@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dependency="clr-namespace:TSD.Services.DependencyProperties"
+             x:Class="TSD.Views.FlyoutPages.UniversalDetailView"
+             Title="{Binding Title, Mode=OneWay}">
+    <ContentPage.ToolbarItems>
+        <dependency:CustomToolbarItem Command="{Binding DeletePosition}"
+                                      IconImageSource="remove_100px.png"
+                                      IsVisible="{Binding IsNewPosition, Mode=TwoWay}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Resources/Resources_XML/ResourceDictionaryMobile.xaml"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame Style="{StaticResource PanelStyle}"
+                   Margin="10"
+                   VerticalOptions="StartAndExpand">
+                <StackLayout Margin="10">
+                    <ListView  ItemsSource="{Binding Elements}"
+                               SelectedItem="{Binding SelectedElement}"
+                           HeightRequest="{Binding HeightColumns}"
+                           HasUnevenRows="True"
+                           SeparatorVisibility="None"
+                           ItemTapped="ListView_ItemTapped"
+                           VerticalOptions="CenterAndExpand"
+                           CachingStrategy="RecycleElementAndDataTemplate">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Grid HorizontalOptions="FillAndExpand">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Label Grid.Row="0" Text="{Binding Name, StringFormat='{0}:'}"
+                                                       TextColor="{StaticResource TextUserBlue}"
+                                                       FontSize="14"
+                                                       FontAttributes="Bold"
+                                                       HorizontalTextAlignment="Start"
+                                                       VerticalTextAlignment="End"
+                                               Padding="0"
+                                               Margin="0"/>
+                                            <Editor Grid.Row="1" Text="{Binding Value, Mode=TwoWay}"
+                                                           TextColor="{StaticResource TextUserBlue}"
+                                                           FontSize="14"
+                                                           IsReadOnly="True"
+                                                           AutoSize="TextChanges"
+                                                           HorizontalOptions="Fill"
+                                                           VerticalOptions="StartAndExpand"
+                                                           Keyboard="Default"
+                                                           Focused="Entry_Focused"
+                                                           Unfocused="Entry_Unfocused"
+                                                    TextChanged="Editor_TextChanged"
+                                                           Margin="0">
+                                                <Editor.Triggers>
+                                                    <DataTrigger TargetType="Editor" Binding="{Binding Modif}" Value="True">
+                                                        <Setter Property="IsReadOnly" Value="False"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Editor" Binding="{Binding DataType}" Value="NUMERIC">
+                                                        <Setter Property="Keyboard" Value="Numeric"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Editor" Binding="{Binding IsModify}" Value="True">
+                                                        <Setter Property="FontAttributes" Value="Bold"/>
+                                                    </DataTrigger>
+                                                </Editor.Triggers>
+                                            </Editor>
+                                            <StackLayout HorizontalOptions="FillAndExpand" Grid.Row="2">
+                                                <Button HorizontalOptions="FillAndExpand"
+                                                    Margin="2"
+                                                    Style="{StaticResource ButtonStyle}"
+                                                    Text="Отправить запрос"
+                                                    FontSize="12"
+                                                    FontAttributes="Bold"
+                                                    IsVisible="False">
+                                                    <Button.Triggers>
+                                                        <DataTrigger TargetType="Button" Binding="{Binding IsNew}" Value="True">
+                                                            <Setter Property="IsVisible" Value="True"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Button" Binding="{Binding Action}" Value="">
+                                                            <Setter Property="IsVisible" Value="False"/>
+                                                        </DataTrigger>
+                                                    </Button.Triggers>
+                                                </Button>
+                                            </StackLayout>
+                                        </Grid>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </Frame>
+            <Frame Style="{StaticResource PanelStyle}" HorizontalOptions="FillAndExpand" VerticalOptions="End" Margin="10">
+                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                    <Grid HorizontalOptions="FillAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" HorizontalOptions="FillAndExpand"
+                            Text="{Binding TitleButton, Converter={StaticResource ResxLocalizationConverter}}"
+                            Margin="2"
+                            FontSize="15"
+                            Style="{StaticResource ButtonStyle}"
+                            Command="{Binding ComplitedProcessed}"/>
+                        <ImageButton Grid.Column="0" HorizontalOptions="FillAndExpand"
+                            Margin="2"
+                            Style="{StaticResource ImageButtonStyle}"
+                            Source="prev_48px.png"
+                            Command="{Binding PrevElement}">
+                            <ImageButton.Triggers>
+                               <Trigger TargetType="ImageButton" Property="IsEnabled"  Value="False">
+                                    <Setter Property="Source" Value="prevlock_48px.png"/>
+                                </Trigger>
+                            </ImageButton.Triggers>
+                        </ImageButton>
+                        <ImageButton Grid.Column="2" HorizontalOptions="FillAndExpand"
+                            Margin="2"
+                            Source="next_48px.png"
+                            Style="{StaticResource ImageButtonStyle}"
+                            Command="{Binding NextElement}">
+                            <ImageButton.Triggers>
+                                <Trigger TargetType="ImageButton" Property="IsEnabled"  Value="False">
+                                    <Setter Property="Source" Value="nextlock_48px.png"/>
+                                </Trigger>
+                            </ImageButton.Triggers>
+                        </ImageButton>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

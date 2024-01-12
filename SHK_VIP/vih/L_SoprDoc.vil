@@ -1,0 +1,196 @@
+
+#ifdef ComponentVersion
+#component "L_SOPRDOC"
+#end
+
+#include SoprType.inc
+#include SoprSort.vih
+#include F_GetP.vih
+
+VipInterface CallMake                   implements IGetPrihPar
+                                        licensed (FREE) Parameters (TypeSopr: word; pNRec: comp; wDate, wTXO, wDel: word; w_dOpr: date);
+VipInterface CheckAktUslB               licensed (FREE);
+VipInterface CorrFastClose              licensed (FREE) Parameters (TypeSopr: word; pKatSopr: comp);
+VipInterface doc_3                      licensed (FREE) Parameters (c1,c2,c3: Comp);
+VipInterface EditMove                   licensed (FREE) Parameters (TypeSopr: word; pNRec: comp);
+VipInterface ExciseNakl                 licensed (FREE) Parameters (TypeSopr: word);
+VipInterface FillNumV                   licensed (FREE);
+VipInterface GetAktM7                   licensed (FREE) Parameters (pNRec, pOrgBase, pDogovor: comp; bOtvHran: boolean);
+VipInterface GetAktSp                   licensed (FREE) Parameters (pNRec: comp; wPList: word);
+VipInterface GetAktToNakl               licensed (FREE) Parameters (pNRec: comp);
+VipInterface GetBuilding                licensed (FREE) Parameters (c1, NrecKS: comp; VidS: word);
+VipInterface GetDocSpAPO                licensed (FREE) Parameters (pNRec: comp; wPrMC: word; wFiltr: word; wPList: word);
+VipInterface GetDocSpSopr               licensed (FREE) Parameters (pNRec: comp; wPrMC: word; wFiltr: word; wPList: word);
+VipInterface GetEditDoc                 licensed (FREE) Parameters (pTuneCode: string; psNastr: string; pwNastr: longint);
+VipInterface GetCorrNakl                licensed (FREE) Parameters (pNRec: comp; pKorrRec: comp; wAction, wTypeCorr: word);
+VipInterface GetKatSopr101_201          licensed (FREE) Parameters (pRecNakl, pRecAkt: comp);
+VipInterface GetMCFromTekSaldo          licensed (FREE) Parameters (ParamcPodr, ParamcMol: comp; ParamTiDk: word; ParamcDoc: comp);
+VipInterface GetMCSopr                  licensed (FREE) Parameters (pStepDoc: comp; wPrMC: word);
+VipInterface GetMCSoprSinhr             licensed (FREE) Parameters (cSopr: comp; cStepDoc: comp);
+VipInterface GetMCVz                    licensed (FREE) Parameters (TypeSopr: word; OrgParam: comp; dForm_nakl: date; DSK_cVal: comp; DSK_VhodNal: word);
+VipInterface GetMCVzN                   licensed (FREE) Parameters (TypeSopr: word; OrgParam: comp; dForm_nakl: date);
+VipInterface DistributeGTSP             licensed (FREE) Parameters (TypeSopr: word; OrgParam: comp; dForm_nakl: date; pVal : comp; wVhodNal : word);
+VipInterface GetNakl                    licensed (FREE) Parameters (wVidSopr: word; pNRec: comp);
+VipInterface GetNaklToAkt               licensed (FREE) Parameters (pNRec: comp; pCondWin: integer);
+VipInterface GetReservesPos             licensed (FREE) Parameters (tPodr: comp; tMol: comp);
+VipInterface GetReservRasres            licensed (FREE) Parameters (pPodr,pMol: comp);
+#include SomeSopr.vih
+VipInterface GetSomeKatSopr             licensed (FREE) Parameters (TypeSopr: word; begdate, enddate: date; wView, wGrSopr: word; oGSKS_Parameters: IGSKS_Parameters = NullRef);
+Public:
+  Function EventCantMark: boolean;
+  Function EventCantSelectAll: boolean;
+end;
+
+VipInterface GetSoprFrom                licensed (FREE) Parameters (pNRec: comp; w1: word; pSklad: comp);
+VipInterface GetSoprTo                  licensed (FREE) Parameters (pNRec, pSklad, pMol: comp);
+VipInterface GetSpAktNakl               licensed (FREE) Parameters (pNRec, pSklad, pMol: comp; wVisual: word; wPList: word; boRaspred : boolean);
+VipInterface GetSpSopr                  licensed (FREE) Parameters (TypeSopr: word; vwParam: word; vcSpSoprNRec: comp);
+VipInterface GetSpSoprMarker            licensed (FREE) Parameters (pNRec: comp);
+VipInterface GetSpSoprMarkerByPrMC(GetSpSoprMarker)
+                                        licensed (FREE) Parameters (PrMC: word);
+VipInterface GetSpSoprMarkerForCorr(GetSpSoprMarker)
+                                        licensed (FREE) Parameters (PrMC: word);
+VipInterface GetSpSoprMarkerForKN(GetSpSoprMarker)
+                                        licensed (FREE) Parameters (PrMC: word);
+VipInterface GetSpSoprMarkerForSomeCorr licensed (FREE);
+
+VipInterface GetSpSoprPick              licensed (FREE) Parameters (pNRec: comp; wPList: word);
+VipInterface GetSpUSL                   licensed (FREE) Parameters (Cod: comp);
+VipInterface GetSSopr                   licensed (FREE) Parameters (pNRec: comp; wPrMC, wFiltr, wPList: word);
+VipInterface GetVagon                   licensed (FREE) Parameters (p1: word; c1, pMC, pEd, Sert: comp);
+VipInterface iAllPickParty              licensed (FREE) Parameters (pKatSopr: comp);
+VipInterface iCheckKodOil               licensed (FREE) Parameters (pRec: comp; CanEdit: boolean);
+VipInterface iCheckKolSoprOrdB          licensed (FREE) Parameters (pSpSopr: comp; KolOld: double);
+VipInterface iCheckTitleKatSopr         licensed (FREE) Parameters (_VidSopr: word; isFilter: boolean; begdate, enddate: date; str: string);
+VipInterface iChKolTNVED                licensed (FREE) Parameters (wTip : word);
+VipInterface iChkSum                    licensed (FREE) Parameters (_pSopr, _pSpSopr            : comp; _CSPOnly: boolean; _Method: word; _Result: boolean);
+VipInterface iChkSumB                   licensed (FREE) Parameters (_pSopr, _pSpSopr, _pSpSopUsl: comp; _MSUOnly: boolean; _Method: word; _result: boolean);
+VipInterface iCloseFMC                  licensed (FREE) Parameters (pKatSopr: comp; pPrint: boolean);
+VipInterface iCopyAttrParty             licensed (FREE) Parameters (pNrec: comp);
+VipInterface ICOPYWIN                   licensed (FREE) Parameters (KVidSoprIn: Word; KVidSoprOut: Word; DatCopy: Date);
+VipInterface iDeleteParty               licensed (FREE) Parameters (pNrec: comp);
+VipInterface iFindKSopr                 licensed (FREE) Parameters (TypeSopr: word ; c1: comp; result: boolean);
+VipInterface iKatPartydGodn             licensed (FREE) Parameters (c1, c2: comp);
+VipInterface iKatPartyKATPARTYCENAZAV   licensed (FREE) Parameters (c1: comp);
+VipInterface iKolichestvoOrderovPoNakladnoy
+                                        licensed (FREE) Parameters (pNrec: comp; TW: word; D1: double);
+VipInterface iMakeNeogrPos              licensed (FREE) Parameters (fltSkl: comp; fltMol: comp; SpStepNRec: comp);
+VipInterface iMakeVozvrat               licensed (FREE) Parameters (TypeSopr: word; OrgParam: comp; dForm_nakl: date; DSK_cVal: comp; DSK_VhodNal: word);
+Public:
+  Function sDSK_prefix : string;
+end;
+VipInterface iMakeVozvratUsl            licensed (FREE) Parameters (TypeSopr: word; OrgParam: comp; dForm_nakl: date; DSK_cVal: comp; DSK_VhodNal: word);
+VipInterface ImportVagonsFromDBF        licensed (FREE);
+VipInterface iNalogsFromSpStep          licensed (FREE) Parameters (c1: comp; _SumNDS, _SumVNDS, _Price, _VPrice: double; wParam: word);
+VipInterface iNalogsFromSpSopr          licensed (FREE) Parameters (pSpSopr, pSpSoprSrc: comp; _SumNDS, _SumVNDS, _Price, _VPrice: double; wParam: word);
+VipInterface iNalogsFromSpStepRembyNakl licensed (FREE) Parameters (c1: comp; _SumNDS, _SumVNDS, _Price, _VPrice: double);
+VipInterface iNalogsFromSpStepRembyZayv licensed (FREE) Parameters (c1: comp; _SumNDS, _SumVNDS, _Price, _VPrice: double);
+VipInterface iNastRep                   licensed (FREE) Parameters (NReport: word);
+VipInterface IndKontr                   licensed (FREE);
+VipInterface iNormUb                    licensed (FREE);
+VipInterface iRasNeotg                  licensed (FREE) Parameters (c1: comp; D1: double);
+VipInterface iRasNeotgReklUsl           licensed (FREE) Parameters (pSpSopr: comp; pSpSoprSource: comp; dKol: double);
+VipInterface iRecalcSpSopUslNalogs      licensed (FREE) Parameters (pSpSopr, pGrNal, pchGrNal: comp; RecKatSopr: type$KatSopr;
+                                                                   _SumNDS, _SumVNDS: double);
+VipInterface iRepMonitMC                licensed (FREE) Parameters (pUserDeskRep: comp);
+VipInterface iRepSAkt                   licensed (FREE) Parameters (pUserDeskRep: comp);
+VipInterface iRepSNakl                  licensed (FREE) Parameters (pUserDeskRep: comp);
+VipInterface iRepSUN                    licensed (FREE) Parameters (pUserDeskRep: comp);
+VipInterface iNastRepZatrDecode         licensed (FREE);
+VipInterface ZatrDecode                 licensed (FREE) Parameters (pUserDeskRep: comp);
+VipInterface iSCopyPrl                  licensed (FREE) Parameters (KatSoprNRec: comp; MarkerNZ, handle_Prot: TPtr);
+VipInterface iSortAndPrintReestr        licensed (FREE) Parameters (pMarker: TPtr; wVidDoc, wVidRep: word);
+VipInterface iwDocNal                   licensed (FREE) Parameters (c1: comp);
+VipInterface KatSopr_SortMC             licensed (FREE) Parameters (pKatSopr: comp; SortMCPar : ISortMCPar = NullRef);
+VipInterface KolDopEd                   licensed (FREE) Parameters (coTable: word; cRec: comp; wTipKol: word; sTitle: string;
+                                                                    cMCUsl: comp; PrMC: word; Price:double;
+                                                                    forPrice, forSumma: byte;
+                                                                    cVal, cOtpEd: comp; fKol: TSumma; lParam: longint; pTiDk: word);
+VipInterface MakePos201fromKN           licensed (FREE) Parameters (c1: comp);
+VipInterface MakeRaspByDOG              licensed (FREE) Parameters (pNRec: comp);
+VipInterface MakeRaspByDOGB             licensed (FREE) Parameters (pNRec: comp);
+VipInterface MakeRecNakl                licensed (FREE) Parameters (pRashNakl: comp; pMarkSopr: TPtr; var pRecNakl : comp);
+VipInterface NdsNak                     licensed (FREE) Parameters (p1: comp);
+VipInterface NumVagEd                   licensed (FREE) Parameters (cRec: comp; wAction: word);
+VipInterface OTSTuneField               licensed (FREE) Parameters (wTuneField, wDisableField: longint);
+VipInterface pecrpv                     licensed (FREE) Parameters (Res: word);
+VipInterface pecrpv_v                   licensed (FREE) Parameters (Res: word);
+VipInterface PickSkladMol               licensed (FREE);
+VipInterface PrDoc                      licensed (FREE) Parameters (PrDoc_VidDoc: word);
+VipInterface PriceProtocol              licensed (FREE) Parameters (pKatSopr: comp);
+VipInterface PrintNaklALK               licensed (FREE) Parameters (pRec: comp);
+VipInterface PrintNakMatOtg             licensed (FREE) Parameters (pNRec: comp);
+VipInterface PrintNakSamVivoz           licensed (FREE) Parameters (pNRec: comp);
+VipInterface PrintPaspKach              licensed (FREE) Parameters (pNRec: comp);
+VipInterface PrintZhdNakl               licensed (FREE) Parameters (pNRec: comp);
+VipInterface PrnAkts                    licensed (FREE) Parameters (pNrec: comp; MarkerNZ: TPtr; wParam: word; pVidReport: word);
+VipInterface PRNM29                     licensed (FREE) Parameters (pNRec: Comp);
+VipInterface PrnNormUbAkt               licensed (FREE) Parameters (pKatSopr: comp);
+VipInterface PrintIA                    licensed (FREE) Parameters (pKatSopr: comp);
+VipInterface ProcentRazrez              licensed (FREE);
+VipInterface ProcessingDO               licensed (FREE) Parameters (pVidDoc: word);
+Vipinterface Propusk_Otves              licensed (FREE) Parameters (pSopr: comp);
+VipInterface RaspVIPMC                  licensed (FREE) Parameters (pNrec: comp);
+VipInterface ReestrNakl                 licensed (FREE) Parameters (pMarker: TPtr; wVidDoc, wVidRep: word);
+VipInterface ReestrZeroSt               licensed (FREE);
+VipInterface RemakeSpSoprOnTeksaldo2    licensed (FREE) Parameters (pSpSopr: comp; wMode: word);
+VipInterface RepSertif                  licensed (FREE) Parameters (sMarkerName: string; pNastr: comp; pStatus: word; PrintFr: boolean = false; PrintGr: boolean = false);
+VipInterface Scales                     licensed (FREE) Parameters (pKatSopr, pSpSopr: comp);
+VipInterface Select_MC                  licensed (FREE) Parameters (Specif, aNrec, aPos: comp);
+VipInterface SelGroup                   licensed (FREE);
+VipInterface SelGroup_V                 licensed (FREE) Parameters (kodgr: string[20]);
+VipInterface Sertificate                licensed (FREE) Parameters (TypeWork: word; c1: comp);
+VipInterface SertNastr                  licensed (FREE);
+VipInterface ShapingPrice               licensed (FREE) Parameters ( NRecKatSopr, NRecSpSopr: comp; SopUslBasicOrg, SopUslOtherOrg, Customs_Price, NDS_Price, Akciz_Price, Prod_Price, Other_Price: double);
+VipInterface ShowAktPriem               licensed (FREE) Parameters (param_sopr: comp);
+VipInterface ShowUksSoprPrice           licensed (FREE) Parameters (pNRec: comp);
+VipInterface SHT_CE_DoSpec              licensed (FREE) Parameters (pStepDoc, pSpStep: comp);
+VipInterface SHT_CE_OrgDo               licensed (FREE) Parameters (pStepDoc: comp; pOrg: comp);
+VipInterface Soprc34_Base               licensed (FREE) Parameters (c1: comp; wMode: word);
+VipInterface SoprNalAkts                licensed (FREE);
+VipInterface SoprNalReg                 licensed (FREE);
+VipInterface Soprrees                   licensed (FREE);
+VipInterface SoprTTNi                   licensed (FREE) Parameters (Field: word; Netto, Tara, Brutto: double; TIDK: word);
+VipInterface SoprUsl                    licensed (FREE) Parameters (RecSopr: comp; TypeSopr: word);
+VipInterface Spis_Nakl                  licensed (FREE) Parameters (aDocument,Kontragent,pNrec: comp);
+VipInterface Svert                      licensed (FREE) Parameters (pSpSopr: comp; wParam: word);
+VipInterface TTNAttrAction              licensed (FREE) Parameters (pTable: word; pNrec: comp; pTableTo: word; pNRecTo: comp);
+VipInterface ViewNormUb                 licensed (FREE) Parameters (pKatSopr: comp);
+VipInterface SetGTDVals                 licensed (FREE) Parameters (pKatSopr: comp);
+VipInterface BookZk_RegNalAkt           licensed (FREE) Parameters (pNalAkt: comp);
+VipInterface GetInfPolFHJ1              licensed (FREE) Parameters (pTable: word; pNrec: comp);
+VipInterface GetInfPolFHJ2              licensed (FREE) Parameters (pTable: word; pNrec: comp);
+VipInterface ConvSynchronizeDO          licensed (FREE);
+
+#ifdef _RPrice_
+VipInterface PickRPrice licensed (FREE) Parameters (wPick: word);
+VipInterface ShowRPrice licensed (FREE) Parameters (pParty: comp; pRPrice: comp; pMode: word);
+#end
+
+Menu SoprUslSpSoprExt_HotKeys;
+Menu mnuSDMain;
+Menu SoprBoxPlan;
+Menu mnuSDUks;
+Menu mnuSDUksEx;
+Menu mnuClcPrice;
+Menu mnuSDExt;
+
+Dialog GetTipKS
+(
+  tip : word
+);
+
+Dialog GetParamSetCopySpecAkta110
+(
+  wPickDoc : word
+);
+
+DIALOG PriceChangeSaveDialog
+(
+  wPrice1 : word
+);
+
+DIALOG GetKolOplAccuracy
+(
+  wAcc : integer
+);

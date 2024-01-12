@@ -1,0 +1,18 @@
+#include MakeMove.vih
+
+#ifndef __SHK_MakeMove_VIH__
+#define __SHK_MakeMove_VIH__
+
+#component "SHK"
+
+ObjInterface SHK_ObjMakeMove;
+
+Public Function MakeMoveForSHK(cKatSopr : comp; wDefine, SkPr, wDel, wDate, wTXO, wMode, wParam, wOrder : word; w_dOpr : date; var _error : string) : boolean;
+
+Public Function AnySpOrderUpdateSHK(pSpOrder, pNewParty: comp): boolean;
+
+end;
+
+VipInterface SHK_MakeMove(MakeMove) implements SHK_ObjMakeMove;
+
+#endif

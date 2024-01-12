@@ -1,0 +1,223 @@
+/*************************************************************************************************\
+* Наименование: Библиотека для вывода логов                                                       *
+* Контур/Модуль: *                                                                                *
+* Примечание:                                                                                     *
+*                                                                                                 *
+* Вид работы  |Номер задачи  |Дата    |Исполнитель              |Проект                           *
+* ----------------------------------------------------------------------------------------------- *
+
+\*************************************************************************************************/
+// взято с проекта ЭМ
+#include SHK_Log.vih
+
+interface SHK_Log;
+
+  var
+    LogFileName: String;           // Имя фала для сохранения лога
+    WasWrite: Boolean;             // true-если была хоть одна запись
+    TextShift: Byte;               // Кол-во пробелов перед текстом
+    StartTime: _DateTime;          // Время и дата начала лога
+    FinishTime: _DateTime;         // Время и дата окончания лога
+    NeedShowTotalTime: Boolean;    // true-показывать в логе дату и время начала и завершения процесса
+    VerboseMode: Boolean;          // true-показывать подробный лог, иначе - только ошибки, по умолчанию true
+    InitCounter: Word;             // Счетчик запусков Init - увеличивается при каждом запуске Init, уменьшается при каждом запуске Done.
+                                   // Done закрывает файл лога и выводит его на просмотр только при в случае, если при запуске Done InitCounter равен 1
+    LogBuf: array[1..1] of String; // Буфер отложенного вывода в лог
+    LogBufCnt: Word;               // Количество строк в буфере отложенного вывода в лог
+    IsOutToBuf: Boolean;           // Если true, то весь вывод Write переадресуется в буфер отложенного вывода
+
+  file fLog;
+
+  // Инициализирует файл лога
+  // _Name - имя файла лога
+  // _ShowTime - если true, в лог будет выведена информация о времени начала и окончания формирования лога
+  // _Overwrite - если false и файл уже существует, то вывод будет дописан в конец этого файла
+  // _UseOutPath - если true, к имени лога будет добавлен путь на директорию OUT
+  function Init(_Name: String; _ShowTime: Boolean; _Overwrite: Boolean; _UseOutPath: Boolean): Boolean;
+  begin
+    result := true;
+
+    InitCounter++;
+    // Если Init уже был вызван, пишем в тот же файл лога
+    if InitCounter > 1 then
+      exit;
+
+    NeedShowTotalTime := _ShowTime;
+    VerboseMode := true;
+    WasWrite := false;
+    TextShift := 0;
+    LogBufCnt := 0;
+    IsOutToBuf := false;
+
+    // Полное название файла
+    if _UseOutPath then
+      // если указано что формировать в директории OUT
+      LogFileName := GetStringParameter('Files', 'OutputFilesDirectory', 0) + _Name;
+    else
+      LogFileName := _Name;
+
+    if _Overwrite then
+    begin
+      _try
+        fLog.OpenFile(LogFileName, stCreate);
+      _except
+        on ExFile:
+          result := false;
+    end else
+    begin
+      _try
+        begin
+          fLog.OpenFile(LogFileName,stOpen);
+          flog.Seek(fLog.GetSize);
+        end;
+      _except
+        on ExFileNotFound:
+          fLog.OpenFile (LogFileName, stCreate);
+        on ExFile:
+          result := false;
+    end;
+
+    StartTime := _CurDateTime;
+    if NeedShowTotalTime then
+      fLog.WriteLn('Процесс запущен: ' + _DateTimeToStr(StartTime, 'DD.MM.YYYY HH:NN:SS') + '  ' + UserName + ''#13#10);
+  end;
+
+  // Включает или выключает вывод подробного лога
+  procedure SetVerboseMode(_Mode: Boolean);
+  begin
+    VerboseMode := _Mode;
+  end;
+
+  // Возвращает информацию о том, включен ли вывод подробного лога
+  function GetVerboseMode: Boolean;
+  begin
+    result := VerboseMode;
+  end;
+
+  // Пишет одну строку в буфер отложенного вывода в лог
+  procedure WriteToBuf(_Text: String);
+  begin
+    if InitCounter < 1 then
+      exit;
+    Inc(LogBufCnt);
+    LogBuf[LogBufCnt] := if(TextShift > 0, if(_Text !='', Pad('', TextShift), ''), '') + _Text;
+  end;
+
+  // Пишет одну строку в лог-файл
+  procedure Write(_Text: String);
+  begin
+    if InitCounter < 1 then
+      exit;
+    if IsOutToBuf then
+      WriteToBuf(_Text)
+    else
+      fLog.Writeln(if(TextShift > 0, if(_Text !='', Pad('', TextShift), ''), '') + _Text);
+    WasWrite := true;
+  end;
+
+  // Выводит буфер отложенного вывода в лог
+  procedure WriteBuf;
+  var
+    I: Word;
+  begin
+    if InitCounter < 1 then
+      exit;
+    IsOutToBuf := false;
+    if LogBufCnt > 0 then
+    begin
+      for (I := 1; I <= LogBufCnt; I := I + 1)
+      begin
+        fLog.Writeln(LogBuf[I]);
+      end;
+      LogBufCnt := 0;
+      SetLimit(LogBuf, 1);
+      WasWrite := true;
+    end;
+  end;
+
+  // Очищает буфер отложенного вывода в лог
+  procedure ClearBuf;
+  begin
+    if InitCounter < 1 then
+      exit;
+    IsOutToBuf := false;
+    if LogBufCnt > 0 then
+    begin
+      LogBufCnt := 0;
+      SetLimit(LogBuf, 1);
+    end;
+  end;
+
+  // Перенаправляет вывод лога в буфер отложенного вывода
+  procedure StartOutToBuf;
+  begin
+    if InitCounter < 1 then
+      exit;
+    IsOutToBuf := true;
+  end;
+
+  // Закрывает лог-файл
+  procedure Done(_Show: Boolean);
+  begin
+    if InitCounter < 1 then
+      exit;
+    InitCounter--;
+    if InitCounter != 0 then
+      exit;
+    if NeedShowTotalTime then
+    begin
+      FinishTime := _CurDateTime;
+      fLog.Writeln(''#13#10'Процесс завершен: ' + _DateTimeToStr(FinishTime, 'DD.MM.YYYY HH:NN:SS'));
+      fLog.Writeln('Затрачено времени: ' + _DateTimeToStr(_FromSec100(_SubDateTime(FinishTime, StartTime)), 'MM/DD HH:NN:SS') + ''#13#10);
+    end;
+    fLog.Close;
+    if WasWrite and _Show then
+      ProcessText(LogFileName, vfMacroSize + vfNewTitle, 'Протокол расчетов');
+  end;
+
+  // Устанавливает кол-во пробелов перед текстом
+  procedure SetShift(_TextShift: Byte);
+  begin
+    TextShift := _TextShift;
+  end;
+
+  // Получает кол-во пробелов перед текстом
+  function GetShift: Byte;
+  begin
+    result := TextShift;
+  end;
+
+  // Увеличивает кол-во пробелов перед текстом на 1
+  procedure IncShift;
+  begin
+    if TextShift < 255 then
+      TextShift++;
+  end;
+
+  // Уменьшает кол-во пробелов перед текстом на 1
+  procedure DecShift;
+  begin
+    if TextShift > 0 then
+      TextShift--;
+  end;
+
+  // Преобразует переданный текст для вывода жирным шрифтом
+  function Bold(_Text: String): String;
+  begin
+    result := Chr(255) + 'Б' + _Text + Chr(255) + 'Б';
+  end;
+
+  // Вывод сообщения об ошибке
+  procedure Error(_Text: String);
+  begin
+    Write(Bold('Ошибка:') + ' ' + _Text);
+  end;
+
+  // Вывод в лог информации, которая отображается только в подробном режиме
+  procedure Info(_Text: String);
+  begin
+    if VerboseMode then
+      Write(_Text);
+  end;
+
+end.

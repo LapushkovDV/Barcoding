@@ -1,0 +1,25 @@
+
+if wGetTune('Doc.DEI.CalcOst') <> 0  //использовать ДЕИ в остатках
+  {
+    StartNewVisual(vtNumericVisual, vfTimer, 'Пересчет ДЕИ в спецификации', 1);
+    _LOOP SpSopr where ((KatSopr.NRec == SpSopr.cSopr))
+      {
+        NextVisual;
+
+        if boGetTune('Doc.DEI.MakeOrd') = FALSE // 'Пересчитывать ДЕИ в накладных\актах перед формированием ордеров'
+          Continue;
+
+        _LOOP SpDopEd where (( coSpSopr     == SpDopEd.wTable AND
+                               SpSopr.nRec  == SpDopEd.cRec   AND
+                               1            == SpDopEd.wTipKol ))
+          {
+            if GetFirst KatDopEd where ((SpDopEd.cDopEd == KatDopEd.nRec )) <> tsOk
+              continue;
+            if KatDopEd.formula = 0 /*nRec формулы*/
+              continue;
+            SpDopEd.kol:= piKatDopEd.CalcValue( coSpDopEd, SpDopEd.nRec, KatDopEd.formula, word(3) /*прямая формула*/, SpSopr.kolFact );
+            update current SpDopEd;
+          }//_L SpDopEd
+      }//_L SpSopr
+    StopVisual('',0);
+  }

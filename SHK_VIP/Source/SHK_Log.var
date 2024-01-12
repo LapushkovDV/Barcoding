@@ -1,0 +1,9 @@
+#ifndef __GP_LOG_VAR__
+#define __GP_LOG_VAR__
+
+#ifndef __GP_LOG_VIH__
+#Warning Необходимо подключить GP_Log.vih
+#end
+
+var oGP_Log: GP_Log;
+#end

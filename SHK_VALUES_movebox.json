@@ -1,0 +1,22 @@
+﻿{
+  "ACTIONBODY": "MOVEBOX",	
+  "OBJECTVALUES": {
+      "OBJECTACTION": "sssss",
+      "IDOBJECT": "2",
+      "SYS_KATBOXNREC": "2",
+      "SYS_BARCODE": "0000000000697",
+      "FIELDS": {
+        "KATBOX_NAME": "яечка 2",
+        "KATBOX_KOD": "яечка 2"
+      },
+      "COLUMNS": [
+        {
+          "SALDOBOX_KOL": "30.00",
+          "KATMC_BARKOD": "",
+          "KATBOX_TO_NAME": "0000000000680",
+          "SALDOBOX_TO_KOL": "5.00",
+          "SALDOBOX_NREC": "2"
+        }
+      ]
+    }
+}

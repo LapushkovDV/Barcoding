@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:TSD.Services.MarkupExtensions.ValuesConverters"
+             x:Class="TSD.Views.FlyoutPages.ContentViews.TaskView"
+             x:Name="root">
+    <ContentView.Resources>
+        <ResourceDictionary Source="../../Resources/Resources_XML/ResourceDictionaryMobile.xaml"/>
+        <converters:StripedBackgroundIndexConverter x:Key="StripedBackgroundIndexConverter"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <Frame Style="{StaticResource PanelStyle}"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="FillAndExpand"
+                   Margin="5, 5, 5, 5"
+                   Padding="0"
+                   BorderColor="{StaticResource TextUserBlue}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackLayout Orientation="Horizontal" Grid.Row="0"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="Start"
+                           BackgroundColor="{StaticResource TextUserBlue}">
+                        <Label Text="Очередь задач"
+                               HorizontalOptions="StartAndExpand"
+                               VerticalOptions="Center"
+                               VerticalTextAlignment="Center"
+                               FontSize="Medium"
+                               TextColor="White"
+                               FontAttributes="Bold"
+                               Padding="5, 0"/>
+                        <ImageButton HorizontalOptions="EndAndExpand"
+                                     VerticalOptions="Center"
+                                     Source="exit_96px.png"
+                                     WidthRequest="{OnPlatform iOS=45, Android=35}"
+                                     BackgroundColor="Transparent"
+                                     Command="{Binding CancelCommand}"/>
+                    </StackLayout>
+                    <ListView Grid.Row="1" ItemsSource="{Binding DocumentTasks}"
+                                          HasUnevenRows="True"
+                                          IsEnabled="False"
+                                          SeparatorVisibility="None"
+                                          x:Name="listViewColumns">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <StackLayout HorizontalOptions="CenterAndExpand"
+                                                                 VerticalOptions="StartAndExpand"
+                                                                 IsEnabled="False"
+                                                                 BackgroundColor="{Binding ., Converter={StaticResource StripedBackgroundIndexConverter}, ConverterParameter={x:Reference listViewColumns}}"
+                                                                 x:Name="stringElement"
+                                                                 Padding="0, 2"
+                                                                 Margin="2, 0, 2.3, 0"
+                                                                 Orientation="Horizontal">
+                                            <Image HorizontalOptions="CenterAndExpand"
+                                                   VerticalOptions="Center"
+                                                   Margin="2, 0"
+                                                   WidthRequest="{OnPlatform iOS=30, Android=20}">
+                                                <Image.Triggers>
+                                                    <DataTrigger TargetType="Image" Binding="{Binding StatusId}" Value="1">
+                                                        <Setter Property="Source" Value="inWork_48px.png"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Image" Binding="{Binding StatusId}" Value="2">
+                                                        <Setter Property="Source" Value="sync_48px.png"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Image" Binding="{Binding StatusId}" Value="3">
+                                                        <Setter Property="Source" Value="send_48px.png"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Image" Binding="{Binding StatusId}" Value="4">
+                                                        <Setter Property="Source" Value="complited_48px.png"/>
+                                                    </DataTrigger>
+                                                </Image.Triggers>
+                                            </Image>
+
+
+                                            <CollectionView x:Name="collView"
+                                                                    ItemsSource="{Binding FieldsTasks}"
+                                                                    HorizontalScrollBarVisibility="Never"
+                                                                    ItemsUpdatingScrollMode="KeepItemsInView"
+                                                                    IsEnabled="False"
+                                                                    HeightRequest="20"
+                                                                    VerticalOptions="Start">
+                                                <CollectionView.ItemsLayout>
+                                                    <GridItemsLayout Orientation="Horizontal"/>
+                                                </CollectionView.ItemsLayout>
+                                                <CollectionView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackLayout HorizontalOptions="CenterAndExpand"
+                                                                             VerticalOptions="CenterAndExpand"
+                                                                             IsEnabled="False"
+                                                                             HeightRequest="20"
+                                                                     WidthRequest="{Binding SizeColumn}">
+                                                            <Label HorizontalTextAlignment="Center"
+                                                                               VerticalTextAlignment="Center"
+                                                                               Text="{Binding Value}"
+                                                                               TextColor="{StaticResource TextUserBlue}"
+                                                                               LineBreakMode="TailTruncation"
+                                                                               IsEnabled="False"
+                                                                               FontAttributes="None"
+                                                                   />
+                                                        </StackLayout>
+                                                    </DataTemplate>
+                                                </CollectionView.ItemTemplate>
+                                            </CollectionView>
+                                        </StackLayout>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Frame>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

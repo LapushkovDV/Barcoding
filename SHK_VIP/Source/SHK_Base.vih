@@ -1,0 +1,80 @@
+/*************************************************************************************************\
+* Наименование: Ведение телефонного справочника                                                   *
+* Контур/Модуль: Кадры                                                                            *
+* Примечание:                                                                                     *
+*                                                                                                 *
+* Вид работы  |Номер         |Дата    |Исполнитель              |Проект                           *
+* ----------------------------------------------------------------------------------------------- *
+*/
+
+#ifnDef _SHK_BASE_INCLUDED_
+#define _SHK_BASE_INCLUDED_
+
+
+ObjInterface oSHK_Base;
+public:
+#doc
+#end
+procedure filltTypeObj;
+
+#doc
+#end
+function GetLogFile : string;
+
+#doc
+#end
+function GetTableNameBYTidkGal(_tidkGal, _headSP: word) : string;
+
+
+#doc
+#end
+function fillttActionsByTidkGal(_tidkGal: word) : boolean;
+
+#doc
+#end
+function getNameDataType(_type : byte) : string;
+
+#doc
+#end
+function gettableCodebyTableName(_name : string) : string;
+
+#doc
+#end
+procedure insertCU_tFields(_NPP : byte; _tableName : string);
+
+#doc
+#end
+procedure inserttFieldsByTableName(_tableName : string; _postFixTBL : string = ''; _postFixName : string = '');
+
+#doc
+#end
+function filltFieldsby_tidkGal(_tidkGal, _headSP : word) : boolean;
+
+#doc
+#end
+Function isExistSpec : boolean;
+
+#doc
+#end
+Function getTableCodeByViddoc(_viddoc : word) : word;
+
+#doc
+Является ли объект каталогом по SHK_TMPLT_OBJ.VIDDOC
+#end
+function isObjectCatalogBYTidkGal(_tidkGal : word) : boolean;
+
+#doc
+Создать новый файл логов
+#end
+Function GenerateNewOutFile: string;
+
+#doc
+Для использования в алгоритмах: получаем tidkGal по TypeCpNrec
+#end
+Function getShkTidkGalbyTypeCpNrec(_typeCpNrec : word) : word;
+
+end;
+
+VipInterface SHK_BASE Implements oSHK_Base #Licensed_Free;
+
+#end

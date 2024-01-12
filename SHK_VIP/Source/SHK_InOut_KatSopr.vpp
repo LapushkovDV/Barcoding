@@ -1,0 +1,719 @@
+sql query queryKatSopr =
+      select distinct
+        %SelectFieldsSys
+       ,%IdentityField                        as SYS_BARCODE
+        %SelectFields
+       from katsopr
+          left join KatNotes             on katnotes.nrec     = KATSOPR.cNote
+//          left join spsopr               on spsopr.cSopr      = KatSopr.Nrec and spsopr.cmcusl <> #comp(0)
+//          left join katusl               on katusl.nrec       = spsopr.cmcusl and spsopr.prmc = 2
+          left join spsopr               on spsopr.cSopr      = KatSopr.Nrec and spsopr.prmc = 1 and spsopr.cmcusl <> #comp(0)
+          left join katorg               on katorg.nrec       = KatSopr.cOrg
+          left join katpodr katpodr_to   on katpodr_to.nrec   = KatSopr.cPodrTo
+          left join katpodr katpodr_From on katpodr_From.nrec = KatSopr.cPodrFrom
+          left join katMol katMol_to     on katMol_to.nrec    = KatSopr.cMolTo
+          left join katMol katMol_From   on katMol_From.nrec  = KatSopr.cMolFrom
+          left join katotped             on katotped.nrec     = spsopr.cotped
+          left join katmc                on katmc.nrec        = spsopr.cmcusl and spsopr.prmc = 1
+          left join shk_barcodelink SHK_BARCODELINK_MC on SHK_BARCODELINK_MC.wtable = 1411 and SHK_BARCODELINK_MC.crec = katmc.NREC and SHK_BARCODELINK_MC.type = 0
+          left join specmtr SPMTR_KS     on SPMTR_KS.cotable  = 1109 and SPMTR_KS.cSpec = KatSopr.Nrec
+          left join specmtr SPMTR_SP     on SPMTR_SP.cotable  = 1110 and SPMTR_SP.cSpec = SpSopr.Nrec
+          left join katparty             on katparty.nrec     = spsopr.cParty
+          left join shk_barcodelink SHK_BARCODELINK_PARTY on SHK_BARCODELINK_PARTY.wtable = 1430 and SHK_BARCODELINK_PARTY.crec = katParty.NREC and SHK_BARCODELINK_PARTY.type = 0
+          left join attrnam on attrnam.wtable = 1109 and attrnam.name = :anName
+          left join attrval on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katsopr.nrec
+          left join INBOXP on INBOXP.CSPSOPR = spsopr.nrec //and INBOXP.WTYPE = 0
+          left join KATBOX on KATBOX.nrec = INBOXP.CBOX
+          left join shk_barcodelink SHK_BARCODELINK_KATBOX on SHK_BARCODELINK_KATBOX.wtable = 1423 and SHK_BARCODELINK_KATBOX.crec = KATBOX.NREC and SHK_BARCODELINK_KATBOX.type = 0
+          left join shk_barcodelink on shk_barcodelink.wtable = 1109 and shk_barcodelink.crec = katsopr.NREC and shk_barcodelink.type = 0
+          left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD
+          left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM
+          left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser
+          left join x$users on x$users.ATL_NREC = SHK_USER.cUser
+
+       where KatSopr.vidsopr = :Vidsopr // если меняете запрос, то обязательно исправьте функцию Fill_fieldArray
+         and %IdentityFieldWhere = :pIdent
+         and (
+              %WhereFields
+             )
+;
+
+function GetResultQueryForKatSopr(_pcSHKObj: comp; _pIdent : string) : IResultSet;
+{
+
+   if not BoundActive(tbbySHKObjNrec) then
+   {
+    set _cSHKObj := _pcSHKObj;
+    pushbounds(tbbySHKObjNrec);
+   }
+
+  var qKatSopr : iQuery = queryManager.createQuery(queryKatSopr);
+    var SelectFields : longint = 0;
+
+   _loop SHKObjSP_HEAD
+      {
+        if pos('VA_1109',SHKObjSP_HEAD.SYSNAMETBL) = 1 then continue;
+
+        if pos('CU_1109',SHKObjSP_HEAD.SYSNAMETBL) = 1 then
+         {
+           var _iKau : integer = Integer(extractdelimitedword(SHKObjSP_HEAD.SYSNAMETBL +'_'+ SHKObjSP_HEAD.SYSNAME,4,'_')); // CU_1009_KAU_2
+            case _iKau  of
+             1     : MysqlAddStr(SelectFields, '     ,Coalesce(SPMTR_KS.cObj     , #comp(0)) as CU_1110_KAU_1  ');
+             2..10 : MysqlAddStr(SelectFields, '     ,Coalesce(SPMTR_KS.CKAU['+string(_iKau-1)+']     , #comp(0)) as '+SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME);
+            end;
+           continue;
+         }
+
+        MysqlAddStr( SelectFields ,' ,  ' +SHKObjSP_HEAD.SYSNAMETBL + '.'+SHKObjSP_HEAD.SYSNAME + ' as ' +SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME  );
+      }
+
+   _loop SHKObjSP_SP
+      {
+        mylog('    _loop SHKObjSP_SP  ->  SHKObjSP_SP.SYSNAMETBL = ' + SHKObjSP_SP.SYSNAMETBL + '    SHKObjSP_SP.SYSNAME = ' + SHKObjSP_SP.SYSNAME );
+        if pos('VA_1110',SHKObjSP_SP.SYSNAMETBL) = 1 then continue;
+        if pos('VA_1430',SHKObjSP_SP.SYSNAMETBL) = 1 then continue;
+        if pos('VA_1411',SHKObjSP_SP.SYSNAMETBL) = 1 then continue;
+
+        if pos('CU_1110',SHKObjSP_SP.SYSNAMETBL) = 1 then
+         {
+           mylog('    _loop SHKObjSP_SP  -> pos(CU_1110,SHKObjSP_SP.SYSNAMETBL) = 1');
+
+           var _iKau : integer = Integer(extractdelimitedword(SHKObjSP_SP.SYSNAMETBL +'_'+ SHKObjSP_SP.SYSNAME,4,'_')); //CU_10109_KAU_2
+           mylog('    _loop SHKObjSP_SP  -> _iKau = ' + string(_iKau));
+            case _iKau of
+             1    : MysqlAddStr(SelectFields, '     ,Coalesce(SPMTR_SP.cObj     , #comp(0)) as CU_1110_KAU_1  ');
+             2..10 : MysqlAddStr(SelectFields, '     ,Coalesce(SPMTR_SP.CKAU['+string(_iKau-1)+']     , #comp(0)) as '+SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME);
+            end;
+           continue;
+         }
+
+        MysqlAddStr( SelectFields ,' ,  ' +SHKObjSP_SP.SYSNAMETBL + '.'+SHKObjSP_SP.SYSNAME + ' as ' +SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME  )
+      }
+
+
+
+ var _anName : string;
+  var Identificator : longint = 0;
+
+        if pos('VA_1109',SHKOBJ.SYSNAMETBL) = 1
+        then
+          {
+           _anName := SHKOBJ.SYSNAME;
+           MysqlAddStr( Identificator ,'attrval.vstring');
+           mylog('    %IdentityField =attrval.vstring');
+          }
+        else
+          {
+          _anName := '---';
+           MysqlAddStr( Identificator ,SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME ) ;
+           mylog('    %IdentityField =' + SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME );
+          }
+
+
+   var SelectFieldsSys : longint = 0;
+
+   MysqlAddStr( SelectFieldsSys, '  KatSopr.NREC                           as SYS_KATSOPR_NREC     ' );
+   MysqlAddStr( SelectFieldsSys, ' ,Coalesce(SPSOPR.NREC, #comp(0))        as SYS_SPSOPRNREC       ' );
+   MysqlAddStr( SelectFieldsSys, ' ,Coalesce(SPMTR_KS.CSALDTUNE, #comp(0)) as SYS_KATSOPR_cSaldTune' );
+   MysqlAddStr( SelectFieldsSys, ' ,Coalesce(SPMTR_SP.CSALDTUNE, #comp(0)) as SYS_SPSOPR_cSaldTune ' );
+
+  qKatSopr.setMacro('SelectFieldsSys', SelectFieldsSys);
+
+  qKatSopr.setMacro('IdentityField', Identificator);
+  qKatSopr.setMacro('IdentityFieldWhere', Identificator);
+
+  qKatSopr.setMacro('SelectFields', SelectFields);
+
+
+  var WhereFields : longint = 0;
+       MysqlAddStr( WhereFields ,' 1=1');
+
+  qKatSopr.setMacro('WhereFields', WhereFields);
+
+
+  qKatSopr.setParam('VIDSOPR',  SHKObj.viddoc);
+  qKatSopr.setParam('anName', _anName);
+   var _type : byte = GetTypeByTableAndField(SHKOBJ.SYSNAMETBL, SHKOBJ.SYSNAME);
+   mylog('    _type = '+_type) ;
+ case _type of
+        4 :  qKatSopr.setParam('pIdent',    word(_pIdent) );
+        6 :  qKatSopr.setParam('pIdent', longint(_pIdent) );
+       11 :  qKatSopr.setParam('pIdent',  double(_pIdent) );
+       17 :  qKatSopr.setParam('pIdent',    comp(_pIdent) );
+        else qKatSopr.setParam('pIdent',  _pIdent);
+   end;
+
+   result := qKatSopr.getResultSet;
+
+}
+
+function GenerateJSON_VALUES_KATSOPRONE(_ActionName: string; _pIdent: string; var _err : string) : TpTr;
+{
+ var iRes : IResultSet = GetResultQueryForKatSopr(GetTMPLTByName(_ActionName), _pIdent);
+
+  var JSONObj_VALUES: TPtr = HttpConnect_JsonObjectCreate(m_service);
+  var JSONObj_Array : TPtr = 0;
+  var JSONObj_ArrayOneElement : tptr =0  ;
+
+ if NullVipRef(iRes) then
+ {
+
+//    HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'ERROR', 'ОШИБКА ВЫПОЛНЕНИЯ ЗАПРОСА В БД');
+    _err := 'ОШИБКА ВЫПОЛНЕНИЯ ЗАПРОСА В БД';
+    result := 0;
+    exit;
+
+ }
+
+ if iRes.getFirst <>  tsOk
+  {
+//    HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'ERROR', 'НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = ' + _pIdent);
+    _err := 'НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = ' + _pIdent;
+    result := 0;
+    exit;
+  }
+
+        var _SYS_KATSOPR_NREC      : comp = 0h;
+        var _SYS_KATSOPR_cSaldTune : comp = 0h;
+
+         _SYS_KATSOPR_NREC      := iRes.row.val('SYS_KATSOPR_NREC');
+         _SYS_KATSOPR_cSaldTune := iRes.row.val('SYS_KATSOPR_cSaldTune');
+
+        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'OBJECTACTION', SHKObj.Action);
+        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'IDOBJECT'       , String(_SYS_KATSOPR_NREC));
+        var _SYS_BARCODE   : string = iRes.row.val('SYS_BARCODE');
+        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'SYS_BARCODE'       , String(_SYS_BARCODE));
+
+        if getfirst katSopr_Check where ((_SYS_KATSOPR_NREC == katSopr_Check.nrec)) = tsOK
+        {
+         HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_VALUES, 'ALLOWMODIFY'    , isStatusAllow(katSopr_Check.cNote));
+        }
+
+
+//       JSONObj_Array := HttpConnect_JsonArrayCreate(m_service);
+
+//      var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
+     var JSONObj_FIELDS : tptr = HttpConnect_JsonObjectCreate(m_service);
+       _loop SHKObjSP_HEAD
+         {
+           var _value : string = coUnRealString;
+//           var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
+
+           if pos('VA_1109',SHKObjSP_HEAD.SYSNAMETBL) = 1 then {
+                _value := piextattr.sgetattr(1109, _SYS_KATSOPR_NREC, SHKObjSP_HEAD.SYSNAME);
+             }
+
+
+            if pos('CU_1109',SHKObjSP_HEAD.SYSNAMETBL) = 1 then {
+               if getfirst SaldTuneKS where ((_SYS_KATSOPR_cSaldTune == SaldTuneKS.nrec)) = tsOK {
+                   var _cKau : comp = iRes.row.val(SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME);
+                   var _iKau : integer = Integer(extractdelimitedword(SHKObjSP_HEAD.SYSNAMETBL +'_'+ SHKObjSP_HEAD.SYSNAME,4,'_')); // CU_1009_KAU_2
+                    case _iKau  of
+                     1    : _value := ShowKau(SaldTuneKS.WOBJ         , _cKau    )
+                     2..10 : _value := ShowKau(SaldTuneKS.WKAU[_iKau-1], _cKau    )
+                    end;
+                }
+             }
+             if _value = coUnRealString then _value := iRes.row.val(SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME);
+//             HttpConnect_JsonObjectAddString(m_service, JSONObj_ArrayOneElement, SHKObjSP_HEAD.SYSNAMETBL+'_'+SHKObjSP_HEAD.SYSNAME, _value);
+
+             HttpConnect_JsonObjectAddString(m_service, JSONObj_FIELDS, SHKObjSP_HEAD.SYSNAMETBL+'_'+SHKObjSP_HEAD.SYSNAME, _value);
+//           HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement);
+         }
+//         HttpConnect_JsonObjectAddObject(m_service, JSONObj_VALUES, 'FIELDS', JSONObj_Array);
+          HttpConnect_JsonObjectAddObject(m_service, JSONObj_VALUES, 'FIELDS', JSONObj_FIELDS);
+
+
+         JSONObj_Array := HttpConnect_JsonArrayCreate(m_service);
+      do
+      {
+         var _SYS_SPSOPRNREC        : comp = iRes.row.val('SYS_SPSOPRNREC');
+         var _SYS_SPSOPR_cSaldTune  : comp = iRes.row.val('SYS_SPSOPR_cSaldTune');
+         JSONObj_ArrayOneElement := HttpConnect_JsonObjectCreate(m_service);
+         _loop SHKObjSP_SP
+           {
+             var _value : string = coUnRealString;
+
+             if pos('VA_1110',SHKObjSP_SP.SYSNAMETBL) = 1 then {
+                  _value := piextattr.sgetattr(1110, _SYS_SPSOPRNREC, SHKObjSP_SP.SYSNAME);
+               }
+
+             if pos('VA_1430',SHKObjSP_SP.SYSNAMETBL) = 1 then  {
+               if getfirst SpSoprQuery where ((_SYS_SPSOPRNREC == SpSoprQuery.nrec)) = tsOK {
+                 if pos('VA_1430',SHKObjSP_SP.SYSNAMETBL) = 1 then  {
+                   _value := piextattr.sgetattr(1430, SpSoprQuery.cParty, SHKObjSP_SP.SYSNAME);
+                  }
+                }
+             }
+
+             if pos('VA_1411',SHKObjSP_SP.SYSNAMETBL) = 1 then  {
+               if getfirst SpSoprQuery where ((_SYS_SPSOPRNREC == SpSoprQuery.nrec)) = tsOK {
+                 if pos('VA_1411',SHKObjSP_SP.SYSNAMETBL) = 1 then {
+                   _value := piextattr.sgetattr(1411, SpSoprQuery.cMcUsl, SHKObjSP_SP.SYSNAME);
+                  }
+                }
+             }
+
+              if pos('CU_1110',SHKObjSP_SP.SYSNAMETBL) = 1 then {
+               mylog(' pos(CU_1110,SHKObjSP_SP.SYSNAMETBL) = 1 ' + SHKObjSP_SP.SYSNAMETBL);
+               mylog('  _SYS_SPSOPR_cSaldTune = ' + _SYS_SPSOPR_cSaldTune);
+                 if getfirst SaldTuneSP where ((_SYS_SPSOPR_cSaldTune == SaldTuneSP.nrec)) = tsOK {
+                    mylog('  if getfirst SaldTuneSP where ((_SYS_SPSOPR_cSaldTune == SaldTuneSP.nrec)) = tsOK {');
+                     var _cKau : comp = iRes.row.val(SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME);
+                     var _iKau : integer = Integer(extractdelimitedword(SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME,4,'_')); // CU_1010_KAU_2
+                    mylog('  iRes.row.val(  '+SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME );
+                    mylog('  _cKau = ' + _cKau);
+
+                      case _iKau  of
+                       1    : _value := ShowKau(SaldTuneSP.WOBJ         , _cKau    )
+                       2..10 : _value := ShowKau(SaldTuneSP.WKAU[_iKau-1], _cKau    )
+                      end;
+                  }
+               }
+
+               if _value = coUnRealString then _value := iRes.row.val(SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME);
+              mylog('SHKObjSP_SP.SYSNAMETBL_SHKObjSP_SP.SYSNAME=' + SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME);
+              mylog('   _value = ' + _value);
+              HttpConnect_JsonObjectAddString(m_service, JSONObj_ArrayOneElement, SHKObjSP_SP.SYSNAMETBL+'_'+SHKObjSP_SP.SYSNAME, _value);
+           }
+         HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement);
+      } while iRes.getNext = tsOk;
+    HttpConnect_JsonObjectAddObject(m_service, JSONObj_VALUES, 'COLUMNS', JSONObj_Array);
+
+
+  result := JSONObj_VALUES;
+}
+
+function GetResultQueryForKatSoprBatch(_pcSHKObj: comp; _pIdent : string;  _login: string; _imei : string) : IResultSet;
+{
+ // 1 заполняем системные поля выборки
+  var SelectFieldsSys : longint = 0;
+  MysqlAddStr( SelectFieldsSys, '  KatSopr.NREC                           as SYS_KATSOPR_NREC     ' );
+
+  #BatchBodyFunctionGetResultQuery(queryKatSopr,1109)
+
+ // 2 добавляем параметры в запрос
+  _Query.setParam('VIDSOPR',  SHKObj.viddoc);
+
+ result := _Query.getResultSet;
+
+}
+
+function GenerateJSON_VALUES_KATSOPR(_ActionName: string; _pIdent: string; var _err : string; _login: string = ''; _imei : string = '') : TpTr;
+{
+  #Function_GenerateJSON_VALUES_Body(GetResultQueryForKatSoprBatch,GenerateJSON_VALUES_KATSOPRONE,SYS_KATSOPR_NREC,coKatSopr)
+}
+
+function checkkatSopr_makeAction(var _ERRORENG : string; var _ERRORRUS : string) : boolean;
+{
+  result := false;
+  if not isStatusAllow(katSopr_makeAction.CNOTE) {
+   _ERRORENG := 'doc status is not allowed. modification is prohibited';
+   _ERRORRUS := 'статус документа не в списке разрешенных. изменение запрещено';
+    exit;
+
+  }
+
+ if katSopr_makeAction.dopr <> 0 then
+  {
+   _ERRORENG := 'there are warehouse orders for the document. modification is prohibited';
+   _ERRORRUS := 'по документу есть складские ордера. изменение запрещено';
+    exit;
+  }
+  // что то еще?
+  result := true;
+}
+procedure GetParamSkPr_wOrder(_vidsopr : word; var _skPr : word; var _wOrder : word);
+{
+  // 1 расход  2  приход 3 оба wOrder
+ case _vidsopr of
+   600: {
+       _skPr := 0;  // склад
+       _wOrder := 3; // формируем и приход и расход
+     }
+   101 : { // 1 расход  2  приход 3 оба wOrder
+       _skPr := 0;  // склад
+       _wOrder := 2; // формируем приход
+   }
+   201 : { // 1 расход  2  приход 3 оба wOrder
+       _skPr := 0;  // склад
+       _wOrder := 1; // формируем  расход
+   }
+   501 : { // 1 расход  2  приход 3 оба wOrder
+       _skPr := 0;  // склад
+       _wOrder := 3; // формируем и приход и расход
+   }
+   end;
+}
+Function isNumber(_str: string; var _retstr, _retstrRus : string) : boolean;
+{
+  _retstrRus := _retstr := '';
+  var _tmpDbl : double = 0;
+  _try {
+     mylog('Function isNumber: value = '+ _str);
+    _tmpDbl := double(_str);
+    }
+  _except
+    on ExNumberConvert: {
+       _retstr    := 'value not a number : "'  +_str+ '"';
+       _retstrRus := 'указано не число: "'  +_str+ '"';
+       mylog('Function isNumber: указано не число '+ _str);
+       result := false;
+       exit;
+     }
+   if _tmpDbl < 0 then {
+       _retstr    := 'value less then 0 : "'  +_str+ '"';
+       _retstrRus := 'указано число меньше нуля: "'  +_str+ '"';
+       mylog('Function isNumber: указано число меньше нуля '+ _str);
+       result := false;
+       exit;
+     }
+  result := true; //принципиально не отрицательное, а вот целое или нет проверим дальше по МЦ
+}
+Function MakeAction_MakeAction_KATSOPR(_login, _IMEI : string) : TPtr;
+{
+  var JSONObj : TPtr = HttpConnect_JsonObjectCreate(m_service);
+ if getfirst _tElements <> tsOK
+  {
+   #WRITE_JSONERROR(JSONObj,'Empty table _tElements','Служебная таблица _tElements пустая')
+   result := JSONObj;
+   exit;
+  }
+ if getfirst _tElements where ((0 == _tElements.npp and 'IDOBJECT' == _tElements.name)) <> tsOK
+  {
+   #WRITE_JSONERROR(JSONObj,'does not exist element IDOBJECT in table _tElements','не найден элемент IDOBJECT в _tElements')
+   result := JSONObj;
+   exit;
+  }
+  var _cSopr : comp = comp(_tElements.value);
+  if getfirst  katSopr_makeAction where ((_cSopr == katSopr_makeAction.nrec)) <> tsOK
+   {
+     #WRITE_JSONERROR(JSONObj,'does not exist katSopr where nrec = ' + _tElements.value,'не найдена накладной katSopr с nrec = ' + _tElements.value)
+     result := JSONObj;
+     exit;
+   }
+
+ mylog('katSopr_makeAction.nrec  = ' + katSopr_makeAction.nrec);
+ mylog('katSopr_makeAction.nsopr = ' + katSopr_makeAction.nsopr);
+ mylog('katSopr_makeAction.cnote = ' + katSopr_makeAction.cNote);
+
+var _ERRORENG,_ERRORRUS : string = '';
+  if not checkkatSopr_makeAction(_ERRORENG,_ERRORRUS) // тут все проверки типа статуса, оприхордлования и т.д.
+   {
+     #WRITE_JSONERROR(JSONObj,_ERRORENG,_ERRORRUS)
+     result := JSONObj;
+     exit;
+   }
+
+ if getfirst _tElements where ((0 == _tElements.npp and 'ACTIONBODY' == _tElements.name)) <> tsOK
+  {
+   #WRITE_JSONERROR(JSONObj,'does not exist element ACTIONBODY in table _tElements','не найден элемент ACTIONBODY в _tElements')
+   result := JSONObj;
+   exit;
+  }
+var _ActionBody : string = _tElements.value;
+ mylog('_ActionBody = ' + _ActionBody);
+  var _npp : longint = 1;
+ // любом случае сначала сохраним все, а потом все действия
+
+  do
+  {
+// check
+    mylog(' check _npp = ' + _npp);
+    var _SpecFieldIDName : string = GetSpecFieldIDName;
+     var _retstr, _retstrRus : string = '';
+     var _cSpSopr : comp = 0h;
+     if (getfirst _tElements where ((_npp == _tElements.npp)) and _tElements.name = _SpecFieldIDName) = tsOK
+      {
+        _cSpSopr := comp(_tElements.value);
+        if _cSpSopr <> 0h then {
+           if getfirst SpSopr_makeAction where ((_cSpSopr == SpSopr_makeAction.nrec)) <> tsOK
+            {
+               #WRITE_JSONERROR(JSONObj,'does not exist SPSOPR where nrec = ' + _tElements.value,'не найдена запись SPSOPR с nrec = ' + _tElements.value)
+               result := JSONObj;
+               exit;
+            }
+         }
+      }
+
+    _loop _tElements where ((_npp == _tElements.npp)) and _tElements.name <> _SpecFieldIDName
+     {
+      mylog(' check _tElements.name = ' + _tElements.name);
+       if pos('SPSOPR_',_tElements.name) = 1 then {
+             var _field : string = extractdelimitedword(_tElements.name,2,'_'); // CU_1009_KAU_2
+            case _field of
+//              'PRICE', 'NPP', 'PROCUB', 'SUMAVT', 'NETTO', 'MTARA',  'VPRICE'
+//              'KOLNORMA', 'OILPLOT', 'PROCNAC', 'SUMNDS', 'SUMVNDS', 'RPRICE',
+              'KOL','KOLOPL','KOLFACT', 'KOL2', 'KOLFACT2', 'KOLGRM', 'KOLPOV', 'KOLDOP'     : {
+                             if not isNumber(_tElements.value, _retstr, _retstrRus) {
+                               #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'в поле '+_field +' '+ _retstrRus)
+                               result := JSONObj;
+                               exit;
+                             }
+                             var _tmpDbl : double = double(_tElements.value);
+                              mylog(' check _tmpDbl = ' + _tmpDbl);
+                             if getfirst katotped where ((SpSopr_makeAction.cotpEd == katotped.nrec)) = tsOK {
+                                 mylog(' check if getfirst katotped where ((SpSopr_makeAction.cotpEd == katotped.nrec)) = tsOK ');
+                                 if katotped.diskret = 1 then {
+                                    if round(_tmpDbl,0)  <> _tmpDbl {
+                                       #WRITE_JSONERROR(JSONObj,'The KOL '+_field+' is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpDbl),'Указано дробное число "'+string(_tmpDbl)+'" для неделимой единицы измерения "'+katotped.abbr+'"')
+                                       mylog('В поле KOL передано не целое число, хотя ед.изм МЦ неделимая  = ' + string(_tmpDbl));
+                                       result := JSONObj;
+                                       exit;
+                                    }
+                                  }
+                                }
+                           }
+             end;
+          }
+     }
+   _npp++;
+  } while getfirst _tElements where ((_npp == _tElements.npp)) = tsOK
+  _npp := 1;
+
+  do
+  {
+    var _cSpSopr : comp = 0h;
+    var _SpecFieldIDName : string = GetSpecFieldIDName;
+    if (getfirst _tElements where ((_npp == _tElements.npp)) and _tElements.name = _SpecFieldIDName) = tsOK
+     {
+       _cSpSopr := comp(_tElements.value);
+       if _cSpSopr <> 0h then {
+           if getfirst SpSopr_makeAction where ((_cSpSopr == SpSopr_makeAction.nrec)) <> tsOK
+            {
+               #WRITE_JSONERROR(JSONObj,'does not exist SPSOPR where nrec = ' + _tElements.value,'не найдена запись SPSOPR с nrec = ' + _tElements.value)
+               result := JSONObj;
+               exit;
+            }
+        }
+        else {
+               insert SpSopr_makeAction set
+                  SpSopr_makeAction.cSopr   := katSopr_makeAction.nrec
+                , SpSopr_makeAction.DSOPR   := katSopr_makeAction.DSOPR
+                , SpSopr_makeAction.VIDSOPR := katSopr_makeAction.VIDSOPR
+               ;
+//             , SpSopr_makeAction.prMc  := 1 // вот тут вопрос конечно....
+//             , SpSopr_makeAction.prMc  := 1 // вот тут вопрос конечно....
+            ;
+        }
+        mylog(' _getfirst SpSopr_makeAction _cSpSopr = ' + _cSpSopr)
+     }
+     else
+      {
+           #WRITE_JSONERROR(JSONObj,'does not exist system field _SpecFieldIDName= ' + _SpecFieldIDName,'не найдено служебное поле _SpecFieldIDName= ' + _SpecFieldIDName)
+           result := JSONObj;
+           exit;
+      }
+/*
+     mylog('  _npp = ' + _npp);
+     _loop _tElements {
+       mylog('  _tElements.npp = ' + _tElements.npp);
+       mylog('  _tElements.name = ' + _tElements.name);
+     }
+*/
+
+
+
+    _loop _tElements where ((_npp == _tElements.npp)) and _tElements.name <> _SpecFieldIDName
+    {
+     mylog('  _tElements.name = ' + _tElements.name);
+      /* if pos('VA_1110',_tElements) = 1 then {
+
+       }
+       */
+#declare updateSpSopr_makeActionDouble(FieldName)
+ mylog('  SpSopr_makeAction.#FieldName  = '+ SpSopr_makeAction.#FieldName +' _   _tElements.value = ' + _tElements.value);
+if SpSopr_makeAction.#FieldName <> double(_tElements.value) then {
+     mylog('  SpSopr_makeAction.#FieldName -> ' + double(_tElements.value));
+   update current SpSopr_makeAction set SpSopr_makeAction.#FieldName := double(_tElements.value);
+  }
+#end
+#declare updateSpSopr_makeActionString(FieldName)
+if SpSopr_makeAction.#FieldName <> _tElements.value then update current SpSopr_makeAction set SpSopr_makeAction.#FieldName := _tElements.value;
+#end
+
+       if _cSpSopr = 0h { // добавляем запись
+
+         // надо найти поле, в котором action есть - туда полдучить ссылку на объект и вставить его
+          if    pos('KATMC_',_tElements.name) = 1
+             or pos('SHK_BARCODELINK_MC',_tElements.name) = 1
+             then {
+            var _ActionSpName : string = getspActionName(_tElements.name);
+             if _ActionSpName <> '' then  {
+               var _iSHK_InOut : SHK_InOut new;
+               var _cmc : comp = _iSHK_InOut.GetMCNRECByIdent(_ActionSpName, _tElements.value);
+               if _cmc <> 0 {
+                  SpSopr_makeAction.prmc   := 1;
+                  SpSopr_makeAction.cmcUsl := _cmc;
+                 update current SpSopr_makeAction;
+               }
+             }
+           }
+
+          if    pos('KATPARTY_',_tElements.name) = 1
+             or pos('SHK_BARCODELINK_PARTY',_tElements.name) = 1
+             then {
+            var _ActionSpName : string = getspActionName(_tElements.name);
+             if _ActionSpName <> '' then  {
+               var _iSHK_InOut : SHK_InOut new;
+               var _cParty : comp = _iSHK_InOut.GetPARTYNRECByIdent(_ActionSpName, _tElements.value);
+               if _cParty <> 0 {
+                  SpSopr_makeAction.cParty := _cParty;
+                  if SpSopr_makeAction.cMcUsl = 0h then {
+                      if getfirst KatParty_makeAction where ((_cParty == KatParty_makeAction.nrec)) = tsOK {
+                        SpSopr_makeAction.cMcUsl := KatParty_makeAction.cmc;
+                      }
+                  }
+                 update current SpSopr_makeAction;
+               }
+             }
+           }
+
+
+        }
+
+       if pos('SPSOPR_',_tElements.name) = 1 then {
+         var _field : string = extractdelimitedword(_tElements.name,2,'_'); // CU_1009_KAU_2
+
+        case _field of
+          'KOL'      : {#updateSpSopr_makeActionDouble(KOL)
+                        if _cSpSopr = 0h {
+                          #updateSpSopr_makeActionDouble(KOLOPL)
+                          #updateSpSopr_makeActionDouble(KOLFACT)
+                         }
+                       }
+          'KOLOPL'   : {#updateSpSopr_makeActionDouble(KOLOPL)
+                         if _cSpSopr = 0h {
+                          #updateSpSopr_makeActionDouble(KOL)
+                          #updateSpSopr_makeActionDouble(KOLFACT)
+                         }
+                       }
+          'KOLFACT'  : {#updateSpSopr_makeActionDouble(KOLFACT)
+                        if _cSpSopr = 0h {
+                         #updateSpSopr_makeActionDouble(KOL)
+                         #updateSpSopr_makeActionDouble(KOLOPL)
+                        }
+                       }
+          'PRICE'    : {#updateSpSopr_makeActionDouble(PRICE)    }
+          'NPP'      : {#updateSpSopr_makeActionDouble(NPP)      }
+          'PROCUB'   : {#updateSpSopr_makeActionDouble(PROCUB)   }
+          'NVAGON'   : {#updateSpSopr_makeActionString(NVAGON)   }
+          'NKVIT'    : {#updateSpSopr_makeActionString(NKVIT)    }
+          'NSERTIF'  : {#updateSpSopr_makeActionString(NSERTIF)  }
+          'SUMAVT'   : {#updateSpSopr_makeActionDouble(SUMAVT)   }
+          'NETTO'    : {#updateSpSopr_makeActionDouble(NETTO)    }
+          'MTARA'    : {#updateSpSopr_makeActionDouble(MTARA)    }
+          'KOL2'     : {#updateSpSopr_makeActionDouble(KOL2)     }
+          'KOLFACT2' : {#updateSpSopr_makeActionDouble(KOLFACT2) }
+          'VPRICE'   : {#updateSpSopr_makeActionDouble(VPRICE)   }
+          'KOLNORMA' : {#updateSpSopr_makeActionDouble(KOLNORMA) }
+          'OILPLOT'  : {#updateSpSopr_makeActionDouble(OILPLOT)  }
+          'PROCNAC'  : {#updateSpSopr_makeActionDouble(PROCNAC)  }
+          'SUMNDS'   : {#updateSpSopr_makeActionDouble(SUMNDS)   }
+          'SUMVNDS'  : {#updateSpSopr_makeActionDouble(SUMVNDS)  }
+          'RPRICE'   : {#updateSpSopr_makeActionDouble(RPRICE)   }
+          'KOLGRM'   : {#updateSpSopr_makeActionDouble(KOLGRM)   }
+          'KOLPOV'   : {#updateSpSopr_makeActionDouble(KOLPOV)   }
+          'KOLDOP'   : {#updateSpSopr_makeActionDouble(KOLDOP)   }
+         else {
+           #WRITE_JSONERROR(JSONObj,'field "'+_field+'" doesnot allow to modify','поле "'+_field+'" не предусмотрено для модификации')
+           result := JSONObj;
+           exit;
+         }
+         end;
+       }
+    }
+    _npp++;
+  } while getfirst _tElements where ((_npp == _tElements.npp)) = tsOK
+#declare SetStatus
+          _loop SHKObjSP_BTN
+           {
+             mylog('SetStatus: SHKObjSP_BTN.SysName = ' + SHKObjSP_BTN.SysName);
+             if SHKObjSP_BTN.SysName = _ActionBody
+              {
+                mylog('SetStatus: enter -> if SHKObjSP_BTN.SysName = _ActionBody');
+               if getfirst KN_BTN = tsOK {
+                mylog('SetStatus: enter -> if getfirst KN_BTN = tsOK');
+                 insert statlog_makeAction set
+                      statlog_makeAction.cdoc      := katSopr_makeAction.nrec
+                    , statlog_makeAction.NEWSTATUS := KN_BTN.status
+                    , statlog_makeAction.OLDSTATUS := katSopr_makeAction.status
+                    , statlog_makeAction.CNEWNOTE  := KN_BTN.nrec
+                    , statlog_makeAction.COLDNOTE  := katSopr_makeAction.cnote
+                    , statlog_makeAction.DOCTYPE   := oNotes.GetVidNoteByVidDoc(katSopr_makeAction.vidsopr)
+                    , statlog_makeAction.DESCR     := sGetTune('USER.DESCR')
+                    , statlog_makeAction.DESGR     := sGetTune('USER.DESGR')
+                    , statlog_makeAction.DOPER     := Cur_date
+                    , statlog_makeAction.TIMEOPER  := Cur_time
+                    , statlog_makeAction.COMMENT   := 'Изменение с ТСД: login= "'+_login+'" IMEI= "' + _IMEI+'"'
+                    , statlog_makeAction.LASTUSER  := UserName
+                  ;
+                  mylog('SetStatus: success -> insert statlog_makeAction set');
+                  katSopr_makeAction.Status := KN_BTN.Status;
+                  katSopr_makeAction.cNote  := KN_BTN.nrec;
+                 update current katSopr_makeAction;
+                 mylog('SetStatus: success -> update current katSopr_makeAction;');
+                 break;
+               }
+              }
+           }
+
+         HttpConnect_JsonObjectAddInteger(m_service, JSONObj, 'RESULT_CODE', 1);
+         HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG' ,     'SETSTATUS OK');
+         HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG_RUS' , 'Статус изменен');
+         mylog('SetStatus: Статус изменен');
+        result := JSONObj;
+        exit;
+#end
+      mylog('    _ActionBody = ' + _ActionBody);
+  case _ActionBody of
+      'SETSTATUS_1' : {
+             #SetStatus
+          }
+      'SETSTATUS_2' : {
+             #SetStatus
+          }
+      'SETSTATUS_3' : {
+             #SetStatus
+          }
+      'SAVEDOC' : {
+             HttpConnect_JsonObjectAddInteger(m_service, JSONObj, 'RESULT_CODE', 1);
+             HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG' ,     'SAVEDOC OK');
+             HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG_RUS' , 'Документ сохранен');
+            result := JSONObj;
+            exit;
+          }
+      'CREATEORDERS' : {
+            mylog('CREATEORDERS begin');
+            var iSHK_MakeMove : SHK_MakeMove;
+            var _skPr, _wOrder : word;
+            GetParamSkPr_wOrder(katSopr_makeAction.vidsopr, _skPr, _wOrder);
+            mylog('CREATEORDERS GetParamSkPr_wOrder . _skPr='+_skPr+', _wOrder ='+ _wOrder );
+            var _error : string = '';
+            if iSHK_MakeMove.MakeMoveForSHK(  katSopr_makeAction.nrec
+                           , if(katSopr_makeAction.vidsopr = 501,168,32) // 28  для НОП - 168
+                           , _skPr // склад -производствр
+                           , 0 // wDel
+                           , 0 // wDate
+                           , 0 // wTXO
+                           , 0 // wMode
+                           , 2 // wParam
+                           , _wOrder //  1 расход  2  приход 3 оба wOrder
+                           , cur_date
+                           , _error
+                          ) {
+               HttpConnect_JsonObjectAddInteger(m_service, JSONObj, 'RESULT_CODE', 1);
+               HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG' ,     'MAKEORDERS OK');
+               HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG_RUS' , 'Ордера сформированы');
+               mylog('CREATEORDERS Ордера сформированы' );
+               result := JSONObj;
+            }
+            else
+             {
+              #WRITE_JSONERROR(JSONObj,'MAKEORDERS NOT OK','Ордера не сформированы:' + _error)
+              result := JSONObj;
+             }
+            exit;
+        }
+    end;
+}

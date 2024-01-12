@@ -1,0 +1,45 @@
+﻿@model ERP_API_Service.Objects.UserImei
+
+@{
+    ViewData["Title"] = "UserImeiCreate";
+    ViewBag.Title = "UserImeiCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Добавление новой записи</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Новый код IMEI для пользователя @Html.DisplayFor(model => model.User.Login)</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.User.Id)
+    @*<div class="form-group" style="font-size:20px">
+            @Html.Label("Логин", "Логин", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.User.Id, new SelectList(ViewBag.users, "Value", "Text"), "- Логин -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.User.Id, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group" style="font-size:20px">
+        @Html.Label("IMEI", "IMEI", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Imei.Id, new SelectList(ViewBag.imeis, "Value", "Text"), "- IMEI -", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Imei.Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Сохранить" class="btn btn-light" style="font-size:20px" />
+            <a type="button" class="btn btn-light" style="font-size:20px" href="@Url.Action("UserEdit", new { id = Model.User.Id })">Отмена</a>
+        </div>
+    </div>
+    <br />
+</div>
+}

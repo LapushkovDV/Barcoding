@@ -1,0 +1,255 @@
+/*
+ ╔═══════════════════════════════════════════════════════════════════════════╗
+ ║                     (c) 1994,98 корпорация ГАЛАКТИКА                      ║
+ ║ Проект        : ГАЛАКТИКА                                                 ║
+ ║ Система       : Оперативный контур                                        ║
+ ║ Версия        : 5.70                                                      ║
+ ║ Назначение    : Проверка на превышение лимита и замена МЦ при дефиците    ║
+ ║ Ответственный : Левченко Андрей Александрович(Andrew)                     ║
+ ║ Параметры     :                                                           ║
+ ╚═══════════════════════════════════════════════════════════════════════════╝
+*/
+#ifndef GAL7_1
+if ((ResTov < 4) and (ResTov <> 0))
+{
+  var flagg : boolean;
+  flagg:=false;
+
+  if (Message(''#3'Некоторых матценностей недостаточно, хотите заменить их?',YesNo)=cmYes )
+     {var varFlagUsed_AktZam0_ListZam1 : word;
+      var varFlagSort_SG0_F1_L2_P3 : word;
+      var varFlagAvtoFillParty  : word;
+
+      DoneMCInfo();
+      FlagUsed_AktZam0_ListZam1 := 0;
+      varFlagSort_SG0_F1_L2_P3 := 0;
+      varFlagAvtoFillParty  := 0;
+      RunInterface('SpZamMC', KatSopr.nRec, flagg, datOpr, varFlagUsed_AktZam0_ListZam1, varFlagSort_SG0_F1_L2_P3, varFlagAvtoFillParty);
+      if (flagg)
+         {var vVozv : word;
+          var varKolZam, varKolFact : Double;
+          var varParty : comp;
+          var varRefDownTab, varRefTab : comp;
+          var varRefParty : comp;
+
+          vVozv := cmYes;
+          InitMCInfo(datOpr);
+          if(isValid(#SpSopr)) vVozv := Message(''#3'Заменить спецификацию ?',YesNo);
+             if (vVozv = cmYes)
+                {
+                 if (GetFirst SpSopr where ((KatSopr.nRec    ==       SpSopr.cSopr    and
+                                             word(1)         ==       SpSopr.prMC)) = tsOK)
+                    {
+                     do{
+                        varRefParty := if (SpSopr.cParty<>0, SpSopr.cParty, -1);
+                        _loop SvodTmp where ((comp(0)        ==      SvodTmp.nRec2             and
+                                              SpSopr.cMCUsl  ==      SvodTmp.nRec9(NoIndex)    and
+                                              varRefParty    ==      SvodTmp.nRec7(NoIndex)))
+                           {
+                            if (SvodTmp.Chasf < 0.00001) continue;
+                            varKolZam  := Round(SvodTmp.Chasf/SvodTmp.Summa2, 5);
+                            varKolFact := Round(SpSopr.KolFact, 5);
+! Message(''#3'40000000  MakeZam   SpSopr.nRec = '+SpSopr.nRec+' SvodTmp.nRec10 = '+SvodTmp.nRec10+'  SvodTmp.nRec1 = '+SvodTmp.nRec1+' SvodTmp.nRec9 = '+SvodTmp.nRec9+' SvodTmp.nRec7 = '+SvodTmp.nRec7+' SvodTmp.Chasf = '+SvodTmp.Chasf+' varKolFact = '+varKolFact+' varKolZam = '+varKolZam,Information);
+                            if (varKolFact > varKolZam)
+                               {
+                                SpSopr.KolFact := SpSopr.KolFact - varKolZam;
+                                if (UpDate current SpSopr <> tsOK)
+                                    Message(''#10#13'  Ошибка при обновлении данных таблицы SpSopr! Файл MakeZam.vpp', Error);
+                                SvodTmp.Chasf := 0;
+                               }
+                            else
+                               {
+                                Delete ManufIO where ((SpSopr.NRec  == ManufIO.cSpSopr and
+                                                       SpSopr.cSopr == ManufIO.cSopr));
+                                SpSopr_Delete(SpSopr.nRec);
+#ifdef NAK501
+                                DoDeleteAllSoprDop();
+#endif
+                                SvodTmp.Chasf := SvodTmp.Chasf - (varKolFact*SvodTmp.Summa2);   //!!!!! это для топ узлов, ниже мы будем хоидить по листьям иерархии
+                               }
+                            if (Update current SvodTmp <> tsOK) Message(''#10#13'  Ошибка при обновлении данных таблицы SvodTmp! Файл MakeZam.vpp', Error);
+                           }
+                       }while (GetNext SpSopr where ((KatSopr.nRec    ==       SpSopr.cSopr   and
+                                                      word(1)         ==       SpSopr.prMC)) = tsOK);
+                    }
+                 if (GetFirst SvodTmp = tsOk)
+                    {
+                     do{
+                        if (SvodTmp.ArSum[7] >= 0.5) continue;
+! Message(''#3'30000000  MakeZam   SvodTmp.nRec10 = '+SvodTmp.nRec10.+'  SvodTmp.nRec1 = '+SvodTmp.nRec1+' SvodTmp.nRec9 = '+SvodTmp.nRec9+' SvodTmp.nRec7 = '+SvodTmp.nRec7+' SvodTmp.nRec8 = '+SvodTmp.nRec8+' SvodTmp.Chasf = '+SvodTmp.Chasf,Information);
+                        varRefDownTab := 0;
+                        varRefTab     := SvodTmp.nRec10;
+                        PushPos(#SvodTmp);
+                        if (GetFirst SvodTmp where ((varRefTab       ==     SvodTmp.nRec2)) = tsOK)
+                            varRefDownTab := SvodTmp.nRec10;
+                        PopPos(#SvodTmp);
+                        if (varRefDownTab <> 0) continue;
+
+                        varParty := SvodTmp.nRec7;
+                        if ( (SvodTmp.nRec7 = -1) or (SvodTmp.nRec7 < 2) ) varParty := 0;
+                        if (SvodTmp.Chasf >= 0.00001)
+                           {var varKoefOtpED, varKol : Double;
+
+!                            Old_cSpStep : comp;
+!                            Old_cSpStep := SpSopr.cSpStep;
+!Message('vpp коэфф='+TmpNormP.ADD02);
+                            ClearBuffer(#SpSopr);
+                           #ifndef GAL8_1
+                            SpSopr.LastUser   := UserName;
+                           #end
+//                            SpSopr.LastTime   := Cur_Time;
+//                            SpSopr.LastDate   := Cur_Date;
+                            SpSopr.FilialNo   := lGetTune('Konsolid.FilialNo');
+! может и не надо SpSopr.cSpStep    := Old_cSpStep;
+                            SpSopr.cSopr      := KatSopr.NRec;
+                            SpSopr.dSopr      := KatSopr.dSopr;
+                            SpSopr.dOprttn    := KatSopr.dOpr;
+                            SpSopr.VidSopr    := KatSopr.VidSopr;
+                            SpSopr.cMcUsl     := SvodTmp.nRec1;
+                            SpSopr.PrMC       := 1;
+                            SpSopr.cOtpEd     := GetAktOtpEdNrec(SvodTmp.nRec1, word(1));
+                            varKoefOtpED      := GetKoefOtpEd(SpSopr.cOtpEd);
+                            varKol            := SvodTmp.Chasf * varKoefOtpED;
+                            SpSopr.Kol        := varKol;
+                            SpSopr.KolFact    := varKol;
+                            SpSopr.KolOpl     := varKol;
+                            SpSopr.cParty     := SvodTmp.nRec5;
+                            SpSopr.cVal       := StepMCInfo(SvodTmp.nRec1, KatSopr.cVal,
+                                                 if (KatSopr.cPodrFrom = 0,comp(-1), KatSopr.cPodrFrom),
+                                                 if (KatSopr.cMolFrom  = 0,comp(-1), KatSopr.cMolFrom),
+                                                 if (SpSopr.cParty     = 0,comp(-1), SpSopr.cParty));
+                            SpSopr.Price  := AveragePrice  * varKoefOtpED;
+                            SpSopr.rPrice := SpSopr.Price;
+                            SpSopr.VPrice := AverageVPrice * varKoefOtpED;
+                            SpSopr.rVPrice:= SpSopr.VPrice;
+                            if (Insert current SpSopr = tsOk)
+                               {
+                                isSpStepAfte := True;
+                                OnAfterInsertSpSopr;
+                               }
+                           }
+                       }while (GetNext SvodTmp = tsOk);
+// пересортируем накладную
+                     var NumPP : word;
+                     delete tmpReeN;
+                     PushPos(#KatMC);
+                     PushPos(#KatUsl);
+                     if (GetFirst SpSopr = tsOk)
+                        do{
+                           ClearBuffer(#tmpReeN);
+                           tmpreen.cRec := SpSopr.Nrec;
+                           tmpreen.c1   := SpSopr.cMCUsl;
+!                           if (SpStep.PrMC=1)
+!                              {
+!                               tmpreen.dSopr := longint(0)
+!                               if (GetFirst KatMC where ((SpSopr.cMCUsl    ==   KatMC.nRec)) = tsOK)
+!                                   tmpreen.Nomer := if (wGetTune('Pick.SortMC')=0, KatMC.Name, KatMC.BarKod);
+!                              }
+!                           else
+!                              {
+!                               tmpreen.dSopr := longint(1);
+!                               if (GetFirst KatUsl where ((SpSopr.cMCUsl    ==   KatUsl.nRec)) = tsOK)
+!                                   tmpreen.Nomer := if (wGetTune('Pick.SortMC')=0, KatUsl.Name, KatUsl.Kod);
+!                              }
+                           insert current tmpReeN;
+                          } while (GetNext SpSopr = tsOk);
+                     PopPos(#KatMC);
+                     PopPos(#KatUsl);
+                     NumPP := 0;
+                     ResetBounds(#SpSopr);
+                     if (GetFirst tmpreen ordered by index TmpReeN04 = tsOk)
+                         do{
+                            if (GetFirst SpSopr where ((tmpReeN.cRec == SpSopr.Nrec)) = tsOk)
+                               {
+                                Inc(NumPP);
+                                SpSopr.Npp := NumPP;
+                                update current SpSopr;
+                               }
+                           } while (GetNext tmpreen ordered by index TmpReeN04 = tsOk);
+                     SetBounds(#SpSopr);
+// отсортировали
+                     ReReadRecord(#SpSopr);
+                     RescanPanel(#KatSopr);
+                     RecalcSumm(False);
+                     Message(''#3'Проверьте сформированную спецификацию и выполните списание снова.',Information);
+                    };
+                }
+          if (InitMCInfo(datOpr)) SkladProizv(0);
+          RecalcSumm(true);
+          frm1wed.AbortForm;
+          ResTov:=132; // от балды
+          DoneMCInfo();
+     //     exit;
+     //     abort;
+         };
+     };
+};
+#endif
+!=====================ПРОВЕРКА ПРЕВЫШЕНИЯ ЛИМИТА================================
+if ( KatSopr.cStepDoc <> 0)
+   {var fffl:boolean;
+#IFDEF _GP_
+    var p1, p2, p3 : word=0;
+#ELSE
+    var p1, p2, p3 : word;
+#ENDIF
+    var CheckLimObj  : oCheckLimit;
+    var LimSoprObj   : oLimSopr;
+
+    fffl:=true;
+    p2 := 0;
+    if (NullVipRef(CheckLimObj))
+       {
+        if (not LoadVipRef(CheckLimObj, 'M_Up::CheckLimitObject'))
+            Message('Ошибка!!! Не загружен интерфейс CheckLimitObject');
+       }
+    if (NullVipRef(LimSoprObj))
+       {
+        if (not LoadVipRef(LimSoprObj, 'M_Up::LimSoprObject'))
+            Message('Ошибка!!! Не загружен интерфейс LimSoprObject');
+       }
+// пользователь имеет право отпускать сверхлимита никаких проверок не проводить
+!    CheckLimObj.SetModeDebugSomeIndex(word(1));
+!    CheckLimObj.SetModeDebugForAllIndex(1);
+    if (CheckLimObj.InitInter())
+       {
+        StartNewVisual(vtRotateVisual, vfTimer+vfBreak+vfConfirm,'Проверка превышения лимитов по накладной №'+string(KatSopr.NSopr)+'  от '+string(KatSopr.dSopr), 1);
+        CheckLimObj.CheckLimit_SpecifNkl(KatSopr.nRec);
+        p2 := CheckLimObj.GetFlagOverLim_KatSoprOne(KatSopr.nRec);
+        p3 := CheckLimObj.GetTuneLim_Full();
+        p1 := p2 and p3;
+        StopVisual('',0);
+       }
+    fffl := p1 = 0;
+    LimSoprObj.InitInter(KatSopr.nRec, p3, p2, datOpr);
+    LimSoprObj.DeleteTab();
+    if (BaseDoc.dEnd >= datOpr)
+       {
+        if (not fffl)
+           {
+            case wGetTune('Manuf.Limit') of
+              0 : fffl := true;
+              1 : LimSoprObj.GetWndZapretLimSopr();
+              2 : fffl := LimSoprObj.GetWndEditLimSopr();
+            end; // case
+           }
+       }
+    else
+       {
+        fffl := false;
+        LimSoprObj.GetWndDefDataLimSopr();
+       }
+    if (not fffl)  // выходим отсюда
+       {
+        frm1wed.AbortForm;
+        ResTov:=132;
+       };
+    if (Not NullVipRef(CheckLimObj))
+       {
+        FreeVipInterface(CheckLimObj);
+       }
+    if (Not NullVipRef(LimSoprObj))
+       {
+        FreeVipInterface(LimSoprObj);
+       }
+   }

@@ -1,0 +1,159 @@
+/*************************************************************************************************\
+* Наименование: Ведение телефонного справочника                                                   *
+* Контур/Модуль: Кадры                                                                            *
+* Примечание:                                                                                     *
+*                                                                                                 *
+* Вид работы  |Номер         |Дата    |Исполнитель              |Проект                           *
+* ----------------------------------------------------------------------------------------------- *
+\_0.0_/
+
+-_-
+0_-
+-_0
+0_0
+
+\*************************************************************************************************/
+#include GetUsers.vih
+#include SHK_BASE.vih
+#include SHK_InOut.vih
+
+Interface SHK_ADMIN_PANEL 'Интерфейс администратора ШК' (,,sci178Esc), EscClose;
+//************************************************************
+
+//----------------------------------------
+create view
+from
+   SHK_TSD_ARM_USER SHK_TSD
+ , SHK_TSD_ARM_USER SHK_ARM
+ , SHK_TSD_ARM_USER SHK_USER
+ , x$users
+ where ((
+         1 == SHK_TSD.type
+     and 2 == SHK_ARM.type
+     and 3 == SHK_USER.type
+     and SHK_USER.cUser == x$users.ATL_NREC
+
+ ))
+;
+tabbedSheet top tsSHK_ADMIN_PANEL
+Show At (,,,20);
+browse brTSD 'ТСД';
+  Table SHK_TSD;
+  fields {Font={Color=if(not SHK_TSD.IsActive,ColorGray,0)}};
+   SHK_TSD.ID          'AndroidID' ('идентификатор устройства') : [ 6], NoProtect, nopickbutton;
+   SHK_TSD.name        'Наименование'('наименование устройства') : [ 6], NoProtect, nopickbutton;
+   SHK_TSD.Description 'Описание'('описание устройства') : [ 10], NoProtect, nopickbutton;
+   SHK_TSD.IsActive    'Активный'('признак активности') : [ 2], NoProtect, checkBox;
+ end;
+browse brARM 'АРМ';
+  Table SHK_ARM;
+  fields {Font={Color=if(not SHK_ARM.IsActive,ColorGray,0)}};
+   SHK_ARM.ID          'Код АРМ' ('идентификатор АРМ') : [ 6], NoProtect, nopickbutton;
+   SHK_ARM.name        'Наименование'('наименование устройства') : [ 6], NoProtect, nopickbutton;
+   SHK_ARM.Description 'Описание'('описание устройства') : [ 10], NoProtect, nopickbutton;
+   SHK_ARM.IsActive    'Активный'('признак активности') : [ 2], NoProtect, checkBox;
+ end;
+browse brUser 'Пользователи';
+  Table SHK_User;
+  fields {Font={Color=if(not SHK_User.IsActive,ColorGray,0)}};
+   SHK_User.ID          'Код пользователя' ('идентификатор пользователя') : [ 6], NoProtect, nopickbutton;
+   SHK_User.name        'ФИО' ('ФИО') : [ 6], NoProtect, nopickbutton;
+   x$users.xu$loginname 'Пользователь системы' : [ 10], Protect, pickbutton;
+   SHK_User.Description 'Описание'('описание пользователя') : [ 10], NoProtect, nopickbutton;
+   SHK_User.IsActive    'Активный'('признак активности') : [ 2], NoProtect, checkBox;
+ end;
+end; // end tabbed
+//embedded embViewResult 'Результат' interface wViewResult end;
+
+Screen scrSHK_ADMIN_PANEL ;
+Show At (,21,,);
+buttons
+  cmValue1,,,'Выгрузить справочники',,;
+  cmValue2,,,'Выгрузить меню',,;
+  cmValue3,,,'Выгрузить пользователей',,;
+  cmValue4,,,'Выгрузить документы',,;
+<<
+<. Выгрузить справочники .>    <.  Выгрузить меню   .>
+<.Выгрузить пользователей.>    <.Выгрузить документы.>
+>>
+end;
+function CheckLic : boolean; {
+ #BodyfunctionCheckLic
+}
+
+
+#declare tableeventtableTSDARMUSER(table,type)
+TableEvent table #table;
+cmSetDefault: {
+   #table.type      := #type;
+   #table.IsActive  := true;
+}
+
+cmInsertRecord: {
+  Insert Current #table;
+}
+cmUpdateRecord: {
+  Update Current #table;
+}
+cmDeleteRecord: {
+   #table.IsActive := false;
+  update Current #table;
+}
+end; //TableEvent table #table
+#end
+#tableeventtableTSDARMUSER(SHK_TSD,1)
+#tableeventtableTSDARMUSER(SHK_ARM,2)
+#tableeventtableTSDARMUSER(SHK_USER,3)
+HandleEvent
+cminit: {
+/*
+  if (wgettune('SHK.CONNECTIONTYPE') <> 1) then
+   {
+     message('Функционал данного интерфейса используется только при передаче данных через USB'
+     +''#13'' + gettunename('SHK.CONNECTIONTYPE') +'=USB - обмен файлами, подключение ТСД к АРМ'
+     ,error)
+   }
+*/
+   if not CheckLic then {stop; abort; exit;}
+}
+
+
+cmpick:{
+  case curfield of
+   #x$users.xu$loginname: {
+      var _iGetUsers : GetUsers;
+      if _iGetUsers.GetUser(SHK_USER.cUser) {
+        update current SHK_USER;
+      }
+   }
+   end;
+   rereadrecord;
+}
+cmdelonprotect:{
+  case curfield of
+   #x$users.xu$loginname: {
+         SHK_USER.cUser := 0h;
+        update current SHK_USER;
+      }
+   end;
+   rereadrecord;
+}
+cmValue1: {
+ var _SHK_InOut: SHK_InOut new;
+ message(_SHK_InOut.JSON_Export_Catalogs);
+}
+
+cmValue2: {
+ var _SHK_InOut: SHK_InOut new;
+ message(_SHK_InOut.JSON_Export_Menu);
+}
+cmValue3: {
+ var _SHK_InOut: SHK_InOut new;
+ message(_SHK_InOut.JSON_Export_Users);
+}
+cmValue4: {
+ var _SHK_InOut: SHK_InOut new;
+ message(_SHK_InOut.JSON_Export_Docs);
+}
+end;
+end.

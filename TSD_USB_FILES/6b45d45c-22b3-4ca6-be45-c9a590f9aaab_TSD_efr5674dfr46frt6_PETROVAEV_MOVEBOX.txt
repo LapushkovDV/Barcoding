@@ -1,0 +1,41 @@
+﻿{
+  "ACTIONBODY": "MOVEBOX",
+  "OBJECTVALUES": {
+    "OBJECTACTION": "BOXMOVE",
+    "IDOBJECT": "2814749767109267",
+    "FIELDS": {
+      "KATBOX_NAME": "Зона приема ",
+      "KATBOX_KOD": "ЗП",
+      "KATPODR_KOD": "СГП-01"
+    },
+    "COLUMNS": [
+      {
+        "KATMC_BARKOD": "1856486098",
+        "KATMC_NAME": "_Квас",
+        "KATPARTY_NAME": "0.00 руб Накладная на приход готовой продукции №2200012 от 14/12/2022  Дог.№  от ДД/ММ/ГГГГ(087196)",
+        "SALDOBOX_KOL": "504.00",
+        "KATBOX_TO_KOD": "0000001156362",
+        "SALDOBOX_TO_KOL": "504",
+        "SALDOBOX_NREC": "2814749767116550"
+      },
+      {
+        "KATMC_BARKOD": "1856486099",
+        "KATMC_NAME": "_Пиво светлое",
+        "KATPARTY_NAME": "0.00 руб Накладная на приход готовой продукции №2200012 от 14/12/2022  Дог.№  от ДД/ММ/ГГГГ(087197)",
+        "SALDOBOX_KOL": "1008.00",
+        "KATBOX_TO_KOD": "0000001156195",
+        "SALDOBOX_TO_KOL": "1008",
+        "SALDOBOX_NREC": "2814749767116552"
+      },
+      {
+        "KATMC_BARKOD": "1856486097",
+        "KATMC_NAME": "_Пиво темное",
+        "KATPARTY_NAME": "0.00 руб Накладная на приход готовой продукции №2200012 от 14/12/2022  Дог.№  от ДД/ММ/ГГГГ(087198)",
+        "SALDOBOX_KOL": "1512.00",
+        "KATBOX_TO_KOD": "0000001156270",
+        "SALDOBOX_TO_KOL": "1512",
+        "SALDOBOX_NREC": "2814749767116551"
+      }
+    ]
+  }
+}

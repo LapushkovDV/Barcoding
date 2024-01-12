@@ -1,0 +1,329 @@
+#include PickDoc.vih
+#include ArchiveGetAttrs.vih
+#include GetWorkDocs.vih
+
+interface iGetDocsForBarcode;
+
+#include ArchiveGetAttrs.var
+#include PickDoc.var
+
+create view
+var
+  m_Obj   : longint;
+  m_cUser : comp;
+
+  m_TuneDefCode  : string;
+  m_TuneDefObj   : longint;
+  m_TuneDefcUser : comp;
+select * from
+  RefTable,
+  TuneDef,
+  TuneVal,
+  RefTable RefTableTmp
+where
+((
+      cgReg_Main        == RefTable.wAccount
+  and cgSel_UserDocRgh  == RefTable.wMain
+  and m_Obj             == RefTable.wSub
+  and coX$Users         == RefTable.wTable1
+  and m_cUser           == RefTable.cRecord1
+
+  and m_TuneDefCode  == TuneDef.Code
+  and TuneDef.Nrec   == TuneVal.cTune
+  and m_TuneDefObj   == TuneVal.Obj
+  and m_TuneDefcUser == TuneVal.cUser
+));
+
+function WhatTuneWasSet(Code : string; Obj : longint; cUser : comp; var sValue : string) : longint;
+{
+  result := 0;
+
+  // определение какая настройка задана
+  m_TuneDefCode := code;
+  if( getfirst TuneDef = tsOk)
+  {
+    if (TuneDef.SysType = ttSysTune) cUser := 0;// системная
+
+    if (TuneDef.CorpoType = ttCorpoTune) Obj := 0;// корпоротивная
+
+    // 1) значения настройки конкретного пользователя
+    if( cUser <> 0 )
+    {
+      m_TuneDefObj   := Obj;
+      m_TuneDefcUser := cUser;
+      if( getfirst TuneVal = tsOk )
+      {
+        sValue := TuneVal.strVal;
+        result := 1;
+        exit;
+      }
+    }
+
+    // 2) значения настройки офиса
+    if( Obj <> 0 )
+    {
+      m_TuneDefObj   := Obj;
+      m_TuneDefcUser := 0;
+      if( getfirst TuneVal = tsOk )
+      {
+        sValue := TuneVal.strVal;
+        result := 2;
+        exit;
+      }
+    }
+
+    // 3) значения настройки пользователя по умолчанию
+    m_TuneDefObj   := 0;
+    m_TuneDefcUser := 0;
+    if( getfirst TuneVal = tsOk )
+    {
+      sValue := TuneVal.strVal;
+      result := 3;
+      exit;
+    }
+  }
+}
+
+function EditUserWorkDocs(Obj : longint; cUser : comp; var sValue : string): boolean;
+{
+  result := false;
+
+  var i : longint;
+  var MarkerDocPick : TPtr;
+  var AttrTypeList : TDocAttrArray;
+  var wTidkGal: word;
+
+  // Загрузка общего списка документов
+  oAchiveGetAttrs.GetAllTidkGal(AttrTypeList);
+  LoadVipInterface(iPickDoc);
+  iPickDoc.Clear;
+
+  for(i := 0; i < count(AttrTypeList); i++)
+    iPickDoc.AddDoc(word(AttrTypeList[i]));
+
+  // Загрузка документов из настройки
+  MarkerDocPick := InitMarker('', 2, 100, 10);
+  case WhatTuneWasSet('Barcode.CanWorkWithDocs', Obj, cUser, sValue) of
+    1: //значения настройки конкретного пользователя
+    {
+      m_cUser := cUser;
+      m_Obj   := 0;
+
+      if( sValue <> '' )
+        _Loop RefTable
+          InsertMarker(MarkerDocPick, RefTable.Attr);
+    }
+    2: // значения настройки офиса
+    {
+      m_cUser := 0;
+      m_Obj   := Obj;
+
+      if( sValue <> '' )
+        _Loop RefTable
+          InsertMarker(MarkerDocPick, RefTable.Attr);
+    }
+    3: // пользователя по умолчанию
+    {
+      m_cUser := 0;
+      m_Obj   := 0;
+
+      if( sValue <> '' )
+        _Loop RefTable
+          InsertMarker(MarkerDocPick, RefTable.Attr);
+    }
+  end;
+
+  // Выбор
+  if (iPickDoc.PickMulti('Выбор типов документов', MarkerDocPick))
+  {
+    // ссылка wSub нулевая для настройки конкретного пользователя
+    var tmpObj : longint;
+    tmpObj := if(cUser <> 0, 0, Obj);
+
+    // зачистка прежних данных
+    delete RefTableTmp where
+    ((
+          cgReg_Main        == RefTableTmp.wAccount
+      and cgSel_UserDocRgh  == RefTableTmp.wMain
+      and tmpObj            == RefTableTmp.wSub
+      and coX$Users         == RefTableTmp.wTable1
+      and cUser             == RefTableTmp.cRecord1
+    ));
+
+    var n : longint;
+    n := GetMarkerCount(MarkerDocPick);
+
+    // запись новых данных
+    for( i := 0; i < n; i++)
+    {
+      if (not GetMarker(MarkerDocPick, i, wTidkGal))
+        continue;
+
+      clearbuffer(#RefTable);
+      RefTable.wAccount := cgReg_Main;
+      RefTable.wMain    := cgSel_UserDocRgh;
+      RefTable.wSub     := tmpObj;
+      RefTable.wTable1  := coX$Users;
+      RefTable.cRecord1 := cUser;
+      RefTable.Attr     := wTiDkGal;
+      insert current RefTable;
+    }
+
+    if( n > 0 )
+    {
+      if( cUser <> 0 )
+        sValue := 'Выбрано ' + string(n) + ' документов'
+      else if( Obj <> 0 )
+        sValue := 'По умолчанию для офиса ' + string(Obj)+ ' выбрано ' + string(n) + ' документов'
+      else
+        sValue := 'По умолчанию выбрано ' + string(n) + ' документов'
+    }
+    else
+      sValue := '';
+
+    result := true;
+  }
+
+  DoneMarker(MarkerDocPick, '');
+  FreeVipInterface(iPickDoc);
+}
+
+function ClearUserWorkDocs(obj: longint; cUser: comp): boolean;
+{
+  // ссылка wSub нулевая для настройки конкретного пользователя
+  var tmpObj : longint;
+  tmpObj := if(cUser <> 0, 0, Obj);
+
+  // зачистка прежних данных
+  result :=(delete RefTableTmp where
+    ((
+          cgReg_Main        == RefTableTmp.wAccount
+      and cgSel_UserDocRgh  == RefTableTmp.wMain
+      and tmpObj            == RefTableTmp.wSub
+      and coX$Users         == RefTableTmp.wTable1
+      and cUser             == RefTableTmp.cRecord1
+    )) = tsOk);
+}
+
+function GetWorkDocs(cUser: comp): TCodeDocsArray;
+{
+  var i : longint;
+  var sValue : string;
+  var UserOffice : longint;
+
+  i := 0;
+  SetLimit(result, 0);
+
+  if( cUser <> 0 )
+  {
+    sValue := '';
+    UserOffice := UserOfficeFilial(cUser);
+    case WhatTuneWasSet('ArchiveLink.CanWorkWithDocs', UserOffice, cUser, sValue) of
+      1:// значения настройки конкретного пользователя
+      {
+        if( sValue <> '' )
+        {
+          m_cUser := cUser;
+          m_Obj   := 0;
+          _Loop RefTable
+          {
+            i++;
+            SetLimit(result, i);
+            result[i - 1] := RefTable.Attr;
+          }
+        }
+      }
+
+      2: // значения настройки офиса
+      {
+        if( sValue <> '' )
+        {
+          m_cUser := 0;
+          m_Obj   := UserOffice;
+          _Loop RefTable
+          {
+            i++;
+            SetLimit(result, i);
+            result[i - 1] := RefTable.Attr;
+          }
+        }
+      }
+
+      3: //значения настройки пользователя по умолчанию
+      {
+        if( sValue <> '' )
+        {
+          m_cUser := 0;
+          m_Obj   := 0;
+          _Loop RefTable
+          {
+            i++;
+            SetLimit(result, i);
+            result[i - 1] := RefTable.Attr;
+          }
+        }
+      }
+    end;
+  }
+}
+
+function GetWorkDoc(cUser : comp; TiDkGal : word) : boolean;
+{
+  var mAttrTypeList : TCodeDocsArray = GetWorkDocs(cUser);
+  var i : longint;
+  result := false;
+  for (i := 0; i < count(mAttrTypeList); i++)
+  {
+     if (mAttrTypeList[i] = TiDkGal)
+     {
+       result := true;
+       exit;
+     }
+  }
+}
+
+function CopyWorkDocs(CopyInfo : TCopyTunePluginInfo): boolean;
+{
+  result := false;
+
+  if( UpCase(CopyInfo.TuneCode) = 'BARCODE.CANWORKWITHDOCS' )
+  {
+    ClearUserWorkDocs(CopyInfo.OfficeTo, CopyInfo.cUserTo);
+
+    m_cUser := CopyInfo.cUserFrom;
+    m_Obj   := if(CopyInfo.cUserFrom <> 0, 0, CopyInfo.OfficeFrom);
+
+    var n : longint;
+    n := 0;
+
+    _loop refTable {
+      clearbuffer(#RefTableTmp);
+      RefTableTmp.wAccount := cgReg_Main;
+      RefTableTmp.wMain    := cgSel_UserDocRgh;
+      RefTableTmp.wSub     := if(CopyInfo.cUserTo <> 0, 0, CopyInfo.OfficeTo);
+      RefTableTmp.wTable1  := coX$Users;
+      RefTableTmp.cRecord1 := CopyInfo.cUserTo;
+      RefTableTmp.Attr     := RefTable.Attr;
+      insert current RefTableTmp;
+
+      n++;
+    }
+
+    var sValue: string;
+    if (n > 0) {
+      if( CopyInfo.cUserTo <> 0 )
+        sValue := 'Выбрано ' + string(n) + ' документов'
+      else if( CopyInfo.OfficeTo <> 0 )
+        sValue := 'По умолчанию для офиса ' + string(CopyInfo.OfficeTo)+ ' выбрано ' + string(n) + ' документов'
+      else
+        sValue := 'По умолчанию выбрано ' + string(n) + ' документов';
+    }
+    else
+      sValue := '';
+
+    sSetTuneEx(CopyInfo.TuneCode, CopyInfo.OfficeTo, CopyInfo.cUserTo, sValue);
+
+    result := true;
+  }
+}
+end.

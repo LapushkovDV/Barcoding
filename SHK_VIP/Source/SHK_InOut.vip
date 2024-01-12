@@ -1,0 +1,1392 @@
+/*************************************************************************************************\
+* Наименование: Ведение телефонного справочника                                                   *
+* Контур/Модуль: Кадры                                                                            *
+* Примечание:                                                                                     *
+*                                                                                                 *
+* Вид работы  |Номер         |Дата    |Исполнитель              |Проект                           *
+* ----------------------------------------------------------------------------------------------- *
+Е
+
+целевой JSON на вход/выход
+{
+	"OBJECTDESCRIPTION":
+	{
+		"OBJECTACTION":  "WORKWITHNVP"// уникашльный идентификатор шаблона - действие
+		"ALLOWADDROWS": true, // редактирование спецификации
+		"ACTIONS": // список кнопок
+		[
+			{
+				"ROW": "1", // строка расположения
+				"SIZE": "10", // длина кнопки
+				"NAME": "Действие 1" // наименование действия
+			},
+			{
+				"ROW": "2",
+				"SIZE": "20",
+				"NAME": "Действие 2"
+			}
+		],
+		"FIELDS":
+		[
+			{
+				"ROW": "1", // порядок отображения
+				"SIZE": "10", // длина поля
+				"NAME": "Номер накладной", // наименование поля
+				"SYSNAME": "NSOPR"
+			},
+			{
+				"ROW": "2",
+				"SIZE": "20",
+				"NAME": "Дата накладной",
+				"SYSNAME": "DSOPR"
+			}
+		],
+		"COLUMNS":
+		[
+			{
+				"MOD": false,
+				"SIZE": 10,
+				"NAME": "БАРКОД",
+				"SYSNAME": "BARKOD",
+				"ACTION": "GETMCBARKOD"
+			},
+			{
+				"MOD": false,
+				"SIZE": 10,
+				"NAME": "Н/П",
+				"SYSNAME": "NPP"
+			},
+			{
+				"MOD": true,
+				"SIZE": 15,
+				"NAME": "Количество",
+				"SYSNAME": "QUANT"
+			}
+		]
+	},
+	"OBJECTVALUES":
+	{
+		"ACTION":  "WORKWITHNVP"// уникашльный идентификатор шаблона - действие
+		"FIELDS":
+		[
+			{ "NSOPR": "44444" },
+			{ "DSOPR": "2021-01-01" }
+		],
+		"COLUMNS":
+		[
+			{
+				"BARKOD": "546565",
+				"NPP": 1,
+				"QUANT": 10
+			},
+			{
+				"BARKOD": "546565",
+				"NPP": 2,
+				"QUANT": 15
+			}
+		]
+	}
+}
+\*************************************************************************************************/
+/*
+JSON - MAKEACTION
+{
+  "RESULT_CODE": 1,
+  "RESULT_MSG": "OK",
+  "RESULT_MSG_RUS": "OK",
+  "ACTIONBODY": "SAVEDOC",
+  "OBJECTVALUES": {
+    "OBJECTACTION": "NVP_3_NEW",
+    "IDOBJECT": "2814749767950554",
+    "FIELDS": {
+      "KATSOPR_NSOPR": "21\/22104",
+      "KATSOPR_DSOPR": "06\/08\/2021 00:00"
+    },
+    "COLUMNS": [
+      {
+        "KATMC_BARKOD": "0001584289",
+        "SPSOPR_KOLFACT": "0.84",
+        "CU_1110_KAU_2": "03654",
+        "KATPARTY_NAME": "",
+        "SPSOPR_NREC": "2814749770681100"
+      },
+      {
+        "KATMC_BARKOD": "0001584289",
+        "SPSOPR_KOLFACT": "0.84",
+        "CU_1110_KAU_2": "03664",
+        "KATPARTY_NAME": "",
+        "SPSOPR_NREC": "2814749770681101"
+      },
+      {
+        "KATMC_BARKOD": "0001584289",
+        "SPSOPR_KOLFACT": "0.84",
+        "CU_1110_KAU_2": "03674",
+        "KATPARTY_NAME": "",
+        "SPSOPR_NREC": "2814749770681102"
+      },
+      {
+        "KATMC_BARKOD": "0001584289",
+        "SPSOPR_KOLFACT": "0.84",
+        "CU_1110_KAU_2": "03684",
+        "KATPARTY_NAME": "",
+        "SPSOPR_NREC": "2814749770681103"
+      },
+      {
+        "KATMC_BARKOD": "0001584289",
+        "SPSOPR_KOLFACT": "0.84",
+        "CU_1110_KAU_2": "03754",
+        "KATPARTY_NAME": "",
+        "SPSOPR_NREC": "2814749770681104"
+      },
+      {
+        "KATMC_BARKOD": "0001225023",
+        "SPSOPR_KOLFACT": "11",
+        "CU_1110_KAU_2": "03754",
+        "KATPARTY_NAME": "",
+        "SPSOPR_NREC": ""
+      }
+    ]
+  }
+}
+
+*/
+#include shk_barcodeFunc.vih
+#include Query.vih
+#include SHK_InOut.vih
+//************************************************************
+const
+coUnRealString = 'ТАКОЙ СТРОКИ НЕ БЫВАЕ В РАБОЧЕЙ БАЗЕ, НУЕТ НУ ВАЩЕ НЕ БЫВАЕТ ВЕДЬ НЕТ ТАКИХ УДМАКОВ ЧТОБЫ ТИАКМ ПОПАСТЬ В СТРОКУ ТАКУЮ ИНТЕРСЕСНУЮ';
+end;
+Interface SHK_InOut 'Штрихкодирование. Обработка входных и выходных файлов';
+
+table struct tgroup_TSD_ARM_USER
+(
+   cTSD    : comp
+ , TSD_ID  : string
+ , cARM    : comp
+ , ARM_ID  : string
+ , cUser   : comp
+ , USER_ID : string
+)
+;
+table struct tJSON_ID
+(
+   Service : TPtr
+ , JSON_ID : TPtr
+)
+with index
+(
+  ind0 = Service + JSON_ID
+)
+;
+table struct _tElements
+(
+   Name  : string
+ , value : string
+ , npp   : longint
+)
+with index
+(
+ ind0 = npp + Name
+)
+;
+/*
+TO DO
+
+генерация JSON
+в структуру JSON добавить в VALUES "ACTION"  "любой уникальный текст" -ссылка на SHK_TMPLT_OBJ
+т.е. приемник вообще должен быть: одна функция, которая дальше разберет все
+
+у полей добавить в передачу ВУСЕГДА, visible- это только видимость на ТСД, туда положим, например nrec спеицификации, для чего?: для апдейтов назад в базу
+может быть сделать принудительно его заполнение, т.е.системное такое поле
+
+*/
+
+create view
+var
+   _Ident : string;
+    m_service : TPtr;
+    _FileIN     : string;
+
+      fltTSD
+    , fltARM
+    , fltUser : comp = 0h;
+    _AutoExport,_ActionName : string;
+
+ from
+    SaldTune SaldTuneKS
+  , SaldTune SaldTuneSP
+  , spsopr SpSopr_makeAction
+  , katSopr katSopr_makeAction
+  , katSopr katSopr_Check
+  , statlog statlog_makeAction
+  , INVTAB INVTAB_makeAction
+  , SPINVTAB SPINVTAB_makeAction
+  , SaldoBox SaldoBox_makeAction
+  , KatBox KatBox_tmp
+  , SpBox SpBox_makeAction
+  , KaTparty KatParty_makeAction
+//  , katBox KatBox_MakeAction
+  , katmc
+  , KatNotes KatNotes2
+  , SpInvTab SpInvTabQuery
+  , SpSopr SpSoprQuery
+  , SHK_TMPLT_OBJ  SHKObjMenu
+  , SHK_TMPLT_OBJ   SHK_TMPLT_OBJ_1
+  , SHK_TMPLT_OBJSP SHKObjSP_BatchTerms_1
+  , SHK_TSD_ARM_USER SHK_USER
+  , KatEd
+  , KatOtpEd
+
+  , _tElements
+  , tJSON_ID
+  , tgroup_TSD_ARM_USER
+where ((
+       SHK_TMPLT_OBJ_1.nrec == SHKObjSP_BatchTerms_1.cSHK_TMPLT_OBJ
+      ))
+bounds bySHKObjNrec _cSHKObj == SHKObj.nrec
+;
+parameters _AutoExport,_ActionName;
+File resJSONFile;
+
+Procedure insert_tJSON_ID(_service, _JSON_ID : TPtr);
+{
+ exit;
+ /* думал замутить очистку всех JSON, чтобы память очищалась лучшею...
+
+ но память течет еще больше
+  с данной очисткой еще больше памяти в утечке памяти буду
+ */
+ if getfirst tJSON_ID where (( _Service == tJSON_ID.Service
+                           and _JSON_ID == tJSON_ID.JSON_ID
+                            )) <> tsOK
+   Insert tJSON_ID set
+      tJSON_ID.Service := _Service
+    , tJSON_ID.JSON_ID := _JSON_ID
+   ;
+}
+
+procedure destroyall_JSON(_service : TPtr);
+{
+ exit;
+
+ // с данной очисткой еще больше памяти в утечке памяти буду
+ _loop tJSON_ID where ((_service == tJSON_ID.service))
+  {
+   HttpConnect_JSONObjectDestroy(tJSON_ID.service, tJSON_ID.JSON_ID);
+   delete current tJSON_ID;
+  }
+}
+
+function IsExistSHKObjbyNREC(_pcSHKObj : comp; var _err : string): boolean;
+{
+  result := true;
+   if BoundActive(tbbySHKObjNrec) {
+     popbounds(tbbySHKObjNrec);
+   }
+
+    set _cSHKObj := _pcSHKObj;
+    pushbounds(tbbySHKObjNrec);
+
+ if getfirst SHKObj <> tsOK {
+   _err := 'Не найден шаблон ШК ' + string(_pcSHKObj,0,0);
+   result := false;
+ }
+}
+function GenerateJSON_Description(_pcSHKObj : comp) : TPtr;
+{
+    if not CheckLic then exit;
+ GenerateNewOutFile;
+  mylog('function GenerateJSON_Description _pcSHKObj = ' + _pcSHKObj);
+   if not BoundActive(tbbySHKObjNrec) then
+   {
+    set _cSHKObj := _pcSHKObj;
+    pushbounds(tbbySHKObjNrec);
+   }
+  result := 0;
+ if getfirst SHKObj <> tsOK
+ {
+   mylog(' getfirst SHKObj <> tsOK ');
+   mylog(' exit ');
+   exit;
+ }
+  mylog(' getfirst SHKObj = tsOK ');
+
+  var JSONObj_Descriptions : TPtr = HttpConnect_JsonObjectCreate(m_service);
+
+  HttpConnect_JsonObjectAddString(m_service, JSONObj_Descriptions, 'OBJECTACTION', SHKObj.Action);
+  HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_Descriptions, 'ALLOWADDROWS', SHKObj.ALLOWADDROWS);
+  HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_Descriptions, 'BLOCKPROCESSEDROWS', SHKObj.BlockRows);
+  HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_Descriptions, 'ISDOC', ISDOC);
+  HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_Descriptions, 'BATCHLOAD',  (SHKObj.UseBatchLoad = 1));
+  if SHKObj.IsMenuPoint and trim(SHKObj.MenuPointName) <> '' then {
+    HttpConnect_JsonObjectAddString(m_service, JSONObj_Descriptions, 'MENUPOINTNAME', SHKObj.MenuPointName);
+   }
+
+
+   var JSONObj_Array : TPtr = 0;
+   JSONObj_Array := HttpConnect_JsonArrayCreate(m_service);
+  if getfirst SHKObjSP_BTN = tsOK
+  {
+     _loop SHKObjSP_BTN
+      {
+       var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
+       HttpConnect_JsonObjectAddInteger(m_service, JSONObj_ArrayOneElement, 'ROW'          , SHKObjSP_BTN.ROW);
+       HttpConnect_JsonObjectAddInteger(m_service, JSONObj_ArrayOneElement, 'SIZE'         , SHKObjSP_BTN.SIZE);
+       HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'NAME'         , SHKObjSP_BTN.NAME);
+       HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'SYSNAME'      , SHKObjSP_BTN.SYSNAME);
+       HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'SYSNAMETBL'   , SHKObjSP_BTN.SYSNAMETBL);
+       HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'ISSYNCHACTION', SHKObjSP_BTN.isSynchAction);
+       HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'DELETEDOC'    , SHKObjSP_BTN.isDeleteDoc);
+       HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'CLOSEDOC'     , SHKObjSP_BTN.CloseDoc);
+       HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement);
+      }
+     HttpConnect_JsonObjectAddObject(m_service, JSONObj_Descriptions, 'ACTIONS', JSONObj_Array);
+  }
+
+  JSONObj_Array := HttpConnect_JsonArrayCreate(m_service);
+
+  if getfirst SHKObjSP_HEAD = tsOK
+  {
+     _loop SHKObjSP_HEAD
+      {
+       var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
+       HttpConnect_JsonObjectAddInteger(m_service, JSONObj_ArrayOneElement, 'ROW'         , SHKObjSP_HEAD.ROW);
+       HttpConnect_JsonObjectAddInteger(m_service, JSONObj_ArrayOneElement, 'SIZE'        , SHKObjSP_HEAD.SIZE);
+       HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'NAME'        , SHKObjSP_HEAD.NAME);
+       HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'SYSNAME'     , SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME);
+       HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'ISIDENTIFIER', SHKObjSP_HEAD.ISIdentifier  );
+       HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'BROWSE_CARD' , SHKObjSP_HEAD.BROWSE_CARD );
+       HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'NULLABLE'    , SHKObjSP_HEAD.NULLABLE );
+       HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement);
+      }
+     HttpConnect_JsonObjectAddObject(m_service, JSONObj_Descriptions, 'FIELDS', JSONObj_Array);
+  }
+
+  JSONObj_Array := HttpConnect_JsonArrayCreate(m_service);
+ if getfirst SHKObjSP_SP = tsOK
+  {
+     _loop SHKObjSP_SP
+      {
+       var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
+       HttpConnect_JsonObjectAddInteger(m_service, JSONObj_ArrayOneElement, 'NPP'        , SHKObjSP_SP.NPP      );
+       HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'NAME'       , SHKObjSP_SP.NAME     );
+//       HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'SYSNAMETBL', SHKObjSP_SP.SYSNAMETBL);
+       HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'SYSNAME'    , SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME   );
+       HttpConnect_JsonObjectAddInteger(m_service, JSONObj_ArrayOneElement, 'SIZE'       , SHKObjSP_SP.SIZE      );
+       HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'MODIF'      , SHKObjSP_SP.MODIF     );
+       HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'ACTION'     , if(isvalidall(tnSHKObjAction),SHKObjAction.ACTION,''));//SHKObjSP_SP.ACTION    );
+       HttpConnect_JsonObjectAddInteger(m_service, JSONObj_ArrayOneElement, 'BROWSE'     , SHKObjSP_SP.WISACTIVE );
+       HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'BROWSE_CARD', SHKObjSP_SP.BROWSE_CARD );
+       HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'NULLABLE'   , SHKObjSP_SP.NULLABLE );
+       HttpConnect_JsonObjectAddString(m_service, JSONObj_ArrayOneElement , 'DATATYPE'    , getdatatypebyTableField(SHKObjSP_SP.SYSNAMETBL, SHKObjSP_SP.SYSNAME));
+
+       HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement);
+      }
+     HttpConnect_JsonObjectAddObject(m_service, JSONObj_Descriptions, 'COLUMNS', JSONObj_Array);
+  }
+  mylog(' END GenerateJSON_Description');
+  result := JSONObj_Descriptions;
+}
+
+
+
+
+
+function GetTypeByTableAndField(_SYSNAMETBL, _SYSNAME : string) : byte;
+{
+ result := 0;
+ if getfirst x$fields where ((gettableCodebyTableName(_SYSNAMETBL) == x$fields.XE$FILECODE
+                                 and _SYSNAME == x$fields.XE$NAME)) = tsOK
+    then result := x$fields.XE$DATATYPE;
+}
+
+Procedure MysqlAddStr(var query_handle: longInt; add_query_str: string);
+{
+   sqlAddStr(query_handle, add_query_str);
+   MyLog('sql: ' + add_query_str);
+} //Function MysqlAddStr(var query_handle: longInt; add_query_str: string): longInt;
+
+#declare WRITE_JSONERROR(JSONObj,ERRORENG,ERRORRUS)
+   HttpConnect_JsonObjectAddInteger(m_service, #JSONObj, 'RESULT_CODE', 0);
+   HttpConnect_JsonObjectAddString( m_service, #JSONObj, 'RESULT_MSG' ,     #ERRORENG);
+   HttpConnect_JsonObjectAddString( m_service, #JSONObj, 'RESULT_MSG_RUS' , #ERRORRUS);
+   MyLog('ERROR:  '+#ERRORRUS );
+#end
+function SetMacroValues(_BatchTerms : string;  _BatchDate: date;  _login, _Imei: string  ): string;
+{
+   _BatchTerms := replace(_BatchTerms ,'#(BatchDate)','#DATE('+datetostr(_BatchDate,'DD,MM,YYYY')+')' );
+   _BatchTerms := replace(_BatchTerms ,'#(LOGIN)', _login);
+   _BatchTerms := replace(_BatchTerms ,'#(IMEI)',_Imei);
+   result := _BatchTerms;
+}
+#declare BatchBodyFunctionGetResultQuery(QueryRef, TablePostFix)
+   if not BoundActive(tbbySHKObjNrec) then
+   {
+    set _cSHKObj := _pcSHKObj;
+    pushbounds(tbbySHKObjNrec);
+   }
+
+   // Declare param1 ref query
+  var _Query : iQuery = queryManager.createQuery(#QueryRef);
+
+  var WhereFields : longint = 0;
+
+   _loop SHKObjSP_BatchTerms
+      {
+        MysqlAddStr( WhereFields , SetMacroValues(SHKObjSP_BatchTerms.Name, SHKObj.BatchDate, _login, _Imei)); // +SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME  );
+      }
+
+
+ var _anName : string;
+
+
+  var Identificator : longint = 0;
+
+        if pos('VA_#TablePostFix',SHKOBJ.SYSNAMETBL) = 1
+        then
+          {
+           _anName := SHKOBJ.SYSNAME;
+           MysqlAddStr( Identificator ,'attrval.vstring');
+           mylog('    %IdentityField =attrval.vstring');
+          }
+        else
+          {
+          _anName := '---';
+           MysqlAddStr( Identificator ,SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME ) ;
+           mylog('    %IdentityField =' + SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME );
+          }
+
+  _Query.setMacro('SelectFieldsSys', SelectFieldsSys);
+  var IdentityFieldWhere   : longint = 0;
+   MysqlAddStr( IdentityFieldWhere ,'1') ;
+  _Query.setMacro('IdentityFieldWhere', IdentityFieldWhere);
+  _Query.setMacro('IdentityField', Identificator);
+  _Query.setParam('pIdent',  '1');
+  var SelectFields : longint = 0;
+  MysqlAddStr( SelectFields ,' ,  1 ');
+  _Query.setMacro('SelectFields', SelectFields);
+
+
+  if SHKObj.VIDDOC <> coTypeDocBoxSaldo // заглушка для SALDOBOX
+  if wgettune('SHK.CONNECTIONTYPE') = 1 { // добавляем условия, чтобы выгружать пакеты сгруппированные, фильтры задаются снаружи перед запуском функции
+        MysqlAddStr( WhereFields , ' and shk_barcodelink.cTSD = #comp(' + string(fltTSD)+')' );
+        MysqlAddStr( WhereFields , ' and shk_barcodelink.cARM = #comp(' + string(fltARM)+')' );
+        MysqlAddStr( WhereFields , ' and shk_barcodelink.cUser = #comp(' + string(fltUser)+')' );
+    }
+
+  _Query.setMacro('WhereFields', WhereFields);
+  _Query.setParam('anName', _anName);
+#end
+
+#declare Function_GenerateJSON_VALUES_Body(Function_GetResultQueryForBatch,Funcion_GenerateJSON_VALUES_ONE,Sys_field_name,tableNumber)
+
+
+  var JSONObj_Array           : TPtr = HttpConnect_JsonArrayCreate(m_service);
+  var JSONObj_ArrayOneElement : TPtr = HttpConnect_JsonObjectCreate(m_service);
+
+//   по идее тут ставим цикл для пакетной выгрузки
+
+
+  if _pIdent = co_BatchMode then
+   {
+    mylog('_pIdent = '+ _pIdent);
+    mylog('SHKObj.UseBatchLoad = ' + SHKObj.UseBatchLoad) ;
+    if SHKObj.UseBatchLoad = 0
+     {
+       _err := 'ДЛЯ ДАННОГО ОБЪЕКТА НЕ ПРЕДУСМОТРЕНА ПАКЕТНАЯ ЗАГРУЗКА';
+       result := 0;
+       exit;
+     }
+
+     var _isEmptyTerms : boolean = true;
+     _loop SHKObjSP_BatchTerms {
+       if SHKObjSP_BatchTerms.name <> '' then  {
+         _isEmptyTerms := false;
+         break;
+       }
+     }
+
+    if _isEmptyTerms
+     {
+       _err := 'ДЛЯ ДАННОГО ОБЪЕКТА НЕ УКАЗАНЫ УСЛОВИЯ ОТБОРА';
+       result := 0;
+       exit;
+
+     }
+
+    var _iShk_BarcodeFunc : iShk_BarcodeFunc;
+      var iRes : IResultSet = #Function_GetResultQueryForBatch(GetTMPLTByName(_ActionName), _pIdent, _login, _IMEI);
+
+      if nullvipref(iRes)
+       {
+        _err := 'ОШИБКА В УСЛОВИЯХ ОТБОРА';
+        result := 0;
+        exit;
+       }
+
+     if SHKObj.BatchDate <> cur_date then update current SHKObj set SHKObj.BatchDate := cur_date;
+
+
+     if iRes.getfirst <> tsOK {
+       _err := 'НЕТ ОБЪЕКТОВ ПО УСЛОВИЯМ ПАКЕТНОГО ВЫБОРА';
+       result := 0;
+
+       exit;
+     }
+     do
+      {
+        var _SYS_BARCODE : string = iRes.row.val('SYS_BARCODE');
+        var _cRec        : comp   = iRes.row.val('#Sys_field_name');
+         if isvalidall(tnNoteAfterBatch) then {
+            clearbuffer(#statlog_makeAction) ;
+              statlog_makeAction.NEWSTATUS := NoteAfterBatch.status;
+              statlog_makeAction.CNEWNOTE  := NoteAfterBatch.nrec;
+              statlog_makeAction.DOCTYPE   := oNotes.GetVidNoteByVidDoc(SHKObj.viddoc);
+              statlog_makeAction.DESCR     := sGetTune('USER.DESCR');
+              statlog_makeAction.DESGR     := sGetTune('USER.DESGR');
+              statlog_makeAction.DOPER     := Cur_date;
+              statlog_makeAction.TIMEOPER  := Cur_time;
+              statlog_makeAction.COMMENT   := 'Изменение при пакетной выгрузке. Шаблон ' + SHKObj.Action;
+              statlog_makeAction.LASTUSER  := UserName;
+           case SHKObj.viddoc of
+            600,101,201,
+            501,602,601  : {
+                             if getfirst katSopr_makeAction where ((_cRec == katSopr_makeAction.nrec)) = tsOK {
+
+                                     statlog_makeAction.cdoc      := katSopr_makeAction.nrec;
+                                     statlog_makeAction.OLDSTATUS := katSopr_makeAction.status;
+                                     statlog_makeAction.COLDNOTE  := katSopr_makeAction.cnote;
+                                    insert current statlog_makeAction;
+                                    katSopr_makeAction.Status := NoteAfterBatch.Status;
+                                    katSopr_makeAction.cNote  := NoteAfterBatch.nrec;
+                                   update current katSopr_makeAction;
+                                 }
+                          }
+           615 :          {
+                             if getfirst INVTAB_makeAction where ((_cRec == INVTAB_makeAction.nrec)) = tsOK {
+                                     statlog_makeAction.cdoc      := INVTAB_makeAction.nrec;
+                                     statlog_makeAction.OLDSTATUS := INVTAB_makeAction.status;
+                                     statlog_makeAction.COLDNOTE  := INVTAB_makeAction.cnote;
+                                    insert current statlog_makeAction;
+                                    INVTAB_makeAction.Status := NoteAfterBatch.Status;
+                                    INVTAB_makeAction.cNote  := NoteAfterBatch.nrec;
+                                   update current INVTAB_makeAction;
+                                 }
+                          }
+           end;
+         }
+
+
+
+       if _SYS_BARCODE = '' then { //  считаем, что используют системный баркод       вот тут возникает вопрос.. а если нет ШК еще в системе... ну не сгенерировали его, чисто теоретически можно нагенерировать их... но точно ли все будут пользоваться нашими баркодами
+         _SYS_BARCODE := _iShk_BarcodeFunc.getCode(#tableNumber, SHKOBJ.VIDDOC, _cRec, true);
+          if _SYS_BARCODE = '' then continue;
+       }
+
+        JSONObj_ArrayOneElement := #Funcion_GenerateJSON_VALUES_ONE(_ActionName,_SYS_BARCODE,_err);
+         if JSONObj_ArrayOneElement <> 0
+         then HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement)
+          else JSONObj_Array := 0;
+      } while iRes.getNext = tsOk;
+   }
+   else {
+     JSONObj_ArrayOneElement := #Funcion_GenerateJSON_VALUES_ONE(_ActionName,_pIdent,_err);
+     if JSONObj_ArrayOneElement <> 0
+      then HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement)
+     else JSONObj_Array := 0;
+   }
+
+
+  result := JSONObj_Array;
+#end
+
+#include SHK_InOut_KatMC.vpp
+#include SHK_InOut_KatSopr.vpp
+#include SHK_InOut_InvTab.vpp
+#include SHK_InOut_KatParty.vpp
+#include SHK_InOut_KatMol.vpp
+#include SHK_InOut_KatPodr.vpp
+#include SHK_InOut_KatBox.vpp
+#include SHK_InOut_KatBoxSaldo.vpp
+
+function GenerateJSON_VALUES(_ActionName: string; _pIdent: string; var _err : string; _login: string = ''; _imei : string = '') : TpTr;
+{
+    if not CheckLic then exit;
+StartNewVisual(vtRotateVisual, vfTimer, 'Сбор данных', 0);
+  case SHKObj.Viddoc of
+    600,101,201,501,602,601 : Result := GenerateJSON_VALUES_KATSOPR (_ActionName, _pIdent, _err, _login, _imei); //'KATSOPR' // накладная на внутренее перемещение
+    615               : result := GenerateJSON_VALUES_InvTab  (_ActionName, _pIdent, _err, _login, _imei);  // Инвентарная ведомость
+    coTypeDocMC       : result := GenerateJSON_VALUES_KATMC   (_ActionName, _pIdent, _err, _login, _imei);    // МЦ, в качестве спеки пусть отпускные единицы будут
+    coTypeDocPODR     : result := GenerateJSON_VALUES_KATPodr (_ActionName, _pIdent, _err, _login, _imei); //
+    coTypeDocMOL      : result := GenerateJSON_VALUES_KATMol  (_ActionName, _pIdent, _err, _login, _imei); //
+    coTypeDocPARTY    : result := GenerateJSON_VALUES_KATParty(_ActionName, _pIdent, _err, _login, _imei); //
+    coTypeDocBox      : result := GenerateJSON_VALUES_KATBOX  (_ActionName, _pIdent, _err, _login, _imei); //
+    coTypeDocBoxSaldo : result := GenerateJSON_VALUES_KATBOXSALDO  (_ActionName, _pIdent, _err, _login, _imei); //
+  else result := 0;
+  end;
+stopvisual;
+}
+
+
+function GenerateJSON_DescriptionArrayFILE : string;
+{
+    if not CheckLic then exit;
+   result := '';
+   m_service := HttpConnect_CreateEx('http://ya.ru', '', '', true);
+   var JSONObj_Descriptions :tPTR = HttpConnect_JsonObjectCreate(m_service);
+   var JSONObj_DescriptionsArray :tPTR= HttpConnect_JsonArrayCreate(m_service);
+   var _sfileout : string = GetStringParameter('Files','OutputFilesDirectory',0)+ '\SHK_DescriptionArray_OUT_'+OleGenerateGUID+'.json';
+
+_loop SHKObjMenu where SHKObjMenu.IsMenuPoint and trim(SHKObjMenu.MenuPointName) <> ''
+ {
+    set _cSHKObj := SHKObjMenu.nrec;
+    pushbounds(tbbySHKObjNrec);
+
+    var JSONObj_DescriptionsOne : tptr = GenerateJSON_Description(_cSHKObj);
+    HttpConnect_JsonArrayAddObject(m_service, JSONObj_DescriptionsArray, JSONObj_DescriptionsOne);
+ }
+    if JSONObj_Descriptions <> 0 then
+     {
+       HttpConnect_JsonObjectAddObject(m_service, JSONObj_Descriptions, 'OBJECTDESCRIPTIONARRAY', JSONObj_DescriptionsArray);
+      var JSONSJSON     : TPtr    = HttpConnect_JSONObjectToJSON(m_service,JSONObj_Descriptions);
+      HttpConnect_SaveToFileEx(m_service, JSONSJSON, _sfileout, cpUTF8, false);
+      HttpConnect_JSONObjectDestroy(m_service,JSONObj_Descriptions);
+      HttpConnect_Free(m_service) ;
+      result := _sfileout;
+     }
+}
+
+function GenerateJSON_UsersArrayFILE : string;
+{
+  if not CheckLic then exit;
+   result := '';
+   GenerateNewOutFile;
+   m_service := HttpConnect_CreateEx('http://ya.ru', '', '', true);
+   var JSONObj_Descriptions :tPTR = HttpConnect_JsonObjectCreate(m_service);
+   var JSONObj_DescriptionsArray :tPTR= HttpConnect_JsonArrayCreate(m_service);
+   var _sfileout : string = GetStringParameter('Files','OutputFilesDirectory',0)+ '\SHK_TsdUsersArray_OUT_'+OleGenerateGUID+'.json';
+
+   var JSONObj_USERSTSD : TPtr = HttpConnect_JsonObjectCreate(m_service);
+   var JSONObj_Array : TPtr = HttpConnect_JsonArrayCreate(m_service);
+
+  HttpConnect_JsonObjectAddString(m_service, JSONObj_USERSTSD, 'OBJECTACTION', 'TSD_USERS');
+
+    _loop SHK_USER where ((3 == SHK_USER.type and (SHK_User.IsActive=True) ))
+    {
+     var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
+       HttpConnect_JsonObjectAddString(m_service, JSONObj_ArrayOneElement, 'USERSYSNAME', SHK_User.ID);
+       HttpConnect_JsonObjectAddString(m_service, JSONObj_ArrayOneElement, 'USERNAME'   , SHK_User.name);
+       HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement);
+     }
+    HttpConnect_JsonObjectAddObject(m_service, JSONObj_USERSTSD, 'TSD_USERS_ARRAY', JSONObj_Array);
+
+  var JSONSJSON     : TPtr    = HttpConnect_JSONObjectToJSON(m_service,JSONObj_USERSTSD);
+  HttpConnect_SaveToFileEx(m_service, JSONSJSON, _sfileout, cpUTF8, false);
+  HttpConnect_JSONObjectDestroy(m_service,JSONObj_USERSTSD);
+  HttpConnect_Free(m_service) ;
+  result := _sfileout;
+}
+
+
+function GenerateJSON_DescriptionFILE( _ActionName: String) : string;
+{
+  if not CheckLic then exit;
+  mylog('function GenerateJSON_DescriptionFILE _ActionName = ' + _ActionName);
+
+  var _pcSHKObj : comp = GetTMPLTByName(_ActionName);
+
+  mylog('_pcSHKObj='+_pcSHKObj);
+
+  result := '';
+   if not BoundActive(tbbySHKObjNrec) then
+   {
+    set _cSHKObj := _pcSHKObj;
+    pushbounds(tbbySHKObjNrec);
+   }
+   m_service := HttpConnect_CreateEx('http://ya.ru', '', '', true);
+
+  var _sfileout : string = GetStringParameter('Files','OutputFilesDirectory',0)+ '\SHK_Description_OUT_'+OleGenerateGUID+'.json';
+
+  var JSONObj : TPtr = HttpConnect_JsonObjectCreate(m_service);
+  var JSONObj_Descriptions : tptr = GenerateJSON_Description(_cSHKObj);
+
+  if JSONObj_Descriptions <> 0 then
+   {
+    HttpConnect_JsonObjectAddObject(m_service, JSONObj, 'OBJECTDESCRIPTION', JSONObj_Descriptions);
+    var JSONSJSON     : TPtr    = HttpConnect_JSONObjectToJSON(m_service,JSONObj);
+    HttpConnect_SaveToFileEx(m_service, JSONSJSON, _sfileout, cpUTF8, false);
+    HttpConnect_JSONObjectDestroy(m_service,JSONObj_Descriptions);
+    HttpConnect_Free(m_service) ;
+    result := _sfileout;
+    mylog('END function GenerateJSON_DescriptionFILE');
+   }
+   else {
+     mylog('END function GenerateJSON_DescriptionFILE ERROR JSONObj_Descriptions = 0');
+   }
+}
+Function MakeAction_MakeAction(_login, _IMEI : string) : TPtr;
+{
+  if not CheckLic then exit;
+  case SHKObj.Viddoc of
+    600,201,101,501,602,601    : Result := MakeAction_MakeAction_KATSOPR(_login, _IMEI); //'KATSOPR' // накладная на внутренее перемещение
+    coTypeDocMC    : result := 0; //MakeAction_MakeAction_KATMC;    // МЦ, в качестве спеки пусть отпускные единицы будут
+    coTypeDocPODR  : result := 0; //
+    coTypeDocMOL   : result := 0; //
+    coTypeDocPARTY : result := 0; //
+    615            : result := MakeAction_MakeAction_INVTAB(_login, _IMEI); //MakeAction_MakeAction_INVVED;  // Инвентарная ведомость
+    101423         : result := MakeAction_MakeAction_SALDOBOX(_login, _IMEI); //MakeAction_MakeAction_INVVED;  // Инвентарная ведомость
+  else result := 0;
+  end;
+}
+function MakeAction_GenerateJSONERROR(_ERROR, _ERROR_RUS : string): string;
+{
+ var _sfileout : string = GetStringParameter('Files','OutputFilesDirectory',0)+ '\SHK_VALUES_OUT_'+OleGenerateGUID+'.json';
+
+  var JSONObj : TPtr = HttpConnect_JsonObjectCreate(m_service);
+
+  #WRITE_JSONERROR(JSONObj,_ERROR,_ERROR_RUS)
+
+    var JSONSJSON     : TPtr    = HttpConnect_JSONObjectToJSON(m_service,JSONObj);
+    HttpConnect_SaveToFileEx(m_service, JSONSJSON, _sfileout, cpUTF8, false);
+    HttpConnect_JSONObjectDestroy(m_service,JSONObj);
+    result := _sfileout;
+}
+
+function MakeAction_FromJSONFILE(_login: string; _IMEI : string; _FilePath: string) : string;
+{
+  if not CheckLic then exit;
+ m_service := HttpConnect_CreateEx('http://ya.ru', '', '', true);
+
+ var _longValue :TPtr = HttpConnect_LoadFromFile (m_service //fn        : LongInt,
+                                                , _FilePath // sFileName : String,
+                                                , cpUTF8 // Encoding  : LongInt
+                                                 ) ;
+if (_longValue = 0) {
+     result := MakeAction_GenerateJSONERROR('income DOES NOT EXIST','входного файла не существует');
+     exit;
+    }
+
+  if (HttpConnect_GetLongStringLength(m_service, _longValue) <= 0) {
+        result := MakeAction_GenerateJSONERROR('FILE IS EMPTY','пустой файл');
+       Exit;
+      }
+
+  var JSON_Object : longint = HttpConnect_JSONObjectByLongString(m_service, _longValue);
+   if JSON_Object = 0 {
+      result := MakeAction_GenerateJSONERROR('error convert file to json','не смогли преобразовать файл в JSON');
+      exit;
+    }
+
+//    message('_ACTIONBODY = '+_ACTIONBODY)
+  var JSON_OBJECTVALUES : TPTr = HttpConnect_JSONObjectByName(m_service,JSON_Object,'OBJECTVALUES');
+ //    message('JSON_OBJECTVALUES = '+JSON_OBJECTVALUES)
+      if JSON_OBJECTVALUES = 0 {
+       result := MakeAction_GenerateJSONERROR('ERROR convert/find OBJECTVALUES','не смогли преобразовать/найти массив OBJECTVALUES');
+       exit;
+    }
+
+    var _OBJECTACTION : string =      HttpConnect_JsonObjectValueByName(m_service,JSON_OBJECTVALUES,'OBJECTACTION');
+     if _OBJECTACTION =  '' {
+       result := MakeAction_GenerateJSONERROR('EMPTY OBJECTACTION','OBJECTACTION пустой - не могу определить тип объекта');
+       exit;
+     }
+
+   var _pcSHKObj : comp = GetTMPLTByName(_OBJECTACTION);
+     if _pcSHKObj = 0h {
+       result := MakeAction_GenerateJSONERROR('TEMPLATE "' +_OBJECTACTION+'" does not exists','шаблона "' +_OBJECTACTION+'" не существует');
+       exit;
+      }
+
+     if not IsExistSHKObjbyNREC(_pcSHKObj, '') {  // тут ставится баунд
+       result := MakeAction_GenerateJSONERROR('0_o ','o_0');
+       exit;
+     }
+
+    var  _ACTIONBODY : string = HttpConnect_JsonObjectValueByName(m_service,JSON_OBJECT,'ACTIONBODY');
+    if  _ACTIONBODY = ''
+     {
+       result := MakeAction_GenerateJSONERROR('ACTIONBODY is empty','ACTIONBODY - действие не передано');
+       exit;
+     }
+
+    var isFoundActionBody : boolean = false;
+    _loop SHKObjSP_BTN
+     {
+       if upcase(_ACTIONBODY) = upcase(SHKObjSP_BTN.SYSNAME)
+        {
+          isFoundActionBody := true;
+          break;
+        }
+     }
+
+   if not isFoundActionBody
+    {
+     result := MakeAction_GenerateJSONERROR('ACTION "'+_ACTIONBODY +'" does not exist in template','действие "'+_ACTIONBODY +'" не существует у данного объекта');
+     exit;
+    }
+
+
+    var _IDOBJECTSTR : comp   = HttpConnect_JsonObjectValueByName(m_service,JSON_OBJECTVALUES,'IDOBJECT');
+    if _IDOBJECTSTR = ''
+    {
+     // предусмотретьситуацию, когда  _IDOBJECT - пустой значит должны создавать новый
+     // но тут видимо надо созаватьсделать признак разрешения создания документа прям на стйройстве
+      result := MakeAction_GenerateJSONERROR('IDOBJECT is emty ','IDOBJECT пустой');
+      exit;
+    }
+
+    var _IDOBJECT    : comp   = comp(_IDOBJECTSTR);
+    if _IDOBJECT = 0h
+    {
+      result := MakeAction_GenerateJSONERROR('IDOBJECT error convert value "'+_IDOBJECTSTR+'" to comp ','IDOBJECT ошибка конвертации "'+_IDOBJECTSTR+'" в comp ');
+      exit;
+    }
+
+   var lJsonArray : TPtr = HttpConnect_JSONArrayByName(m_service, JSON_OBJECTVALUES, 'COLUMNS');
+     if lJsonArray =  0 {
+       result := MakeAction_GenerateJSONERROR('could not get section COLUMNS ','не удалось получить спецификацию секции  COLUMNS');
+       exit;
+     }
+
+   var lCount : longint = HttpConnect_JsonCount(m_service, lJsonArray);
+    if lCount =  0 {
+       result := MakeAction_GenerateJSONERROR('there is no elements in COLUMNS ','в спецификации нет позиций (секция COLUMNS)');
+       exit;
+     }
+
+   var _SpecFieldIDName : string = GetSpecFieldIDName;
+   var i_JSONARRAY : longint = 0;
+   delete all _tElements;
+    insert _tElements set
+       _tElements.Name  := 'IDOBJECT'
+     , _tElements.value := string(_IDOBJECT)
+     , _tElements.npp   := 0
+    ;
+
+    insert _tElements set
+       _tElements.Name  := 'ACTIONBODY'
+     , _tElements.value := _ACTIONBODY
+     , _tElements.npp   := 0
+    ;
+
+  for (i_JSONARRAY := 0; i_JSONARRAY <= lCount - 1; i_JSONARRAY++)
+   {
+     MyLog('i_JSONARRAY = ' + i_JSONARRAY)  ;
+     var _JSON_Element : TPtr = HttpConnect_JSONObjectByIndexOfArray(m_service, lJsonArray, i_JSONARRAY);
+     MyLog('_JSON_Element = ' + _JSON_Element)    ;
+     _loop SHKObjSP_SP
+      {
+        //цикл по модифицируемым полям настройки шаблона JSON element  = название поля, которое можно модифицировать
+        var _ElementName : string = SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME;
+         MyLog('_ElementName = ' + _ElementName)    ;
+        if not (SHKObjSP_SP.MODIF
+             or _SpecFieldIDName = _ElementName
+             or SHKObjSP_SP.ACTION <> 0h // т.е. действие есть по полю (например добавили позицию и выбрали МЦ)
+               ) then continue;
+
+
+        var _value : string = HttpConnect_JsonObjectValueByName( m_service
+                                                               , _JSON_Element
+                                                               , _ElementName
+                                                               );
+         insert _tElements set
+            _tElements.Name  := _ElementName
+          , _tElements.value := _value
+          , _tElements.npp   :=  i_JSONARRAY+1
+         ;
+        MyLog('_tElements.Name  = ' + _tElements.Name );
+        MyLog('_tElements.value = ' + _tElements.value);
+        MyLog('_tElements.npp   = ' + _tElements.npp  );
+
+      }
+   }
+
+  var _sfileout        : string = GetStringParameter('Files','OutputFilesDirectory',0)+ '\SHK_VALUES_OUT_'+OleGenerateGUID+'.json';
+  var _JSON_MakeAction : TPtr = MakeAction_MakeAction(_login, _IMEI);
+  var JSONSJSON        : TPtr = HttpConnect_JSONObjectToJSON(m_service,_JSON_MakeAction);
+    HttpConnect_SaveToFileEx(m_service, JSONSJSON, _sfileout, cpUTF8, false);
+    HttpConnect_JSONObjectDestroy(m_service,JSONSJSON);
+    HttpConnect_JSONObjectDestroy(m_service,_JSON_MakeAction);
+    HttpConnect_Free(m_service);
+    result := _sfileout;
+}
+
+procedure setFilter_TSD_ARM_USER(_cTSD, _cARM, _cUser: comp);
+{
+ set fltTSD  := _cTSD ;
+ set fltARM  := _cARM ;
+ set fltUser := _cUser;
+
+    mylog(' setFilter_TSD_ARM_USER fltTSD  ' + fltTSD );
+    mylog(' setFilter_TSD_ARM_USER fltARM  ' + fltARM );
+    mylog(' setFilter_TSD_ARM_USER fltUser ' + fltUser);
+}
+
+
+function checkDestPathfromTune: boolean; // _typeErr = 1 - пустая настройка
+{
+       result := true;
+        if trim(sgettune('SHK.FILEPATHEXPORT')) = '' then {
+             message('Пустая настройка '+ gettunename('SHK.FILEPATHEXPORT')
+               +''#13'' + 'файл выгружен в директорию OUT и будет открыт для просмотра', error);
+           result := false;
+          }
+        if not VerifyPathName(sgettune('SHK.FILEPATHEXPORT'), true)  then {
+             message('В настройке '+ gettunename('SHK.FILEPATHEXPORT')
+               +''#13'' + 'Указана несуществующая директория и ее не удалось создать.'
+               +''#13'' + 'файл выгружен в директорию OUT и будет открыт для просмотра', error);
+           result := false;
+          }
+}
+
+
+function get_destFolder : string;
+{
+  result := '';
+  if checkDestPathfromTune then {
+     result := sgettune('SHK.FILEPATHEXPORT') + if(substr(result,length(result),1) <> '\','\','');
+  }
+  mylog('   get_destFolder = ' + result);
+}
+
+procedure generate_batch_files_group_TSD_ARM_USER(_ActionName : string);
+{
+  if not CheckLic then exit;
+  mylog('   generate_batch_files_group_TSD_ARM_USER _ActionName = ' + _ActionName );
+  var _pcSHKObj : comp = GetTMPLTByName(_ActionName);
+   if not BoundActive(tbbySHKObjNrec) then
+   {
+    set _cSHKObj := _pcSHKObj;
+    pushbounds(tbbySHKObjNrec);
+   }
+  var _tidkgal : word = SHKObj.VIDDOC ;
+  delete all tgroup_TSD_ARM_USER;
+  mylog('   generate_batch_files_group_TSD_ARM_USER _tidkgal = ' + _tidkgal);
+  if _tidkgal <> coTypeDocBoxSaldo
+  {
+    sql
+     select
+         SHK_BARCODELINK.cTSD
+       , coalesce(SHK_TSD.id,'COMMON') as TSD_ID
+       , SHK_BARCODELINK.cARM
+       , coalesce(SHK_ARM.id,'COMMON') as ARM_ID
+       , SHK_BARCODELINK.cUSer
+       , coalesce(SHK_USER.id,'COMMON') as USER_ID
+     from SHK_BARCODELINK
+       left join SHK_TSD_ARM_USER SHK_TSD  on SHK_TSD.nrec  = SHK_BARCODELINK.cTSD
+       left join SHK_TSD_ARM_USER SHK_ARM  on SHK_ARM.nrec  = SHK_BARCODELINK.cARM
+       left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = SHK_BARCODELINK.cUser
+     where tidkgal = :(_tidkgal)
+     group by
+       SHK_BARCODELINK.cTSD
+     , coalesce(SHK_TSD.id,'COMMON')
+     , SHK_BARCODELINK.cARM
+     , coalesce(SHK_ARM.id,'COMMON')
+     , SHK_BARCODELINK.cUSer
+     , coalesce(SHK_USER.id,'COMMON')
+    into tgroup_TSD_ARM_USER;
+  }
+  else {
+    mylog('   generate_batch_files_group_TSD_ARM_USER KOSTYL DLYA SALDOBOX');
+    if getfirst tgroup_TSD_ARM_USER <> tsOK
+     insert tgroup_TSD_ARM_USER set    // заглушка для saldobox
+         tgroup_TSD_ARM_USER.cTSD    := 0h
+       , tgroup_TSD_ARM_USER.TSD_ID  := 'COMMON'
+       , tgroup_TSD_ARM_USER.cARM    := 0h
+       , tgroup_TSD_ARM_USER.ARM_ID  := 'COMMON'
+       , tgroup_TSD_ARM_USER.cUSer   := 0h
+       , tgroup_TSD_ARM_USER.USER_ID := 'COMMON'
+    ;
+  }
+  mylog('   generate_batch_files_group_TSD_ARM_USER recordsintable(tntgroup_TSD_ARM_USER) = ' + recordsintable(tntgroup_TSD_ARM_USER));
+
+  var _destFolder : string = get_destFolder ;
+  var _isPathOK   : boolean = checkDestPathfromTune;
+ _loop tgroup_TSD_ARM_USER
+  {
+    mylog('   generate_batch_files_group_TSD_ARM_USER _loop tgroup_TSD_ARM_USER ');
+    setFilter_TSD_ARM_USER(tgroup_TSD_ARM_USER.cTSD, tgroup_TSD_ARM_USER.cARM, tgroup_TSD_ARM_USER.cUser);
+    var _JSONfile : string = GenerateJSON_VALUESFILE(_ActionName, co_BatchMode);
+
+    if _JSONfile <> ''
+      if _isPathOK {
+          var _destFile : string = _destFolder + OleGenerateGUID + '_GAL_'+tgroup_TSD_ARM_USER.TSD_ID+'_'+tgroup_TSD_ARM_USER.ARM_ID+'_'+tgroup_TSD_ARM_USER.USER_ID+'_'+_ActionName+'.json' ;
+          CopyFile(_JSONfile, _destFile);
+          mylog('   generate_batch_files_group_TSD_ARM_USER _destFile = ' + _destFile);
+        }
+       else {
+          processtext(_JSONfile, vfNewTitle Or vfMacroSize, 'Сгенерированный JSON');
+        }
+  }
+
+}
+
+function GenerateJSON_VALUESFILE(_ActionName: string; _pIdent: string; _login: string = ''; _imei : string = '') : string;
+{
+  if not CheckLic then exit;
+  result := '';
+
+  var _pcSHKObj : comp = GetTMPLTByName(_ActionName);
+
+   if not BoundActive(tbbySHKObjNrec) then
+   {
+    set _cSHKObj := _pcSHKObj;
+    pushbounds(tbbySHKObjNrec);
+   }
+   m_service := HttpConnect_CreateEx('http://ya.ru', '', '', true);
+
+  var _sfileout : string = GetStringParameter('Files','OutputFilesDirectory',0)+ '\SHK_VALUES_OUT_'+OleGenerateGUID+'.json';
+
+  var _err : string = '';
+  var JSONObj : TPtr = HttpConnect_JsonObjectCreate(m_service);
+     mylog('   _sfileout = ' + _sfileout);
+     mylog(' before GenerateJSON_VALUES');
+  var JSONObj_VALUES : tptr = GenerateJSON_VALUES(_cSHKObj, _pIdent, _err, _login, _imei );
+
+     mylog(' after GenerateJSON_VALUES JSONObj_VALUES = ' + JSONObj_VALUES);
+    mylog(' HttpConnect_LastErrorText =' + HttpConnect_LastErrorText(m_service));
+     mylog('      HttpConnect_JsonCount(m_service, JSONObj_VALUES) =' + HttpConnect_JsonCount(m_service, JSONObj_VALUES));
+  var _setResultEmpty : boolean = False;
+  if JSONObj_VALUES <> 0 then
+   {
+     HttpConnect_JsonObjectAddInteger(m_service, JSONObj, 'RESULT_CODE', 1);
+     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG' , 'OK');
+     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG_RUS' , 'OK');
+     HttpConnect_JsonObjectAddObject( m_service, JSONObj, 'OBJECTVALUES', JSONObj_VALUES);
+     mylog(' HttpConnect_JsonObjectAddObject( m_service, JSONObj OBJECTVALUES =' + HttpConnect_LastErrorText(m_service));
+//     mylog(' HttpConnect_JsonObjectAddObject(m_service, JSONObj_Descriptions, ''DESCRIPTIONS'', JSONObj_Array);');
+
+    var JSONSJSON     : TPtr    = HttpConnect_JSONObjectToJSON(m_service,JSONObj);
+//    var JSONSJSON     : TPtr    =     HttpConnect_JSONObjectToString(m_service,JSONObj);
+
+    mylog('JSONSJSON =' + JSONSJSON);
+     mylog(' HttpConnect_LastErrorText =' + HttpConnect_LastErrorText(m_service));
+//    var _res : boolean = false;
+
+     HttpConnect_SaveToFileEx(m_service, JSONSJSON, _sfileout, cpUTF8, false);
+    mylog('HttpConnect_SaveToFileEx HttpConnect_LastErrorText =' + HttpConnect_LastErrorText(m_service));
+/*     HttpConnect_SaveToFile(m_service, JSONSJSON, _sfileout+'www', cpUTF8);
+    mylog('HttpConnect_SaveToFile HttpConnect_LastErrorText =' + HttpConnect_LastErrorText(m_service));
+
+    var _Len : longint = HttpConnect_GetLongStringLength(m_service, JSONSJSON) - 1;
+
+    var _begPos : longint = 0;
+    var _endPos : longint = _begPos + 255;
+
+    resJSONFile.OpenFile(_sfileout+'_file', stCreate);
+    mylog('=======Запись в файл своими методами=========');
+    do
+     {
+         Setvisualheader('Чтение длинной строки'
+         +''#13''  + 'обработано позиций : '  +_begPos+ ' из ' + _Len);
+
+      if _begPos >= _len then break;
+//      mylog('_begPos ='+_begPos + '   _EndPos='+  _EndPos + '  всего '  + _Len);
+       var _str : string = HttpConnect_GetLongStringSubString(m_service, JSONSJSON, _begPos, _EndPos);
+//       mylog(_str);
+       resJSONFile.Write(_str);
+       _begPos := _endPos;
+       _endPos := _begPos + 255;
+       if _endPos > _Len then _endPos := _Len
+     } while true;
+    resJSONFile.Close;
+*/
+   }
+   else
+    {
+      #WRITE_JSONERROR(JSONObj,'No Data',_err)
+
+//     HttpConnect_JsonObjectAddObject(m_service, JSONObj, 'OBJECTVALUES', JSONObj_VALUES);
+
+     var JSONSJSON     : TPtr    = HttpConnect_JSONObjectToJSON(m_service,JSONObj);
+     HttpConnect_SaveToFileEx(m_service, JSONSJSON, _sfileout, cpUTF8, false);
+     if (_pIdent = co_BatchMode or SHKObj.viddoc = coTypeDocBoxSaldo) // если пакетная выгрузка или по сальдо ячеек идем и преедача через ЮСБ, то ошибки, что пустой файл не надо
+         and wgettune('SHK.CONNECTIONTYPE') = 1 then _setResultEmpty := True;
+    }
+
+    result := if(_setResultEmpty,'',_sfileout);
+
+    HttpConnect_JSONObjectDestroy(m_service,JSONObj_VALUES);
+    destroyall_JSON(m_service);
+    HttpConnect_Free(m_service);
+
+}
+
+function JSON_Import_Docs(): string;
+{
+    var Folder_input   : string = AddSlashToPath(sgettune('SHK.FILEPATHIMPORT'));
+    var Folder_archive : string = AddSlashToPath(sgettune('SHK.FILEPATHARCHIVE'));
+    var Folder_log     : string = AddSlashToPath(sgettune('SHK.FILEPATHLOG'));
+    if Folder_log = '' or Folder_archive = '' or Folder_input = ''
+     {
+       message('Необходимо указать настройки для всех каталогов '
+       + ''#13'' + gettunename('SHK.FILEPATHIMPORT')
+       + ''#13'' + gettunename('SHK.FILEPATHARCHIVE')
+       + ''#13'' + gettunename('SHK.FILEPATHLOG'));
+       exit;
+     }
+    startnewvisual(vtRotateVisual,vftimer+vfbreak+vfconfirm,'Поиск файлов...',0);
+   var File_input, File_archive : string = '';
+
+    if FindFirstFile(Folder_input+'*.*', File_input)
+     do{
+       File_input  := upcase(File_input);
+       File_archive := upcase(File_input);
+        if(MatchesMask(File_input,'*|.;..;~*') )
+        if(MatchesMask(File_input,'*.JSON') )
+
+         if not IsDirectory(Folder_input+File_input)
+         {
+           var _SHK_InOut: SHK_InOut new;
+           var _JSONfile : string = _SHK_InOut.MakeAction_FromJSONFILE('AUTO', 'AUTO',Folder_input+ File_input);
+           var _logFile : string = _SHK_InOut.GetLogFile;
+           CopyMoveFile(_logFile , Folder_log + 'SHK_LOG_IMPORT_'+DateToStr(cur_date,'YYYYMMDD')+'_'+timetostr(cur_time,'HHMMSS')+'.log', false, ecmfClientFrom  + ecmfClientTo );
+           CopyMoveFile(Folder_input+File_input , Folder_archive+File_archive, true, ecmfClientFrom  + ecmfClientTo ) ;
+         }
+       } while FindNextFile(File_input);
+  stopvisual();
+}
+
+function JSON_Export_Catalogs : string;
+{
+  if not CheckLic then exit;
+ mylog('JSON_Export_Catalogs');
+ var _isEmptyTerms : boolean = true;
+   var _SHK_BASE : SHK_BASE new;
+
+  _loop SHK_TMPLT_OBJ_1 where SHK_TMPLT_OBJ_1.UseBatchLoad = 1 // ПРЕДУСМОТРЕНА ПАКЕТНАЯ ЗАГРУЗКА
+   if _SHK_BASE.isObjectCatalogBYTidkGal(SHK_TMPLT_OBJ_1.viddoc)
+   {
+     _isEmptyTerms := true;
+     _loop SHKObjSP_BatchTerms_1
+      {
+       if SHKObjSP_BatchTerms_1.name <> '' then  {
+         _isEmptyTerms := false;
+         break;
+       }
+      }
+     if not _isEmptyTerms then break;
+   }
+
+  if _isEmptyTerms then {
+     result := 'Нет шаблонов каталогов с пакетной выгрузкой'
+    }
+    else {
+      var _isPathOK : boolean = checkDestPathfromTune;
+
+      var _destFolder : string = get_destFolder;
+
+      _loop SHK_TMPLT_OBJ_1 where SHK_TMPLT_OBJ_1.UseBatchLoad = 1 // ПРЕДУСМОТРЕНА ПАКЕТНАЯ ЗАГРУЗКА
+       if _SHK_BASE.isObjectCatalogBYTidkGal(SHK_TMPLT_OBJ_1.viddoc)
+       {
+         _isEmptyTerms := true;
+         _loop SHKObjSP_BatchTerms_1
+          {
+           if SHKObjSP_BatchTerms_1.name <> '' then  {
+             _isEmptyTerms := false;
+             break;
+           }
+          }
+
+        if _isEmptyTerms then continue ;// 'ДЛЯ ДАННОГО ОБЪЕКТА НЕ УКАЗАНЫ УСЛОВИЯ ОТБОРА';
+
+         var _SHK_InOut: SHK_InOut new;
+        var _JSONfile : string = _SHK_InOut.GenerateJSON_VALUESFILE(SHK_TMPLT_OBJ_1.Action, co_BatchMode);
+
+        if _isPathOK {
+              var _destFile :string= _destFolder + OleGenerateGUID + '_GAL_COMMON_COMMON_COMMON_'+SHK_TMPLT_OBJ_1.Action+'.json' ;
+              CopyFile(_JSONfile, _destFile);
+           }
+  /*
+          else {
+            processtext(_JSONfile, vfNewTitle Or vfMacroSize, 'Сгенерированный JSON OBJECTVALUES');
+          }
+  */
+       }
+       if _isPathOK {
+         result :='Файлы выгружены в директорию ' +''#13''+  _destFolder
+       }
+       else {
+         result :='Не задана директория выгрузки файлов в настройке'+''#13''+'Файлы выгружены в директорию запуска "Галактики"'
+       }
+    }
+
+}
+
+function JSON_Export_Menu : string;
+{
+  if not CheckLic then exit;
+ mylog('JSON_Export_Menu');
+ var _JSONfile   : string  = GenerateJSON_DescriptionArrayFILE;
+ var _isPathOK   : boolean = checkDestPathfromTune;
+ var _destFolder : string  = get_destFolder;
+
+      if _isPathOK {
+               var _destFile :string= _destFolder + OleGenerateGUID + '_MENU_COMMON_COMMON_COMMON.json';
+               CopyFile(_JSONfile, _destFile);
+             result := 'Файлы выгружены в директорию ' +''#13''+  _destFolder
+         }
+        else {
+         result :='Не задана директория выгрузки файлов в настройке'+''#13''+'Файлы выгружены в директорию запуска "Галактики"'
+        }
+}
+
+function JSON_Export_Users : string;
+{
+  if not CheckLic then exit;
+ mylog('JSON_Export_Users');
+ var _JSONfile   : string  = GenerateJSON_UsersArrayFILE;
+ var _isPathOK   : boolean = checkDestPathfromTune;
+ var _destFolder : string  = get_destFolder;
+
+      if _isPathOK {
+               var _destFile :string= _destFolder + OleGenerateGUID + '_USERS_COMMON_COMMON_COMMON.json';
+               CopyFile(_JSONfile, _destFile);
+             result := 'Файлы выгружены в директорию ' +''#13''+  _destFolder
+         }
+        else {
+         result :='Не задана директория выгрузки файлов в настройке'+''#13''+'Файлы выгружены в директорию запуска "Галактики"'
+        }
+}
+
+function JSON_Export_Docs(_action: string = '') : string;
+{
+  if not CheckLic then exit;
+  mylog('JSON_Export_Docs _action = ' + _action);
+  var _isEmptyTerms : boolean = true;
+   var _SHK_BASE : SHK_BASE new;
+
+  _loop SHK_TMPLT_OBJ_1 where SHK_TMPLT_OBJ_1.UseBatchLoad = 1 // ПРЕДУСМОТРЕНА ПАКЕТНАЯ ЗАГРУЗКА
+   if (SHK_TMPLT_OBJ_1.action = _action or _action = '')
+   if not _SHK_BASE.isObjectCatalogBYTidkGal(SHK_TMPLT_OBJ_1.viddoc)
+   {
+     _isEmptyTerms := true;
+     _loop SHKObjSP_BatchTerms_1
+      {
+       if SHKObjSP_BatchTerms_1.name <> '' then  {
+         _isEmptyTerms := false;
+         break;
+       }
+      }
+     if not _isEmptyTerms then break;
+   }
+
+  if _isEmptyTerms then {
+     result := 'Нет шаблонов документов с пакетной выгрузкой';
+    }
+    else {
+      var _isPathOK : boolean = checkDestPathfromTune;
+
+      var _destFolder : string = get_destFolder;
+
+      _loop SHK_TMPLT_OBJ_1 where SHK_TMPLT_OBJ_1.UseBatchLoad = 1 // ПРЕДУСМОТРЕНА ПАКЕТНАЯ ЗАГРУЗКА
+       if (SHK_TMPLT_OBJ_1.action = _action or _action = '')
+       if not _SHK_BASE.isObjectCatalogBYTidkGal(SHK_TMPLT_OBJ_1.viddoc)
+       {
+         _isEmptyTerms := true;
+         _loop SHKObjSP_BatchTerms_1
+          {
+           if SHKObjSP_BatchTerms_1.name <> '' then  {
+             _isEmptyTerms := false;
+             break;
+           }
+          }
+
+        if _isEmptyTerms then continue ;// 'ДЛЯ ДАННОГО ОБЪЕКТА НЕ УКАЗАНЫ УСЛОВИЯ ОТБОРА';
+
+         var _SHK_InOut: SHK_InOut new;
+          _SHK_InOut.generate_batch_files_group_TSD_ARM_USER(SHK_TMPLT_OBJ_1.Action);
+
+       }
+       if _isPathOK {
+             result:= 'Файлы выгружены в директорию ' +''#13''+  _destFolder;
+        }
+        else {
+         result :='Не задана директория выгрузки файлов в настройке'+''#13''+'Файлы выгружены в директорию запуска "Галактики"'
+        }
+    }
+     mylog('JSON_Export_Docs result = ' + result);
+}
+
+function JSON_Export_SaldoBox(_ActionName, _SHKcode, _idTSD, _idARM, _idUser : string) : string;
+{
+  if not CheckLic then exit;
+  if (getfirst SHK_TMPLT_OBJ_1 where SHK_TMPLT_OBJ_1.action = _ActionName and SHK_TMPLT_OBJ_1.viddoc = coTypeDocBoxSaldo) <> tsOK
+  {
+    result := _ActionName + ' не является шаблоном для saldobox';
+    mylog('JSON_Export_SaldoBox '+result);
+    exit;
+  }
+
+    var _pcSHKObj : comp = GetTMPLTByName(_ActionName);
+
+        set _cSHKObj := _pcSHKObj;
+        pushbounds(tbbySHKObjNrec);
+
+      mylog('JSON_Export_SaldoBox _ActionName = ' + _ActionName);
+      mylog('JSON_Export_SaldoBox _SHKcode = ' + _SHKcode);
+      mylog('JSON_Export_SaldoBox _idTSD  = ' + _idTSD );
+      mylog('JSON_Export_SaldoBox _idARM  = ' + _idARM );
+      mylog('JSON_Export_SaldoBox _idUser = ' + _idUser);
+
+      var _isPathOK : boolean = checkDestPathfromTune;
+      var _destFolder : string = get_destFolder;
+
+      var _SHK_InOut: SHK_InOut new;
+      var _JSONfile : string = _SHK_InOut.GenerateJSON_VALUESFILE(_ActionName, _SHKcode);
+
+     if _JSONfile <> ''
+      if _isPathOK {
+          var _destFile : string = _destFolder + OleGenerateGUID + '_GAL_'+_idTSD+'_'+_idARM+'_'+_idUser+'_'+_ActionName+'.json' ;
+          CopyFile(_JSONfile, _destFile);
+          mylog('   generate_batch_files_group_TSD_ARM_USER _destFile = ' + _destFile);
+        }
+       else {
+          processtext(_JSONfile, vfNewTitle Or vfMacroSize, 'Сгенерированный JSON');
+        }
+       if _isPathOK {
+             result:= 'Файлы выгружены в директорию ' +''#13''+  _destFolder;
+        }
+        else {
+         result :='Не задана директория выгрузки файлов в настройке'+''#13''+'Файлы выгружены в директорию запуска "Галактики"'
+        }
+     mylog('JSON_Export_SaldoBox result = ' + result);
+}
+#include SHK_InOut.pan
+function TestExportJSON(_pcSHKObj : comp) : boolean;
+{
+   filltTypeObj;
+var _err : string = '';
+
+  if not IsExistSHKObjbyNREC(_pcSHKObj, _err) {
+    message(_err , error);
+    result := false;
+    exit;
+   }
+  RunWindowModal(wnSHK_getParameter) ;
+  result := true;
+}
+
+handleevent // фейса
+cmInit:{
+    if not CheckLic then exit;
+  case Upcase(_AutoExport) of
+   Upcase('JSON_Export_Catalogs') : JSON_Export_Catalogs;
+   Upcase('JSON_Export_Menu')     : JSON_Export_Menu;
+   Upcase('JSON_Export_Users')    : JSON_Export_Users;
+   Upcase('JSON_Export_Docs')     : JSON_Export_Docs(_ActionName);
+   Upcase('JSON_Import_Docs')     : JSON_Import_Docs;
+  end;
+  stop; abort;exit;
+}
+cmPick:{
+  case curfield of
+   #_FileIN : {
+     _FileIN := GetFileName('*.JSON', 'Выбор файла для импорта');
+   }
+   end;
+   rereadrecord;
+}
+end;
+end.

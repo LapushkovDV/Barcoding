@@ -1,0 +1,53 @@
+//********************************************************************************
+//                                                        (c) корпорация Галактика
+// Галактика 9.1 - пост-обработчик настроек
+// Дополнительные действия после редактирования настройки в компонентах
+//********************************************************************************
+
+#include TuneSpec.vih
+#include PostFunc.vih
+#include CreateUser.vih
+#include GetWorkDocs.vih
+
+vipInterface postTune_C_Barcode implements ObjPostTuneComponent  licensed (FREE);
+
+// Обработчик точки расширения epPostTuneComponent
+// Должен вернуть FALSE если обработка проводилась. TRUE - если не проводилась.
+handler with replace C_Barcode_PostTune on extensionPoint epPostTuneComponent
+(TR: TuneFuncObj; TuneCode: string; TuneObj: longint; TuneUser: comp) [100]
+action
+{
+  var ifc: postTune_C_Barcode;
+  result := not ifc.PostUpdateComponent(TR, TuneCode, TuneObj, TuneUser)
+}
+
+#doc
+ Дополнительные действия после редактирования настройки в компоненте C_Barcode
+#end
+interface PostTune_C_Barcode cacheable;
+
+// Возвращает False если обработка не производилась, иначе true
+//********************************************************************************
+//   Входные параметры
+//     TR - ссылка на интерфейс TuneFunc
+//     TuneCode: string  - код настройки
+//     TuneObj: LongInnt - офис и/или филиал пользователя ( использовать функцию UserOfficeFilial(x$Users.atl_nrec))
+//     TuneUser: comp    - ID пользователя
+public function PostUpdateComponent(TR: TuneFuncObj; TuneCode: string; TuneObj: LongInt; TuneUser: comp): boolean;
+{
+  #__unused__(TR)
+  result := true;
+
+  case TuneCode of
+    'BARCODE.CANWORKWITHDOCS':
+    {
+      // Зачистка списка доступных документов поле удаления значения настройки
+      var getDocsForBarcode: iGetDocsForBarcode;
+      if (sGetTuneEx(TuneCode, TuneObj, TuneUser) = '')
+        getDocsForBarcode.ClearUserWorkDocs(TuneObj, TuneUser);
+    }
+  else
+    result := false;
+  end;
+}
+end.

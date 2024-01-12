@@ -1,0 +1,9 @@
+#ifndef __BD_TYPES_VPP
+#define __BD_TYPES_VPP
+
+#doc
+структуры записи таблицы SpStep
+#end
+#GalPublic type TSpStep = record as table SpStep;
+
+#end // __BD_TYPES_VPP

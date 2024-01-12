@@ -1,0 +1,69 @@
+/*************************************************************************************************\
+* Наименование: Ведение телефонного справочника                                                   *
+* Контур/Модуль: Кадры                                                                            *
+* Примечание:                                                                                     *
+*                                                                                                 *
+* Вид работы  |Номер         |Дата    |Исполнитель              |Проект                           *
+* ----------------------------------------------------------------------------------------------- *
+\_0.0_/
+
+-_-
+0_-
+-_0
+0_0
+
+\*************************************************************************************************/
+
+#include Shk_BarcodeFunc.vih
+
+Interface shk_barcode_view_oneObject 'Интерфейс просмотра объекта по ШК' (,,sci17EnEsc), EscClose;
+//************************************************************
+Show At (,,120,30);
+//----------------------------------------
+create view
+var
+  _ShkCode : string;
+  _iShk_BarcodeFunc : iShk_BarcodeFunc new;
+from
+ shk_barcodeLink
+;
+
+Screen scrshk_barcode_view_oneObject 'Просмотра объекта по ШК';
+Fields
+ _ShkCode : NoProtect;
+Buttons
+ cmValue1,,,;
+ cmCancel,,,;
+<<'Просмотра объекта по внутреннему ШК'
+
+  Штрих код .@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+  <. Просмотр .>  <. Отмена.>
+
+>>
+end;
+function CheckLic : boolean; {
+ #BodyfunctionCheckLic
+}
+
+HandleEvent
+cminit:
+{
+    if not CheckLic then exit;
+   _ShkCode := '';
+}
+cmValue1:{
+  if(getfirst shk_barcodeLink where ((       0 == shk_barcodeLink.TYPE
+                                  and _ShkCode == shk_barcodeLink.BARCODE
+                                    ))
+    ) = tsOK then {
+      _iShk_BarcodeFunc.show_doc(shk_barcodeLink.TidkGal, shk_barcodeLink.crec);
+     }
+     else {
+        message('Не найден внутренний штрих код "'+_ShkCode+'"', error);
+      }
+
+}
+end;
+end.

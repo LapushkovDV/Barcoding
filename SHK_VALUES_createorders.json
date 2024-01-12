@@ -1,0 +1,18 @@
+﻿{
+  "ACTIONBODY": "CREATEORDERS",
+  "OBJECTVALUES": {
+      "OBJECTACTION": "nvp_copy_6",
+      "IDOBJECT": "844424930132038",
+      "FIELDS": {
+        "KATSOPR_DSOPR": "25\/03\/2023 00:00",
+        "KATSOPR_NSOPR": "000066"
+      },
+      "COLUMNS": [
+        {
+          "SPSOPR_KOL": "24.00",
+          "KATMC_NAME": "ккк",
+          "SPSOPR_NREC": "844424930132167"
+        }
+      ]
+    }
+}

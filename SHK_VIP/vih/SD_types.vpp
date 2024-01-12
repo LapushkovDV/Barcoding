@@ -1,0 +1,9 @@
+#ifndef __SD_TYPES_VPP
+#define __SD_TYPES_VPP
+
+#doc
+структуры записи таблицы SpSopr
+#end
+#GalPublic type TSpSopr = record as table SpSopr;
+
+#end // __SD_TYPES_VPP

@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:dependencyproperties="clr-namespace:TSD.Services.DependencyProperties"
+             x:Class="TSD.Views.FlyoutPages.ContentViews.ExpireTokenView"
+             IsVisible="{Binding IsActivity}">
+    <ContentView.Resources>
+        <ResourceDictionary Source="../../Resources/Resources_XML/ResourceDictionaryMobile.xaml"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <Frame Style="{StaticResource PanelStyle}" BorderColor="DarkRed" Margin="15">
+                    <StackLayout>
+                        <StackLayout Orientation="Vertical" Margin="5" HorizontalOptions="Center" VerticalOptions="Fill">
+                            <StackLayout.Triggers>
+                                <DataTrigger TargetType="StackLayout" Binding="{Binding IsLoginForm}" Value="True">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </DataTrigger>
+                            </StackLayout.Triggers>
+                            <Label Text="Срок действия токена истек. Повторите запрос." HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Style="{StaticResource LabelStyleHeader}"/>
+                            <StackLayout Margin="0, 3" Orientation="Vertical" >
+                                <Button Command="{Binding AcceptCommand}" Text="Повторить запрос" Style="{StaticResource ButtonStyleRed}" HorizontalOptions="FillAndExpand">
+                                    <Button.Triggers>
+                                        <DataTrigger TargetType="Button" Binding="{Binding IsLoginForm}" Value="True">
+                                            <Setter Property="IsVisible" Value="False"/>
+                                        </DataTrigger>
+                                    </Button.Triggers>
+                                </Button>
+                                <Button Text="Отмена" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyleRed}" HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical" Margin="5" HorizontalOptions="FillAndExpand" IsVisible="{Binding IsLoginForm}">
+                            <StackLayout IsVisible="True">
+                                <StackLayout.Triggers>
+                                    <DataTrigger TargetType="StackLayout" Binding="{Binding IsBarcode}" Value="True">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                </StackLayout.Triggers>
+                                <dependencyproperties:ImageEntry x:Name="login"
+                                                                 Placeholder="Логин"
+                                                                 Image="login_48px"
+                                                                 Text="{Binding Login, Mode=TwoWay}"
+                                                                 TextColor="#0060cc"
+                                                                 Keyboard="Default"
+                                                                 ImageHeight="10"
+                                                                 ImageWidth="10"
+                                                                 LineColor="LightGray"
+                                                                 HorizontalOptions="FillAndExpand">
+                                    <dependencyproperties:ImageEntry.Behaviors>
+                                        <xct:TextValidationBehavior InvalidStyle="{StaticResource InvalidStyle}"/>
+                                    </dependencyproperties:ImageEntry.Behaviors>
+                                </dependencyproperties:ImageEntry>
+                                <dependencyproperties:ImageEntry x:Name="password"
+                                                                 Placeholder="Пароль"
+                                                                 Text="{Binding Password, Mode=TwoWay}"
+                                                                 TextColor="#0060cc"
+                                                                 Keyboard="Default"
+                                                                 IsPassword="True"
+                                                                 Image="password_48px"
+                                                                 ImageHeight="10"
+                                                                 ImageWidth="10"
+                                                                 LineColor="LightGray"
+                                                                 HorizontalOptions="FillAndExpand">
+                                    <dependencyproperties:ImageEntry.Behaviors>
+                                        <xct:TextValidationBehavior InvalidStyle="{StaticResource InvalidStyle}"/>
+                                    </dependencyproperties:ImageEntry.Behaviors>
+                                </dependencyproperties:ImageEntry>
+                            </StackLayout>
+                            <StackLayout IsVisible="{Binding IsBarcode}">
+                                <Frame Style="{StaticResource LabelFrameStyleRed}">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="barcode_64px.png"
+                                               WidthRequest="{OnPlatform iOS=40, Android=30}"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start"/>
+                                        <Label
+                                               Text="Сканируйте штрих-код..."
+                                               TextColor="White"
+                                               HorizontalOptions="FillAndExpand"
+                                               VerticalOptions="Center"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center">
+                                        </Label>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" IsVisible="{Binding IsBarcodeSwitch, Mode=TwoWay}" HorizontalOptions="EndAndExpand">
+                                <Label Text="{Binding LabelSwitch}" HorizontalTextAlignment="End" HorizontalOptions="End"/>
+                                <Switch IsToggled="{Binding IsBarcode}" HorizontalOptions="End"/>
+                            </StackLayout>
+                            <StackLayout Margin="0, 3" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <Button Text="Войти" Command="{Binding LoginCommand}" Style="{StaticResource ButtonStyleRed}" IsVisible="{Binding IsLoginForm}" HorizontalOptions="FillAndExpand">
+                                    <Button.Triggers>
+                                        <DataTrigger TargetType="Button" Binding="{Binding Source={x:Reference login}, Path=Text.Length}" Value="0">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="BackgroundColor" Value="LightGray"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Button" Binding="{Binding IsBarcode}" Value="True">
+                                            <Setter Property="IsVisible" Value="False"/>
+                                        </DataTrigger>
+                                    </Button.Triggers>
+                                </Button>
+                                <Button Text="Отмена" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyleRed}" HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

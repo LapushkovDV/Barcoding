@@ -1,0 +1,49 @@
+﻿@page "/menus"
+@inherits MenusModel
+@layout BodyLayout
+
+<AuthorizeView>
+    <Authorized>
+        <div class="container-fluid">
+                <div class="mb-2" style="z-index:10; bottom:0">
+                    <button class="btn btn-primary btn-user btn-block" @onclick="AddMenu">
+                        <span class="fa fa-plus"></span> Добавить новый пункт меню
+                    </button>
+                </div>
+
+                @if(Menus == null)
+                {
+                    <p><em>Loading...</em></p>
+                }
+                else
+                {
+                    <Table Items="@Menus" Context="menu">
+                        <TableHeader>
+                            <th scope="col" class="text-center">№ позиции</th>
+                            <th scope="col" class="text-center">Название меню</th>
+                            <th scope="col" class="text-center">Действие</th>
+                            <th scope="col" class="text-center">Описание</th>
+                            <th scope="col" class="text-center">Операции</th>
+                        </TableHeader>
+                        <RowTemplate>
+                            <td>@menu.Npp</td>
+                            <td>@menu.Name</td>
+                            <td>@menu.Action</td>
+                            <td>@menu.Description</td>
+                            <td scope="row">
+                               <button type="submit" class="btn btn-primary" @onclick="() => EditMenu(menu)">
+                                    <span class="fa fa-edit"></span>
+                               </button>
+                               <button type="submit" class="btn btn-red" @onclick="() => RemoveMenu(menu)">
+                                    <span class="fa fa-remove"></span>
+                               </button>
+                            </td>
+                        </RowTemplate>
+                    </Table>
+                }
+         </div>
+    </Authorized>
+    <NotAuthorized>
+        <RedirectToLogin/>
+    </NotAuthorized>
+</AuthorizeView>

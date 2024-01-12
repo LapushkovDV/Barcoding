@@ -1,0 +1,9 @@
+﻿@inherits RemoveDeviceModel
+
+<div class="modal-body">
+    <p>Вы действительно хотите удалить устройство @(Device == null ? string.Empty : $"\"{Device.DeviceCode}\"")?</p>
+</div>
+<div class="modal-footer justify-content-center">
+    <button class="btn btn-danger" @onclick="@Cancel">Нет</button>
+    <button class="btn btn-primary" @onclick="@Accept">Да</button>
+</div>

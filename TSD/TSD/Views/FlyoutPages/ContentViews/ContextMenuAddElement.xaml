@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TSD.Views.FlyoutPages.ContentViews.ContextMenuAddElement">
+    <ContentView.Resources>
+        <ResourceDictionary Source="../../Resources/Resources_XML/ResourceDictionaryMobile.xaml"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="CenterAndExpand"
+                     VerticalOptions="CenterAndExpand">
+            <Frame Style="{StaticResource PanelStyle}"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="FillAndExpand"
+                   Margin="5, 5, 5, 5"
+                   Padding="0"
+                   BorderColor="{StaticResource TextUserBlue}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <StackLayout Orientation="Horizontal" Grid.Row="0"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="Start"
+                           BackgroundColor="{StaticResource TextUserBlue}">
+                        <Label Text="Добавление записи"
+                               HorizontalOptions="StartAndExpand"
+                               VerticalOptions="Center"
+                               VerticalTextAlignment="Center"
+                               FontSize="Medium"
+                               TextColor="White"
+                               FontAttributes="Bold"
+                               Padding="5, 0"/>
+                        <ImageButton HorizontalOptions="EndAndExpand"
+                                     VerticalOptions="Center"
+                                     Source="exit_96px.png"
+                                     WidthRequest="{OnPlatform iOS=45, Android=35}"
+                                     BackgroundColor="Transparent"
+                                     Command="{Binding CancelCommand}"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="1" Orientation="Vertical"
+                                 Padding="5, 0"
+                                 HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="CenterAndExpand">
+                        <Entry x:Name="identificatorElement"
+                               Placeholder="Идентификатор"
+                               Text="{Binding Identification}"
+                               TextColor="{StaticResource TextUserBlue}"
+                               HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="2">
+                        <Button Style="{StaticResource ButtonStyle}"
+                                Text="Добавить"
+                                Command="{Binding AddElement}">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding Source = {x:Reference identificatorElement}, Path=Text.Length}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Setter Property="BackgroundColor" Value="LightGray"/>
+                                    <Setter Property="BorderColor" Value="{StaticResource TextUserBlue}"/>
+                                    <Setter Property="BorderWidth" Value="1"/>
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+        </StackLayout>
+        
+    </ContentView.Content>
+</ContentView>

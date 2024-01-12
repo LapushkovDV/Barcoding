@@ -1,0 +1,818 @@
+/*************************************************************************************************\
+* Наименование: Ведение телефонного справочника                                                   *
+* Контур/Модуль: Кадры                                                                            *
+* Примечание:                                                                                     *
+*                                                                                                 *
+* Вид работы  |Номер         |Дата    |Исполнитель              |Проект                           *
+* ----------------------------------------------------------------------------------------------- *
+
+\*************************************************************************************************/
+
+
+#include SHK_BASE.vih
+
+//************************************************************
+const
+end;
+Interface SHK_BASE 'Шаблоны объектов штрихкодирования. Просмотр/редактирование';
+
+table struct tDescriptionQuery
+(
+    npp   : word
+  , descr : string
+)
+with index
+(
+   ind0 = npp
+)
+;
+
+table struct tFields
+(
+   NAME       : string
+ , TITLE      : string
+ , SYSNAMETBL : string
+ , DATATYPE   : string
+)
+with index
+(
+   ind0 = NAME
+)
+;
+table struct tActions
+ (
+   name        : string
+  ,DESCRIPTION : string
+ )
+ with index
+ (
+  ind0 = name
+ )
+ ;
+
+function allowtidkGal(_tidkGal : word) : boolean; forward;
+create view
+var _cSHKObj : comp;
+
+    _logSHK_OUT : string; //глобальная
+
+ as select
+    SHKObj.nrec
+ ,  if( pos('SETSTATUS',SHKObjSP_BTN.SysName) = 1 , KN_BTN.name, '') (FieldName = Btn_StatusName)
+ ,  Not(isObjectCatalogBYTidkGal(SHKObj.viddoc)) (FieldName = ISDOC)
+from
+    SHK_TMPLT_OBJ   SHKObj
+  , SHK_TMPLT_OBJ   SHKObjAction
+  , SHK_TMPLT_OBJ   SHKObjChk
+  , SHK_TMPLT_OBJSP SHKObjSP_BTN
+  , SHK_TMPLT_OBJSP SHKObjSP_HEAD
+  , SHK_TMPLT_OBJSP SHKObjSP_SP
+  , SHK_TMPLT_OBJSP SHKObjSP_AllowStatus
+  , SHK_TMPLT_OBJSP SHKObjSP_BatchTerms
+  , KatDoc KatDocBR
+//  , KatDoc KatDocWin
+  , x$files
+  , x$fields
+  , attrnam
+
+  , tFields
+  , tActions
+  , tDescriptionQuery
+  , tTypeObj
+  , tTypeObj tTypeObjWin
+  , KatNotes KN_BTN
+  , KatNotes KN_AllowStatus
+  , KatNotes NoteAfterBatch
+ where ((             root == SHKObj.nrec
+         and SHKObj.VIDDOC == tTypeObjWin.tidkGal
+
+           and SHKObj.nrec == SHKObjSP_BTN.cSHK_TMPLT_OBJ
+        and coVIDFIELD_BTN == SHKObjSP_BTN.VIDFIELD
+       and              0 <<= SHKObjSP_BTN.row
+
+      and SHKObjSP_BTN.AddComp == KN_BTN.nrec
+
+            and SHKObj.nrec == SHKObjSP_HEAD.cSHK_TMPLT_OBJ
+        and coVIDFIELD_HEAD == SHKObjSP_HEAD.VIDFIELD
+        and              0 <<= SHKObjSP_HEAD.row
+
+            and SHKObj.nrec == SHKObjSP_SP.cSHK_TMPLT_OBJ
+          and coVIDFIELD_SP == SHKObjSP_SP.VIDFIELD
+         and             0 <<= SHKObjSP_SP.npp
+         and SHKObjSP_SP.ACTION == SHKObjAction.nrec
+
+                      and SHKObj.nrec == SHKObjSP_AllowStatus.cSHK_TMPLT_OBJ
+            and coVIDFIELD_AlloStatus == SHKObjSP_AllowStatus.VIDFIELD
+//                   and             0 <<= SHKObjSP_AllowStatus.npp
+    and  SHKObjSP_AllowStatus.ADDCOMP == KN_AllowStatus.nrec
+
+                      and SHKObj.nrec == SHKObjSP_BatchTerms.cSHK_TMPLT_OBJ
+            and coVIDFIELD_BatchTerms == SHKObjSP_BatchTerms.VIDFIELD
+                  and              0 <<= SHKObjSP_BatchTerms.row
+
+             and 0 <<= KatDocBR.tidkGal
+         And ( allowtidkGal(KatDocBR.tidkGal) )
+
+         and SHKObj.cNoteAfterBatch == NoteAfterBatch.nrec
+       ))
+;
+function CheckLic : boolean; {
+ #BodyfunctionCheckLic
+}
+
+Procedure Fill_fieldArray(_viddoc: word);//array[1..24] of string);
+{
+#declare inserttDescriptionQuery(_descr)
+ insert tDescriptionQuery set
+      tDescriptionQuery.npp   := _npp
+    , tDescriptionQuery.descr := #_descr
+   ;
+   _npp++;
+#end
+  delete all tDescriptionQuery;
+  var _npp : word = 0;
+ #inserttDescriptionQuery('ниже представлены условия и связки таблиц, эти таблицы можно использовать в условиях пакетной выгрузки');
+ #inserttDescriptionQuery('****');
+ #inserttDescriptionQuery('можно использовать: ');
+ #inserttDescriptionQuery('                   #(BatchDate), что автоматом подставит SHKObj.BatchDate "Дата последней пакетной выгрузки"');
+ #inserttDescriptionQuery('                   #(LOGIN), что автоматом подставит Login пользователя с ТСД ');
+ #inserttDescriptionQuery('                   #(IMEI), что автоматом подставит IMIE ТСД');
+  case _viddoc of
+  coTypeDocMC       :  {//10000+1411
+                    #inserttDescriptionQuery('например: ');
+                    #inserttDescriptionQuery('          KATMC.atl_lastdate >= #(BatchDate) and KAELEM.CODE in (''012'',''1548'')');
+                    #inserttDescriptionQuery('          SHK_USER.name = ''#(LOGIN)''');
+                    #inserttDescriptionQuery('          SHK_TSD.name = ''#(IMEI)''');
+                    #inserttDescriptionQuery('****');
+                    #inserttDescriptionQuery('from KATMC');
+                    #inserttDescriptionQuery('left join katotped on katotped.cMcUsl = katmc.nrec and katotped.prmc = 1');
+                    #inserttDescriptionQuery('left join KATED    on katotped.nrec= katmc.cEd');
+                    #inserttDescriptionQuery('left join GROUPMC  on GROUPMC.nrec = katmc.CGROUPMC');
+                    #inserttDescriptionQuery('left join GRNAL    on GRNAL.nrec   = katmc.cGrNal');
+                    #inserttDescriptionQuery('left join TYPEMC   on TYPEMC.nrec  = katmc.cType');
+                    #inserttDescriptionQuery('left join STZATR   on STZATR.nrec  = katmc.cStZatr');
+                    #inserttDescriptionQuery('left join KAELEM   on KAELEM.nrec  = katmc.CKAELEM');
+                    #inserttDescriptionQuery('left join attrnam     on attrnam.wtable = 1411 and attrnam.name = :anName // это атрибут, выбранный в качество идентификатора ШК объекта');
+                    #inserttDescriptionQuery('left join attrval     on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katmc.nrec');
+                    #inserttDescriptionQuery('left join shk_barcodelink on shk_barcodelink.wtable = 1411 and shk_barcodelink.crec = KATMC.NREC and shk_barcodelink.type = 0');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser');
+                    #inserttDescriptionQuery('left join x$users on x$users.ATL_NREC = SHK_USER.cUser');
+
+                   }
+  coTypeDocPODR     :  {//10000+1413
+                    #inserttDescriptionQuery('например, KatPODR.atl_lastdate >= #(BatchDate) or GRPODR.atl_lastDate >= #(BatchDate)');
+                    #inserttDescriptionQuery('          SHK_USER.name = ''#(LOGIN)''');
+                    #inserttDescriptionQuery('          SHK_TSD.name = ''#(IMEI)''');
+                    #inserttDescriptionQuery('****');
+                    #inserttDescriptionQuery('from KatPODR');
+                    #inserttDescriptionQuery('left join GRPODR      on GRPODR.nrec = KatPODR.CGRPODR');
+                    #inserttDescriptionQuery('left join DEPFUNC     on DEPFUNC.nrec = KatPodr.CFUNC ');
+                    #inserttDescriptionQuery('left join KATKOD      on KATKOD.nrec =  KatPodr.CKPP  ');
+                    #inserttDescriptionQuery('left join attrnam     on attrnam.wtable = 1413 and attrnam.name = :anName // это атрибут, выбранный в качество идентификатора ШК объекта');
+                    #inserttDescriptionQuery('left join attrval     on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katPODR.nrec');
+                    #inserttDescriptionQuery('left join shk_barcodelink on shk_barcodelink.wtable = 1413 and shk_barcodelink.crec = KatPODR.NREC and shk_barcodelink.type = 0');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser');
+                    #inserttDescriptionQuery('left join x$users on x$users.ATL_NREC = SHK_USER.cUser');
+
+                    }
+  coTypeDocMOL      :  {//10000+1424
+                    #inserttDescriptionQuery('например, KatMol.atl_lastdate >= #(BatchDate) and Katpodr.atl_lastDate >= #(BatchDate)');
+                    #inserttDescriptionQuery('          SHK_USER.name = ''#(LOGIN)''');
+                    #inserttDescriptionQuery('          SHK_TSD.name = ''#(IMEI)''');
+
+                    #inserttDescriptionQuery('****');
+                    #inserttDescriptionQuery('from KatMol');
+                    #inserttDescriptionQuery('left join Katpodr on KatPodr.nrec = KatMol.CSKL');
+                    #inserttDescriptionQuery('left join attrnam on attrnam.wtable = 1424 and attrnam.name = :anName');
+                    #inserttDescriptionQuery('left join attrval on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katMol.nrec');
+                    #inserttDescriptionQuery('left join shk_barcodelink on shk_barcodelink.wtable = 1424 and shk_barcodelink.crec = KatMol.NREC and shk_barcodelink.type = 0');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser');
+                    #inserttDescriptionQuery('left join x$users on x$users.ATL_NREC = SHK_USER.cUser');
+
+                    }
+  coTypeDocPARTY    :  {//10000+1430
+                    #inserttDescriptionQuery('например, KatParty.atl_lastdate >= #(BatchDate) or GROUPPARTY.atl_lastDate >= #(BatchDate)');
+                    #inserttDescriptionQuery('          SHK_USER.name = ''#(LOGIN)''');
+                    #inserttDescriptionQuery('          SHK_TSD.name = ''#(IMEI)''');
+
+                    #inserttDescriptionQuery('****');
+                    #inserttDescriptionQuery('from KatParty');
+                    #inserttDescriptionQuery('left join katmc                on katmc.nrec        = KatParty.cMC');
+                    #inserttDescriptionQuery('left join GROUPPARTY  on GROUPPARTY.nrec = KatParty.CGROUPPARTY');
+                    #inserttDescriptionQuery('left join attrnam     on attrnam.wtable = 1430 and attrnam.name = :anName// это атрибут, выбранный в качество идентификатора ШК объекта');
+                    #inserttDescriptionQuery('left join attrval     on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katParty.nrec');
+                    #inserttDescriptionQuery('left join shk_barcodelink on shk_barcodelink.wtable = 1430 and shk_barcodelink.crec = KatParty.NREC and shk_barcodelink.type = 0');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser');
+                    #inserttDescriptionQuery('left join x$users on x$users.ATL_NREC = SHK_USER.cUser');
+
+                    }
+  coTypeDocBox      :  {//10000+1430 ячейас храения
+                    #inserttDescriptionQuery('например, katbox.atl_lastdate >= #(BatchDate) and katpodr.kod in (''0125'',''1542'')');
+                    #inserttDescriptionQuery('          SHK_USER.name = ''#(LOGIN)''');
+                    #inserttDescriptionQuery('          SHK_TSD.name = ''#(IMEI)''');
+
+                    #inserttDescriptionQuery('****');
+                    #inserttDescriptionQuery('from katbox');
+                    #inserttDescriptionQuery('left join katpodr          on katpodr.nrec = katbox.CPODR');
+                    #inserttDescriptionQuery('left join katbox katbox_UP on katbox_UP.nrec = katbox.cBox');
+                    #inserttDescriptionQuery('left join attrnam          on attrnam.wtable = 1423 and attrnam.name = :anName');
+                    #inserttDescriptionQuery('left join attrval          on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katBox.nrec');
+                    #inserttDescriptionQuery('left join shk_barcodelink  on shk_barcodelink.wtable = 1423 and shk_barcodelink.crec = katbox.NREC and shk_barcodelink.type = 0');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser');
+                    #inserttDescriptionQuery('left join x$users on x$users.ATL_NREC = SHK_USER.cUser');
+
+                    }
+  coTypeDocBoxSaldo :  { //100000+1430 Сальдо по ячейкам хранения, но я забыл, что в функции параметр WORD, а word(101423)=
+                    #inserttDescriptionQuery('например, (katbox.atl_lastdate >= #(BatchDate) or saldoBox.atl_lastDate >= #(BatchDate)) and  katmc.name like ''%ТСД%'' ');
+                    #inserttDescriptionQuery('          SHK_USER.name = ''#(LOGIN)''');
+                    #inserttDescriptionQuery('          SHK_TSD.name = ''#(IMEI)''');
+
+                    #inserttDescriptionQuery('****');
+                    #inserttDescriptionQuery('from katbox');
+                    #inserttDescriptionQuery('left join saldoBox         on saldobox.cbox = katbox.nrec');
+                    #inserttDescriptionQuery('left join katpodr          on katpodr.nrec = katbox.CPODR');
+                    #inserttDescriptionQuery('left join attrnam          on attrnam.wtable = 1423 and attrnam.name = :anName// это атрибут, выбранный в качество идентификатора ШК объекта');
+                    #inserttDescriptionQuery('left join attrval          on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katBox.nrec');
+                    #inserttDescriptionQuery('left join katmc            on katmc.nrec = saldobox.cMc');
+                    #inserttDescriptionQuery('left join shk_barcodelink SHK_BARCODELINK_MC on SHK_BARCODELINK_MC.wtable = 1411 and SHK_BARCODELINK_MC.crec = katmc.NREC and SHK_BARCODELINK_MC.type = 0');
+                    #inserttDescriptionQuery('left join katParty         on katparty.nrec = saldobox.cParty');
+                    #inserttDescriptionQuery('left join shk_barcodelink SHK_BARCODELINK_PARTY on SHK_BARCODELINK_PARTY.wtable = 1430 and SHK_BARCODELINK_PARTY.crec = katParty.NREC and SHK_BARCODELINK_PARTY.type = 0');
+                    #inserttDescriptionQuery('left join shk_barcodelink      on shk_barcodelink.wtable = 1423 and shk_barcodelink.crec = katbox.NREC and shk_barcodelink.type = 0');
+                    #inserttDescriptionQuery('left join KatBox KatBox_to        on KATBOX_to.nrec = #comp(0)');
+                    #inserttDescriptionQuery('left join shk_barcodelink shk_barcodelink_BoxTo on shk_barcodelink_BoxTo.wtable = 1423 and shk_barcodelink_BoxTo.crec = katbox_to.NREC and shk_barcodelink_BoxTo.type = 0');
+                    #inserttDescriptionQuery('left join SaldoBox SaldoBox_to      on SaldoBox_to.nrec = #comp(0)');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser');
+                    #inserttDescriptionQuery('left join x$users on x$users.ATL_NREC = SHK_USER.cUser');
+
+                    }
+    600,101,201,
+    501,602,601       : { // katsopr
+                    #inserttDescriptionQuery('например, katsopr.atl_lastdate >= #(BatchDate) and KatNotes.name = ''Для передачи на ТСД'' ');
+                    #inserttDescriptionQuery('          SHK_USER.name = ''#(LOGIN)''');
+                    #inserttDescriptionQuery('          SHK_TSD.name = ''#(IMEI)''');
+
+                    #inserttDescriptionQuery('****');
+                    #inserttDescriptionQuery('from katsopr');
+                    #inserttDescriptionQuery('left join KatNotes             on katnotes.nrec     = KATSOPR.cNote');
+                    #inserttDescriptionQuery('left join spsopr               on spsopr.cSopr      = KatSopr.Nrec');
+                    #inserttDescriptionQuery('left join katpodr katpodr_to   on katpodr_to.nrec   = KatSopr.cPodrTo');
+                    #inserttDescriptionQuery('left join katpodr katpodr_From on katpodr_From.nrec = KatSopr.cPodrFrom');
+                    #inserttDescriptionQuery('left join katMol katMol_to     on katMol_to.nrec    = KatSopr.cMolTo');
+                    #inserttDescriptionQuery('left join katMol katMol_From   on katMol_From.nrec  = KatSopr.cMolFrom');
+                    #inserttDescriptionQuery('left join katotped             on katotped.nrec     = spsopr.cotped');
+                    #inserttDescriptionQuery('left join katmc                on katmc.nrec        = spsopr.cmcusl and spsopr.prmc = 1');
+                    #inserttDescriptionQuery('left join shk_barcodelink SHK_BARCODELINK_MC on SHK_BARCODELINK_MC.wtable = 1411 and SHK_BARCODELINK_MC.crec = katmc.NREC and SHK_BARCODELINK_MC.type = 0');
+                    #inserttDescriptionQuery('left join katusl               on katusl.nrec       = spsopr.cmcusl and spsopr.prmc = 2');
+                    #inserttDescriptionQuery('left join specmtr SPMTR_KS     on SPMTR_KS.cotable  = 1109 and SPMTR_KS.cSpec = KatSopr.Nrec');
+                    #inserttDescriptionQuery('left join specmtr SPMTR_SP     on SPMTR_SP.cotable  = 1110 and SPMTR_SP.cSpec = SpSopr.Nrec');
+                    #inserttDescriptionQuery('left join katparty             on katparty.nrec     = spsopr.cParty');
+                    #inserttDescriptionQuery('left join shk_barcodelink SHK_BARCODELINK_PARTY on SHK_BARCODELINK_PARTY.wtable = 1430 and SHK_BARCODELINK_PARTY.crec = katParty.NREC and SHK_BARCODELINK_PARTY.type = 0');
+                    #inserttDescriptionQuery('left join attrnam on attrnam.wtable = 1109 and attrnam.name = :anName// это атрибут, выбранный в качество идентификатора ШК объекта');
+                    #inserttDescriptionQuery('left join attrval on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katsopr.nrec');
+                    #inserttDescriptionQuery('left join INBOXP on INBOXP.CSPSOPR = spsopr.nrec //and INBOXP.WTYPE = 0');
+                    #inserttDescriptionQuery('left join KATBOX on KATBOX.nrec = INBOXP.CBOX');
+                    #inserttDescriptionQuery('left join shk_barcodelink SHK_BARCODELINK_KATBOX on SHK_BARCODELINK_KATBOX.wtable = 1423 and SHK_BARCODELINK_KATBOX.crec = KATBOX.NREC and SHK_BARCODELINK_KATBOX.type = 0');
+                    #inserttDescriptionQuery('left join shk_barcodelink on shk_barcodelink.wtable = 1109 and shk_barcodelink.crec = katsopr.NREC and shk_barcodelink.type = 0');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser');
+                    #inserttDescriptionQuery('left join x$users on x$users.ATL_NREC = SHK_USER.cUser');
+
+                    }
+    615               : { //invtab
+                    #inserttDescriptionQuery('например, InvTab.atl_lastdate >= #(BatchDate) and KatNotes.name = ''Для передачи на ТСД'' ');
+                    #inserttDescriptionQuery('          SHK_USER.name = ''#(LOGIN)''');
+                    #inserttDescriptionQuery('          SHK_TSD.name = ''#(IMEI)''');
+
+                    #inserttDescriptionQuery('****');
+
+                    #inserttDescriptionQuery('from InvTab');
+                    #inserttDescriptionQuery('join SpInvTab         on SpInvTab.CINVTAB  = InvTab.Nrec');
+                    #inserttDescriptionQuery('left join KatNotes         on katnotes.nrec     = InvTab.cNote');
+                    #inserttDescriptionQuery('left join katpodr          on katpodr.nrec      = InvTab.CSKLAD');
+                    #inserttDescriptionQuery('left join katMol           on katMol.nrec       = InvTab.CMOL');
+                    #inserttDescriptionQuery('left join katmc            on katmc.nrec        = SpInvTab.cmc');
+                    #inserttDescriptionQuery('left join KATED    on kated.nrec= katmc.cEd');
+                    #inserttDescriptionQuery('left join shk_barcodelink SHK_BARCODELINK_MC on SHK_BARCODELINK_MC.wtable = 1411 and SHK_BARCODELINK_MC.crec = katmc.NREC and SHK_BARCODELINK_MC.type = 0');
+                    #inserttDescriptionQuery('left join specmtr SPMTR_SP on SPMTR_SP.cotable  = 1124 and SPMTR_SP.cSpec = SpInvTab.Nrec');
+                    #inserttDescriptionQuery('left join katparty         on katparty.nrec     = SpInvTab.cParty');
+                    #inserttDescriptionQuery('left join shk_barcodelink SHK_BARCODELINK_PARTY on SHK_BARCODELINK_PARTY.wtable = 1430 and SHK_BARCODELINK_PARTY.crec = katParty.NREC and SHK_BARCODELINK_PARTY.type = 0');
+                    #inserttDescriptionQuery('left join attrnam          on attrnam.wtable    = 1119 and attrnam.name = :anName // это атрибут, выбранный в качество идентификатора ШК объекта');
+                    #inserttDescriptionQuery('left join attrval          on attrval.cattrnam  = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = InvTab.nrec');
+                    #inserttDescriptionQuery('left join shk_barcodelink  on shk_barcodelink.wtable = 1119 and shk_barcodelink.crec = InvTab.NREC and shk_barcodelink.type = 0');
+                    #inserttDescriptionQuery('left join KatBox           On SpInvTab.cBox = KatBox.nRec');
+                    #inserttDescriptionQuery('left join shk_barcodelink SHK_BARCODELINK_KATBOX on SHK_BARCODELINK_KATBOX.wtable = 1423 and SHK_BARCODELINK_KATBOX.crec = KATBOX.NREC and SHK_BARCODELINK_KATBOX.type = 0');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM');
+                    #inserttDescriptionQuery('left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser');
+                    #inserttDescriptionQuery('left join x$users on x$users.ATL_NREC = SHK_USER.cUser');
+
+                    }
+
+  end;
+}
+
+Function GenerateNewOutFile: string;
+{
+ _logSHK_OUT := GetStringParameter('Files','OutputFilesDirectory',0)+ '\SHK_LOG_'+DateToStr(cur_date,'YYYYMMDD')+'_'+timetostr(cur_time,'HHMMSS')+'.log';
+ result := _logSHK_OUT;
+}
+
+function GetLogFile : string;
+{
+  if _logSHK_OUT = '' then _logSHK_OUT := GenerateNewOutFile;
+  result := _logSHK_OUT;
+}
+
+Procedure MyLog(_str: string; _needlog : boolean = false);
+{
+  if isvalidall(tnSHKObj)
+  if not (SHKObj.isLogging or _needlog) then exit;// debud
+  LogStrToFile(GetLogFile,DateToStr(cur_date,'YYYYMMDD')+'_'+timetostr(cur_time,'HHMMSS') + ': ' + shortstrtowin(_str));
+}
+
+Function GetTMPLTByName(_ActionName : string) : comp; cacheable;
+{
+  if not CheckLic then exit;
+  result := 0h;
+  if getfirst SHKObjChk where ((_ActionName == SHKObjChk.ACTION)) = tsOK {
+     result := SHKObjChk.nrec
+   }
+}
+procedure filltTypeObj;  // если в эту функцию что то добавляете то обязаьтельно и в getTableCodeByViddoc
+{
+  if not CheckLic then exit;
+  delete all tTypeObj;
+   _loop KatDocBR
+   {
+     insert tTypeObj set
+        tTypeObj.name    := KatDocBR.name
+      , tTypeObj.tidkGal := KatDocBR.tidkGal
+      ;
+   }
+
+     insert tTypeObj set
+        tTypeObj.name    := 'МЦ'
+      , tTypeObj.tidkGal := coTypeDocMC
+     ;
+     insert tTypeObj set
+        tTypeObj.name    := 'Подразделение'
+      , tTypeObj.tidkGal := coTypeDocPODR
+     ;
+     insert tTypeObj set
+        tTypeObj.name    := 'МОЛ'
+      , tTypeObj.tidkGal := coTypeDocMOL
+     ;
+     insert tTypeObj set
+        tTypeObj.name    := 'Партия'
+      , tTypeObj.tidkGal := coTypeDocPARTY
+     ;
+     insert tTypeObj set
+        tTypeObj.name    := 'Ячейки хранения'
+      , tTypeObj.tidkGal := coTypeDocBox
+     ;
+
+     insert tTypeObj set
+        tTypeObj.name    := 'Сальдо по ячейкам хранения'
+      , tTypeObj.tidkGal := coTypeDocBoxSaldo
+     ;
+}
+
+function GetTableNameBYTidkGal(_tidkGal, _headSP: word) : string; cacheable;
+{
+   case _tidkGal of
+    600,101,201,
+    501,602,601       : result := if(_headSP = 0, 'KATSOPR'  , 'SPSOPR'); // накладная на внутренее перемещение
+    615               : result := if(_headSP = 0, 'INVTAB'   , 'SPINVTAB') ; // Инвентарная ведомость
+    coTypeDocMC       : result := if(_headSP = 0, 'KATMC'    , 'KATOTPED') ; // МЦ, в качестве спеки пусть отпускные единицы будут
+    coTypeDocPODR     : result := if(_headSP = 0, 'KATPODR'  , '') ; //
+    coTypeDocMOL      : result := if(_headSP = 0, 'KATMOL'   , '') ; //
+    coTypeDocPARTY    : result := if(_headSP = 0, 'KATPARTY' , '') ; //
+    coTypeDocBox      : result := if(_headSP = 0, 'KATBOX'   , '') ; //
+    coTypeDocBoxSaldo : result := if(_headSP = 0, 'SALDOBOX_NOT_PERSISTENT' , 'SALDOBOX') ; //
+   else result := '';
+   end;
+}
+
+function isObjectCatalogBYTidkGal(_tidkGal : word) : boolean; cacheable;
+{
+   case _tidkGal of
+    coTypeDocMC       : result := true //'KATMC'
+    coTypeDocPODR     : result := true //'KATPODR'
+    coTypeDocMOL      : result := true //'KATMOL'
+    coTypeDocPARTY    : result := true //'KATPARTY'
+    coTypeDocBox      : result := true //'KATBOX'
+   else result := false;
+   end;
+}
+
+Function getShkTidkGalbyTypeCpNrec(_typeCpNrec : word) : word;
+{
+  result := _typeCpNrec;
+  case _typeCpNrec of
+   1101 : result := 0; // До снабжение
+   1201 : result := 0; // ДО сбыт
+   1501 : result := 0; //  ДО/ЛЗК на отпуск в производство
+   2101 : result := 101; // Приходная накладная
+   2111 : result := 0; // Акт на прием услуг
+   2201 : result := 201; // Накладная на отпуск
+   2211 : result := 0; // Акт на оказание услуг
+   2106 : result := 0; // Накладная на возврат товаров по рекламации в продаже
+   2626 : result := 0; // Акт на возврат оборудования и материалов
+   2501 : result := 501; // Накладная на отпуск в производство /склад-подразделение/
+   2502 : result := 0; // Накладная на приход готовой продукции из производства /подразделение-склад/
+   2503 : result := 0; // Накладная на возврат сырья из производства /подразделение-склад/
+   2504 : result := 0; // Акт на списание МЦ из производства /подразделение-.../
+   2505 : result := 0; // Межцеховая накладная (полуфабрикат) /подразделение-подразделение/
+   2506 : result := 0; // Накладная на внутреннее перемещение в производстве (МЦ) /подразделение-подразделение/
+   2507 : result := 0; // Акт на брак
+   2508 : result := 0; // Акт на оказание услуг
+   2600 : result := 600; // Накладная на внутреннее перемещение - склад
+   2601 : result := 601; // Накладная на передачу МЦ в ОС	601
+   2602 : result := 602; // Накладная на передачу МЦ в спецоснастку	602
+   2650 : result := 615; // Инвентаризационная опись складского учета	615
+   2630 : result := 0; // Акт пересортицы - склад
+   2532 : result := 0; // Накладная на расход сырья /по накладной на приход готовой продукции из производства /
+    74  : result := 0; // СФ сбыт
+    75  : result := 0; // СФ поставщика
+    7   : result := 0; // договор
+    6   : result := 0; // Ссылка на Indent
+    8   : result := 0; // Ссылка на CalPlan
+    9   : result := 0; // Ссылка на OperPlan
+    10  : result := 0; // Ссылка на SklOrder
+    11  : result := 0; // Ссылка на RsvOper
+   3101 : result := 0; // на всякий
+   3111 : result := 0; // Сводный сопроводительный документ снабжение
+   3201 : result := 0; //сводная накладная
+   3211 : result := 0; // Сводный сопроводительный документ сбыт
+  end;
+}
+Function getTableCodeByViddoc(_viddoc : word) : word; cacheable;
+{
+  result := 0;
+  var _tableName : string = GetTableNameBYTidkGal(_viddoc, 0);
+
+  result := word(gettableCodebyTableName(_tableName));
+}
+
+function allowtidkGal(_tidkGal: word) : boolean; cacheable;
+{
+ if GetTableNameBYTidkGal(_tidkGal, 0) <> ''
+   then result := true
+   else result := false;
+}
+function fillttActionsByTidkGal(_tidkGal: word) : boolean; cacheable;
+{
+  delete all tActions;
+   case _tidkGal of
+    600,101,201, 501 :  {result := true; // накладная на внутренее перемещение
+      insert tActions set tActions.name := 'CREATEORDERS', tActions.DESCRIPTION := 'Сформировать ордера';
+      insert tActions set tActions.name := 'SAVEDOC'     , tActions.DESCRIPTION := 'Сохранить документ';
+      insert tActions set tActions.name := 'SETSTATUS_1' , tActions.DESCRIPTION := 'Установить статус 1';
+      insert tActions set tActions.name := 'SETSTATUS_2' , tActions.DESCRIPTION := 'Установить статус 2';
+      insert tActions set tActions.name := 'SETSTATUS_3' , tActions.DESCRIPTION := 'Установить статус 3';
+     }
+    602,601 :  {result := true; // накладная склад-ос, склад-спецоснастка
+      insert tActions set tActions.name := 'SAVEDOC'     , tActions.DESCRIPTION := 'Сохранить документ';
+      insert tActions set tActions.name := 'SETSTATUS_1' , tActions.DESCRIPTION := 'Установить статус 1';
+      insert tActions set tActions.name := 'SETSTATUS_2' , tActions.DESCRIPTION := 'Установить статус 2';
+      insert tActions set tActions.name := 'SETSTATUS_3' , tActions.DESCRIPTION := 'Установить статус 3';
+     }
+
+    615 : {result := true ; // Инвентарная ведомость
+      insert tActions set tActions.name := 'SAVEDOC',   tActions.DESCRIPTION := 'Сохранить документ';
+      insert tActions set tActions.name := 'SETSTATUS_1', tActions.DESCRIPTION := 'Установить статус';
+      insert tActions set tActions.name := 'SETSTATUS_2' , tActions.DESCRIPTION := 'Установить статус 2';
+      insert tActions set tActions.name := 'SETSTATUS_3' , tActions.DESCRIPTION := 'Установить статус 3';
+     }
+     coTypeDocBoxSaldo : {
+      result := true; // накладная на внутренее перемещение
+      insert tActions set tActions.name := 'MOVEBOX', tActions.DESCRIPTION := 'Переместить между ячейками';
+     }
+   else result := false;
+   end;
+}
+
+function isStatusAllow(_cNote : comp) : boolean;
+{
+//  MyLog('isStatusAllow start')
+//  MyLog('_cNote= '+_cNote);
+
+  result := false;
+  if getfirst SHKObjSP_AllowStatus <> tsOK then
+   {
+//      MyLog('if getfirst SHKObjSP_AllowStatus <> tsOK meen all allowed');
+     result := true;
+     exit;
+   }
+   _loop SHKObjSP_AllowStatus  {
+//      MyLog('_loop SHKObjSP_AllowStatus SHKObjSP_AllowStatus.addcomp = ' + SHKObjSP_AllowStatus.addcomp);
+     if SHKObjSP_AllowStatus.addcomp = _cNote {
+//      MyLog('_loop SHKObjSP_AllowStatus addcomp = _cNote! ');
+        result := true;
+        break;
+       }
+    }
+//    MyLog('  result ='+result);
+//  MyLog('isStatusAllow end')
+}
+function GetSpecFieldIDName : string;
+{
+  result := '';
+  case GetTableNameBYTidkGal(SHKObj.VIDDOC, 1) of
+   'SPSOPR'   : result := 'SPSOPR_NREC';
+   'SPINVTAB' : result := 'SPINVTAB_NREC';
+   'SALDOBOX' : result := 'SALDOBOX_NREC';
+   end;
+
+}
+function getspActionName(_FieldName : string) : string; cacheable;
+{
+  result := '';
+    _loop SHKObjSP_SP {
+      if SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME = _FieldName {
+        if getfirst SHKObjAction = tsOK then result := SHKObjAction.ACTION;
+        break;
+       }
+    }
+mylog(' getspActionName : _FieldName = ' + _FieldName);
+mylog(' getspActionName : ACTION = ' + result);
+}
+
+function getNameDataType(_type : byte) : string; cacheable;
+{
+  case _type of
+        4 : result := 'word'
+        6 : result := 'longint'
+        7 : result := 'date'
+        8 : result := 'time'
+       11 : result := 'double'
+       12 : result := 'string'
+       17 : result := 'comp'
+   else result := string(_type)
+  end;
+}
+
+function PosR(_substr: string; _s: string): byte;
+var ww_str:string;
+    ii :word;
+    len_sub:word;
+{ ww_str:='';
+  Result:=0;
+  len_sub:=length(_substr);
+  for(ii:=length(_s);ii>0;ii--)
+  { ww_str:=substr(_s,ii,1)+ww_str;
+    if substr(ww_str,1,len_sub)=_substr
+    { Result:=ii;
+      break
+    }
+  }
+} //function PosR(substr: string; s: string): byte;
+
+
+function gettableCodebyTableName(_name : string) : string; cacheable;
+{
+  result := '';
+ if getfirst x$files where ((_name == x$files.xf$name)) = tsOK
+   then {
+       result := String(x$files.xf$code);
+       exit;
+     }
+
+  var _posr_ : word= PosR('_', _name);
+  if _posr_ > 0 {
+        _name := substr(_name,1,_posr_ - 1);
+       if getfirst x$files where ((_name == x$files.xf$name)) = tsOK
+         then {
+             result := String(x$files.xf$code);
+             exit;
+           }
+     }
+
+}
+
+procedure insertCU_tFields(_NPP : byte; _tableName : string);
+{
+        Insert tFields set
+            tFields.NAME      := 'KAU_'+string(_NPP)
+          , tFields.TITLE     := _tableName + ' ЦУ KAU['+string(_NPP) +']'
+          , tFields.SYSNAMETBL := 'CU_'+gettableCodebyTableName(_tableName)
+          , tFields.DATATYPE  := 'Строковое представление' //getNameDataType(x$fields.XE$DATATYPE)
+        ;
+}
+procedure inserttFieldsByTableName(_tableName : string; _postFixTBL : string = ''; _postFixName : string = '');
+{
+ _loop x$fields where ((gettableCodebyTableName(_tableName) == x$fields.XE$FILECODE))
+    {
+        Insert tFields set
+            tFields.NAME       := x$fields.XE$NAME
+          , tFields.TITLE      := _tableName + _postFixTBL+' ' +x$fields.XE$TITLE + ' ' + _postFixName
+          , tFields.SYSNAMETBL := _tableName+_postFixTBL
+          , tFields.DATATYPE   := getNameDataType(x$fields.XE$DATATYPE)
+        ;
+    }
+}
+Function getdatatypebyTableField(_tableName, _field : string) : string;
+{
+  result := 'STRING';
+   if getfirst x$fields where ((gettableCodebyTableName(_tableName) == x$fields.XE$FILECODE
+    and _field == x$fields.XE$NAME)) = tsOK
+    {
+     case x$fields.XE$DATATYPE of
+        4 : result := 'NUMERIC'
+        6 : result := 'NUMERIC'
+//        7 : result := 'date'
+//        8 : result := 'time'
+       11 : result := 'NUMERIC'
+//       12 : result := 'string'
+       17 : result := 'NUMERIC'
+       end;
+    }
+
+}
+procedure addAttrValsByTableName(_tableName : string);
+{
+
+   _loop attrnam where ((gettableCodebyTableName(_tableName) == attrnam.wtable))
+    {
+        Insert tFields set
+            tFields.NAME      := attrnam.name
+          , tFields.TITLE     := _tableName+' Внешний атрибут'
+          , tFields.SYSNAMETBL := 'VA_' + gettableCodebyTableName(_tableName)
+          , tFields.DATATYPE  := 'Строковое представление' //getNameDataType(x$fields.XE$DATATYPE)
+        ;
+    }
+
+}
+
+
+function filltFieldsby_tidkGal(_tidkGal, _headSP : word) : boolean;
+{
+  if not CheckLic then exit;
+result := false;
+  delete all tFields;
+if pos('_NOT_PERSISTENT',GetTableNameBYTidkGal(_tidkGal, _headSP)) = 0 // например отчет хотим по сальдо, у него в шапке как бы пусто, а таблицуы реальные будут пересекатьсчя с другими сущностями
+if gettableCodebyTableName(GetTableNameBYTidkGal(_tidkGal, _headSP)) = '' then exit;
+
+  inserttFieldsByTableName(GetTableNameBYTidkGal(_tidkGal, _headSP));
+    // список внешний атрибутов
+    addAttrValsByTableName(GetTableNameBYTidkGal(_tidkGal, _headSP));
+
+    // данные о ЦУ
+    case GetTableNameBYTidkGal(_tidkGal, _headSP) of
+    'SPSOPR', 'SPINVTAB': {
+      insertCU_tFields( 1, GetTableNameBYTidkGal(_tidkGal, _headSP));
+      insertCU_tFields( 2, GetTableNameBYTidkGal(_tidkGal, _headSP));
+      insertCU_tFields( 3, GetTableNameBYTidkGal(_tidkGal, _headSP));
+      insertCU_tFields( 4, GetTableNameBYTidkGal(_tidkGal, _headSP));
+      insertCU_tFields( 5, GetTableNameBYTidkGal(_tidkGal, _headSP));
+      insertCU_tFields( 6, GetTableNameBYTidkGal(_tidkGal, _headSP));
+      insertCU_tFields( 7, GetTableNameBYTidkGal(_tidkGal, _headSP));
+      insertCU_tFields( 8, GetTableNameBYTidkGal(_tidkGal, _headSP));
+      insertCU_tFields( 9, GetTableNameBYTidkGal(_tidkGal, _headSP));
+      insertCU_tFields(10, GetTableNameBYTidkGal(_tidkGal, _headSP));
+    }
+    end;
+
+    if GetTableNameBYTidkGal(_tidkGal, _headSP) = 'SPSOPR'
+     {
+       inserttFieldsByTableName('KATUSL');
+       inserttFieldsByTableName('KATMC');
+       inserttFieldsByTableName('KATOTPED');
+       inserttFieldsByTableName('KATPARTY');
+       inserttFieldsByTableName('INBOXP');
+       inserttFieldsByTableName('KATBOX');
+       inserttFieldsByTableName('SHK_BARCODELINK','_MC','к матценности');
+       inserttFieldsByTableName('SHK_BARCODELINK','_PARTY','к партии');
+       inserttFieldsByTableName('SHK_BARCODELINK','_KATBOX','к ячейке');
+
+       addAttrValsByTableName('KATPARTY');
+       addAttrValsByTableName('KATMC');
+     }
+
+    if GetTableNameBYTidkGal(_tidkGal, _headSP) = 'INVTAB'
+     {
+       inserttFieldsByTableName('KATPODR');
+       inserttFieldsByTableName('KATMOL' );
+       inserttFieldsByTableName('KATNOTES');
+     }
+
+    if GetTableNameBYTidkGal(_tidkGal, _headSP) = 'SPINVTAB'
+     {
+       inserttFieldsByTableName('KATMC');
+       inserttFieldsByTableName('KATED');
+       inserttFieldsByTableName('KATPARTY');
+       inserttFieldsByTableName('KATBOX');
+       inserttFieldsByTableName('SHK_BARCODELINK','_MC','к матценности');
+       inserttFieldsByTableName('SHK_BARCODELINK','_PARTY','к партии');
+       inserttFieldsByTableName('SHK_BARCODELINK','_KATBOX','к ячейке');
+
+
+       addAttrValsByTableName('KATPARTY');
+       addAttrValsByTableName('KATMC');
+     }
+
+    if GetTableNameBYTidkGal(_tidkGal, _headSP) = 'KATSOPR'
+     {
+       inserttFieldsByTableName('KATPODR', '_TO','куда');
+       inserttFieldsByTableName('KATMOL' , '_TO','куда');
+       inserttFieldsByTableName('KATPODR', '_FROM','откуда');
+       inserttFieldsByTableName('KATMOL' , '_FROM','откуда');
+       inserttFieldsByTableName('KATNOTES');
+       inserttFieldsByTableName('KATORG');
+     }
+
+
+
+    if GetTableNameBYTidkGal(_tidkGal, _headSP) = 'KATMC'
+     {
+       inserttFieldsByTableName('KATED');
+       inserttFieldsByTableName('GROUPMC');
+       inserttFieldsByTableName('GRNAL');
+       inserttFieldsByTableName('TYPEMC');
+       inserttFieldsByTableName('STZATR');
+       inserttFieldsByTableName('KAELEM');
+       inserttFieldsByTableName('SHK_BARCODELINK','','к МЦ');
+     }
+
+    if GetTableNameBYTidkGal(_tidkGal, _headSP) = 'KATPODR'
+     {
+       inserttFieldsByTableName('DEPFUNC');
+       inserttFieldsByTableName('GRPODR');
+       inserttFieldsByTableName('KATKOD');
+       inserttFieldsByTableName('SHK_BARCODELINK','','к подразделению');
+     }
+
+    if GetTableNameBYTidkGal(_tidkGal, _headSP) = 'KATMOL'
+     {
+       inserttFieldsByTableName('KATPODR');
+     }
+
+    if GetTableNameBYTidkGal(_tidkGal, _headSP) = 'KATPARTY'
+     {
+       inserttFieldsByTableName('KATMC');
+       inserttFieldsByTableName('KATNOTES');
+       inserttFieldsByTableName('GROUPPARTY');
+       inserttFieldsByTableName('SHK_BARCODELINK','','к партии');
+     }
+
+
+    if GetTableNameBYTidkGal(_tidkGal, _headSP) = 'KATBOX'
+    {
+       inserttFieldsByTableName('KATBOX' , '_UP','вышестоящая');
+       inserttFieldsByTableName('KATPODR');
+       addAttrValsByTableName('KATPODR');
+       addAttrValsByTableName('KATBOX');
+       inserttFieldsByTableName('SHK_BARCODELINK','','к ячейке');
+    }
+    if GetTableNameBYTidkGal(_tidkGal, _headSP) = 'SALDOBOX_NOT_PERSISTENT'
+    {
+       inserttFieldsByTableName('KATBOX');
+       inserttFieldsByTableName('KATPODR');
+       addAttrValsByTableName('KATPODR');
+       addAttrValsByTableName('KATBOX');
+
+    }
+
+   if GetTableNameBYTidkGal(_tidkGal, _headSP) = 'SALDOBOX'
+    {
+       inserttFieldsByTableName('KATMC');
+       inserttFieldsByTableName('KATPARTY');
+       inserttFieldsByTableName('KATBOX', '_TO','куда');
+       inserttFieldsByTableName('SALDOBOX', '_TO','куда');
+       inserttFieldsByTableName('SHK_BARCODELINK','_MC','к матценности');
+       inserttFieldsByTableName('SHK_BARCODELINK','_PARTY','к партии');
+
+       inserttFieldsByTableName('SHK_BARCODELINK','_BOXTO','ячейка куда');
+
+
+       addAttrValsByTableName('KATMC');
+       addAttrValsByTableName('KATPARTY');
+    }
+
+
+ if getfirst tFields = tsOK {result := true;}
+
+}
+
+Function isExistSpec : boolean;
+{
+  result := false;
+  if  (getfirst SHKObjSP_BTN = tsOK
+    or getfirst SHKObjSP_HEAD = tsOK
+    or getfirst SHKObjSP_SP = tsOK
+   ) { result := true;}
+}
+end.

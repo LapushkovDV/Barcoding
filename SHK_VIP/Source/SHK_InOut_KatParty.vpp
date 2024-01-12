@@ -1,0 +1,191 @@
+sql query queryKatParty =
+      select distinct
+        %SelectFieldsSys
+       ,%IdentityField                        as SYS_BARCODE
+        %SelectFields
+       from KatParty
+          left join katmc                on katmc.nrec        = KatParty.cMC
+          left join GROUPPARTY  on GROUPPARTY.nrec = KatParty.CGROUPPARTY
+          left join attrnam     on attrnam.wtable = 1430 and attrnam.name = :anName
+          left join attrval     on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katParty.nrec
+          left join shk_barcodelink on shk_barcodelink.wtable = 1430 and shk_barcodelink.crec = KatParty.NREC and shk_barcodelink.type = 0
+          left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD
+          left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM
+          left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser
+          left join x$users on x$users.ATL_NREC = SHK_USER.cUser
+
+       where  %IdentityFieldWhere = :pIdent // если меняете запрос, то обязательно исправьте функцию Fill_fieldArray
+         and (
+              %WhereFields
+             )
+;
+
+function GetResultQueryForKatParty(_pcSHKObj: comp; _pIdent : string) : IResultSet;
+{
+
+   if not BoundActive(tbbySHKObjNrec) then
+   {
+    set _cSHKObj := _pcSHKObj;
+    pushbounds(tbbySHKObjNrec);
+   }
+
+  var qKatParty : iQuery = queryManager.createQuery(queryKatParty);
+    var SelectFields : longint = 0;
+
+   _loop SHKObjSP_HEAD
+     {
+        if pos('VA_1430',SHKObjSP_HEAD.SYSNAMETBL) = 1 then continue;
+        MysqlAddStr( SelectFields ,' ,  ' +SHKObjSP_HEAD.SYSNAMETBL + '.'+SHKObjSP_HEAD.SYSNAME + ' as ' +SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME  );
+     }
+ var _anName : string;
+  var Identificator : longint = 0;
+
+        if pos('VA_1430',SHKOBJ.SYSNAMETBL) = 1
+        then
+          {
+           _anName := SHKOBJ.SYSNAME;
+           MysqlAddStr( Identificator ,'attrval.vstring');
+           mylog('    %IdentityField =attrval.vstring');
+          }
+        else
+          {
+          _anName := '---';
+           MysqlAddStr( Identificator ,SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME ) ;
+           mylog('    %IdentityField =' + SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME );
+          }
+
+  qKatParty.setMacro('IdentityField', Identificator);
+
+  qKatParty.setMacro('SelectFields', SelectFields);
+
+
+   var SelectFieldsSys : longint = 0;
+   MysqlAddStr( SelectFieldsSys, ' KatParty.NREC                           as SYS_KATPARTY_NREC');
+
+  qKatParty.setMacro('SelectFieldsSys', SelectFieldsSys);
+  qKatParty.setMacro('IdentityFieldWhere', Identificator);
+   var WhereFields : longint = 0;
+       MysqlAddStr( WhereFields ,' 1=1');
+
+  qKatParty.setMacro('WhereFields', WhereFields);
+
+
+
+  qKatParty.setParam('anName', _anName);
+   var _type : byte = GetTypeByTableAndField(SHKOBJ.SYSNAMETBL, SHKOBJ.SYSNAME);
+   mylog('    _type = '+_type) ;
+ case _type of
+        4 :  qKatParty.setParam('pIdent',    word(_pIdent) );
+        6 :  qKatParty.setParam('pIdent', longint(_pIdent) );
+       11 :  qKatParty.setParam('pIdent',  double(_pIdent) );
+       17 :  qKatParty.setParam('pIdent',    comp(_pIdent) );
+        else qKatParty.setParam('pIdent',  _pIdent);
+   end;
+
+   result := qKatParty.getResultSet;
+
+}
+
+function GenerateJSON_VALUES_KATPartyOne(_ActionName: string; _pIdent: string; var _err : string) : TpTr;
+{
+ var iRes : IResultSet = GetResultQueryForKatParty(GetTMPLTByName(_ActionName), _pIdent);
+
+
+  var JSONObj_VALUES: TPtr = HttpConnect_JsonObjectCreate(m_service);
+//  var JSONObj_Array : TPtr = 0;
+//  var JSONObj_ArrayOneElement : tptr =0  ;
+
+ if NullVipRef(iRes) then
+ {
+
+//    HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'ERROR', 'ОШИБКА ВЫПОЛНЕНИЯ ЗАПРОСА В БД');
+    _err := 'ОШИБКА ВЫПОЛНЕНИЯ ЗАПРОСА В БД';
+    result := 0;
+    exit;
+
+ }
+
+ if iRes.getFirst <>  tsOk
+  {
+//    HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'ERROR', 'НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = ' + _pIdent);
+    _err := 'НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = ' + _pIdent;
+    result := 0;
+    exit;
+  }
+
+        var _SYS_KATParty_NREC      : comp = 0h;
+
+         _SYS_KATParty_NREC      := iRes.row.val('SYS_KATPARTY_NREC');
+
+        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'OBJECTACTION', SHKObj.Action);
+        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'IDOBJECT'       , String(_SYS_KATParty_NREC));
+        var _SYS_BARCODE   : string = iRes.row.val('SYS_BARCODE');
+        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'SYS_BARCODE'       , String(_SYS_BARCODE));
+
+//       JSONObj_Array := HttpConnect_JsonArrayCreate(m_service);
+
+//      var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
+     var JSONObj_FIELDS : tptr = HttpConnect_JsonObjectCreate(m_service);
+       _loop SHKObjSP_HEAD
+         {
+           var _value : string = coUnRealString;
+//           var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
+
+           if pos('VA_1430',SHKObjSP_HEAD.SYSNAMETBL) = 1 then {
+                _value := piextattr.sgetattr(1430, _SYS_KATParty_NREC, SHKObjSP_HEAD.SYSNAME);
+             }
+
+
+             if _value = coUnRealString then _value := iRes.row.val(SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME);
+//             HttpConnect_JsonObjectAddString(m_service, JSONObj_ArrayOneElement, SHKObjSP_HEAD.SYSNAMETBL+'_'+SHKObjSP_HEAD.SYSNAME, _value);
+
+             HttpConnect_JsonObjectAddString(m_service, JSONObj_FIELDS, SHKObjSP_HEAD.SYSNAMETBL+'_'+SHKObjSP_HEAD.SYSNAME, _value);
+//           HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement);
+         }
+//         HttpConnect_JsonObjectAddObject(m_service, JSONObj_VALUES, 'FIELDS', JSONObj_Array);
+          HttpConnect_JsonObjectAddObject(m_service, JSONObj_VALUES, 'FIELDS', JSONObj_FIELDS);
+
+  result := JSONObj_VALUES;
+}
+
+
+function GetResultQueryForKatPartyBatch(_pcSHKObj: comp; _pIdent : string;  _login: string; _imei : string) : IResultSet;
+{
+  // 1 заполняем системные поля выборки
+   var SelectFieldsSys : longint = 0;
+   MysqlAddStr( SelectFieldsSys, '  KatParty.NREC                           as SYS_KATPARTY_NREC');
+
+  #BatchBodyFunctionGetResultQuery(queryKatParty,1430)
+ // 2 добавляем параметры в запрос
+ //  _Query.setParam('',  SHKObj.viddoc); --  тут нечего добавлять
+
+  result := _Query.getResultSet;
+
+//  message(qKatMC.errorCode)
+}
+
+function GenerateJSON_VALUES_KatParty(_ActionName: string; _pIdent: string; var _err : string; _login: string = ''; _imei : string = '') : TpTr;
+{
+  #Function_GenerateJSON_VALUES_Body(GetResultQueryForKatPartyBatch,GenerateJSON_VALUES_KatPartyOne,SYS_KATPARTY_NREC,coKatParty)
+}
+
+
+function GetPARTYNRECByIdent(_ActionName: string; _pIdent: string) : comp;
+{
+ mylog('  GetPARTYNRECByIdent: _ActionName='+_ActionName+ '  _pIdent=' +_pIdent );
+ result := 0h;
+ var iRes : IResultSet = GetResultQueryForKatParty(GetTMPLTByName(_ActionName), _pIdent);
+ Setvisualheader('выполнение запроса в СУБД');
+ if NullVipRef(iRes) then {
+   mylog('  GetPARTYNRECByIdent: ОШИБКА ВЫПОЛНЕНИЯ ЗАПРОСА В БД');
+//    _err := 'ОШИБКА ВЫПОЛНЕНИЯ ЗАПРОСА В БД';
+    exit;
+ }
+ if iRes.getFirst <>  tsOk {
+//    _err := 'НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = "' + _pIdent+'"';
+    mylog('  GetPARTYNRECByIdent: НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = "' + _pIdent+'"');
+    exit;
+  }
+ Result    := iRes.row.val('SYS_KATPARTY_NREC');
+ mylog('  GetPARTYNRECByIdent: Result = ' + Result);
+}

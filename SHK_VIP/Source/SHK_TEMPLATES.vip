@@ -1,0 +1,466 @@
+/*************************************************************************************************\
+* Наименование: Ведение телефонного справочника                                                   *
+* Контур/Модуль: Кадры                                                                            *
+* Примечание:                                                                                     *
+*                                                                                                 *
+* Вид работы  |Номер         |Дата    |Исполнитель              |Проект                           *
+* ----------------------------------------------------------------------------------------------- *
+
+\*************************************************************************************************/
+
+#include getsnote.vih
+#include SHK_TEMPLATES.vih
+#include SHK_InOut.vih
+//************************************************************
+const
+end;
+Interface SHK_TEMPLATES 'Шаблоны объектов штрихкодирования. Просмотр/редактирование';
+function GetAllowStatus : string; forward;
+create view
+var _bVIDDOC : word;
+    _cParent : comp;
+    _isGroupCreate : boolean = False;
+as select
+  GetAllowStatus() (FieldName = AllowStatus)
+from SHK_TMPLT_OBJSP SHKObjSP_Del
+   , SHK_TMPLT_OBJ   SHKObjSel
+   , SHK_TMPLT_OBJ   SHKObj_UP
+   , SHK_TMPLT_OBJ   SHKObj_group
+   , SHK_TMPLT_OBJ   SHKObj_Copy
+   , SHK_TMPLT_OBJ   SHKObj_New
+   , SHK_TMPLT_OBJSP SHKObjSP_copy
+   , SHK_TMPLT_OBJSP SHKObjSP_new
+
+where ((SHKObj.cGroup == SHKObj_UP.nrec
+      and True == SHKObj_group.isGroup
+     and (SHKObj_group.nrec <> SHKObj.nrec)
+))
+
+bounds showBrowse false == SHKObj.ISGROUP
+
+bounds showTree _cParent == SHKObj.cGroup
+
+bounds byTipDoc
+ _bVIDDOC == SHKObjSel.VIDDOC
+
+;
+
+function GetAllowStatus : string;
+{
+  var _cnt : word = 0;
+   _loop SHKObjSP_AllowStatus _cnt++;
+
+ result := if(_cnt = 0,'Все','Выбрано ' + string(_cnt))
+}
+
+ procedure updateSHKObjBlockRows;
+ {
+   var _BlockRows : boolean = false;
+    _loop SHKObjSP_HEAD
+     {
+       if SHKObjSP_HEAD.nullable then {
+         _BlockRows := true;
+         break;
+        }
+     }
+     if not _BlockRows then {
+        _loop SHKObjSP_SP
+         {
+           if SHKObjSP_SP.nullable then {
+             _BlockRows := true;
+             break;
+            }
+         }
+     }
+   update current SHKObj set SHKObj.BlockRows := _BlockRows;
+   rescanpanel(tnSHKObj);
+ }
+
+Procedure SetProtectFields;
+{
+  cfsSetProp('i_SCRSHK_GETPARAMETER_SHKOBJ.MENUPOINTNAME','Skip',not(SHKObj.IsMenuPoint));
+}
+Procedure SetSkipFields;
+{
+ cfsSetProp('c_BRSHKOBJSP_BTN_SHKOBJSP_BTN.ISDELETEDOC_Удалять_с_ТСД_после_обработки','Skip',not(SHKObjSP_BTN.isSynchAction));
+}
+procedure SetVisibleAllowStatus;
+{
+  var _visible : boolean = false;
+  case SHKObj.VIDDOC of
+    600, 101, 201, 501, 602, 601, 615  : _visible := true; // накладные
+   else _visible := false;
+  end;
+
+  cfsSetProp('L_SCRSHK_GETPARAMETER_Статусы_для_передачи_на_ТСД','Visible',_visible);
+  cfsSetProp('i_SCRSHK_GETPARAMETER_ALLOWSTATUS','Visible',_visible);
+  SetProtectFields;
+  SetSkipFields;
+}
+
+Procedure PositionChanged;
+{
+  SetVisibleAllowStatus;
+}
+
+#include SHK_TEMPLATES.pan
+Function fnSelObjActions(_fnviddoc : word = 0) : comp;
+{
+  result := 0h;
+  if _fnVIDDOC <> 0 {
+     popbounds(tbbyTipDoc);
+     set _bVIDDOC := _fnviddoc;
+     pushbounds(tbbyTipDoc);
+  }
+
+  if runwindowmodal(winSelObjActions) = cmDefault {
+      result := SHKObjSel.nrec;
+    }
+   popbounds(tbbyTipDoc);
+}
+Function SelectVIDDOC : word;
+{
+  filltTypeObj;
+  result := 0;
+if RunWindowmodal(wintTypeObj) = cmDefault then result := tTypeObj.tidkGal;
+}
+Function SelectGroup : word;
+{
+  filltTypeObj;
+  result := 0;
+if RunWindowmodal(wintTypeObj) = cmDefault then result := tTypeObj.tidkGal;
+}
+Procedure CopyTemplate(_cRec : comp);
+{
+  if not CheckLic then exit;
+  if getfirst SHKObj_Copy where ((_cRec == SHKObj_Copy.nrec)) <> tsOK {
+    exit;
+  }
+ if SHKObj_Copy.isGroup = True then {
+   exit;
+ }
+   var _Action : string = '';
+   var _ActionTmp : string = '';
+
+   if length(_Action) < 250 {
+     var _i : word = 0;
+     for (_i := 1; _i<= 100; _i++) {
+       _ActionTmp := SHKObj_Copy.action +'_copy_'+ string(_i);
+       if getfirst SHKObj_new where ((_ActionTmp == SHKObj_new.action)) <> tsOK {
+         _Action := _ActionTmp;
+         break;
+       }
+     }
+   }
+   if _Action = '' {
+     _Action := OleGenerateGUID;
+   }
+
+    SHKObj_new.buffer := SHKObj_Copy.buffer ;
+    SHKObj_new.nrec   := 0h;
+    SHKObj_new.Action := _Action;
+   Insert current SHKObj_new;
+
+   var _newNrec : comp = SHKObj_new.nrec;
+
+    _loop SHKObjSP_copy where ((SHKObj_Copy.nrec == SHKObjSP_copy.cSHK_TMPLT_OBJ)) {
+        SHKObjSP_new.buffer         := SHKObjSP_copy.buffer;
+        SHKObjSP_new.nrec           := 0h;
+        SHKObjSP_new.cSHK_TMPLT_OBJ := _newNrec;
+       Insert current SHKObjSP_new;
+    }
+ message('Шаблон скопирован.'+
+   ''#13'' + 'Новый шаблон: ACTION = "'+SHKObj_new.Action+'"');
+
+   treeJumpToRecord(trSHKObj, SHKObj_new.nrec);
+   rereadrecord;
+}
+
+handleevent // фейса
+cmCheckField: {
+   Case CurField of
+       #SHKObj.UserSysBarcode: {
+         pushpos(#SHKObjSP_HEAD);
+          _loop SHKObjSP_HEAD update current SHKObjSP_HEAD set SHKObjSP_HEAD.ISIdentifier := false;
+         poppos(#SHKObjSP_HEAD);
+
+         if SHKObj.UserSysBarcode = 1 {
+           SHKObj.SYSNAMETBL := 'SHK_BARCODELINK';
+           SHKObj.SYSNAME    := 'BARCODE';
+         }
+         else {
+           if isvalidall(tnSHKObjSP_HEAD) {
+               SHKObj.SYSNAMETBL := SHKObjSP_HEAD.SYSNAMETBL;
+               SHKObj.SYSNAME    := SHKObjSP_HEAD.SYSNAME;
+              update current SHKObjSP_HEAD set SHKObjSP_HEAD.ISIdentifier := true;
+           }
+         }
+     }
+    end;
+   updatetable;
+ SetProtectFields;
+ updateSHKObjBlockRows;
+
+ rereadrecord;
+}
+cmPick:{
+  case curfield of
+     #SHKObj_UP.name: {
+         var _crec : comp = SHKObj.nrec;
+       if runWindowModal(wintSelGroup) = cmDefault {
+         update current SHKObj set SHKObj.cGroup := SHKObj_group.nrec;
+         treeJumpToRecord(trSHKObj, _crec);
+         set _cParent := SHKObj.cGroup;
+
+       }
+       rescanpanel(tnSHKObj_UP);
+       rescanpanel(tnSHKObj);
+     }
+     #tTypeObjWin.name :{
+       if isExistSpec {
+         message('Существует спецификация, менять тип документа нельзя',error);
+         stop; abort; exit;
+        }
+         set SHKObj.VIDDOC := SelectVIDDOC;
+         updatetable;
+     }
+     #NoteAfterBatch.name: {
+        case SHKObj.viddoc of
+         600, 101, 201, 501, 602, 601 // накладные
+         , 615: { // инвентарная ведомость
+                            If(RunInterface('L_Dogovor::GetSomKatNotes', SHKObj.VIDDOC, 0, 0, False, SHKObj.cNoteAfterBatch, IGetSomKatNotes(NullRef)) = CmDefault) {
+                                  Set SHKObj.cNoteAfterBatch := SHKObj.cNoteAfterBatch;
+                                  update current SHKObj;
+                              }
+                           }
+         else message('Используется только в накладных',error)
+         end;
+       }
+      #SHKObjSP_HEAD.SysName : {
+      updatetable;
+      if filltFieldsby_tidkGal(SHKObj.VIDDOC, 0) {
+         if runwindowModal(wintFields) = cmdefault {
+             SHKObjSP_HEAD.SysName    := tFields.NAME;
+             SHKObjSP_HEAD.SYSNAMETBL := tFields.SYSNAMETBL;
+              if SHKObjSP_HEAD.Name = '' then {
+                SHKObjSP_HEAD.Name := tFields.title;
+               }
+             update current SHKObjSP_HEAD
+         }
+        }
+        else
+         {
+           message(' К данному типу доркумента не предусмотренн выбор полей. ''#13'' обратитесь к разработчику',error)
+         }
+     }
+    #SHKObjSP_HEAD.ISIdentifier: {
+           pushpos(#SHKObjSP_HEAD);
+            _loop SHKObjSP_HEAD update current SHKObjSP_HEAD set SHKObjSP_HEAD.ISIdentifier := false;
+           poppos(#SHKObjSP_HEAD);
+       if SHKObj.UserSysBarcode = 0 {
+           update current SHKObj set
+              SHKObj.SYSNAMETBL := SHKObjSP_HEAD.SYSNAMETBL
+            , SHKObj.SYSNAME    := SHKObjSP_HEAD.SYSNAME
+           ;
+           update current SHKObjSP_HEAD set SHKObjSP_HEAD.ISIdentifier := true;
+       }
+     }
+     #SHKObjAction.ACTION: {
+      if runwindowmodal(winSelObjActions) = cmDefault {
+        if SHKObjSel.nrec <> SHKObj.nrec then set SHKObjSP_SP.ACTION := SHKObjSel.nrec
+        else message('Нельзя выбирать действие, ссылающееся само на себя', error);
+       updatetable;
+      }
+     }
+     #SHKObjSP_SP.SysName : {
+      if GetSpecFieldIDName = SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME then
+      {
+       stop;abort;exit
+      }
+      updatetable;
+      if filltFieldsby_tidkGal(SHKObj.VIDDOC, 1) {
+         if runwindowModal(wintFields) = cmdefault {
+             SHKObjSP_SP.SysName    := tFields.NAME;
+             SHKObjSP_SP.SYSNAMETBL := tFields.SYSNAMETBL;
+              if SHKObjSP_SP.Name = '' then {
+                SHKObjSP_SP.Name := tFields.title;
+               }
+             update current SHKObjSP_SP
+         }
+        }
+        else
+         {
+           message(' К данному типу доркумента не предусмотренн выбор полей. ''#13'' обратитесь к разработчику',error)
+         }
+     }
+
+     #SHKObjSP_BTN.SysName : {
+      updatetable;
+      if fillttActionsByTidkGal(SHKObj.VIDDOC) {
+         if runwindowModal(wintActions) = cmdefault {
+           SHKObjSP_BTN.SysName := tActions.NAME;
+           if SHKObjSP_BTN.Name = '' then {
+             SHKObjSP_BTN.Name := tActions.description;
+            }
+           update current SHKObjSP_BTN
+          }
+         }
+        else {
+           message(' К данному типу доркумента не предусмотренн выбор действий ''#13'' обратитесь к разработчику',error)
+        }
+     }
+     #BTN_STATUSNAME: {
+      updatetable;
+       if pos('SETSTATUS',SHKObjSP_BTN.SysName) <> 1
+        then {
+           message(' К данному типу действия не предусмотренн выбор целевого значения',error);
+           stop; abort; exit;
+        }
+        If(RunInterface('L_Dogovor::GetSomKatNotes', SHKObj.VIDDOC, 0, 0, False, SHKObjSP_BTN.AddComp, IGetSomKatNotes(NullRef)) = CmDefault) {
+          Set SHKObjSP_BTN.AddComp := SHKObjSP_BTN.AddComp;
+          update current SHKObjSP_BTN;
+        }
+      }
+     #AllowStatus: {
+       RunWindowModal(winSelAllowStatus);
+     }
+/*      #SHKObj.SYSNAMETBL
+     ,#SHKObj.SYSNAME : {
+      updatetable;
+      if filltFieldsby_tidkGal(SHKObj.VIDDOC, 0) {
+         if runwindowModal(wintFields) = cmdefault {
+             SHKObj.SysName    := tFields.NAME;
+             SHKObj.SYSNAMETBL := tFields.SYSNAMETBL;
+             update current SHKObj
+         }
+        }
+        else
+         {
+           message(' К данному типу доркумента не предусмотренн выбор полей. ''#13'' обратитесь к разработчику',error)
+         }
+     }
+*/
+  end
+  rereadrecord;
+}
+cmdelonprotect:{
+  case curfield of
+  #SHKObj_UP.name: {
+    var _crec : comp = SHKObj.nrec;
+    update current SHKObj set SHKObj.cGroup := 0h;
+    treeJumpToRecord(trSHKObj, _crec);
+    set _cParent := SHKObj.cGroup;
+    rereadrecord;
+  }
+  #tTypeObjWin.name: {
+     if isExistSpec {
+           message('Существует спецификация, менять тип документа нельзя',error);
+          stop; abort; exit;
+         }
+      set SHKObj.VIDDOC := 0;
+  }
+  #SHKObjAction.ACTION :{
+    set SHKObjSP_SP.ACTION := 0h
+  }
+  #AllowStatus: {
+     _loop SHKObjSP_AllowStatus delete current SHKObjSP_AllowStatus;
+     rereadrecord;
+  }
+  end;
+  updatetable;
+}
+
+cmInit:{
+  if not CheckLic then {stop; abort; exit;}
+
+
+
+ pushbounds(tbshowTree);
+ if getfirst SHKObj = tsOK {}
+ updateSHKObjBlockRows;
+ filltTypeObj;
+ // HttpConnect_JsonObjectCreate
+}
+cmEdit: {
+  putcommand(cmdefault)
+}
+cmPositionChanged :
+{
+ if CurWindow = wnSHK_TMPLT_Edit_group {
+   if SHKObj.isGroup = False {
+    closewindow(wnSHK_TMPLT_Edit_group);
+    rereadrecord;
+//    runwindowmodal(wnSHK_TMPLT_Edit);
+   }
+ }
+ if CurWindow = wnSHK_TMPLT_Edit {
+   if SHKObj.isGroup = True {
+    closewindow(wnSHK_TMPLT_Edit);
+    rereadrecord;
+//    runwindowmodal(wnSHK_TMPLT_Edit_group);
+   }
+ }
+
+ PositionChanged;
+}
+cmdefault:{
+  if SHKObj.ISGROUP = True
+  then {
+    runwindowmodal(wnSHK_TMPLT_Edit_group)
+  }
+  else {
+    SetVisibleAllowStatus;
+    runwindowmodal(wnSHK_TMPLT_Edit)
+  }
+  rereadrecord;
+}
+
+cmHotKeys :{
+  case curtable of
+     tnSHKObj:
+     if SHKObj.isGroup = False {
+         PutHotCommand(RunMenu('SHKObj_HotKeys_2'));
+       }
+       else {
+         PutHotCommand(RunMenu('SHKObj_HotKeys'));
+       }
+   end;
+  }
+cmValue1: {
+  clearbuffer(tnSHKObj);
+   SHKObj.Action := OleGenerateGUID;
+   SHKObj.isGroup   := True;
+   SHKObj.WISACTIVE := 1;
+  Insert Current SHKObj;
+  runwindowmodal(wnSHK_TMPLT_Edit_group) ;
+}
+cmValue2: {
+  clearbuffer(tnSHKObj);
+   SHKObj.isGroup   := False;
+   SHKObj.WISACTIVE := 1;
+  Insert Current SHKObj;
+  runwindowmodal(wnSHK_TMPLT_Edit) ;
+}
+cmValue3: {
+  CopyTemplate(SHKObj.nrec);
+}
+cmInsert:{
+  case curtable of
+     tnSHKObj:  PutContextMenuCommand('SHKObj_HotKeys');
+  end;
+  stop;
+}
+end;
+end.
+SHKObj_HotKeys Menu
+{
+  - 'Создать группу шаблонов', cmValue1, 'Создать группу шаблонов', hcNoContext,'',,sci1Esc;
+  - 'Создать шаблон', cmValue2, 'Создать шаблон', hcNoContext,'',,sci1Esc;
+}
+
+SHKObj_HotKeys_2 Menu
+{
+  - 'Создать группу шаблонов', cmValue1, 'Создать группу шаблонов', hcNoContext,'',,sci1Esc;
+  - 'Создать шаблон', cmValue2, 'Создать шаблон', hcNoContext,'',,sci1Esc;
+  - 'Копировать шаблон', cmValue3, 'Создать шаблон', hcNoContext,'',,sci1Esc;
+}

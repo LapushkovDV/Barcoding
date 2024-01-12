@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TSD.Views.FlyoutPages.ContentViews.ConnectView">
+	<ContentView.Resources>
+		<ResourceDictionary Source="../../Resources/Resources_XML/ResourceDictionaryMobile.xaml"/>
+	</ContentView.Resources>
+  <ContentView.Content>
+		<StackLayout Orientation="Horizontal"
+                     HorizontalOptions="CenterAndExpand"
+                     VerticalOptions="CenterAndExpand">
+			<Frame Style="{StaticResource PanelStyle}"
+                   BorderColor="{StaticResource TextUserBlue}"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand">
+				<StackLayout Orientation="Vertical" Margin="5"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand">
+					<Label Text="Адрес подключения:"
+                           Style="{StaticResource LabelStyleHeader}"/>
+                    <Entry x:Name="host"
+						   Placeholder="Например, http://example.ru"
+						   Text="{Binding Address, Mode=TwoWay}"
+						   TextColor="{StaticResource TextUserBlue}"
+						   HorizontalTextAlignment="Start"
+						   Keyboard="Url"
+						   HorizontalOptions="FillAndExpand">
+                    </Entry>
+                    <StackLayout Margin="0, 3"
+                                 Orientation="Horizontal" >
+                        <Button Command="{Binding Connect}"
+                                Text="Подключиться" Style="{StaticResource ButtonStyle}"
+                                HorizontalOptions="FillAndExpand">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button"
+                                             Binding="{Binding Source = {x:Reference host}, Path=Text.Length, Mode=TwoWay}"
+                                             Value="0">
+                                    <Setter Property="IsEnabled"
+                                            Value="False"/>
+                                    <Setter Property="BackgroundColor"
+                                            Value="LightGray"/>
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Button Text="Отмена"
+                                Command="{Binding CancelCommand}"
+                                Style="{StaticResource ButtonStyle}"
+                                HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                </StackLayout>
+			</Frame>
+		</StackLayout>
+  </ContentView.Content>
+</ContentView>

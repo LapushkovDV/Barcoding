@@ -1,0 +1,14 @@
+﻿@inherits ToastsModel
+
+@if(ToastList.Any())
+{
+    <div class="blazored-toast-container @PositionClass">
+        <CascadingValue Value=this>
+            @foreach (var toast in ToastList.OrderBy(x => x.TimeStamp))
+            {
+                <Toast ToastSetting=@toast.ToastSetting ToastId=@toast.Id/>
+            }
+        </CascadingValue>
+    </div>
+}
+

@@ -1,0 +1,149 @@
+Create table BCD.SHK_TMPLT_OBJ "ШК шапка шаблона объекта"
+  With table_Code = 32299
+  With replace
+  With TableOptions Branched
+(
+    NRec         : comp   "Номер записи"
+  , viddoc       : word   "код вида документа"
+  , wisActive    : word   "Условный статус (активный/нет)"
+  , Code         : String "Код"
+  , NAME         : String "Наименование"
+  , ACTION       : string "Действие на ТСД (уникальное)"
+  , DESCRIPTION  : String "Описание"
+  , ALLOWADDROWS : boolean "Редактирование спецификации"
+  , BlockRows    : boolean "Блокироватьпозициина ТСД после обработки"
+  , SYSNAMETBL   : string "Таблица/функция для идентификации"
+  , SYSNAME      : string "Поле для идентификации объекта"
+  , UserSysBarcode : word "Использовать системный баркод"
+  , UseBatchLoad   : word "Использовать пакетную загрузку"
+  , isLogging      : boolean "Логировать действия по шаблону"
+  , IsMenuPoint    : Boolean "Шаблон является пунктом меню"
+  , MenuPointName  : String[40] "Наименование пункта меню на ТСД"
+  , BatchDate      : date       "Дата последней пакетной выгрузки"
+  , cNoteAfterBatch : ref(KatNotes) "После пакетн. выгрузки уст. статус"
+  , isGroup         : boolean "Признак группы"
+  , cGroup          : comp "Ссылка на группу"
+
+)
+With index
+(
+   indTmpltobj0 = NRec (Unique, Surrogate, Journal)
+ , indTmpltobj1 = ACTION (Unique)
+ , indTmpltobj2 = NAME
+ , indTmpltobj3 = viddoc + wisActive
+ , indTmpltobj4 = cGroup
+ , indTmpltobj5 = isGroup
+)
+;
+
+
+Create table BCD.SHK_TMPLT_OBJSP "ШК спецификация шаблона объекта"
+  With table_Code = 32298
+  With replace
+  With TableOptions Branched
+(
+    NRec           : comp    "Номер записи"
+  , cSHK_TMPLT_OBJ : ref(SHK_TMPLT_OBJ) "ссылка на шапку шаблона"
+  , wisActive      : word    "условный статус (активный/нет)"
+  , VidField       : word    "0-кнопка,1-поле шапки,2-поле спец"
+  , NPP            : String  "№ П/П на ТСД"
+  , NAME           : String  "Наименование действия/поля"
+
+  , DESCRIPTION    : String  "Описание"
+  , ROW            : byte    "Строка расположения (шапка и кнопки)"
+  , SIZE           : integer "Длина кнопки/поля"
+  , SYSNAME        : String  "Системное имя (уникальное в шаблоне)"
+  , SYSNAMETBL     : String  "Системное имя таблицы"
+  , MODIF          : boolean "Модификация поля на ТСД"
+  , ACTION         : ref(SHK_TMPLT_OBJ) "Ссылка на операцию-шаблон"
+  , ISIdentifier   : boolean "True-поле является идентификаторов"
+  , isSynchAction  : boolean "True-синхронный запрос,False-Асинхронный"
+  , CloseDoc       : boolean "True-закрывать после выполнения ACTION"
+  , AddComp        : comp    "доп.ссылка"
+  , BROWSE_CARD    : boolean "Отображать в карточке на ТСД"
+  , NULLABLE       : boolean "обнуляемое поле"
+  , isDeleteDoc    : boolean "Удалять с ТСД после обработки"
+)
+With index
+(
+   indTmpltobjSp0 = NRec(Unique, Surrogate, Journal)
+ , indTmpltobjSp1 = cSHK_TMPLT_OBJ + VidField + row
+ , indTmpltobjSp2 = cSHK_TMPLT_OBJ + VidField + NPP
+ , indTmpltobjSp3 = cSHK_TMPLT_OBJ + VidField + NAME  (Unique)
+ , indTmpltobjSp4 = cSHK_TMPLT_OBJ + VidField + SYSNAMETBL + SYSNAME (Unique)
+)
+;
+
+
+
+create table BCD.Shk_barcode "ШК Таблица для генерации штрихкода"
+  with table_code = 32297
+  with tableoptions branched
+(
+  nrec          : comp             "Номер записи"
+, counter       : longint          "Значение счетчика"
+)
+with index
+(
+  barcode00 = nrec(Unique, Surrogate, Journal)
+, barcode01 = counter(autoinc)
+);
+
+
+create table BCD.SHK_TunePrint "ШК Настройка печати"
+  with table_code = 32295
+  with replace
+  with tableoptions branched
+(
+  nrec       : comp         "Номер записи"
+, wTable     : word         "Код таблицы"
+, tiDkGal    : word         "Системный код типа документа"
+, sField     : array[1..10] of string  "шаблоны строк"
+)
+with index
+(
+  TunePrint0 = nrec (Unique, Surrogate, Journal)
+, TunePrint1 = wTable + tiDkGal
+);
+
+
+create table BCD.SHK_TSD_ARM_USER "ШК ТСД АРМ Пользователь"
+  with table_code = 32294
+  with replace
+  with tableoptions branched
+(
+   Nrec        : comp       "Номер записи"
+ , Type        : byte       "1-ТСД,2-АРМ,3-Пользователь"
+ , ID          : String[30] "ID объекта"
+ , Name        : String[50] "Наименование"
+ , Description : String     "Описание"
+ , IsActive    : Boolean    "Признак активного "
+ , cUSER       : ref(x$users) "Пользователь системы"
+)
+with index
+(
+  SHK_TSD0 = nrec (Unique, Surrogate, Journal)
+, SHK_TSD1 = Type + ID
+);
+create table BCD.SHK_barcodeLink "ШК Связь документов с ШК"
+  with table_code = 32296
+  with replace
+  with tableoptions branched
+(
+  nrec       : comp         "Номер записи"
+, wTable     : word         "Код таблицы"
+, tiDkGal    : word         "Системный код типа документа"
+, cRec       : comp         "Ссылка на объект"
+, barcode    : string       "Штрих код документа"
+, type       : byte         "Тип ШК: 0 - свой, 1 - внешний"
+, cTSD       : ref(SHK_TSD_ARM_USER) "Ссылка на ТСД. Передача через USB"
+, cARM       : ref(SHK_TSD_ARM_USER) "Ссылка на АРМ. Передача через USB"
+, cUser      : ref(SHK_TSD_ARM_USER) "Ссылка на Польз. Передача через USB"
+)
+with index
+(
+  barcodeLink00 = nrec (Unique, Surrogate, Journal)
+, barcodeLink01 = type + barcode (Length = 250)
+, barcodeLink02 = wTable + cRec
+);
+

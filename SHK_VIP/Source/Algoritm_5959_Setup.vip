@@ -1,0 +1,361 @@
+/*************************************************************************************************\
+  Наименование: Настройка алгоритма для смены статуса документов, при формировании и отмене ордеров
+  Контур/Модуль: КОУ
+  Примечание:
+  Вид работы  |Номер           |Дата    |Исполнитель              |Проект
+  -----------------------------------------------------------------------------------------------
+\*************************************************************************************************/
+// взято с проекта ЭМ
+/*
+Параметры настройки алгоритма смены статуса
+Тип документа - Выбор из списка документов (единичный выбор)
+Назначение - Выбор из справочника назначений (Katnazna). Предусмотрен множественный выбор.
+             Если выбрано одно или несколько назначений, то действие алгоритма распространять на документы с указанным назначением/назначениями.
+             При незаполненном параметре действие алгоритма распространять на документы со всеми назначениями, в т.ч. если назначение не заполнено.
+Статус текущий / Статус новый -  Выбор из списка статусов для конкретного типа документа (включая системные и пользовательские статусы).
+Действие - Выбор из выпадающего списка. Возможные значения: формирование ордера/отмена ордера.
+Для каждого типа документа может быть несколько комбинаций текущего и нового статуса.
+Действие алгоритма - после формирования/отмены ордера проверять, что документ находится в статусе, определенном как <текущий>, и переводить его в статус, определенный как <новый> для конкретного текущего статуса.
+Если документ при формировании/отмене ордера находится в статусе, отличном от перечисленных текущих статусов для этого действия, изменение статуса не производить, выводить протокол.
+*/
+#include AlgCalc.vih
+#include oAlgFldSys.vih
+#include TMnPlan.vih
+#include oAlgInDocList.vih
+#include Algor.vih
+#include getsnote.vih
+
+#component "M_MnPlan"
+
+VipInterface Algoritm_5959_Setup Implements oAlgoritmSetup parameters (nrecFormPl : comp);
+Interface Algoritm_5959_Setup 'Настройка алгоритма', EscClose, Blue;
+Show at (,,105,20);
+
+Var
+ objNote  : IGetSomKatNotes;
+
+Function GetSelectNazna : String; Forward;
+
+Create view
+Var
+ nrecFormPl : Comp;
+ tipDocOper : Word;
+(
+ selectNazna
+,nppSpFormPl
+)
+As Select
+ GetSelectNazna //Строка с выбранным назначением накладной
+,Word(SpFormPl.descr) //Хранит поле номер по порядку, для списка настроек
+From
+ FormPl
+,SpFormPl(SpFormPl02)
+,Synonym SpFormPl SpFormPlNazna
+,Synonym KatNotes KatNotesCur
+,Synonym KatNotes KatNotesNew
+,KatNazna
+Where
+((
+//Настройки алгоритма
+    nrecFormPl  == FormPl.NRec
+And FormPl.NRec == SpFormPl.cFormPl
+And tipDocOper  == SpFormPl.typeRec
+
+//Назначения для настройки
+And SpFormPl.cFormPl == SpFormPlNazna.cFormPl
+And 1                == SpFormPlNazna.typeRec
+And SpFormPl.nrec    == SpFormPlNazna.resComp1[1](NoIndex)
+And SpFormPlNazna.resComp1[2] == KatNazna.nrec
+
+And SpFormPl.resComp1[1] == KatNotesCur.nrec
+And SpFormPl.resComp1[2] == KatNotesNew.nrec
+))
+;
+
+Parameters
+  nrecFormPl;
+
+Panel pnParam;
+NoTableNavigation;
+Screen scParam (,,sci1Esc);
+Show at (,,,3);
+Fields
+ tipDocOper         ('Тип первичного документа',,sci13Esc) :[LIST ''], Protect;
+ FormPl.resLngInt[1]('Включить / отключить протоколирование алгоритма',,) : NoProtect;
+! FormPl.resLngInt[2]('Статус документа после отмены одераВключить / отключить протоколирование алгоритма',,) : NoProtect;
+<<
+  Запустить алгоритм ПОСЛЕ создания / отмены складского ордера
+  Тип первичного документа .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                            [.] Выводить протокол работы алгоритма`
+!                                    `Статус после отмены одера` (.) По таблице статусов`
+!  хотели добавить сюда, решили выделить в отдельный алгоритм   (.) Статус документа до создания ордеров`
+!  который при отмете оприходования ставит статус который        (.) Предпоследний по логу статусов`
+!  был у документа до оприходования / поиск по истории статусов снизу
+>>
+End;
+HandleEvent
+CmCheckField:
+{
+ Case(CurField)Of
+
+  fnTipDocOper:
+  {
+   ReReadRecord(tnSpFormPl);
+  }
+  #FormPl.resLngInt[1]:
+  {
+   If(Update Current FormPl = TsOk)
+   {}
+  }
+ End
+}
+End;
+End;
+Panel pnSpFormPl;
+Table SpFormPl;
+Browse brSpFormPl(,,sci1378Esc);
+Show at (,4,,);
+Fields
+ nppSpFormPl         '№','п/п' (,,sci178Esc)  : [5],  NoProtect, SpinButton[1, 1, 999];
+ selectNazna         'Назначение'             : [30], Protect, PickButton;
+ KatNotesCur.name    'Статус текущий'         : [25], Protect, PickButton;
+ KatNotesNew.name    'Статус новый'           : [25], Protect, PickButton;
+ SpFormPl.resWord1[1]'Действие'               : [20], [LIST 0'Ордера удалены', 1'Ордера сформированы'], Protect;
+End;
+End;
+
+TableEvent Table SpFormPl;
+CmExprFieldChanged:
+{
+ Var tmpNum : Word;
+
+ Case(CurField)Of
+  fnnppSpFormPl:
+  {
+   tmpNum := 0;
+   tmpNum := Word(ExprFieldValue);
+
+   Case(tmpNum)Of
+    1..999:
+    {
+     Set SpFormPl.descr := LPadCh(tmpNum, '0', 3);
+    }
+    Else
+    {
+     Set SpFormPl.descr := SpFormPl.descr;
+    }
+   End;
+  }
+ End;
+}
+CmSetDefault:
+{
+ Var lastNum : String;
+
+ lastNum := '';
+ PushPos(tnSpFormPl);
+ If(GetLast FastFirstRow SpFormPl = TsOk)
+ {lastNum := SpFormPl.descr;}
+ Else
+ {lastNum := '000';}
+ PopPos(tnSpFormPl);
+
+ ClearBuffer(tnSpFormPl);
+ SpFormPl.cFormPl := FormPl.nrec;
+ SpFormPl.typeRec := tipDocOper;
+ SpFormPl.descr   := NextNumStr(lastNum);
+}
+CmInsertRecord:
+{
+ Insert Current SpFormPl;
+}
+CmUpdateRecord:
+{
+ Update Current SpFormPl;
+}
+CmDeleteRecord:
+{
+ Delete All From SpFormPlNazna;
+ Delete Current SpFormPl;
+}
+End;
+
+HandleEvent
+CmInit:
+{
+ Var strArray : Array[0..0] Of String;
+ Var wrdArray : Array[0..0] Of Word;
+ Var j        : LongInt;
+
+ SetLimit(strArray, 0);
+ SetLimit(wrdArray, 0);
+
+ j:=0;wrdArray[j] := 101; strArray[j] := wrdArray[j]+' '+'Накладная на прием МЦ (Управление снабжением)';
+ j++; wrdArray[j] := 206; strArray[j] := wrdArray[j]+' '+'Накладная на возврат по рекламации (Управление снабжением)';
+ j++; wrdArray[j] := 201; strArray[j] := wrdArray[j]+' '+'Накладная на отпуск МЦ (Управление сбытом)';
+ j++; wrdArray[j] := 115; strArray[j] := wrdArray[j]+' '+'Акт о приемке материалов (Складской учет)';
+ j++; wrdArray[j] := 204; strArray[j] := wrdArray[j]+' '+'Акт на списание МЦ со склада (Складской учет)';
+ j++; wrdArray[j] := 600; strArray[j] := wrdArray[j]+' '+'Накладная на внутреннее перемещение (Складской учет)';
+ j++; wrdArray[j] := 601; strArray[j] := wrdArray[j]+' '+'Накладная на передачу МЦ в ОС (Складской учет)';
+ j++; wrdArray[j] := 602; strArray[j] := wrdArray[j]+' '+'Накладная на передачу МЦ в спецоснастку (Складской учет)';
+ j++; wrdArray[j] := 605; strArray[j] := wrdArray[j]+' '+'Накладная на передачу МЦ в НМА (Складской учет)';
+ j++; wrdArray[j] := 611; strArray[j] := wrdArray[j]+' '+'Акт инвентаризации об излишке МЦ (Складской учет)';
+ j++; wrdArray[j] := 612; strArray[j] := wrdArray[j]+' '+'Акт инвентаризации о недостаче МЦ (Складской учет)';
+ j++; wrdArray[j] := 630; strArray[j] := wrdArray[j]+' '+'Акт на пересортицу (Складской учет)';
+ j++; wrdArray[j] := 632; strArray[j] := wrdArray[j]+' '+'Акт на перемещение между объектами (Складской учет)';
+ j++; wrdArray[j] := 210; strArray[j] := wrdArray[j]+' '+'Акт передачи оборудования в монтаж (Складской учет)';
+ j++; wrdArray[j] := 606; strArray[j] := wrdArray[j]+' '+'Транзитная накладная (Складской учет)';
+ j++; wrdArray[j] := 501; strArray[j] := wrdArray[j]+' '+'Накладная на отпуск в производство (УПЛ)';
+ j++; wrdArray[j] := 502; strArray[j] := wrdArray[j]+' '+'Накладная на приход готовой продукции (УПЛ)';
+ j++; wrdArray[j] := 503; strArray[j] := wrdArray[j]+' '+'Накладная на возврат сырья из производства (УПЛ)';   // new
+ j++; wrdArray[j] := 504; strArray[j] := wrdArray[j]+' '+'Акт на списание МЦ из производства (УПЛ)';
+ j++; wrdArray[j] := 505; strArray[j] := wrdArray[j]+' '+'Межцеховая накладная (УПЛ)';                         // new
+
+
+ SetEnumList(scParam, fnTipDocOper, strArray, wrdArray);  
+ Set tipDocOper := wrdArray[0];                           
+}                                                         
+CmPick:                                                   
+{                                                         
+ Var tmpNrec       : Comp;                                
+ Var i, n          : LongInt;                             
+ Var markerKatNazna: LongInt;                             
+                                                          
+ Case(CurField)Of                                         
+  #KatNotesCur.name://Выбор текущего статуса              
+  {                                                       
+   If(isNew Or (SpFormPl.nrec = Comp(0))){Insert Current SpFormPl; SetNew(False);}
+   SetModified(True);                                     
+   tmpNrec := If(IsValid(tnKatNotesCur), KatNotesCur.nrec, Comp(0));
+   If(RunInterface('L_Dogovor::GetSomKatNotes', SpFormPl.typeRec, 0, 0, False, tmpNrec, objNote) = CmDefault)
+   {
+    Set SpFormPl.resComp1[1] := tmpNrec;
+    ReScanPanel(tnSpFormPl);
+   }
+  }
+  #KatNotesNew.name://Выбор нового статуса, который будет установлен после смены
+  {
+   If(isNew Or (SpFormPl.nrec = Comp(0))){Insert Current SpFormPl; SetNew(False);}
+   SetModified(True);
+   tmpNrec := If(IsValid(tnKatNotesNew), KatNotesNew.nrec, Comp(0));
+   If(RunInterface('L_Dogovor::GetSomKatNotes', SpFormPl.typeRec, 0, 0, False, tmpNrec, objNote) = CmDefault)
+   {
+    Set SpFormPl.resComp1[2] := tmpNrec;
+    ReScanPanel(tnSpFormPl);
+   }
+  }
+  fnSelectNazna://Выбор назначений
+  {
+   If(isNew Or (SpFormPl.nrec = Comp(0))){Insert Current SpFormPl; SetNew(False);}
+   SetModified(True);
+   tmpNrec := Comp(0);
+   markerKatNazna := InitMarker('MKatNazna', 8, 100, 10);
+   ClearMarker(markerKatNazna);
+   _Loop SpFormPlNazna
+   {
+    If(IsValid(tnKatNazna))
+    {
+     InsertMarker(markerKatNazna, SpFormPlNazna.resComp1[2]);
+    }
+   }
+   DoneMarker(markerKatNazna, 'MKatNazna');
+   If(RunInterface('L_KATNAZNA::GetSomKatNazna', True, Comp(0))<>CmCancel)
+   {
+    PushPos(tnSpFormPl);
+    Delete All From SpFormPlNazna;
+    markerKatNazna := InitMarker('MKatNazna', 8, 100, 10);
+    n := GetMarkerCount(markerKatNazna);
+    For(i:=0; i<n; i++)
+    {
+     If(GetMarker(markerKatNazna, i, tmpNrec))
+     {
+      ClearBuffer(tnSpFormPlNazna);
+      SpFormPlNazna.cFormPl     := SpFormPl.cFormPl;
+      SpFormPlNazna.typeRec     := 1;
+      SpFormPlNazna.resComp1[1] := SpFormPl.nrec;
+      SpFormPlNazna.resComp1[2] := tmpNrec;
+      If(Insert Current SpFormPlNazna = TsOk)
+      {}
+     }
+    }
+    DoneMarker(markerKatNazna, '');
+    PopPos(tnSpFormPl);
+    ReScanPanel(tnSpFormPl);
+   }
+  }
+ End;
+}
+CmDelOnProtect:
+{
+ Case(CurField)Of
+  #KatNotesCur.name:
+  {
+   Set SpFormPl.resComp1[1] := Comp(0);
+   ReScanPanel(tnSpFormPl);
+  }
+  #KatNotesNew.name:
+  {
+   Set SpFormPl.resComp1[2] := Comp(0);
+   ReScanPanel(tnSpFormPl);
+  }
+  fnSelectNazna:
+  {
+   Delete All From SpFormPlNazna;
+   ReScanPanel(tnSpFormPl);
+  }
+ End;
+}
+End;
+
+//Данная функция вызывается для установки на запись в таблице FormPl, в которой хранится настройка алгоритма. В данной функции выполняется позиционирование на запись в FormPl, инициализация переменных
+Function asInitInter(p_cFormPl : Comp) : Boolean;
+Begin
+ nrecFormPl := p_cFormPl;
+ If(GetFirst FastFirstRow FormPl = TsOk)
+ {
+  asInitInter := True;
+ }
+ Else
+ {
+  asInitInter := False;
+ }
+End;
+
+//Завершение работы с интерфейсом настройки. Освобождаются переменные.
+Function asDoneInter : Boolean;
+Begin
+ asDoneInter := True;
+End;
+
+//Вызывается после создания новой настройки (записи в таблице FormPl). Используется для начальной инициализации полей.
+Procedure asOnCmSetDefault;
+Begin
+End;
+
+//Вызывается после вставки настройки в шаблон документа на закладку "Параметры автоматического формирования \ Алгоритмы". Шаблоны документов хранятся в таблице WayAccou. В данной процедуре заполняются те поля настройки, которые зависят от конкретного шаблона. В нашем примере это поле "Тип документа".
+Procedure asOnSetWayAccou(p_cWayAccou : Comp);
+Begin
+#__UNUSED__(p_cWayAccou)
+End;
+
+//Строка с выбранным назначением накладной
+Function GetSelectNazna: String;
+Begin
+ Var n : LongInt;
+
+ GetSelectNazna := '';
+ n := 0;
+ _Loop SpFormPlNazna
+ {
+  If(IsValid(tnKatNazna))
+  {
+   n++;
+   GetSelectNazna := KatNazna.name;
+  }
+ }
+ If(n>1)
+ {
+  GetSelectNazna := 'Множественный выбор ('+n+')';
+ }
+End;
+End.

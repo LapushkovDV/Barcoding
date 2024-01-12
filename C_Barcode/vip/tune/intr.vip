@@ -1,0 +1,64 @@
+//********************************************************************************
+//                                                        (c) корпорация Галактика
+// Галактика 9.1 - настрокйи
+// Обработка настроек с вызовом интерфейсов в компонентах
+//********************************************************************************
+
+
+#include TuneSpec.vih
+#include GetWorkDocs.vih
+
+vipInterface intrTune_C_Barcode implements ObjIntrTuneComponent licensed (FREE);
+
+// Обработчик точки расширения epPostTuneComponent
+// Должен вернуть FALSE если обработка проводилась. TRUE - если не проводилась.
+handler with replace C_Barcode_IntrTune on extensionPoint epIntrTuneComponent (TR: objTuneIntr; TVal: TTuneVal; Inter: string) [40]
+action
+{
+   var ifc : intrTune_C_Barcode;
+   result := not ifc.TuneIntrComponent (TR, TVal, Inter);
+}
+
+#doc
+  Обработка настроек с вызовом интерфейсов в компонентах C_Barcode
+#end
+interface IntrTune_C_Barcode;
+
+// Обязательно должна вернуть False если обработка не производилась, иначе true
+public function TuneIntrComponent (TR: objTuneIntr; TVal: TTuneVal; Inter: string) : boolean;
+{
+/*    Входные параметры
+ TR    - ссылка objTuneIntr;
+ TVal  - буфер таблицы TuneVal;
+ Inter - интерфейс
+
+ !!! Внимание !!!
+ Строковые констаты названия интерфейса в CASE писать только в верхнем регистре.  Иначе не сработает.
+ Правильно - 'ARTDIZ1':    НЕПРАВИЛЬНО -  'Ardiz1':
+ После вызова интерфейса, если все нормально нужно установить PrOk := TRUE;
+*/
+
+  var tmpComp:  comp;
+  var tmpLong:  longint;
+  var tmpStr:   string;
+
+  var PrOk : boolean;     PrOk := False;
+  var TuneCode : string;  TuneCode := TR.GetTuneCode(TVal.cTune);  // код текущей настройки
+
+  TuneIntrComponent := true; // Чтобы в каждом case не писать это
+
+  case inter of
+  //----------------------------------------------------------------------------
+  'GETDOCSFORBARCODE': {
+    var getDocsForBarcode: iGetDocsForBarcode;
+    PrOk := getDocsForBarcode.EditUserWorkDocs(TVal.Obj, TVal.cUser, TVal.StrVal);
+  }
+  //----------------------------------------------------------------------------
+  else TuneIntrComponent := false;
+  end; // case
+
+  // Обновим, если был выбор
+  if (PrOk)
+    TR.UpdateTuneVal(TVal);
+}     // TuneIntrComponent
+end.

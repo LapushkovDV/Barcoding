@@ -1,0 +1,109 @@
+/*************************************************************************************************\
+* Наименование: Библиотека для вывода логов                                                       *
+* Контур/Модуль: *                                                                                *
+* Примечание:                                                                                     *
+*                                                                                                 *
+* Вид работы  |Номер задачи  |Дата    |Исполнитель              |Проект                           *
+* ----------------------------------------------------------------------------------------------- *
+
+\*************************************************************************************************/
+// взято с проекта ЭМ
+
+/*
+Пример использования:
+
+#include SHK_Log.vih // объектный интерфейс для вывода протокола
+interface ...
+  #include SHK_Log.var
+  ...
+  if LoadVipInterface(oSHK_Log) then
+  begin
+    oSHK_Log.Init('ZRRolls.log', true, true, true);
+    oSHK_Log.Write('...');
+    oSHK_Log.Done(true);
+    FreeVipInterface(oSHK_Log);
+  end else
+    Message(''#10#13' Ошибка! Не удалось загрузить интерфейс SHK_Log!', Error);
+
+или
+
+#include SHK_Log.vih // объектный интерфейс для вывода протокола
+interface ...
+  #include SHK_Log.var
+  ...
+
+  oSHK_Log.Init('ZRRolls.log', true, true, true);
+  oSHK_Log.Write('...');
+  oSHK_Log.Done(true);
+
+В первом случае создается новый экземляр интерфейса ToSHK_Log, а во втором
+случае - используется один разделяемый экземпляр интерфейса ToSHK_Log.
+Недостаток второго метода - нельзя писать лог одновременно в два
+разных файла лога - т.е. второй вызов Init будет просто проигорирован,
+а весь вывод лога будет идти в файл, заданный в параметрах первого
+вызова.
+*/
+
+#ifndef __SHK_LOG_VIH__
+#define __SHK_LOG_VIH__
+
+#component "SHK"
+
+objInterface SHK_ObjLog;
+
+  // Инициализирует файл лога
+  // _Name - имя файла лога
+  // _ShowTime - если true, в лог будет выведена информация о времени начала и окончания формирования лога
+  // _Overwrite - если false и файл уже существует, то вывод будет дописан в конец этого файла
+  // _UseOutPath - если true, к имени лога будет добавлен путь на директорию OUT
+  function Init(_Name: String; _ShowTime: Boolean; _Overwrite: Boolean; _UseOutPath: Boolean): Boolean;
+
+  // Включает или выключает вывод подробного лога
+  procedure SetVerboseMode(_Mode: Boolean);
+
+  // Возвращает информацию о том, включен ли вывод подробного лога
+  function GetVerboseMode: Boolean;
+
+  // Пишет одну строку в буфер отложенного вывода в лог
+  procedure WriteToBuf(_Text: String);
+
+  // Пишет одну строку в лог-файл
+  procedure Write(_Text: String);
+
+  // Выводит буфер отложенного вывода в лог
+  procedure WriteBuf;
+
+  // Очищает буфер отложенного вывода в лог
+  procedure ClearBuf;
+
+  // Перенаправляет вывод лога в буфер отложенного вывода
+  procedure StartOutToBuf;
+
+  // Закрывает лог-файл
+  procedure Done(_Show: Boolean);
+
+  // Устанавливает кол-во пробелов перед текстом
+  procedure SetShift(_TextShift: Byte);
+
+  // Получает кол-во пробелов перед текстом
+  function GetShift: Byte;
+
+  // Увеличивает кол-во пробелов перед текстом на 1
+  procedure IncShift;
+
+  // Уменьшает кол-во пробелов перед текстом на 1
+  procedure DecShift;
+
+  // Преобразует переданный текст для вывода жирным шрифтом
+  function Bold(_Text: String): String;
+
+  // Вывод сообщения об ошибке
+  procedure Error(_Text: String);
+
+  // Вывод в лог информации, которая отображается только в подробном режиме
+  procedure Info(_Text: String);
+
+end;
+
+vipInterface SHK_Log Implements SHK_ObjLog;
+#endif

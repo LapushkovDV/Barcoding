@@ -1,0 +1,252 @@
+sql query queryKatMC =
+         select distinct
+           %SelectFieldsSys
+          ,%IdentityField                        as SYS_BARCODE
+           %SelectFields
+          from KATMC
+          left join katotped on katotped.cMcUsl = katmc.nrec and katotped.prmc = 1
+          left join KATED    on kated.nrec= katmc.cEd
+          left join GROUPMC  on GROUPMC.nrec = katmc.CGROUPMC
+          left join GRNAL    on GRNAL.nrec   = katmc.cGrNal
+          left join TYPEMC   on TYPEMC.nrec  = katmc.cType
+          left join STZATR   on STZATR.nrec  = katmc.cStZatr
+          left join KAELEM   on KAELEM.nrec  = katmc.CKAELEM
+          left join attrnam     on attrnam.wtable = 1411 and attrnam.name = :anName
+          left join attrval     on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katmc.nrec
+          left join shk_barcodelink on shk_barcodelink.wtable = 1411 and shk_barcodelink.crec = KATMC.NREC and shk_barcodelink.type = 0
+          left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD
+          left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM
+          left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser
+          left join x$users on x$users.ATL_NREC = SHK_USER.cUser
+
+       where katmc.IsArch = 0
+         and %IdentityFieldWhere = :pIdent // если меняете запрос, то обязательно исправьте функцию Fill_fieldArray
+         and (
+              %WhereFields
+             )
+;
+
+function GetResultQueryForKatMC(_pcSHKObj: comp; _pIdent : string) : IResultSet;
+{
+
+   if not BoundActive(tbbySHKObjNrec) then
+   {
+    set _cSHKObj := _pcSHKObj;
+    pushbounds(tbbySHKObjNrec);
+   }
+
+  var qKatMC : iQuery = queryManager.createQuery(queryKatMC);
+
+    var SelectFields : longint = 0;
+
+   _loop SHKObjSP_HEAD
+      {
+        if pos('VA_1411',SHKObjSP_HEAD.SYSNAMETBL) = 1 then continue;
+
+        MysqlAddStr( SelectFields ,' ,  ' +SHKObjSP_HEAD.SYSNAMETBL + '.'+SHKObjSP_HEAD.SYSNAME + ' as ' +SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME  );
+      }
+
+   _loop SHKObjSP_SP
+      {
+        mylog('    _loop SHKObjSP_SP  ->  SHKObjSP_SP.SYSNAMETBL = ' + SHKObjSP_SP.SYSNAMETBL + '    SHKObjSP_SP.SYSNAME = ' + SHKObjSP_SP.SYSNAME );
+        if pos('VA_1434',SHKObjSP_SP.SYSNAMETBL) = 1 then continue;
+
+        MysqlAddStr( SelectFields ,' ,  ' +SHKObjSP_SP.SYSNAMETBL + '.'+SHKObjSP_SP.SYSNAME + ' as ' +SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME  )
+      }
+
+
+
+ var _anName : string;
+  var Identificator : longint = 0;
+
+        if pos('VA_1411',SHKOBJ.SYSNAMETBL) = 1
+        then
+          {
+           _anName := SHKOBJ.SYSNAME;
+           MysqlAddStr( Identificator ,'attrval.vstring');
+           mylog('    %IdentityField =attrval.vstring');
+          }
+        else
+          {
+          _anName := '---';
+           MysqlAddStr( Identificator ,SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME ) ;
+           mylog('    %IdentityField =' + SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME );
+          }
+
+
+
+
+  qKatMC.setParam('anName', _anName);
+  qKatMC.setMacro('SelectFields', SelectFields);
+
+
+  //  qKatMC.setParam('VIDSOPR',  SHKObj.viddoc);
+       qKatMC.setMacro('IdentityField', Identificator);
+
+
+   var SelectFieldsSys : longint = 0;
+
+   MysqlAddStr( SelectFieldsSys, '          KatMc.Nrec    as sys_KATMC_NREC    ');
+   MysqlAddStr( SelectFieldsSys, '        , katotped.nrec as SYS_KATOTPED_NREC ');
+
+  qKatMC.setMacro('SelectFieldsSys', SelectFieldsSys);
+
+   qKatMC.setMacro('IdentityFieldWhere', Identificator);
+
+   var WhereFields : longint = 0;
+       MysqlAddStr( WhereFields ,' 1=1');
+
+
+  qKatMC.setMacro('WhereFields', WhereFields);
+
+       var _type : byte = GetTypeByTableAndField(SHKOBJ.SYSNAMETBL, SHKOBJ.SYSNAME);
+       mylog('    _type = '+_type) ;
+       case _type of
+              4 :  qKatMC.setParam('pIdent',    word(_pIdent) );
+              6 :  qKatMC.setParam('pIdent', longint(_pIdent) );
+             11 :  qKatMC.setParam('pIdent',  double(_pIdent) );
+             17 :  qKatMC.setParam('pIdent',    comp(_pIdent) );
+              else qKatMC.setParam('pIdent',  _pIdent);
+       end;
+
+/*
+  case _pIdent of
+   '**':
+   {
+        qKatMC.setParam('Count',   1000000); // временный костыль т.к. есб что то там косячит по таймауту
+   }
+   else qKatMC.setParam('Count',    100000); // временный костыль т.к. есб что то там косячит по таймауту
+  end;
+*/
+
+   result := qKatMC.getResultSet;
+
+}
+
+function GetMCNRECByIdent(_ActionName: string; _pIdent: string) : comp;
+{
+ mylog('  GetMCNRECByIdent: _ActionName='+_ActionName+ '  _pIdent=' +_pIdent );
+ result := 0h;
+ var iRes : IResultSet = GetResultQueryForKatMC(GetTMPLTByName(_ActionName), _pIdent);
+ Setvisualheader('выполнение запроса в СУБД');
+ if NullVipRef(iRes) then {
+   mylog('  GetMCNRECByIdent: ОШИБКА ВЫПОЛНЕНИЯ ЗАПРОСА В БД');
+//    _err := 'ОШИБКА ВЫПОЛНЕНИЯ ЗАПРОСА В БД';
+    exit;
+ }
+ if iRes.getFirst <>  tsOk {
+//    _err := 'НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = "' + _pIdent+'"';
+    mylog('  GetMCNRECByIdent: НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = "' + _pIdent+'"');
+    exit;
+  }
+ Result    := iRes.row.val('SYS_KATMC_NREC');
+ mylog('  GetMCNRECByIdent: Result = ' + Result);
+}
+
+function GenerateJSON_VALUES_KATMCONE(_ActionName: string; _pIdent: string; var _err : string) : TpTr;
+{
+ var iRes : IResultSet = GetResultQueryForKatMC(GetTMPLTByName(_ActionName), _pIdent);
+Setvisualheader('выполнение запроса в СУБД');
+
+   mylog(' in GenerateJSON_VALUES');
+  var JSONObj_VALUES: TPtr = HttpConnect_JsonObjectCreate(m_service);
+//  insert_tJSON_ID(m_service,JSONObj_VALUES);
+  var JSONObj_Array : TPtr = 0;
+  var JSONObj_ArrayOneElement : tptr =0  ;
+  var JSONObj_FIELDS : tptr = 0;
+ if NullVipRef(iRes) then
+ {
+
+//    HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'ERROR', 'ОШИБКА ВЫПОЛНЕНИЯ ЗАПРОСА В БД');
+    _err := 'ОШИБКА ВЫПОЛНЕНИЯ ЗАПРОСА В БД';
+    result := 0;
+    exit;
+
+ }
+
+ if iRes.getFirst <>  tsOk
+  {
+
+//    HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'ERROR', 'НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = ' + _pIdent);
+    _err := 'НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = "' + _pIdent+'"';
+    result := 0;
+    exit;
+  }
+
+
+
+        var _SYS_KATMC_NREC      : comp = 0h;
+        var _SYS_KATMC_NREC_prev : comp = 0h;
+        var _SYS_KATOTPED_NREC : comp = 0h;
+        var _count :longint = iRes.count;
+
+      do
+      {
+       _SYS_KATMC_NREC    := iRes.row.val('SYS_KATMC_NREC');
+       _SYS_KATOTPED_NREC := iRes.row.val('SYS_KATOTPED_NREC');
+        var _SYS_BARCODE   : string = iRes.row.val('SYS_BARCODE');
+        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'SYS_BARCODE'       , String(_SYS_BARCODE));
+
+
+         HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'OBJECTACTION', SHKObj.Action);
+         HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'IDOBJECT'    , String(_SYS_KATMC_NREC));
+
+          JSONObj_FIELDS := HttpConnect_JsonObjectCreate(m_service);
+//                 insert_tJSON_ID(m_service,JSONObj_FIELDS);
+                 _loop SHKObjSP_HEAD
+                   {
+                     var _value : string = coUnRealString;
+                     if pos('VA_1411',SHKObjSP_HEAD.SYSNAMETBL) = 1 then {
+                          _value := piextattr.sgetattr(1411, _SYS_KATMC_NREC, SHKObjSP_HEAD.SYSNAME);
+                       }
+                       if _value = coUnRealString then _value := iRes.row.val(SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME);
+                       HttpConnect_JsonObjectAddString(m_service, JSONObj_FIELDS, SHKObjSP_HEAD.SYSNAMETBL+'_'+SHKObjSP_HEAD.SYSNAME, _value);
+                   }
+
+                HttpConnect_JsonObjectAddObject(m_service, JSONObj_VALUES, 'FIELDS', JSONObj_FIELDS);
+               JSONObj_Array := HttpConnect_JsonArrayCreate(m_service);
+//               insert_tJSON_ID(m_service,JSONObj_ArraySP);
+
+
+         JSONObj_ArrayOneElement := HttpConnect_JsonObjectCreate(m_service);
+
+         _loop SHKObjSP_SP
+           {
+             var _value : string = coUnRealString;
+//            _SYS_KATMC_NREC      := iRes.row.val('SYS_KATMC_NREC');
+             if pos('VA_1434',SHKObjSP_SP.SYSNAMETBL) = 1 then {
+                  _value := piextattr.sgetattr(1434, _SYS_KATOTPED_NREC, SHKObjSP_SP.SYSNAME);
+               }
+
+               if _value = coUnRealString then _value := iRes.row.val(SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME);
+//              mylog('   _value = ' + _value);
+              HttpConnect_JsonObjectAddString(m_service, JSONObj_ArrayOneElement, SHKObjSP_SP.SYSNAMETBL+'_'+SHKObjSP_SP.SYSNAME, _value);
+           }
+         HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement);
+
+    } while iRes.getNext = tsOk;
+
+    HttpConnect_JsonObjectAddObject(m_service, JSONObj_VALUES, 'COLUMNS', JSONObj_Array);
+
+  result := JSONObj_VALUES;
+}
+
+function GetResultQueryForKatMcBatch(_pcSHKObj: comp; _pIdent : string;  _login: string; _imei : string) : IResultSet;
+{
+  // 1 заполняем системные поля выборки
+   var SelectFieldsSys : longint = 0;
+   MysqlAddStr( SelectFieldsSys, '          KatMc.Nrec as sys_KATMC_NREC       ');
+
+  #BatchBodyFunctionGetResultQuery(queryKatMC,1411)
+ // 2 добавляем параметры в запрос
+ //  _Query.setParam('',  SHKObj.viddoc); --  тут нечего добавлять
+
+  result := _Query.getResultSet;
+
+//  message(qKatMC.errorCode)
+}
+
+function GenerateJSON_VALUES_KATMC(_ActionName: string; _pIdent: string; var _err : string; _login: string = ''; _imei : string = '') : TpTr;
+{
+  #Function_GenerateJSON_VALUES_Body(GetResultQueryForKatMcBatch,GenerateJSON_VALUES_KATMCONE,SYS_KATMC_NREC,coKatMC)
+}

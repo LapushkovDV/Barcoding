@@ -1,0 +1,43 @@
+﻿{
+  "OBJECTDESCRIPTION": {
+    "OBJECTACTION": "GET_MC_INFO",
+    "ALLOWADDROWS": false,
+    "FIELDS": [
+      {
+        "ROW": 1,
+        "SIZE": 5,
+        "NAME": "BARKOD",
+        "SYSNAME": "KATMC_BARKOD"
+      },
+      {
+        "ROW": 2,
+        "SIZE": 20,
+        "NAME": "Наименование",
+        "SYSNAME": "KATMC_NAME"
+      },
+      {
+        "ROW": 3,
+        "SIZE": 20,
+        "NAME": "Ответственный исполнитель",
+        "SYSNAME": "VA_1411_Ответственный исполнитель"
+      },
+      {
+        "ROW": 3,
+        "SIZE": 20,
+        "NAME": "Статья затрат",
+        "SYSNAME": "STZATR_NAME"
+      }
+    ],
+    "COLUMNS": [
+      {
+        "NPP": 1,
+        "NAME": "KATOTPED.0-мужской; 1-женский; 2-средний",
+        "SYSNAME": "KATOTPED_NAME",
+        "SIZE": 10,
+        "MODIF": false,
+        "ACTION": "0",
+        "WISACTIVE": 1
+      }
+    ]
+  }
+}

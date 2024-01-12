@@ -1,0 +1,25 @@
+#include UserReport.vih
+vipInterface UserReport_barcode implements iUserReport licensed(free);
+interface UserReport_barcode;
+create view;
+procedure run;
+begin
+  runinterface('C_Barcode::iBarcodeFunc');
+end;
+function getReportName: string;
+begin
+  result := 'Поис по штрихкоду';
+end;
+function getGroupName (level: word): string;
+begin
+  result := '';
+end;
+function getPriority: integer;
+begin
+  result := 100;
+end;
+function visibleInModule(ind: byte): string;
+begin
+  result := '*';
+end;
+end.
