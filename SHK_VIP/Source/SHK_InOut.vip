@@ -600,7 +600,31 @@ function SetMacroValues(_BatchTerms : string;  _BatchDate: date;  _login, _Imei:
 
   result := JSONObj_Array;
 #end
-
+Function isNumber(_str: string; var _retstr, _retstrRus : string) : boolean;
+{
+  _retstrRus := _retstr := '';
+  var _tmpDbl : double = 0;
+  _try {
+     mylog('Function isNumber: value = '+ _str);
+    _tmpDbl := double(_str);
+    }
+  _except
+    on ExNumberConvert: {
+       _retstr    := 'value not a number : "'  +_str+ '"';
+       _retstrRus := 'введено не числовое значение: '  +_str;
+       mylog('Function isNumber: указано не число '+ _str);
+       result := false;
+       exit;
+     }
+   if _tmpDbl < 0 then {
+       _retstr    := 'value less then 0 : "'  +_str+ '"';
+       _retstrRus := 'введено отрицательное значение: '+_str;
+       mylog('Function isNumber: указано число меньше нуля '+ _str);
+       result := false;
+       exit;
+     }
+  result := true; //принципиально не отрицательное, а вот целое или нет проверим дальше по МЦ
+}
 #include SHK_InOut_KatMC.vpp
 #include SHK_InOut_KatSopr.vpp
 #include SHK_InOut_InvTab.vpp

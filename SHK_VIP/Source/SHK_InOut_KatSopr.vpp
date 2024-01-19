@@ -345,31 +345,7 @@ procedure GetParamSkPr_wOrder(_vidsopr : word; var _skPr : word; var _wOrder : w
    }
    end;
 }
-Function isNumber(_str: string; var _retstr, _retstrRus : string) : boolean;
-{
-  _retstrRus := _retstr := '';
-  var _tmpDbl : double = 0;
-  _try {
-     mylog('Function isNumber: value = '+ _str);
-    _tmpDbl := double(_str);
-    }
-  _except
-    on ExNumberConvert: {
-       _retstr    := 'value not a number : "'  +_str+ '"';
-       _retstrRus := 'указано не число: "'  +_str+ '"';
-       mylog('Function isNumber: указано не число '+ _str);
-       result := false;
-       exit;
-     }
-   if _tmpDbl < 0 then {
-       _retstr    := 'value less then 0 : "'  +_str+ '"';
-       _retstrRus := 'указано число меньше нуля: "'  +_str+ '"';
-       mylog('Function isNumber: указано число меньше нуля '+ _str);
-       result := false;
-       exit;
-     }
-  result := true; //принципиально не отрицательное, а вот целое или нет проверим дальше по МЦ
-}
+
 Function MakeAction_MakeAction_KATSOPR(_login, _IMEI : string) : TPtr;
 {
   var JSONObj : TPtr = HttpConnect_JsonObjectCreate(m_service);
@@ -446,7 +422,7 @@ var _ActionBody : string = _tElements.value;
 //              'KOLNORMA', 'OILPLOT', 'PROCNAC', 'SUMNDS', 'SUMVNDS', 'RPRICE',
               'KOL','KOLOPL','KOLFACT', 'KOL2', 'KOLFACT2', 'KOLGRM', 'KOLPOV', 'KOLDOP'     : {
                              if not isNumber(_tElements.value, _retstr, _retstrRus) {
-                               #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'в поле '+_field +' '+ _retstrRus)
+                               #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле '+_field +' '+ _retstrRus + '. Позиция ' + _npp)
                                result := JSONObj;
                                exit;
                              }
@@ -456,8 +432,8 @@ var _ActionBody : string = _tElements.value;
                                  mylog(' check if getfirst katotped where ((SpSopr_makeAction.cotpEd == katotped.nrec)) = tsOK ');
                                  if katotped.diskret = 1 then {
                                     if round(_tmpDbl,0)  <> _tmpDbl {
-                                       #WRITE_JSONERROR(JSONObj,'The KOL '+_field+' is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpDbl),'Указано дробное число "'+string(_tmpDbl)+'" для неделимой единицы измерения "'+katotped.abbr+'"')
-                                       mylog('В поле KOL передано не целое число, хотя ед.изм МЦ неделимая  = ' + string(_tmpDbl));
+                                       #WRITE_JSONERROR(JSONObj,'The KOL '+_field+' is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpDbl),'Указано дробное число '+string(_tmpDbl)+' при неделимой единице измерения. Позиция '+_npp)
+                                       mylog('Указано дробное число '+string(_tmpDbl)+' при неделимой единице измерения. Позиция '+_npp);
                                        result := JSONObj;
                                        exit;
                                     }

@@ -349,6 +349,109 @@ var _ActionBody : string = _tElements.value;
                exit;
             }
         }
+     }
+     else
+      {
+           #WRITE_JSONERROR(JSONObj,'does not exist system field _SpecFieldIDName= ' + _SpecFieldIDName,'не найдено служебное поле _SpecFieldIDName= ' + _SpecFieldIDName)
+           result := JSONObj;
+           exit;
+      }
+      var _cmc : comp = 0h;
+    _loop _tElements where ((_npp == _tElements.npp)) and _tElements.name <> _SpecFieldIDName
+    {
+     mylog('  _tElements.name = ' + _tElements.name);
+       if _cSpInvTab = 0h { // ищем МЦ добавляем запись
+
+         // надо найти поле, в котором action есть - туда полдучить ссылку на объект и вставить его
+          if pos('KATMC_',_tElements.name) = 1 then {
+            var _ActionSpName : string = getspActionName(_tElements.name);
+             if _ActionSpName <> '' then  {
+               var _iSHK_InOut : SHK_InOut new;
+               _cmc := _iSHK_InOut.GetMCNRECByIdent(_ActionSpName, _tElements.value);
+             }
+           }
+        }
+        if _cmc <> 0h {
+          break;
+        }
+     }
+
+       if _cmc = 0h {
+         #WRITE_JSONERROR(JSONObj,'could not fint MC by barcode = ' + _SpecFieldIDName,'не найдена ТМЦ по ' + _tElements.value)
+         result := JSONObj;
+         exit;
+       }
+
+
+    _loop _tElements where ((_npp == _tElements.npp)) and _tElements.name <> _SpecFieldIDName
+    {
+       if pos('SPINVTAB_',_tElements.name) = 1 then {
+         var _field : string = extractdelimitedword(_tElements.name,2,'_'); // CU_1009_KAU_2
+
+        case _field of
+           'KOL'
+          ,'KOLL'   : {
+                      var _retstr, _retstrRus : string = '';
+                       if not isNumber(_tElements.value, _retstr, _retstrRus) {
+                         #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле '+_field +' '+ _retstrRus + '. Позиция ' + _npp)
+                         result := JSONObj;
+                         exit;
+                       }
+                       var _tmpkol : double = double(_tElements.value);
+                       if getfirst katmc where ((_cmc == katMc.nrec)) = tsOK {
+                         if getfirst kated where ((katMc.cEd == kated.nrec)) = tsOK {
+                           if kated.diskret = 1 then {
+                              if round(_tmpkol,0)  <> _tmpkol {
+                                 #WRITE_JSONERROR(JSONObj,'The KOL field is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpkol),'Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+_npp)
+                                 mylog('check: Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+_npp);
+                                 result := JSONObj;
+                                 exit;
+                              }
+                            }
+                          }
+                       }
+
+
+                    }
+           'PRICEL'
+          ,'PRICE'
+          ,'VPRICE'
+          ,'RPRICE'
+          ,'PPRICE' : {
+                        var _retstr, _retstrRus : string = '';
+                       if not isNumber(_tElements.value, _retstr, _retstrRus) {
+                         #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле '+_field +' '+ _retstrRus + '. Позиция ' + _npp)
+                         result := JSONObj;
+                         exit;
+                       }
+                    }
+         else {
+           #WRITE_JSONERROR(JSONObj,'field "'+_field+'" doesnot allow to modify','поле "'+_field+'" не предусмотрено для модификации')
+           result := JSONObj;
+           exit;
+         }
+         end;
+       }
+    }
+    _npp++;
+  } while getfirst _tElements where ((_npp == _tElements.npp)) = tsOK
+
+  _npp := 1;
+  do
+  {
+    var _cSPINVTAB : comp = 0h;
+    var _SpecFieldIDName : string = GetSpecFieldIDName;
+    if (getfirst _tElements where ((_npp == _tElements.npp)) and _tElements.name = _SpecFieldIDName) = tsOK
+     {
+       _cSPINVTAB := comp(_tElements.value);
+       if _cSPINVTAB <> 0h then {
+           if getfirst SPINVTAB_makeAction where ((_cSPINVTAB == SPINVTAB_makeAction.nrec)) <> tsOK
+            {
+               #WRITE_JSONERROR(JSONObj,'does not exist SPINVTAB where nrec = ' + _tElements.value,'не найдена запись SPINVTAB с nrec = ' + _tElements.value)
+               result := JSONObj;
+               exit;
+            }
+        }
         else {
                insert SPINVTAB_makeAction set
                   SPINVTAB_makeAction.cInvTab   := INVTAB_makeAction.nrec
