@@ -29,6 +29,8 @@ sql query queryKatBOXSaldo =
 
        where %IdentityField = :pIdent // если меняете запрос, то обязательно исправьте функцию Fill_fieldArray
 //Дима Белый сказал убрать это, чтобы пустые возвращались           and saldobox.kol <> 0
+//Дима Белый сказал добавить костыль по сортировке сюда... почему не фронт? а ХЗ
+          order by katmc.name
 ;
 
 function GetResultQueryForKatBOXSaldo(_pcSHKObj: comp; _pIdent : string) : IResultSet;
