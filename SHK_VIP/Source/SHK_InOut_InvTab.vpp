@@ -376,7 +376,6 @@ var _ActionBody : string = _tElements.value;
           break;
         }
      }
-
        if _needInsertsp = True {
            if _cmc = 0h {
              #WRITE_JSONERROR(JSONObj,'could not fint MC by barcode = ' + _SpecFieldIDName,'не найдена ТМЦ по ' + _tElements.value)
@@ -384,6 +383,8 @@ var _ActionBody : string = _tElements.value;
              exit;
            }
        }
+
+      if _cmc = 0h then _cmc := SPINVTAB_makeAction.cmc;
 
 
     _loop _tElements where ((_npp == _tElements.npp)) and _tElements.name <> _SpecFieldIDName
@@ -396,7 +397,7 @@ var _ActionBody : string = _tElements.value;
           ,'KOLL'   : {
                       var _retstr, _retstrRus : string = '';
                        if not isNumber(_tElements.value, _retstr, _retstrRus) {
-                         #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле '+_field +' '+ _retstrRus + '. Позиция ' + _npp)
+                         #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле количество '+ _retstrRus + '. Позиция ' + _npp)
                          result := JSONObj;
                          exit;
                        }
@@ -423,7 +424,7 @@ var _ActionBody : string = _tElements.value;
           ,'PPRICE' : {
                         var _retstr, _retstrRus : string = '';
                        if not isNumber(_tElements.value, _retstr, _retstrRus) {
-                         #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле '+_field +' '+ _retstrRus + '. Позиция ' + _npp)
+                         #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле цена '+ _retstrRus + '. Позиция ' + _npp)
                          result := JSONObj;
                          exit;
                        }

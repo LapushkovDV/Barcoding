@@ -88,7 +88,7 @@
 			<File Name="Source\SHK_InOut.vip" PosX="25" PosY="410" OpenEditor="True"/>
 			<File Name="Source\SHK_InOut_KatBoxSaldo.vpp" PosX="69" PosY="558" OpenEditor="True"/>
 			<File Name="Source\SHK_InOut_KatSopr.vpp" PosX="85" PosY="424" OpenEditor="True"/>
-			<File Name="Source\SHK_InOut_InvTab.vpp" PosX="89" PosY="358" OpenEditor="True" Active="True"/>
+			<File Name="Source\SHK_InOut_InvTab.vpp" PosX="56" PosY="387" OpenEditor="True" Active="True"/>
 			<File Name="Source\SHK_Base.vip" PosX="103" PosY="9" OpenEditor="True"/>
 		</FileList>
 		<DebugOptions StopOnStartup="False"/>
@@ -132,7 +132,8 @@
 			<Marker FileName="Source\SHK_InOut_KatBoxSaldo.vpp" Caption="Нумерованная закладка 2" Line="634" NumIndex="2" MarkerType="mtNumBookmark" Comment="_ckatBox_to := _iSHK_InOut.GetKATBOXNRECByIdent(_ActionSpName, _tElements.value);"/>
 			<Marker FileName="Source\SHK_MakeMove.vip" Caption="Нумерованная закладка 1" Line="984" NumIndex="1" MarkerType="mtNumBookmark" Comment="MTov := ShowNalMKRMsg2Log(ResTov);"/>
 			<Marker FileName="Source\SHK_InOut_KatBoxSaldo.vpp" Caption="Нумерованная закладка 1" Line="659" NumIndex="1" MarkerType="mtNumBookmark" Comment=", SpBox_makeAction.cSALDOBOX := SaldoBox_makeAction.nrec"/>
-			<Marker FileName="Source\SHK_InOut_InvTab.vpp" Caption="Нумерованная закладка 2" Line="493" NumIndex="2" MarkerType="mtNumBookmark" Comment="if _cSpInvTab = 0h { // добавляем запись"/>
+			<Marker FileName="Source\SHK_InOut_InvTab.vpp" Caption="Нумерованная закладка 1" Line="394" NumIndex="1" MarkerType="mtNumBookmark"/>
+			<Marker FileName="Source\SHK_InOut_InvTab.vpp" Caption="Нумерованная закладка 2" Line="458" NumIndex="2" MarkerType="mtNumBookmark" Comment="}"/>
 		</MarkerList>
 		<BreakPointList>
 			<BreakPoint FileName="Vip.prj" Line="90"/>
@@ -142,7 +143,7 @@
 			<BreakPoint FileName="Source\SHK_MakeMove.vip" Line="802"/>
 		</BreakPointList>
 		<CompileMessengerList>
-			<CompileMessenger Name="C:\Galaktika\_git\Barcoding\SHK_VIP\SHK_VIP.prj" DateTimeStart="45313,6486641782" DateTimeCompile="0,000421469907450955" StateHistory="False">
+			<CompileMessenger Name="C:\Galaktika\_git\Barcoding\SHK_VIP\SHK_VIP.prj" DateTimeStart="45313,6932478356" DateTimeCompile="0,000397997690015472" StateHistory="False">
 				<CompileMessageList>
 					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\Algoritm_5959_Setup.vip" SourceLine="37" SourceColumn="1"/>
 					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\Algoritm_5959.vip" SourceLine="103" SourceColumn="1"/>
@@ -308,7 +309,7 @@
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtEndCompile" MessageText="22.01.2024 15:34:41"/>
+					<CompileMessage MessageType="mtEndCompile" MessageText="22.01.2024 16:38:51"/>
 				</CompileMessageList>
 			</CompileMessenger>
 		</CompileMessengerList>
