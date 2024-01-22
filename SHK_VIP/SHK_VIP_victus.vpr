@@ -84,11 +84,12 @@
 			</ConfigurationList>
 		</DatabaseConfiguration>
 		<FileList>
-			<File Name="SHK_VIP.prj" PosX="16" PosY="196" OpenEditor="True"/>
-			<File Name="Source\SHK_InOut.vip" PosX="62" PosY="621" OpenEditor="True"/>
-			<File Name="Source\SHK_InOut_KatBoxSaldo.vpp" PosX="30" PosY="33" OpenEditor="True" Active="True"/>
-			<File Name="Source\SHK_InOut_KatSopr.vpp" PosX="1" PosY="435" OpenEditor="True"/>
-			<File Name="Source\SHK_InOut_InvTab.vpp" PosX="73" PosY="370" OpenEditor="True"/>
+			<File Name="SHK_VIP.prj" PosX="16" PosY="194" OpenEditor="True"/>
+			<File Name="Source\SHK_InOut.vip" PosX="25" PosY="410" OpenEditor="True"/>
+			<File Name="Source\SHK_InOut_KatBoxSaldo.vpp" PosX="74" PosY="581" OpenEditor="True" Active="True"/>
+			<File Name="Source\SHK_InOut_KatSopr.vpp" PosX="85" PosY="424" OpenEditor="True"/>
+			<File Name="Source\SHK_InOut_InvTab.vpp" PosX="11" PosY="380" OpenEditor="True"/>
+			<File Name="Source\SHK_Base.vip" PosX="103" PosY="9" OpenEditor="True"/>
 		</FileList>
 		<DebugOptions StopOnStartup="False"/>
 		<MarkerList>
@@ -140,7 +141,7 @@
 			<BreakPoint FileName="Source\SHK_MakeMove.vip" Line="802"/>
 		</BreakPointList>
 		<CompileMessengerList>
-			<CompileMessenger Name="C:\Galaktika\_git\Barcoding\SHK_VIP\SHK_VIP.prj" DateTimeStart="45310,5089311111" DateTimeCompile="0,000409166670578998" StateHistory="False">
+			<CompileMessenger Name="C:\Galaktika\_git\Barcoding\SHK_VIP\SHK_VIP.prj" DateTimeStart="45313,6387053819" DateTimeCompile="0,000426562502980232" StateHistory="False">
 				<CompileMessageList>
 					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\Algoritm_5959_Setup.vip" SourceLine="37" SourceColumn="1"/>
 					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\Algoritm_5959.vip" SourceLine="103" SourceColumn="1"/>
@@ -306,7 +307,7 @@
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtEndCompile" MessageText="19.01.2024 12:13:27"/>
+					<CompileMessage MessageType="mtEndCompile" MessageText="22.01.2024 15:20:21"/>
 				</CompileMessageList>
 			</CompileMessenger>
 		</CompileMessengerList>

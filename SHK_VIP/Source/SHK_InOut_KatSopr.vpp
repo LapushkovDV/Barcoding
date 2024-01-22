@@ -422,7 +422,7 @@ var _ActionBody : string = _tElements.value;
 //              'KOLNORMA', 'OILPLOT', 'PROCNAC', 'SUMNDS', 'SUMVNDS', 'RPRICE',
               'KOL','KOLOPL','KOLFACT', 'KOL2', 'KOLFACT2', 'KOLGRM', 'KOLPOV', 'KOLDOP'     : {
                              if not isNumber(_tElements.value, _retstr, _retstrRus) {
-                               #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле '+_field +' '+ _retstrRus + '. Позиция ' + _npp)
+                               #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле количество '+ _retstrRus + '. Позиция ' + _npp)
                                result := JSONObj;
                                exit;
                              }

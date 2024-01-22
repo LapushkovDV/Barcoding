@@ -461,7 +461,7 @@ var _ActionBody : string = _tElements.value;
                                      exit;
                                    }
                                  if _tmpkol < 0 then {
-                                     #WRITE_JSONERROR(JSONObj,'Field KOL value less then 0 : "'  +_tElements.value+ '"','В поле "Перемещаемое кол-во" введено отрицательное значение:' +_tElements.value+ '". Позиция' +_npp)
+                                     #WRITE_JSONERROR(JSONObj,'Field KOL value less then 0 : "'  +_tElements.value+ '"','В поле "Перемещаемое кол-во" введено отрицательное значение: ' +_tElements.value+ '. Позиция ' +_npp)
                                      mylog('check: В поле "Перемещаемое кол-во" введено отрицательное значение:' +_tElements.value+ '". Позиция' +_npp);
                                      result := JSONObj;
                                      exit;
@@ -523,7 +523,7 @@ var _ActionBody : string = _tElements.value;
 
                        mylog('check: cbox from = ' + SaldoBox_makeAction.cbox);
                        if _ckatBox_to = SaldoBox_makeAction.cbox {
-                         #WRITE_JSONERROR(JSONObj,'the cell from where and where is the same','В позиции'+ _npp +' совпадают ячейка-отправитель и ячейка-получатель')
+                         #WRITE_JSONERROR(JSONObj,'the cell from where and where is the same','В позиции '+ _npp +' совпадают ячейка-отправитель и ячейка-получатель')
                          mylog('check: В позиции'+ _npp +' совпадают ячейка-отправитель и ячейка-получатель');
                          result := JSONObj;
                          exit;
@@ -570,7 +570,7 @@ var _ActionBody : string = _tElements.value;
 
 
             if _all_kol_zero = true {
-                         #WRITE_JSONERROR(JSONObj,'all quantity is zero ', 'Отсутствуют заполненные позиции для обработки (не указано количество)')
+                         #WRITE_JSONERROR(JSONObj,'all quantity is zero ', 'Отсутствуют заполненные позиции для обработки')
                          mylog('по всем перемещаемым ячейкам указано нулевое количество');
                          result := JSONObj;
                          exit;
@@ -578,7 +578,7 @@ var _ActionBody : string = _tElements.value;
             }
 
             if _all_katBox_to_empty {
-                         #WRITE_JSONERROR(JSONObj,'all katbox_to is empty', 'Отсутствуют заполненные позиции для обработки (не указаны ячейки)')
+                         #WRITE_JSONERROR(JSONObj,'all katbox_to is empty', 'Отсутствуют заполненные позиции для обработки')
                          mylog('ни в одной позиции не заполнены коды ячеек куда');
                          result := JSONObj;
                          exit;
