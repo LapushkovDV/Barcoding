@@ -357,11 +357,12 @@ var _ActionBody : string = _tElements.value;
            exit;
       }
       var _cmc : comp = 0h;
+      var _needInsertsp : boolean = false;
     _loop _tElements where ((_npp == _tElements.npp)) and _tElements.name <> _SpecFieldIDName
     {
      mylog('  _tElements.name = ' + _tElements.name);
        if _cSpInvTab = 0h { // ищем МЦ добавляем запись
-
+         _needInsertsp :=  true;
          // надо найти поле, в котором action есть - туда полдучить ссылку на объект и вставить его
           if pos('KATMC_',_tElements.name) = 1 then {
             var _ActionSpName : string = getspActionName(_tElements.name);
@@ -376,10 +377,12 @@ var _ActionBody : string = _tElements.value;
         }
      }
 
-       if _cmc = 0h {
-         #WRITE_JSONERROR(JSONObj,'could not fint MC by barcode = ' + _SpecFieldIDName,'не найдена ТМЦ по ' + _tElements.value)
-         result := JSONObj;
-         exit;
+       if _needInsertsp = True {
+           if _cmc = 0h {
+             #WRITE_JSONERROR(JSONObj,'could not fint MC by barcode = ' + _SpecFieldIDName,'не найдена ТМЦ по ' + _tElements.value)
+             result := JSONObj;
+             exit;
+           }
        }
 
 
