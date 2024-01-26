@@ -413,11 +413,16 @@ Procedure MysqlAddStr(var query_handle: longInt; add_query_str: string);
    HttpConnect_JsonObjectAddString( m_service, #JSONObj, 'RESULT_MSG_RUS' , #ERRORRUS);
    MyLog('ERROR:  '+#ERRORRUS );
 #end
-function SetMacroValues(_BatchTerms : string;  _BatchDate: date;  _login, _Imei: string  ): string;
+function SetMacroValues(_BatchTerms : string;  _BatchDate: date; _BatchDays, _BatchMinutes: word; _login, _Imei: string  ): string;
 {
    _BatchTerms := replace(_BatchTerms ,'#(BatchDate)','#DATE('+datetostr(_BatchDate,'DD,MM,YYYY')+')' );
    _BatchTerms := replace(_BatchTerms ,'#(LOGIN)', _login);
    _BatchTerms := replace(_BatchTerms ,'#(IMEI)',_Imei);
+
+
+   _BatchTerms := replace(_BatchTerms ,'#(CurDateBatchDays)',datetostr(add_day(cur_date,(-1)*_BatchDays),'DD,MM,YYYY'));
+   _BatchTerms := replace(_BatchTerms ,'#(CurDateBatchMinutes)',timetostr(Sub_Time(cur_time,From_Sec100(_BatchMinutes*100*60)),'HH,MM'));
+
    result := _BatchTerms;
 }
 #declare BatchBodyFunctionGetResultQuery(QueryRef, TablePostFix)
@@ -434,7 +439,7 @@ function SetMacroValues(_BatchTerms : string;  _BatchDate: date;  _login, _Imei:
 
    _loop SHKObjSP_BatchTerms
       {
-        MysqlAddStr( WhereFields , SetMacroValues(SHKObjSP_BatchTerms.Name, SHKObj.BatchDate, _login, _Imei)); // +SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME  );
+        MysqlAddStr( WhereFields , SetMacroValues(SHKObjSP_BatchTerms.Name, SHKObj.BatchDate, SHKObj.BatchDays, SHKObj.BatchMinutes,_login, _Imei)); // +SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME  );
       }
 
 

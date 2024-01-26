@@ -1,0 +1,7 @@
+alter table SHK_TMPLT_OBJ
+  add (
+      BatchDays    : word "кол-во дней для пакетной выгрузки"
+    , BatchMinutes : word "кол-во минут для пакетной выгрузки"
+
+)
+;

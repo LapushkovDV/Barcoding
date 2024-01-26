@@ -23,6 +23,8 @@ Create table BCD.SHK_TMPLT_OBJ "ШК шапка шаблона объекта"
   , cNoteAfterBatch : ref(KatNotes) "После пакетн. выгрузки уст. статус"
   , isGroup         : boolean "Признак группы"
   , cGroup          : comp "Ссылка на группу"
+  , BatchDays       : word "кол-во дней для пакетной выгрузки"
+  , BatchMinutes    : word "кол-во минут для пакетной выгрузки"
 
 )
 With index
