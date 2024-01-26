@@ -1971,6 +1971,7 @@ set SoprHoz.kodValSp := cTMP1;
     // проведение операций с ячейками хранения
     if ((wDefine and 16) <> 16)
     {
+     MyLog('операции с ячейками хранения');
       if (make_prih OR make_rash) // только если формируются прих/расх ордера
       if ((KatSopr.vidSopr = 501) or
           (KatSopr.vidSopr = 502) or
@@ -2060,6 +2061,7 @@ set SoprHoz.kodValSp := cTMP1;
         Pick.wList := 830;
         Pick.cRec  := SklOrder.NRec;
         insert current Pick;
+
 
         if PaketAktsKomp_boxes
           _LOOP SpOrder where ((SklOrder.NRec == SpOrder.cSklOrder)) ordered by index SpOrder14

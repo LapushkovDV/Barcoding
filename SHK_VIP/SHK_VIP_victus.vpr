@@ -84,12 +84,16 @@
 			</ConfigurationList>
 		</DatabaseConfiguration>
 		<FileList>
-			<File Name="SHK_VIP.prj" PosX="16" PosY="194" OpenEditor="True"/>
+			<File Name="SHK_VIP.prj" PosX="22" PosY="189" OpenEditor="True"/>
 			<File Name="Source\SHK_InOut.vip" PosX="25" PosY="410" OpenEditor="True"/>
 			<File Name="Source\SHK_InOut_KatBoxSaldo.vpp" PosX="69" PosY="558" OpenEditor="True"/>
-			<File Name="Source\SHK_InOut_KatSopr.vpp" PosX="85" PosY="424" OpenEditor="True"/>
-			<File Name="Source\SHK_InOut_InvTab.vpp" PosX="56" PosY="387" OpenEditor="True" Active="True"/>
+			<File Name="Source\SHK_InOut_KatSopr.vpp" PosX="57" PosY="671" OpenEditor="True" Active="True"/>
+			<File Name="Source\SHK_InOut_InvTab.vpp" PosX="64" PosY="353" OpenEditor="True"/>
 			<File Name="Source\SHK_Base.vip" PosX="103" PosY="9" OpenEditor="True"/>
+			<File Name="Source\SHK_MakeMove.vip" PosX="6" PosY="2160" OpenEditor="True"/>
+			<File Name="..\..\..\..\Users\Дмитрий\YandexDisk\Work\!Gal_Source\Z_M_L_F_C_20230112\CompSrc\L\L_Sklad\vip\Func\MakeOrder\MakeMove.vip" PosX="14" PosY="2193" OpenEditor="True"/>
+			<File Name="Source\test_make_order.vip" PosX="18" PosY="47" OpenEditor="True"/>
+			<File Name="..\..\..\GAL\Frm\SRC\CompSrc\L\L_Sklad\vip\Func\MakeOrder\MakeOrder.Var" PosX="5" PosY="10" OpenEditor="True"/>
 		</FileList>
 		<DebugOptions StopOnStartup="False"/>
 		<MarkerList>
@@ -128,12 +132,12 @@
 			<Marker FileName="Source\SHK_InOut_KatSopr.vpp" Caption="Нумерованная закладка 2" Line="447" NumIndex="2" MarkerType="mtNumBookmark" Comment="}"/>
 			<Marker FileName="Source\SHK_TEMPLATES.pan" Caption="Нумерованная закладка 1" Line="331" NumIndex="1" MarkerType="mtNumBookmark" Comment="SHKObjSP_BTN.CloseDoc   'Закрывать','после нажатия' ('Закрывать документ после выполнения действия по кнопке') : [3] , [List 0 'Нет','Да'],Protect;"/>
 			<Marker FileName="Source\SHK_TEMPLATES.vip" Caption="Нумерованная закладка 1" Line="199" NumIndex="1" MarkerType="mtNumBookmark"/>
-			<Marker FileName="Source\SHK_InOut_KatSopr.vpp" Caption="Нумерованная закладка 1" Line="432" NumIndex="1" MarkerType="mtNumBookmark" Comment="if getfirst katotped where ((SpSopr_makeAction.cotpEd == katotped.nrec)) = tsOK {"/>
 			<Marker FileName="Source\SHK_InOut_KatBoxSaldo.vpp" Caption="Нумерованная закладка 2" Line="634" NumIndex="2" MarkerType="mtNumBookmark" Comment="_ckatBox_to := _iSHK_InOut.GetKATBOXNRECByIdent(_ActionSpName, _tElements.value);"/>
-			<Marker FileName="Source\SHK_MakeMove.vip" Caption="Нумерованная закладка 1" Line="984" NumIndex="1" MarkerType="mtNumBookmark" Comment="MTov := ShowNalMKRMsg2Log(ResTov);"/>
 			<Marker FileName="Source\SHK_InOut_KatBoxSaldo.vpp" Caption="Нумерованная закладка 1" Line="659" NumIndex="1" MarkerType="mtNumBookmark" Comment=", SpBox_makeAction.cSALDOBOX := SaldoBox_makeAction.nrec"/>
 			<Marker FileName="Source\SHK_InOut_InvTab.vpp" Caption="Нумерованная закладка 1" Line="394" NumIndex="1" MarkerType="mtNumBookmark"/>
 			<Marker FileName="Source\SHK_InOut_InvTab.vpp" Caption="Нумерованная закладка 2" Line="458" NumIndex="2" MarkerType="mtNumBookmark" Comment="}"/>
+			<Marker FileName="Source\SHK_MakeMove.vip" Caption="Нумерованная закладка 1" Line="1972" NumIndex="1" MarkerType="mtNumBookmark" Comment="if ((wDefine and 16) &lt;&gt; 16)"/>
+			<Marker FileName="Source\SHK_InOut_KatSopr.vpp" Caption="Нумерованная закладка 1" Line="671" NumIndex="1" MarkerType="mtNumBookmark"/>
 		</MarkerList>
 		<BreakPointList>
 			<BreakPoint FileName="Vip.prj" Line="90"/>
@@ -143,7 +147,7 @@
 			<BreakPoint FileName="Source\SHK_MakeMove.vip" Line="802"/>
 		</BreakPointList>
 		<CompileMessengerList>
-			<CompileMessenger Name="C:\Galaktika\_git\Barcoding\SHK_VIP\SHK_VIP.prj" DateTimeStart="45313,6932478356" DateTimeCompile="0,000397997690015472" StateHistory="False">
+			<CompileMessenger Name="C:\Galaktika\_git\Barcoding\SHK_VIP\SHK_VIP.prj" DateTimeStart="45317,5575863426" DateTimeCompile="0,000214583335036878" StateHistory="False">
 				<CompileMessageList>
 					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\Algoritm_5959_Setup.vip" SourceLine="37" SourceColumn="1"/>
 					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\Algoritm_5959.vip" SourceLine="103" SourceColumn="1"/>
@@ -157,15 +161,15 @@
 							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" Line="963" Column="1"/>
 						</StackIncludeList>
 					</CompileMessage>
-					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная Stopped:Boolean, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(155), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2168" SourceColumn="1"/>
-					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная nal:Double, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(156), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2168" SourceColumn="1"/>
-					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная procN:Double, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(156), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2168" SourceColumn="1"/>
-					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная koefp:Double, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(156), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2168" SourceColumn="1"/>
-					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная pd:Comp, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(157), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2168" SourceColumn="1"/>
-					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная ml:Comp, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(157), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2168" SourceColumn="1"/>
-					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная pr:Comp, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(157), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2168" SourceColumn="1"/>
-					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная reservOk:Boolean, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(160), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2168" SourceColumn="1"/>
-					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная ret:Word, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(161), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2168" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная Stopped:Boolean, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(155), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2170" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная nal:Double, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(156), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2170" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная procN:Double, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(156), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2170" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная koefp:Double, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(156), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2170" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная pd:Comp, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(157), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2170" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная ml:Comp, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(157), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2170" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная pr:Comp, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(157), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2170" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная reservOk:Boolean, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(160), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2170" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная ret:Word, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip(161), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_MakeMove.vip" SourceLine="2170" SourceColumn="1"/>
 					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_Base.vip" SourceLine="19" SourceColumn="1"/>
 					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;SHK_BASE.Fill_fieldArray&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_Base.vip(123), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_Base.vip" SourceLine="818" SourceColumn="5"/>
 					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;SHK_BASE.GetTMPLTByName&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_Base.vip(346), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_Base.vip" SourceLine="818" SourceColumn="5"/>
@@ -309,7 +313,7 @@
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtEndCompile" MessageText="22.01.2024 16:38:51"/>
+					<CompileMessage MessageType="mtEndCompile" MessageText="26.01.2024 13:23:14"/>
 				</CompileMessageList>
 			</CompileMessenger>
 		</CompileMessengerList>

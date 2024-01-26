@@ -666,28 +666,47 @@ if SpSopr_makeAction.#FieldName <> _tElements.value then update current SpSopr_m
             GetParamSkPr_wOrder(katSopr_makeAction.vidsopr, _skPr, _wOrder);
             mylog('CREATEORDERS GetParamSkPr_wOrder . _skPr='+_skPr+', _wOrder ='+ _wOrder );
             var _error : string = '';
-            if iSHK_MakeMove.MakeMoveForSHK(  katSopr_makeAction.nrec
-                           , if(katSopr_makeAction.vidsopr = 501,168,32) // 28  для НОП - 168
-                           , _skPr // склад -производствр
-                           , 0 // wDel
-                           , 0 // wDate
-                           , 0 // wTXO
-                           , 0 // wMode
-                           , 2 // wParam
-                           , _wOrder //  1 расход  2  приход 3 оба wOrder
-                           , cur_date
-                           , _error
-                          ) {
-               HttpConnect_JsonObjectAddInteger(m_service, JSONObj, 'RESULT_CODE', 1);
-               HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG' ,     'MAKEORDERS OK');
-               HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG_RUS' , 'Ордера сформированы');
-               mylog('CREATEORDERS Ордера сформированы' );
-               result := JSONObj;
+
+            if katSopr_makeAction.vidsopr = 101 { // для приходной накладной MakeMove не катит
+              if oMakeOrder.MakeReceivingOrder(katSopr_makeAction.nrec, cur_date) {
+                   HttpConnect_JsonObjectAddInteger(m_service, JSONObj, 'RESULT_CODE', 1);
+                   HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG' ,     'MAKEORDERS OK');
+                   HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG_RUS' , 'Ордера сформированы');
+                   mylog('CREATEORDERS Ордера сформированы' );
+                   result := JSONObj;
+                }
+                else
+                 {
+                  var _wideStringErr : wideString  = oMakeOrder.LastErrorDescription;
+                  _error := string(_wideStringErr);
+                  #WRITE_JSONERROR(JSONObj,'MAKEORDERS NOT OK','Ордера не сформированы:' + _error)
+                  result := JSONObj;
+                 }
             }
-            else
-             {
-              #WRITE_JSONERROR(JSONObj,'MAKEORDERS NOT OK','Ордера не сформированы:' + _error)
-              result := JSONObj;
+            else {
+                if iSHK_MakeMove.MakeMoveForSHK(  katSopr_makeAction.nrec
+                               , if(katSopr_makeAction.vidsopr = 501,168,32) // 28  для НОП - 168
+                               , _skPr // склад -производствр
+                               , 0 // wDel
+                               , 0 // wDate
+                               , 0 // wTXO
+                               , 0 // wMode
+                               , 2 // wParam
+                               , _wOrder //  1 расход  2  приход 3 оба wOrder
+                               , cur_date
+                               , _error
+                              ) {
+                   HttpConnect_JsonObjectAddInteger(m_service, JSONObj, 'RESULT_CODE', 1);
+                   HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG' ,     'MAKEORDERS OK');
+                   HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG_RUS' , 'Ордера сформированы');
+                   mylog('CREATEORDERS Ордера сформированы' );
+                   result := JSONObj;
+                }
+                else
+                 {
+                  #WRITE_JSONERROR(JSONObj,'MAKEORDERS NOT OK','Ордера не сформированы:' + _error)
+                  result := JSONObj;
+                 }
              }
             exit;
         }
