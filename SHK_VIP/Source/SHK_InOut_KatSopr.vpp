@@ -22,9 +22,12 @@ sql query queryKatSopr =
           left join shk_barcodelink SHK_BARCODELINK_PARTY on SHK_BARCODELINK_PARTY.wtable = 1430 and SHK_BARCODELINK_PARTY.crec = katParty.NREC and SHK_BARCODELINK_PARTY.type = 0
           left join attrnam on attrnam.wtable = 1109 and attrnam.name = :anName
           left join attrval on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katsopr.nrec
-          left join INBOXP on INBOXP.CSPSOPR = spsopr.nrec //and INBOXP.WTYPE = 0
-          left join KATBOX on KATBOX.nrec = INBOXP.CBOX
-          left join shk_barcodelink SHK_BARCODELINK_KATBOX on SHK_BARCODELINK_KATBOX.wtable = 1423 and SHK_BARCODELINK_KATBOX.crec = KATBOX.NREC and SHK_BARCODELINK_KATBOX.type = 0
+          left join INBOXP INBOXP_TO   on INBOXP_TO.CSPSOPR  = spsopr.nrec and INBOXP_TO.WTYPE = 0 // размещение
+          left join INBOXP INBOXP_FROM on INBOXP_FROM.CSPSOPR = spsopr.nrec and INBOXP_FROM.WTYPE = 1 // списание
+          left join KATBOX KATBOX_TO   on KATBOX_TO.nrec = INBOXP_TO.CBOX
+          left join KATBOX KATBOX_FROM on KATBOX_FROM.nrec = INBOXP_FROM.CBOX
+          left join shk_barcodelink SHK_BARCODELINK_KATBOX_TO on SHK_BARCODELINK_KATBOX_TO.wtable = 1423 and SHK_BARCODELINK_KATBOX_TO.crec = KATBOX_TO.NREC and SHK_BARCODELINK_KATBOX_TO.type = 0
+          left join shk_barcodelink SHK_BARCODELINK_KATBOX_FROM on SHK_BARCODELINK_KATBOX_FROM.wtable = 1423 and SHK_BARCODELINK_KATBOX_FROM.crec = KATBOX_FROM.NREC and SHK_BARCODELINK_KATBOX_FROM.type = 0
           left join shk_barcodelink on shk_barcodelink.wtable = 1109 and shk_barcodelink.crec = katsopr.NREC and shk_barcodelink.type = 0
           left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD
           left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM
