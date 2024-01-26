@@ -420,8 +420,8 @@ function SetMacroValues(_BatchTerms : string;  _BatchDate: date; _BatchDays, _Ba
    _BatchTerms := replace(_BatchTerms ,'#(IMEI)',_Imei);
 
 
-   _BatchTerms := replace(_BatchTerms ,'#(CurDateBatchDays)',datetostr(add_day(cur_date,(-1)*_BatchDays),'DD,MM,YYYY'));
-   _BatchTerms := replace(_BatchTerms ,'#(CurDateBatchMinutes)',timetostr(Sub_Time(cur_time,From_Sec100(_BatchMinutes*100*60)),'HH,MM'));
+   _BatchTerms := replace(_BatchTerms ,'#(CurDateBatchDays)','#date('+datetostr(add_day(cur_date,(-1)*_BatchDays),'DD,MM,YYYY')+')');
+   _BatchTerms := replace(_BatchTerms ,'#(CurDateBatchMinutes)','#time('+timetostr(Sub_Time(cur_time,From_Sec100(_BatchMinutes*100*60)),'HH,MM')+',0,0)');
 
    result := _BatchTerms;
 }
