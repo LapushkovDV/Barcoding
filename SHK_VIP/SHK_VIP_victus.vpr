@@ -85,18 +85,8 @@
 		</DatabaseConfiguration>
 		<FileList>
 			<File Name="SHK_VIP.prj" PosX="20" PosY="195" OpenEditor="True"/>
-			<File Name="Source\SHK_InOut.vip" PosX="151" PosY="424" OpenEditor="True" Active="True"/>
-			<File Name="Source\SHK_InOut_KatBoxSaldo.vpp" PosX="69" PosY="558" OpenEditor="True"/>
-			<File Name="Source\SHK_InOut_KatSopr.vpp" PosX="81" PosY="29" OpenEditor="True"/>
-			<File Name="Source\SHK_TEMPLATES.pan" PosX="64" PosY="240" OpenEditor="True"/>
-			<File Name="Source\SHK_Base.vip" PosX="82" PosY="136" OpenEditor="True"/>
-			<File Name="Source\SHK_InOut_InvTab.vpp" PosX="64" PosY="353" OpenEditor="True"/>
-			<File Name="Source\SHK_MakeMove.vip" PosX="6" PosY="2160" OpenEditor="True"/>
-			<File Name="..\..\..\..\Users\Дмитрий\YandexDisk\Work\!Gal_Source\Z_M_L_F_C_20230112\CompSrc\L\L_Sklad\vip\Func\MakeOrder\MakeMove.vip" PosX="14" PosY="2193" OpenEditor="True"/>
-			<File Name="Source\test_make_order.vip" PosX="18" PosY="47" OpenEditor="True"/>
-			<File Name="..\..\..\GAL\Frm\SRC\CompSrc\L\L_Sklad\vip\Func\MakeOrder\MakeOrder.Var" PosX="5" PosY="10" OpenEditor="True"/>
-			<File Name="Source\SHK_InOut.pan" PosX="49" PosY="24" OpenEditor="True"/>
-			<File Name="Source\SHK_TEMPLATES.vip" PosX="22" PosY="106" OpenEditor="True"/>
+			<File Name="Source\SHK_InOut.vip" PosX="89" PosY="400" OpenEditor="True"/>
+			<File Name="Source\SHK_InOut_KatBoxSaldo.vpp" PosX="142" PosY="648" OpenEditor="True" Active="True"/>
 		</FileList>
 		<DebugOptions StopOnStartup="False"/>
 		<MarkerList>
@@ -134,13 +124,13 @@
 			<Marker FileName="Source\SHK_InOut_KatSopr.vpp" Caption="Нумерованная закладка 2" Line="450" NumIndex="2" MarkerType="mtNumBookmark" Comment="}"/>
 			<Marker FileName="Source\SHK_TEMPLATES.pan" Caption="Нумерованная закладка 1" Line="335" NumIndex="1" MarkerType="mtNumBookmark" Comment="SHKObjSP_BTN.CloseDoc   'Закрывать','после нажатия' ('Закрывать документ после выполнения действия по кнопке') : [3] , [List 0 'Нет','Да'],Protect;"/>
 			<Marker FileName="Source\SHK_TEMPLATES.vip" Caption="Нумерованная закладка 1" Line="199" NumIndex="1" MarkerType="mtNumBookmark"/>
-			<Marker FileName="Source\SHK_InOut_KatBoxSaldo.vpp" Caption="Нумерованная закладка 2" Line="634" NumIndex="2" MarkerType="mtNumBookmark" Comment="_ckatBox_to := _iSHK_InOut.GetKATBOXNRECByIdent(_ActionSpName, _tElements.value);"/>
-			<Marker FileName="Source\SHK_InOut_KatBoxSaldo.vpp" Caption="Нумерованная закладка 1" Line="659" NumIndex="1" MarkerType="mtNumBookmark" Comment=", SpBox_makeAction.cSALDOBOX := SaldoBox_makeAction.nrec"/>
+			<Marker FileName="Source\SHK_InOut_KatBoxSaldo.vpp" Caption="Нумерованная закладка 2" Line="640" NumIndex="2" MarkerType="mtNumBookmark" Comment="_ckatBox_to := _iSHK_InOut.GetKATBOXNRECByIdent(_ActionSpName, _tElements.value);"/>
 			<Marker FileName="Source\SHK_InOut_InvTab.vpp" Caption="Нумерованная закладка 1" Line="394" NumIndex="1" MarkerType="mtNumBookmark"/>
 			<Marker FileName="Source\SHK_InOut_InvTab.vpp" Caption="Нумерованная закладка 2" Line="458" NumIndex="2" MarkerType="mtNumBookmark" Comment="}"/>
 			<Marker FileName="Source\SHK_MakeMove.vip" Caption="Нумерованная закладка 1" Line="1972" NumIndex="1" MarkerType="mtNumBookmark" Comment="if ((wDefine and 16) &lt;&gt; 16)"/>
 			<Marker FileName="Source\SHK_InOut_KatSopr.vpp" Caption="Нумерованная закладка 1" Line="674" NumIndex="1" MarkerType="mtNumBookmark"/>
 			<Marker FileName="Source\SHK_InOut.vip" Caption="Нумерованная закладка 1" Line="424" NumIndex="1" MarkerType="mtNumBookmark" Comment="_BatchTerms := replace(_BatchTerms ,'#(CurDateBatchDays)',datetostr(add_day(cur_date,(-1)*BatchDays),'DD,MM,YYYY'));"/>
+			<Marker FileName="Source\SHK_InOut_KatBoxSaldo.vpp" Caption="Нумерованная закладка 1" Line="618" NumIndex="1" MarkerType="mtNumBookmark" Comment="if"/>
 		</MarkerList>
 		<BreakPointList>
 			<BreakPoint FileName="Vip.prj" Line="90"/>
@@ -150,7 +140,7 @@
 			<BreakPoint FileName="Source\SHK_MakeMove.vip" Line="802"/>
 		</BreakPointList>
 		<CompileMessengerList>
-			<CompileMessenger Name="C:\Galaktika\_git\Barcoding\SHK_VIP\SHK_VIP.prj" DateTimeStart="45317,7580406944" DateTimeCompile="0,000165324068802875" StateHistory="False">
+			<CompileMessenger Name="C:\Galaktika\_git\Barcoding\SHK_VIP\SHK_VIP.prj" DateTimeStart="45320,6751035532" DateTimeCompile="0,000452002313977573" StateHistory="False">
 				<CompileMessageList>
 					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\Algoritm_5959_Setup.vip" SourceLine="37" SourceColumn="1"/>
 					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\Algoritm_5959.vip" SourceLine="103" SourceColumn="1"/>
@@ -249,16 +239,6 @@
 							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_InOut.vip" Line="640" Column="1"/>
 						</StackIncludeList>
 					</CompileMessage>
-					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) MakeAction_MakeAction_SALDOBOX локальная переменная _cPodr_to:Comp, объявленная в C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\SOURCE\SHK_INOUT_KATBOXSALDO.VPP(640), не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\SOURCE\SHK_InOut_KatBoxSaldo.vpp" SourceLine="666" SourceColumn="22">
-						<StackIncludeList>
-							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_InOut.vip" Line="640" Column="1"/>
-						</StackIncludeList>
-					</CompileMessage>
-					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) MakeAction_MakeAction_SALDOBOX локальная переменная _cPodr_from:Comp, объявленная в C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\SOURCE\SHK_INOUT_KATBOXSALDO.VPP(640), не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\SOURCE\SHK_InOut_KatBoxSaldo.vpp" SourceLine="666" SourceColumn="22">
-						<StackIncludeList>
-							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_InOut.vip" Line="640" Column="1"/>
-						</StackIncludeList>
-					</CompileMessage>
 					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_INOUT_oSHK_InOut_GenerateJSON_UsersArrayFILE локальная переменная JSONObj_Descriptions:TPtr, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_InOut.vip(695), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_InOut.vip" SourceLine="718" SourceColumn="1"/>
 					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_INOUT_oSHK_InOut_GenerateJSON_UsersArrayFILE локальная переменная JSONObj_DescriptionsArray:TPtr, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_InOut.vip(696), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_InOut.vip" SourceLine="718" SourceColumn="1"/>
 					<CompileMessage MessageType="mtWarning" MessageText="Передача константы в качестве var-параметра" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\SOURCE\SHK_InOut.vip" SourceLine="830" SourceColumn="46"/>
@@ -316,7 +296,7 @@
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtEndCompile" MessageText="26.01.2024 18:11:49"/>
+					<CompileMessage MessageType="mtEndCompile" MessageText="29.01.2024 16:12:48"/>
 				</CompileMessageList>
 			</CompileMessenger>
 		</CompileMessengerList>

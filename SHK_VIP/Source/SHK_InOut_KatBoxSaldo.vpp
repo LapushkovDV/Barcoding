@@ -610,6 +610,12 @@ var _ActionBody : string = _tElements.value;
                     }
                  }
               mylog(' _ckatBox_to = ' + _ckatBox_to);
+             if getfirst KatBox_tmp where ((_ckatBox_to == KatBox_tmp.nrec)) = tsOK {
+                   mylog(' KatBox_to.name = ' + KatBox_tmp.name);
+                  }
+                  else {
+                   mylog(' ERROR! не нашли ячейку KatBox_to.nrec = ' + _ckatBox_to);
+                  }
 
               var _tmpkol : double = 0;
 
@@ -633,11 +639,22 @@ var _ActionBody : string = _tElements.value;
                   var _SpecFieldIDName : string = GetSpecFieldIDName;
 
                   if (getfirst _tElements where ((_npp == _tElements.npp)) and _tElements.name = _SpecFieldIDName) = tsOK
-                   {
-                    mylog('if (getfirst _tElements where ((_npp == _tElements.npp)) and _tElements.name = _SpecFieldIDName) = tsOK');
+                    {
+                       mylog('if (getfirst _tElements where ((_npp == _tElements.npp)) and _tElements.name = _SpecFieldIDName) = tsOK');
 
-                     _cSaldoBox := comp(_tElements.value);
-                       var _cPodr_to, _cPodr_from : comp = 0h;
+                       _cSaldoBox := comp(_tElements.value);
+                         mylog('_cSaldoBox='+_cSaldoBox);
+                         if _cSaldoBox <> 0h then {
+                             if getfirst SaldoBox_makeAction where ((_cSaldoBox == SaldoBox_makeAction.nrec)) <> tsOK {
+                                 mylog('Не найдена ячейка откуда по _cSaldoBox ');
+                                 mylog('EXIT');
+                                 exit;
+                              }
+                           }
+                           else {
+                             mylog('EXIT');
+                             exit;
+                           }
                          mylog('все ок. начинаем создание накладной на перемещение между ячейками');
                          Insert KatSopr_makeAction set
                               KatSopr_makeAction.vidsopr   := 623
@@ -663,7 +680,7 @@ var _ActionBody : string = _tElements.value;
                        mylog('insert SpBox_makeAction set');
 
                        mylog(' _getfirst SpSopr_makeAction _cSaldoBox = ' + _cSaldoBox)
-                     }
+                    }
                    else
                     {
                          #WRITE_JSONERROR(JSONObj,'does not exist system field _SpecFieldIDName= ' + _SpecFieldIDName,'не найдено служебное поле _SpecFieldIDName= ' + _SpecFieldIDName + '/позиция' +_npp)
