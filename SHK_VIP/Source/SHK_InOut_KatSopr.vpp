@@ -678,13 +678,24 @@ if SpSopr_makeAction.#FieldName <> _tElements.value then update current SpSopr_m
 
              _loop SpSopr_makeAction  where ((katSopr_makeAction.Nrec == SpSopr_makeAction.cSopr))
               _loop SOPRORDB where ((SpSopr_makeAction.nrec == SOPRORDB.CSPSOPR))
-              if   (SOPRORDB.PRICE  <> SpSopr_makeAction.PRICE
-                 or SOPRORDB.VPRICE <> SpSopr_makeAction.VPRICE)
               {
-                update current SOPRORDB set
-                    SOPRORDB.PRICE  := SpSopr_makeAction.PRICE
-                  , SOPRORDB.VPRICE := SpSopr_makeAction.VPRICE
-                ;
+                var _PRICE  : double = SpSopr_makeAction.PRICE;
+                var _VPRICE : double = SpSopr_makeAction.VPRICE;
+
+                if katsopr.vhodnal = 1 then
+                 {
+                  _PRICE  := (SpSopr_makeAction.kol*SpSopr_makeAction.price-SpSopr_makeAction.sumnds)/SpSopr_makeAction.kol;
+                  _VPRICE := (SpSopr_makeAction.kol*SpSopr_makeAction.vprice-SpSopr_makeAction.SUMVNDS)/SpSopr_makeAction.kol;
+                 }
+
+                  if   (SOPRORDB.PRICE  <> _PRICE
+                     or SOPRORDB.VPRICE <> _VPRICE)
+                  {
+                    update current SOPRORDB set
+                        SOPRORDB.PRICE  := _PRICE
+                      , SOPRORDB.VPRICE := _vPRICE
+                    ;
+                  }
               }
              /*конец заглушки*/
 
