@@ -671,6 +671,23 @@ if SpSopr_makeAction.#FieldName <> _tElements.value then update current SpSopr_m
             var _error : string = '';
 
             if katSopr_makeAction.vidsopr = 101 { // для приходной накладной MakeMove не катит
+             /*
+             нашелся косяк в функции MakeReceivingOrder... если в распределении стоит 0 цена, то он и ордер создает с 0 ценой
+             ставим заглушку... обновляем цену в распределении
+             */
+
+             _loop SpSopr_makeAction  where ((katSopr_makeAction.Nrec == SpSopr_makeAction.cSopr))
+              _loop SOPRORDB where ((SpSopr_makeAction.nrec == SOPRORDB.CSPSOPR))
+              if   (SOPRORDB.PRICE  <> SpSopr_makeAction.PRICE
+                 or SOPRORDB.VPRICE <> SpSopr_makeAction.VPRICE)
+              {
+                update current SOPRORDB set
+                    SOPRORDB.PRICE  := SpSopr_makeAction.PRICE
+                  , SOPRORDB.VPRICE := SpSopr_makeAction.VPRICE
+                ;
+              }
+             /*конец заглушки*/
+
               if oMakeOrder.MakeReceivingOrder(katSopr_makeAction.nrec, cur_date) {
                    HttpConnect_JsonObjectAddInteger(m_service, JSONObj, 'RESULT_CODE', 1);
                    HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG' ,     'MAKEORDERS OK');

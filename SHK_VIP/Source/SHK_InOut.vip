@@ -216,9 +216,10 @@ var
  from
     SaldTune SaldTuneKS
   , SaldTune SaldTuneSP
-  , spsopr SpSopr_makeAction
   , katSopr katSopr_makeAction
+  , SpSopr SpSopr_makeAction
   , katSopr katSopr_Check
+  , soprOrdB
   , statlog statlog_makeAction
   , INVTAB INVTAB_makeAction
   , SPINVTAB SPINVTAB_makeAction
