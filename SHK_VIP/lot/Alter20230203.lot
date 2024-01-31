@@ -1,0 +1,8 @@
+alter table SHK_TMPLT_OBJ
+add(
+    IsMenuPoint    : Boolean "Шаблон является пунктом меню"
+  , MenuPointName  : String[40] "Наименование пункта меню на ТСД"
+  , BatchDate      : date       "Дата последней пакетной выгрузки"
+ )
+;
+

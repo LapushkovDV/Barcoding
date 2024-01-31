@@ -1,0 +1,59 @@
+//******************************************************************************
+//                                                      (c) корпорация Галактика
+// Галактика 9.1  
+// Меню для работы с штрих кодом
+//******************************************************************************
+#component "C_Barcode"
+nastr_barcodeMain menu
+{
+  - 'Поиск штрих-кодов',cmRunInterface('C_Barcode::BarkodFindList'), '',hcALinkUs_PoiskDokPoSHK,'',,scMenuCtx;
+}
+//******************************************************************************
+#component "L_MCU"
+mnuKatMC2 Menu
+{
+- '~С~писок учетных и отпускных единиц для всех МЦ', cmValue14, 'Получение списка единиц измерения по всем МЦ из каталога', hcOkatalSMCLocMenu, '', , sci1Esc;
+- '~П~роверка наличия учетных и отпускных единиц', cmValue10, 'Получение отчета о наличии учетных и отпускных единиц', hcOkatalSMCLocMenu, '', , sci1Esc;
+- 'Проверка ~у~четных единиц измерения', cmValue11, 'Проверка (восстановление утерянных) учетных единиц', hcOKatalSMCLocMenu, '', , sci1Esc;
+- 'Проверка ~б~ар-кодов', cmValue4, 'Вывод списка МЦ с одинаковыми номенклатурными номерами', hcOKatalSMCLocMenu, '', , sci1Esc;
+- '~Ш~трихкодирование', cmValue38, 'Формирование штрих-кодов МЦ', hcOKatalSMCLocMenu, '', , sci1Esc;
+- 'Проверка ссылки по группе МЦ', cmValue30, 'Проверка ссылки по группе МЦ', hcOKatalSMCLocMenu, '', , sci1Esc;
+-----------;
+- 'Переместить/извлечь МЦ в архив', cmValue9, 'Переместить/извлечь МЦ в архив', hcMcArchMove, , , sci1Esc;
+- 'Тиражирование текущей МЦ', cmAlt1, 'Тиражирование текущей МЦ', hcOkatalSMCLocMenu, 'Alt+1', kbAlt1 , sci1Esc;
+- 'Обновление прайс-~л~истов', cmValue12, 'Обновление наименований матценностей в прайс-листах', hcOkatalSMCLocMenu, '', , sci1Esc;
+- '~Г~рупповая замена поля', cmValue28, 'Групповая замена значения поля в каталоге', hcOkatalSMCLocMenu, , , sci1Esc;
+- 'Изменение заводских цен МЦ к ее последним по времени партиям', cmValue21, 'Изменение заводских цен МЦ к ее последним по времени  партиям', hcMCPartyCenaIzmReport, '', , sci1Esc, ccBelarus;
+- 'Пересчитать расчетные поля по формулам шаблона МЦ', cmValue24, 'Пересчитать расчетные поля по формулам шаблона МЦ', hcNastrLFPereschRaschpolyaPoShablonu, , , sci1Esc;
+- 'Привязать текущую МЦ к складу', cmValue35, 'Привязать текущую МЦ к складу', hcOkatalSMCLocMenu, , , sci1Esc;
+-----------;
+- 'Внешняя классификация', cmPickClass, 'Внешняя классификация', hcGkatalM1ExtClass, 'Alt+C', kbAltC, sci1Esc,,,,bmpClassifier;
+- 'Внешние атрибуты', cmPickAttr, 'Заполнение внешних атрибутов по данной позиции', hcGkatalM1Attr, 'Alt+A', kbAltA, sci1Esc,,,,bmpAttribute;
+- 'Тиражирование внешней классификации', cmExClassRepl, 'Тиражирование внешней классификации',hcm_zakup_Tirazhir,,, sci1Esc;
+}
+//******************************************************************************
+#component "L_KatParty"
+mnuKatParty menu
+{
+- 'Фильтр...', cmFilterSave, 'Установка/снятие фильтров на партиям товаров', hcNastrLocMFiltrParty, 'Alt+B', kbAltB, sci1Esc,,,,bmpBuhFilter;
+-----------;
+- 'Карточка упоминаний партий МЦ', cmValue4, 'Отчет упоминаний партий в документах', hcCartMoveChoiceMC, '', , sci1Esc;
+-----------;
+- 'Печать каталога', cmPrintDoc, 'Печать каталога', hcPrintKatalog, 'Ctrl+P', kbCtrlP, sci1Esc,,,,bmpPrintDoc;
+- 'Печать каталога в FastReport', cmPlansNo, 'Печать каталога в FastReport', hcPrintKatalog, 'Alt+P', kbAltP, sci1Esc,,,,TB_FR;
+-----------;
+#ifdef __MGTS_PHONECARD__
+- 'Проверка атрибутов серий телефонкарт', cmValFld1, 'Проверка атрибутов серий телефонкарт', hcOKatalPartyLocM, '', , sci1Esc;
+#end
+- 'Проверка даты годности', cmValFld2, 'Проверка атрибутов серий телефонкарт', hcOKatalPartyLocM, '', , sci1Esc;
+-----------;
+- 'Формирование кодов партии', cmValue1, 'Формирование новых кодов партии для всего каталога', hcOkatalPartyLocM, '', , sci1Esc;
+- 'Переместить/извлечь партию в архив', cmValue2, 'Переместить/извлечь партию в архив', hcOKatalPartyLocM, , , sci1Esc;
+- '~Ш~трихкодирование', cmValue3, 'Формирование штрих-кодов партии', hcOKatalPartyLocM, , , sci1Esc;
+-----------;
+- 'Сохранить текущую запись в буфер', cmSaveDoc   , 'Сохранить запись в буфер'              , hcOkatalPartyLocM, 'Ctrl+F2', kbCtrlF2, sci1Esc,,,,bmpCopyDoc;
+- 'Копировать запись из буфера'     , cmRestoreDoc, 'Копировать сохраненную в буфере запись', hcOkatalPartyLocM, 'Ctrl+F3', kbCtrlF3, sci1Esc,,,,bmpPasteDoc;
+-----------;
+- 'Внешняя классификация', cmPickClass, 'Внешняя классификация', hcGkatalM1ExtClass, 'Alt+C', kbAltC, sci1Esc,,,,bmpClassifier;
+- 'Внешние атрибуты', cmPickAttr, 'Заполнение внешних атрибутов по данной позиции', hcGkatalM1Attr, 'Alt+A', kbAltA, sci1Esc,,,,bmpAttribute;
+}

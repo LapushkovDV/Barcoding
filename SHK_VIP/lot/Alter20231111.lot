@@ -1,0 +1,19 @@
+alter table SHK_TMPLT_OBJ
+  add (
+    isGroup : boolean "Признак группы"
+   ,cGroup  : comp "Ссылка на группу"
+)
+
+add index (
+    indTmpltobj4 = cGroup
+   ,indTmpltobj5 = isGroup
+)
+;
+
+
+alter table SHK_TSD_ARM_USER
+  add (
+  cUSER       : ref(x$users) "Пользователь системы"
+ )
+;
+

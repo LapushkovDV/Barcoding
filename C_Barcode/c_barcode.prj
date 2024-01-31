@@ -1,0 +1,34 @@
+//------------------------------------------------------------------------------
+//                                                      (c) Корпорация Галактика
+// Галактика ERP 9.1
+// Проектный файл сборки компонента
+//------------------------------------------------------------------------------
+
+#statusline "statgal"
+
+#include galnet.inc end;
+#include glovars.inc
+
+#define CompTitle Работа с ШК
+#doc
+  #CompTitle
+#end
+
+#define ComponentVersion
+
+//#include c_common.vil
+//#include c_barcode.vil
+//#include c_barcode.ver
+
+//#include SiLogFuncs.inc
+
+#make "menu\barcode.mnu"
+
+#component "C_Barcode"
+
+#include barcodeFunc.vih
+
+#make "vip\*.vip"
+#make "vip\tune\*.vip"
+#make "vip\alter\*.vip"
+

@@ -1,0 +1,151 @@
+/*************************************************************************************************\
+* Наименование: Ведение телефонного справочника                                                   *
+* Контур/Модуль: Кадры                                                                            *
+* Примечание:                                                                                     *
+*                                                                                                 *
+* Вид работы  |Номер         |Дата    |Исполнитель              |Проект                           *
+* ----------------------------------------------------------------------------------------------- *
+  0_0        -_-    0_-        -_0     0_0       -_0    -_-        0_-    -_-       0_-      0_0
+\_| |_/   \_| |_/  \_| |_/  \_| |_/  \_| |_/  \_| |_/  \_| |_/  \_| |_/  \_| |_/  \_| |_/  \_| |_/
+  |.|       |.|      |.|      |.|      |.|      |.|      |.|      |.|      |.|      |.|      |.|
+\*************************************************************************************************/
+#include SHK_BASE.vih
+#include SHK_InOut.vih
+#include shk_barcode_Generate.vih
+#include SHK_TEMPLATES.vih
+#include shk_barcodeFunc.vih
+
+Interface SHK_USB_export_saldobox 'Интерфейс выгрузки остатков по ячейкам' (,,sci178Esc), EscClose;
+//************************************************************
+
+//----------------------------------------
+create view
+var
+   _cTSD
+ , _cARM
+ , _cUser
+ , _cSHKObj : comp = 0h;
+ _sadoboxes : string = '';
+ _ishk_barcode_Generate : shk_barcode_Generate;
+ _iSHK_TEMPLATES : SHK_TEMPLATES new;
+  _iShk_BarcodeFunc : iShk_BarcodeFunc new;
+from
+   SHK_TSD_ARM_USER SHK_TSD
+ , SHK_TSD_ARM_USER SHK_ARM
+ , SHK_TSD_ARM_USER SHK_USER
+ , SHK_TMPLT_OBJ   SHKObjSel
+ where ((
+     _cSHKObj == SHKObjSel.nrec
+   and _cTSD  == SHK_TSD.nrec
+   and _cARM  == SHK_ARM.nrec
+   and _cUser == SHK_USER.nrec
+ ))
+;
+function CheckLic : boolean; {
+ #BodyfunctionCheckLic
+}
+
+Screen scrExportSaldoBox 'Выгрузка остатков по ячейкам';
+Fields
+ [SHKObjSel_name] SHKObjSel.name ('Выберит шаблон'          ) : Protect, NoDel, pickbutton;
+ _sadoboxes                               ('Выберите ячейки'          ) : Protect, NoDel,pickbutton;
+ [SHK_TSD_name]  SHK_TSD.name + '(' +SHK_TSD.id+ ')'    ('Целевой ТСД для передачи посредством USB') : Protect, PickButton;
+ [SHK_ARM_name]  SHK_ARM.name + '(' +SHK_ARM.id+ ')'    ('Целевой АРМ для передачи посредством USB') : Protect, PickButton;
+ [SHK_USER_name] SHK_USER.name + '(' +SHK_USER.id+ ')' ('Целевой пользователь для передачи посредством USB') : Protect, PickButton;
+Buttons
+ cmOK,,,;
+ cmCancel,,,;
+<<'Выгрузка остатков по ячейкам'
+
+`Шаблон данных  `.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+`Ячейки хранения`.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+`ТСД            `.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+`Рабочее место  `.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+`Пользователь   `.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+      <.Выгрузить.>              <. Закрыть .>
+>>
+end;
+HandleEvent
+ cmPick: {
+   case curfield of
+    #SHK_TSD_name  : set _cTSD  := _ishk_barcode_Generate.selectTSDARMUSER(1,_cTSD);
+    #SHK_ARM_name  : set _cARM  := _ishk_barcode_Generate.selectTSDARMUSER(2,_cARM );
+    #SHK_USER_name : set _cUser := _ishk_barcode_Generate.selectTSDARMUSER(3,_cUser);
+    #_sadoboxes: {
+        _ishk_barcode_Generate.SelectKatBoxs;
+
+        var _tmpMarker : tpTr = InitMarker( co_MarkerName, 8, 100, 10 ); // маркер из окна выбора
+        DoneMarker( _tmpMarker, co_MarkerNameExportSaldoBox); // сохраняем в свой
+
+        _tmpMarker := InitMarker( co_MarkerNameExportSaldoBox, 8, 100, 10 );
+          if getmarkercount(_tmpMarker) <> 0 then _sadoboxes := 'Выбрано '+ String(getmarkercount(_tmpMarker));
+        DoneMarker( _tmpMarker, co_MarkerNameExportSaldoBox);
+     }
+    #SHKObjSel_name :{set _cSHKObj := _iSHK_TEMPLATES.fnSelObjActions(coTypeDocBoxSaldo);
+     }
+   end;
+
+  SaveMyDsk(_cTSD    , 'ExportSaldoBox__cTSD   ');
+  SaveMyDsk(_cARM    , 'ExportSaldoBox__cARM   ');
+  SaveMyDsk(_cUser   , 'ExportSaldoBox__cUser  ');
+  SaveMyDsk(_cSHKObj , 'ExportSaldoBox__cSHKObj');
+  rereadrecord;
+ }
+cmInit:{
+  if not CheckLic then {stop; abort; exit;}
+  ReadMyDsk(_cTSD    , 'ExportSaldoBox__cTSD   ', True);
+  ReadMyDsk(_cARM    , 'ExportSaldoBox__cARM   ', True);
+  ReadMyDsk(_cUser   , 'ExportSaldoBox__cUser  ', True);
+  ReadMyDsk(_cSHKObj , 'ExportSaldoBox__cSHKObj', True);
+  var _tmpMarker : tpTr = InitMarker( co_MarkerNameExportSaldoBox, 8, 100, 10 );
+    if getmarkercount(_tmpMarker) <> 0 then _sadoboxes := 'Выбрано '+ String(getmarkercount(_tmpMarker));
+  DoneMarker( _tmpMarker, co_MarkerNameExportSaldoBox);
+}
+cmOK:{
+  var _SHK_InOut: SHK_InOut new;
+    var _isPathOK : boolean = _SHK_InOut.checkDestPathfromTune;
+    var _destFolder : string = _SHK_InOut.get_destFolder;
+
+ if not isValidAll(tnSHKObjSel) {
+  message('Выберите шаблон сальдо ячеек',error);
+  stop; abort; exit;
+ }
+
+ var _tmpMarker : tpTr = InitMarker( co_MarkerNameExportSaldoBox, 8, 100, 10 );
+ var mrkCnt : longint = getmarkercount(_tmpMarker);
+ var _i : longint;
+ if mrkCnt = 0
+ {
+  message('Выберите ячейки',error) ;
+  DoneMarker( _tmpMarker, co_MarkerNameExportSaldoBox);
+  stop; abort; exit;
+ }
+ var _idTSD, _idARM, _idUser : string = '';
+    _idTSD := if(isvalidall(tnSHK_TSD) ,  SHK_TSD.id,'COMMON');
+    _idARM := if(isvalidall(tnSHK_ARM) ,  SHK_ARM.id,'COMMON');
+   _idUSER := if(isvalidall(tnSHK_USER), SHK_USER.id,'COMMON');
+
+     For (_i := 0; _i < mrkCnt; _i++) {
+       var _cRec : comp = 0h;
+       if GetMarker( _tmpMarker, _i, _cRec ) then {
+        var _shkCode : string =  _iShk_BarcodeFunc.getCode(coKatBox, coTypeDocBox, _cRec, True) ;
+        if _shkCode <> '' {
+         var _SHK_InOut2: SHK_InOut new;
+           _SHK_InOut2.JSON_Export_SaldoBox(SHKObjSel.action, _shkCode, _idTSD, _idARM, _idUser);
+         }
+       }
+     }
+   DoneMarker( _tmpMarker, co_MarkerNameExportSaldoBox);
+
+    if not _isPathOK
+    {
+      message('Не задана директория выгрузки файлов в настройке'+''#13''+'Файлы выгружены в директорию запуска "Галактики"')
+    }
+    else {
+      message('Файлы выгружены в директорию ' +''#13''+  _destFolder);
+    }
+
+}
+end;
+end.

@@ -1,0 +1,413 @@
+//------------------------------------------------------------------------------
+//                                                      (c) корпорация Галактика
+// Галактика 9.1
+// Функции для работы с возможным перечнем документов и его атрибутами 
+//------------------------------------------------------------------------------
+#include ArchiveGetAttrs.vih
+
+interface AchiveGetAttrs 'Функции работы с возможным перечнем документов и его атрибутами';
+
+var
+  m_bObjIntegratorInt : boolean;
+//m_arObjInt : array [1..1] of iAchiveGetAttrsEx4;
+//m_arObjIntegratorInt  : iIntegratorFuncsEx2;
+
+  table struct AvailObjAndFields (
+      nrec      : comp
+    , tidkGal   : word
+    , sNameAttr : string
+    , nIndex    : word
+  )
+  with index (
+      AvailObj00 = NRec (Unique, Surrogate)
+    , AvailObj01 = TidkGal + sNameAttr
+  );
+
+  table struct AvailTableAndFields (
+      nrec      : comp
+    , tidkGal   : word
+    , coTable   : word
+    , nameTable : string[20]
+    , nameField : string[20]
+    , calcField : string[255]
+    , nameAttr  : string[20]
+    , nameAttrSyn : string[20]
+    , dataType  : byte
+    , coTableRef: word
+    , nameTableRef : string[20]
+    , nameFieldNrecRef : string[20]
+    , nameFieldRef : string[20]
+    , dataTypeRef : byte
+  )
+  with index (
+      AvailableTable00 = NRec (Unique, Surrogate)
+    , AvailableTable01 = TidkGal + coTable + NameField
+    , AvailableTable02 = TidkGal + coTable + NameAttr
+    , AvailableTable03 = TidkGal + coTable + NameAttrSyn
+    , AvailableTable04 = TidkGal + NameAttr
+  );
+
+  table struct AvailableTidkGal (
+      nrec      : comp
+    , tidkGal   : word
+    , coTable   : word
+    , nameTable : string[20]
+    , recognizable : boolean
+  )
+  with index (
+      AvailableTidkGal00 = NRec (Unique, Surrogate)
+    , AvailableTidkGal01 = TidkGal + Recognizable
+  );
+
+  table struct FilterAtrrs (
+      nrec      : comp
+    , tidkGal   : word
+    , nameAttr  : string[20]
+    , sWhere    : string
+  )
+  with index (
+      FilterAtrrs00 = NRec (Unique, Surrogate)
+    , FilterAtrrs01 = TidkGal + NameAttr
+  );
+
+  table struct JoinAtrrs (
+      nrec      : comp
+    , tidkGal   : word
+    , nameAttr  : string[20]
+    , number    : word
+    , sJoin     : string
+    , sWhereOne : string
+  )
+  with index (
+      JoinAtrrs00 = NRec (Unique, Surrogate)
+    , JoinAtrrs01 = TidkGal + NameAttr+Number
+  );
+
+  table struct tmpX$Files (
+      XF$CODE      : word
+    , XF$NAME      : string[40]
+    , XF$CHECKSUM  : longint
+  )
+  with index (
+      tmpX$Files01 = XF$CODE + XF$NAME (unique)
+  );
+
+  table struct tmpX$Fields (
+       XE$CODE     : word
+     , XE$FILECODE : word
+     , XE$NAME     : string [40]
+     , XE$DATATYPE : word
+     , XE$OFFSET   : integer// по этому полю будем считать, что это поле задано некорректно
+  )
+  with index (
+     tmpX$Fields01 = XE$FILECODE + XE$NAME + XE$OFFSET (unique)
+  );
+
+create view
+var
+  m_bInitAttrs : boolean;
+  m_XE$CODEInc : longint;
+as select
+  AvailTableAndFields.*
+from
+    AvailTableAndFields
+  , AvailableTidkGal
+  , FilterAtrrs
+  , JoinAtrrs
+  , tmpX$Files
+  , tmpX$Fields
+  , AvailObjAndFields;
+
+create view vXFiles
+as select x$files.XF$CODE from x$files;
+
+  procedure InitAttrs;
+  {
+    if (not m_bInitAttrs) {
+      delete all AvailTableAndFields;
+      delete all AvailableTidkGal;
+      delete all FilterAtrrs;
+      delete all JoinAtrrs;
+      delete all tmpX$Files;
+      delete all tmpX$Fields;
+    //epArchiveGetAvailableTableAndFields(iAchiveGetAttrs(Self));
+      m_bInitAttrs := true;
+    }
+  }
+
+  function IsX$FilesByCode(wcoTable : word) : boolean;
+  {
+    result := false;
+
+    if (getFirst tmpX$Files where ((wcoTable == tmpX$Files.XF$CODE)) <> tsOk) {
+      // при условия  если таблицы нет в словаре возникает ошибка дублирования (потому сделал явный getFirst)
+      // можно по другому if (vXFiles.getFirst X$Files where ((wcoTable == X$Files.XF$CODE)) = tsOk)
+      if (insert novisual into tmpX$Files (XF$CODE, XF$NAME , XF$CHECKSUM )
+          select X$Files.XF$CODE, X$Files.XF$NAME , X$Files.XF$CHECKSUM
+          from X$Files where ((wcoTable /== X$Files.XF$CODE))
+          ignore_errors(tsDuplicateKey) = tsOk) {}
+
+      if (getFirst tmpX$Files where ((wcoTable == tmpX$Files.XF$CODE)) <> tsOk)
+      {
+        // делаем имитацию что таблицу обработали
+        clearbuffer(#tmpX$Files);
+        tmpX$Files.XF$CODE := wcoTable;
+        tmpX$Files.XF$CHECKSUM := -1;
+        if (insert current tmpX$Files = tsOK) {}
+      }
+    }
+
+    if (tmpX$Files.XF$CHECKSUM <> -1)
+      result := true;
+  }
+
+  function IsX$FieldsByCode(wcoTable : word; sNameField : string) : boolean;
+  {
+    result := false;
+    if (getFirst tmpX$FIELDS where ((wcoTable == XE$FILECODE and sNameField == XE$NAME)) <> tsOk) {
+      if (insert novisual into tmpX$FIELDS (XE$CODE, XE$FILECODE, XE$NAME , XE$DATATYPE,XE$OFFSET)
+          select
+            X$FIELDS.XE$CODE, X$FIELDS.XE$FILECODE, X$FIELDS.XE$NAME
+          , X$FIELDS.XE$DATATYPE
+          , X$FIELDS.XE$OFFSET
+          from X$FIELDS where ((wcoTable /== X$FIELDS.XE$FILECODE
+           and sNameField /== X$FIELDS.XE$NAME
+          ))  ignore_errors(tsDuplicateKey) = tsOk) {}
+
+      if (getFirst tmpX$FIELDS where ((wcoTable == XE$FILECODE and sNameField == XE$NAME)) <> tsOk) {
+        // делаем имитацию что таблицу обработали, чтобы нповто
+        clearbuffer(#tmpX$FIELDS);
+        // полей может несколько для одной таблицы задано и оба неправильно.
+        //но в таблице x$fields есть уникальный индекс по номеру поля и коду таблицы  потому делаем наращивание
+        m_XE$CODEInc++;
+        tmpX$FIELDS.XE$CODE := m_XE$CODEInc;
+        tmpX$FIELDS.XE$FILECODE := wcoTable;
+        tmpX$FIELDS.XE$NAME := sNameField;
+        tmpX$FIELDS.XE$OFFSET := -1;// по этому полю будем считать, что это поле задано некорректно
+        insert current tmpX$FIELDS;
+      }
+    }
+
+    if (tmpX$FIELDS.XE$OFFSET <> -1)
+      result := true;
+  }
+
+  procedure SetRecognizableTidkGal(TiDkGal : word);
+  {
+    if (GetFirst AvailableTidkGal where ((TiDkGal == AvailableTidkGal.TidkGal)) = tsOk) {
+      AvailableTidkGal.Recognizable := true;
+      update current AvailableTidkGal;
+    }
+  }
+
+  function GetExistRecognizableTidkGal(TiDkGal : word) : boolean;
+  {
+    result := false;
+    if (getfirst AvailableTidkGal where ((TiDkGal == tidkGal)) = tsOk)
+      result := AvailableTidkGal.Recognizable;
+  }
+
+  procedure SetTidkGal(TiDkGal : word; wcoTable : word; sNameTable : string);
+  {
+    if (GetFirst AvailableTidkGal where ((TiDkGal == AvailableTidkGal.TidkGal)) = tsOk) exit;
+    insert into AvailableTidkGal set
+      AvailableTidkGal.TidkGal   := TiDkGal
+    , AvailableTidkGal.coTable   := wcoTable
+    , AvailableTidkGal.NameTable := sNameTable
+    ;
+  }
+
+  procedure SetAttr(TiDkGal : word; wcoTable : word;
+                    sNameAttr : string; sNameField : string; sNameAttrSyn : string = '');
+  {
+    if (getfirst AvailTableAndFields where ((TiDkGal   == AvailTableAndFields.TidkGal
+                                       and wcoTable  == AvailTableAndFields.coTable
+                                       and sNameAttr == AvailTableAndFields.NameAttr)) = tsOk)
+    {
+      exit;
+    }
+
+
+    if (not IsX$FilesByCode(wcoTable)) exit;
+    if (not IsX$FieldsByCode(wcoTable, sNameField)) exit;
+
+    SetTidkGal(TiDkGal, wcoTable, tmpX$Files.XF$NAME);
+    Insert into AvailTableAndFields set
+      AvailTableAndFields.TidkGal     := TiDkGal
+    , AvailTableAndFields.coTable     := wcoTable
+    , AvailTableAndFields.NameTable   := tmpX$Files.XF$NAME
+    , AvailTableAndFields.DATATYPE    := tmpX$FIELDS.XE$DATATYPE
+    , AvailTableAndFields.NameAttr    := sNameAttr
+    , AvailTableAndFields.NameAttrSyn := sNameAttrSyn
+    , AvailTableAndFields.NameField   := sNameField
+    ;
+  }
+
+  procedure SetAttrWithCalc(TiDkGal : word; wcoTable : word;
+                    sNameAttr : string; sNameField : string; sCalcField : string;
+                    sNameAttrSyn : string = '');
+  {
+    if (getfirst AvailTableAndFields where ((TiDkGal   == AvailTableAndFields.TidkGal
+                                       and wcoTable  == AvailTableAndFields.coTable
+                                       and sNameAttr == AvailTableAndFields.NameAttr)) = tsOk)
+    {
+      exit;
+    }
+
+    if (not IsX$FilesByCode(wcoTable)) exit;
+    if (not IsX$FieldsByCode(wcoTable, sNameField)) exit;
+
+    SetTidkGal(TiDkGal, wcoTable, tmpX$Files.XF$NAME);
+    Insert into AvailTableAndFields set
+      AvailTableAndFields.TidkGal     := TiDkGal
+    , AvailTableAndFields.coTable     := wcoTable
+    , AvailTableAndFields.CalcField   := sCalcField
+    , AvailTableAndFields.NameTable   := tmpX$Files.XF$NAME
+    , AvailTableAndFields.DATATYPE    := ftList
+    , AvailTableAndFields.NameAttr    := sNameAttr
+    , AvailTableAndFields.NameAttrSyn := sNameAttrSyn
+    , AvailTableAndFields.NameField   := sNameField
+    ;
+  }
+
+  procedure SetAttrCalcRef(TiDkGal : word; wcoTable : word;
+                    sNameAttr : string; sNameCalcField : string;
+                    wcoTableRef : word; sNameFieldNrecRef : string; sNameFieldRef : string;
+                    sNameAttrSyn : string = '');
+  var
+    bufMainFiles, bufChildFiles : type$p_tmpX$Files;
+    bufMainFIELDS, bufChildFIELDS : type$p_tmpX$FIELDS;
+  {
+    if (delete AvailTableAndFields where ((TiDkGal   == AvailTableAndFields.TidkGal
+                                       and wcoTable  == AvailTableAndFields.coTable
+                                       and sNameAttr == AvailTableAndFields.NameAttr)) = tsOk) {}
+
+    // валидацию полей основной таблицы не получиться проверить
+    if (not IsX$FilesByCode(wcoTable)) exit;
+    bufMainFiles := tmpX$Files.bufferp;
+    if (not IsX$FilesByCode(wcoTableRef)) exit;
+    bufChildFiles := tmpX$Files.bufferp;
+//    if (GetFirst X$FIELDS where ((wcoTable == X$FIELDS.XE$FILECODE
+//                              and sNameField == X$FIELDS.XE$NAME)) <> tsOk) exit;
+//    bufMainFIELDS := X$FIELDS.bufferp;
+    if (not IsX$FieldsByCode(wcoTableRef, sNameFieldRef)) exit;
+    bufChildFIELDS := tmpX$FIELDS.bufferp;
+
+    SetTidkGal(TiDkGal, wcoTable, tmpX$Files.XF$NAME);
+    clearbuffer(#AvailTableAndFields);
+    AvailTableAndFields.TidkGal   := TiDkGal;
+    AvailTableAndFields.coTable   := wcoTable;
+    AvailTableAndFields.CalcField := sNameCalcField;
+    AvailTableAndFields.DATATYPE  := ftList + 1;
+    AvailTableAndFields.NameTable := bufMainFiles.XF$NAME;
+    AvailTableAndFields.NameAttr  := sNameAttr;
+    AvailTableAndFields.NameAttrSyn := sNameAttrSyn;
+
+    AvailTableAndFields.NameTableRef := bufChildFiles.XF$NAME;
+    AvailTableAndFields.coTableRef   := wcoTableRef;
+    AvailTableAndFields.NameFieldNrecRef := sNameFieldNrecRef;
+    AvailTableAndFields.NameFieldRef := sNameFieldRef;
+    AvailTableAndFields.DATATYPERef  := bufChildFIELDS.XE$DATATYPE;
+    insert current AvailTableAndFields;
+  }
+
+  procedure SetAttrCalcRefByJoins(TiDkGal : word; wcoTable : word; sNameAttr : string; sNameCalcField : string);
+  var
+    bufMainFiles: type$p_tmpX$Files;
+  {
+    if (delete AvailTableAndFields where ((TidkGal   == AvailTableAndFields.TidkGal
+                                       and wcoTable  == AvailTableAndFields.coTable
+                                       and sNameAttr == AvailTableAndFields.NameAttr)) = tsOk) {}
+
+    // валидацию полей основной таблицы не получиться проверить
+    if (not IsX$FilesByCode(wcoTable)) exit;
+    bufMainFiles := tmpX$Files.bufferp;
+
+    clearbuffer(#AvailTableAndFields);
+    AvailTableAndFields.TidkGal   := TidkGal;
+    AvailTableAndFields.coTable   := wcoTable;
+    AvailTableAndFields.CalcField := sNameCalcField;
+    AvailTableAndFields.DATATYPE  := ftList + 5;
+    AvailTableAndFields.NameTable := bufMainFiles.XF$NAME;
+    AvailTableAndFields.NameAttr  := sNameAttr;
+
+    insert current AvailTableAndFields;
+  }
+
+  procedure SetAttrWithNastr(TiDkGal : word; wcoTable : word;
+                    sNameAttr : string; sNastrName : string; wTypeNastr : word);
+  {
+    if (delete AvailTableAndFields where ((TiDkGal   == AvailTableAndFields.TidkGal
+                                       and wcoTable  == AvailTableAndFields.coTable
+                                       and sNameAttr == AvailTableAndFields.NameAttr)) = tsOk) {}
+    if (not IsX$FilesByCode(wcoTable)) exit;
+
+    SetTidkGal(TiDkGal, wcoTable, tmpX$Files.XF$NAME);
+    clearbuffer(#AvailTableAndFields);
+    AvailTableAndFields.TidkGal   := TiDkGal;
+    AvailTableAndFields.coTable   := wcoTable;
+    AvailTableAndFields.CalcField := sNastrName;
+    AvailTableAndFields.NameTable := tmpX$Files.XF$NAME;
+    AvailTableAndFields.DATATYPE  := wTypeNastr;
+    AvailTableAndFields.NameAttr  := sNameAttr;
+    AvailTableAndFields.NameAttrSyn := sNameAttr;
+    AvailTableAndFields.NameField := '';
+    insert current AvailTableAndFields;
+
+  }
+
+  function GetExistTidkGal(tiDkGal : word) : boolean; cacheable;
+  {
+    result := false;
+    InitAttrs;
+    result := (GetFirst AvailableTidkGal where ((TiDkGal == AvailableTidkGal.TidkGal)) = tsOk);
+  }
+
+  function GetAllTidkGalByAttr(sNameAttr : string; var AttrTypeList : TDocAttrArray) : boolean;
+  var iCount : longint;
+  {
+    InitAttrs;
+    iCount := 0;
+    _loop AvailableTidkGal {
+      if (GetFirst AvailTableAndFields where ((AvailableTidkGal.TidkGal == tidkGal and sNameAttr == nameAttr)) <> tsOk)
+        continue; 
+      iCount++;
+      SetLimit(AttrTypeList, iCount);
+      AttrTypeList[iCount - 1] := AvailableTidkGal.TidkGal;
+    }
+    result := iCount <> 0;
+  }
+
+  function GetAllTidkGal(var AttrTypeList : TDocAttrArray) : boolean;
+  var
+    iCount : longint;
+  {
+    InitAttrs;
+    iCount := 0;
+    _loop AvailableTidkGal {
+      iCount := iCount + 1;
+      SetLimit(AttrTypeList, iCount);
+      AttrTypeList[iCount - 1] := AvailableTidkGal.TidkGal;
+    }
+    result := iCount <> 0;
+  }
+
+ constructor Init;             // конструктор по умолчанию
+{
+  result := true;
+  m_bObjIntegratorInt := false;
+//m_arObjIntegratorInt := NullRef;
+//setLimit(m_arObjInt, 0);
+}
+
+handleevent
+cmOnVipLoad: {
+  m_bInitAttrs := false;
+  m_XE$CODEInc := 1000;// имитация номера поля в таблице неправильно заданного
+  //# SiLogMessage('C_ArchiveLink::BarkodFuncs cmOnVipLoad')
+}
+cmOnVipUnload: {
+  //# SiLogMessage('C_ArchiveLink::BarkodFuncs cmOnVipUnload')
+}
+end;
+end.

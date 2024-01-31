@@ -1,0 +1,163 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:TSD.Views.FlyoutPages.ContentViews"
+        
+             x:Class="TSD.Views.FlyoutPages.AppPageFlyout"
+             Title="Flyout">
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Resources/Resources_XML/ResourceDictionaryMobile.xaml"/>
+    </ContentPage.Resources>
+    <StackLayout>
+        <StackLayout>
+            <views:HeaderViewList/>
+        </StackLayout>
+        <ListView x:Name="MenuItemsListView"
+              SeparatorVisibility="None"
+              HasUnevenRows="True"
+              SelectedItem="{Binding SelectMenu, Mode=TwoWay}"
+              ItemsSource="{Binding MenuItems}"
+              BackgroundColor="White"
+              CachingStrategy="RecycleElement">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Margin="5" Padding="15,3" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <Image Margin="5, 0, 10, 0" Source="elementMenu_96px.png}"
+                                   WidthRequest="{OnPlatform iOS=40, Android=30}"/>
+                            <Label Text="{Binding Title}"
+                                   FontSize="Small"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextUserBlue}"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"
+                                   LineBreakMode="TailTruncation">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsEnabled}" Value="False">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="TextColor" Value="Gray"/>
+                                        <Setter Property="Text" Value="{Binding Title, StringFormat='{0} (не загружено)'}"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid BackgroundColor="White">
+            <Image Aspect="AspectFill" Source="gradientHeaderFlyoutPage.png"/>
+            <StackLayout HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             Orientation="Horizontal"
+                             Margin="5">
+                <!--<Grid HorizontalOptions="CenterAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>-->
+                    <ImageButton Grid.Column="0" Style="{StaticResource ImageButtonMenuStyle}"
+                        Margin="2"
+                        Padding="6"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        Command="{Binding LogoutCommand}"
+                        Source="logout1_96px"
+                        Scale="0.8">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="0.9" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </ImageButton>
+                    <ImageButton Grid.Column="1" Style="{StaticResource ImageButtonMenuStyle}"
+                                 Margin="2"
+                                 Padding="6"
+                                 Source="task_96px"
+                                 HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="FillAndExpand"
+                                 Command="{Binding TaskCommand}"
+                                 IsVisible="{Binding IsNetwork, Mode=OneWay}"
+                                 Scale="0.8">        
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="0.9" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </ImageButton>
+                    <ImageButton Grid.Column="2" Style="{StaticResource ImageButtonMenuStyle}"
+                        Margin="2"
+                        Padding="6"
+                        Source="doc_delete_96px"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        Command="{Binding ClearDb}"
+                        Scale="0.8">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="0.9" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </ImageButton>
+                    <ImageButton Grid.Column="3" Style="{StaticResource ImageButtonMenuStyle}"
+                        Margin="2"
+                        Padding="6"
+                        HorizontalOptions="FillAndExpand"
+                        Source="doc_update_96px.png"
+                        VerticalOptions="FillAndExpand"
+                        Command="{Binding RefreshDocuments}"
+                        IsVisible="False"
+                        Scale="0.8">
+                        <ImageButton.Triggers>
+                            <DataTrigger TargetType="ImageButton" Binding="{Binding IsNetwork, Mode=OneWay}" Value="False">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </ImageButton.Triggers>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="Scale" Value="0.9" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </ImageButton>
+                <!--</Grid>-->
+            </StackLayout>
+        </Grid>
+    </StackLayout>
+</ContentPage>

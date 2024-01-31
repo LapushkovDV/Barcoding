@@ -1,0 +1,23 @@
+﻿@inherits TopMenuModel
+
+
+<div class="top-row shadow-lg ps-4">
+    @if (NavBarOperation.IsSearchVisible)
+    {
+        <div class="input-group rounded">
+            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            <span class="input-group-text border-0" id="search-addon">
+                <i class="fa fa-search"></i>
+            </span>
+        </div>
+    }
+    <DropDownButton ClassButton="btn btn-white">
+        <ContentButton>
+            <span class="d-none me-2 d-lg-inline text-gray-600 small">@String.Concat(Account.Name + " (" + Account.Role + ")")</span>
+            <img class="img-profile rounded-circle" src="images/undraw_profile.svg">
+        </ContentButton>
+        <ChildContent>
+            <DropDownButtonItem Execute="@SignOut" Title="Выход"/>
+        </ChildContent>
+    </DropDownButton>
+</div>

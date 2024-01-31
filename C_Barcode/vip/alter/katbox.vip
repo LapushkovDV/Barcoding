@@ -1,0 +1,66 @@
+#component "L_Box"
+alter interface KatBoxesEdit ('');
+#include barcodeFunc.var
+overload
+function OnKatBoxInsertRecord: boolean;
+end;
+extendformats brboxes;
+extendformats trboxesier;
+
+function OnKatBoxInsertRecord: boolean;
+{
+  result := inherited::OnKatBoxInsertRecord;
+  if result barcodeFunc.getCode(coKatbox, katbox.nrec, true);
+}
+
+browse brboxes;
+table katbox;
+columns
+  barcodeFunc.getCode(coKatbox, katbox.nrec, false) 'Штрихкод' ('Штрихкод записи',, sci178Esc): [13], protect;
+end;
+//addFieldArchiveToBrowseDop
+tree trboxesier;
+table boxier;
+fields
+  barcodeFunc.getCode(coKatbox, boxier.nrec, false) 'Штрихкод' ('Штрихкод записи',, sci178Esc): [13], protect;
+end;
+
+handleevent
+/*
+cmInit: {
+  inherited::handleevent(cmInit);
+  if (getfirst katbox where ((cBox == nrec)) = tsOk) {
+    if (getfirst boxier where ((katbox.nrec == cbox)) != tsOk) {}
+    message(cBox);
+    putcommand(cmDefault);
+  //runwindowmodal(wndEditBox);
+  }
+}
+
+cmDefault: {
+  runwindow(wndEditBox);
+  stop;
+}
+
+ cmValue3: {
+  if (pMarker.count = 0) pMarker.mark;
+  startnewvisual(vtIndicatorVisual, vfTimer + vfBreak + vfConfirm, 'Штрихкодрование выделенных партий...', pMarker.count);
+  pushpos(#katparty);
+  subbounds(tbrmkatparty1);
+  addbounds(tbrmkatparty2);
+
+  _loop pMarker {
+    if not nextvisual break;
+    if (getfirst katparty where ((pMarker.pNRec == nrec)) != tsOK) continue; //katpartyF - синоним
+    barcodeFunc.getCode(coKatParty, katparty.nrec, true);
+  //if (update current katparty <> tsOK) {}
+  }
+  subbounds(tbrmkatparty2);
+  addbounds(tbrmkatparty1);
+  poppos(#katparty);
+  stopvisual('', 0);
+  pMarker.unselectAll;
+  rescanpanel(#katparty);
+} */
+end;
+end.

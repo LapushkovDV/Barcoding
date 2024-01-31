@@ -1,0 +1,57 @@
+/*************************************************************************************************\
+* Наименование: Ведение телефонного справочника                                                   *
+* Контур/Модуль: Кадры                                                                            *
+* Примечание:                                                                                     *
+*                                                                                                 *
+* Вид работы  |Номер         |Дата    |Исполнитель              |Проект                           *
+* ----------------------------------------------------------------------------------------------- *
+
+\*************************************************************************************************/
+
+//************************************************************
+const
+end;
+Interface test_make_order 'тестирование make_order MakeReceivingOrder MakeIssueOrder';
+
+create view
+ var
+  _dateOrder : date;
+  _cKatsopr : comp;
+
+;
+
+Screen SHK_getParameter (,,Sci178Esc);
+Fields
+ _dateOrder : NoProtect;
+ _cKatsopr  : NoProtect;
+buttons
+  cmValue1,,,'MakeReceivingOrder',,;
+  cmValue2,,,'MakeIssueOrder',,;
+  cmValue3,,,'LastErrorDescription',,;
+<<
+        Дата ордера .@@@@@@@@@@@@
+ Ссылка на накладную.@@@@@@@@@@@@
+
+    <.сформировать приходный ордер.>
+
+    <.сформировать расходный ордер.>
+
+    <.     просмотреть ошибку     .>
+>>
+end;//Screen ScrRaiseEdit
+handleevent
+cminit: {
+
+}
+cmValue1: {
+  message(oMakeOrder.MakeReceivingOrder(_cKatsopr,_dateOrder));
+}
+cmValue2: {
+  message(oMakeOrder.MakeIssueOrder(_cKatsopr,_dateOrder));
+}
+cmValue3: {
+  var _wideString : wideString  = oMakeOrder.LastErrorDescription;
+  message(_wideString);
+}
+end;
+end.

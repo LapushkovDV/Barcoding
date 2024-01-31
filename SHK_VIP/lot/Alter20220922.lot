@@ -1,0 +1,12 @@
+alter table SHK_TMPLT_OBJ
+add(
+  isLogging      : boolean "Логировать выполнение действий"
+ )
+;
+
+alter table SHK_TMPLT_OBJSP
+  add (
+    BROWSE_CARD    : boolean "Отображать в карточке на ТСД"
+  , NULLABLE    : boolean "обнуляемое поле"
+  );
+

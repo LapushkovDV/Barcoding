@@ -1,0 +1,26 @@
+#component "L_Box"
+alter interface getbox1 ('');
+#include barcodeFunc.var
+
+extendformats brkatbox1;
+
+browse brkatbox1;
+table katbox;
+columns
+  barcodeFunc.getCode(coKatbox, katbox.nrec, false) 'Штрихкод' ('Штрихкод записи',, sci178Esc): [13], protect;
+end;
+
+tree trboxier;
+table katbox;
+columns
+  barcodeFunc.getCode(coKatbox, katbox.nrec, false) 'Штрихкод' ('Штрихкод записи',, sci178Esc): [13], protect;
+end;
+
+handleevent
+cmInit: {
+  inherited::handleevent(cmInit);
+  setColumnWidth(brkatbox1, #katbox.name, 25);
+}
+end;
+
+end.

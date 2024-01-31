@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                    mc:Ignorable="d">
+
+    <Style TargetType="Frame" x:Key="PanelStyle">
+        <Setter Property="HasShadow" Value="True"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+    <Style TargetType="Frame" x:Key="PanelStyleBlue">
+        <Setter Property="HasShadow" Value="True"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="BackgroundColor" Value="#0060cc"/>
+    </Style>
+    <Style TargetType="Label" x:Key="LabelStyleHeader">
+        <Setter Property="TextColor" Value="#0060cc"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="18"/>
+    </Style>
+    <Style TargetType="Frame" x:Key="BorderEntry">
+        <Setter Property="Padding" Value="10,0"/>
+        <Setter Property="BackgroundColor" Value="White"/>
+        <Setter Property="BorderColor" Value="DarkGray"/>
+        <Setter Property="CornerRadius" Value="50"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+    </Style>
+    <Style TargetType="Button" x:Key="ButtonStyle">
+        <Setter Property="BackgroundColor" Value="#0060cc"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="IsEnabled" Value="True"/>
+    </Style>
+    <Style TargetType="Button" x:Key="ButtonStyleWhite">
+        <Setter Property="BackgroundColor" Value="White"/>
+        <Setter Property="TextColor" Value="#0060cc"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+    <Style TargetType="Button" x:Key="ButtonStyleWhiteBorder">
+        <Setter Property="BackgroundColor" Value="White"/>
+        <Setter Property="BorderColor" Value="#0060cc"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="TextColor" Value="#0060cc"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+    <Style TargetType="Button" x:Key="ButtonStyleRed">
+        <Setter Property="BackgroundColor" Value="DarkRed"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+    <Style TargetType="Button" x:Key="ButtonStyleDisabled">
+        <Setter Property="BackgroundColor" Value="LightGray"/>
+        <Setter Property="TextColor" Value="Gray"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="IsEnabled" Value="False"/>
+    </Style>
+    <Style TargetType="Frame" x:Key="LabelFrameStyle">
+        <Setter Property="BackgroundColor" Value="#0060cc"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+    <Style TargetType="Frame" x:Key="LabelFrameStyleRed">
+        <Setter Property="BackgroundColor" Value="DarkRed"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+    <Style TargetType="Entry" x:Key="InvalidStyle">
+        <Setter Property="TextColor" Value="Red"/>
+    </Style>
+    <Style TargetType="NavigationPage" x:Key="NavigationStyle">
+        <Setter Property="BarBackgroundColor" Value="White"/>
+        <Setter Property="BarTextColor" Value="#0060cc"/>
+    </Style>
+    <Color x:Key="TextWhite">White</Color>
+    <Color x:Key="TextUserBlue">#0060cc</Color>
+    <Style TargetType="ImageButton" x:Key="ImageButtonStyle">
+        <Setter Property="BackgroundColor" Value="#0060cc"/>
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Padding" Value="5"/>
+
+    </Style>
+    <Style TargetType="ImageButton" x:Key="ImageButtonMenuStyle">
+        <!--<Setter Property="BackgroundColor" Value="#0060cc"/>-->
+        <Setter Property="BackgroundColor" Value="White"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        
+
+    </Style>
+</ResourceDictionary>

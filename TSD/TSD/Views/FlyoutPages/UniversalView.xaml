@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:dependency="clr-namespace:TSD.Services.DependencyProperties"
+             xmlns:converters="clr-namespace:TSD.Services.MarkupExtensions.ValuesConverters"
+             xmlns:contentViews="clr-namespace:TSD.Views.FlyoutPages.ContentViews"
+             x:Class="TSD.Views.FlyoutPages.UniversalView"
+             Title="{Binding HomeTitle, Mode=TwoWay}"
+             x:Name="UniversalViePage">
+    <ContentPage.ToolbarItems>
+        <dependency:CustomToolbarItem Command="{Binding OpenFilter}"
+                                      IconImageSource="filter_96px.png"
+                                      IsVisible="{Binding IsOpenDoc, Mode=OneWay}"
+                                      IsDestructive="{Binding IsBlock}"/>
+
+        <dependency:CustomToolbarItem Command="{Binding AddElements}"
+                                      IconImageSource="addElement2_96px.png"
+                                      IsVisible="{Binding IsAllowAddRow, Mode=OneWay}"
+                                      IsDestructive="{Binding IsBlock}"/>
+        <dependency:CustomToolbarItem Command="{Binding OpenDoc}"
+                                      IconImageSource="openDoc_96px.png"
+                                      IsVisible="{Binding IsSelectMenu, Mode=OneWay}"
+                                      IsDestructive="{Binding IsBlock}"/>
+        <dependency:CustomToolbarItem Command="{Binding DeleteDoc}"
+                                      IconImageSource="deletedoc_96px.png"
+                                      IsVisible="{Binding IsVisibleHome, Mode=OneWay}"
+                                      IsDestructive="{Binding IsBlock}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Resources/Resources_XML/ResourceDictionaryMobile.xaml"/>
+        <converters:StripedBackgroundIndexConverter x:Key="StripedBackgroundIndexConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout IsEnabled="{Binding IsEnabledView, Mode=TwoWay}" InputTransparent="{Binding IsBlock}">
+                <Grid IsVisible="{Binding IsVisibleHome, Mode=OneWay}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <StackLayout>
+                        <Frame Grid.Row="0" Style="{StaticResource PanelStyle}"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="Start"
+                               IsEnabled="False"
+                               Margin="5, 5, 5, 10"
+                               IsVisible="{Binding IsVisibleFields, Mode=OneWay}"
+                               InputTransparent="{Binding IsBlock}">
+                            <behaviors:Expander AnimationLength="0" InputTransparent="{Binding IsBlock}">
+                                <behaviors:Expander.Triggers>
+                                    <DataTrigger TargetType="behaviors:Expander" Binding="{Binding IsExpand, Mode=OneWay}" Value="True">
+                                        <Setter Property="IsExpanded" Value="True"/>
+                                    </DataTrigger>
+                                </behaviors:Expander.Triggers>
+                                <behaviors:Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout Grid.Column="0" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                            <Label Text="{Binding HeaderFields, Mode=OneWay}"
+                                                   FontAttributes="Bold"
+                                                   FontSize="16"
+                                                   LineBreakMode="TailTruncation"
+                                                   VerticalOptions="Center"
+                                                   VerticalTextAlignment="Center"/>
+                                            <Frame HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="DarkRed" Padding="6,2" CornerRadius="10" IsVisible="{Binding IsReadOnlyDoc}">
+                                                <Label Text="для чтения" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White" FontAttributes="Bold"/>
+                                            </Frame>
+                                        </StackLayout>
+                                        <Image Source="expand_64px.png"
+                                               WidthRequest="{OnPlatform iOS=40, Android=30}"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="End" Grid.Column="1">
+                                            <Image.Triggers>
+                                                <DataTrigger TargetType="Image"
+                                                             Binding="{Binding Source={RelativeSource AncestorType={x:Type behaviors:Expander}}, Path=IsExpanded}"
+                                                             Value="True">
+                                                    <Setter Property="Source" Value="collapsed_64px.png"/>
+                                                    <Setter Property="WidthRequest" Value="{OnPlatform iOS=40, Android=30}"/>
+                                                </DataTrigger>
+                                            </Image.Triggers>
+                                        </Image>
+                                    </Grid>
+                                </behaviors:Expander.Header>
+                                <StackLayout>
+                                    <BoxView BackgroundColor="LightGray"
+                                             HeightRequest="1"
+                                             HorizontalOptions="FillAndExpand"
+                                             Margin="0, 5"/>
+                                    <ListView x:Name="ListField"
+                                      ItemsSource="{Binding ElementsFields}"
+                                      RowHeight="-1"
+                                      HasUnevenRows="True"
+                                      SeparatorVisibility="None"
+                                      VerticalOptions="FillAndExpand"
+                                      VerticalScrollBarVisibility="Never">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <ViewCell>
+                                                    <ViewCell.View>
+                                                        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                            <Label Text="{Binding Name,StringFormat='{0}:'}"
+                                                                   TextColor="{StaticResource TextUserBlue}"
+                                                                   FontSize="14"
+                                                                   FontAttributes="Bold"
+                                                                   VerticalOptions="CenterAndExpand"
+                                                                   LineBreakMode="TailTruncation"/>
+                                                            <Label Text="{Binding Value, Mode=TwoWay}"
+                                                                   FontSize="14"
+                                                                   VerticalOptions="CenterAndExpand"
+                                                                   LineBreakMode="WordWrap"/>
+                                                        </StackLayout>
+                                                    </ViewCell.View>
+                                                </ViewCell>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </StackLayout>
+                            </behaviors:Expander>
+                        </Frame>
+                    </StackLayout>
+                    <Frame Grid.Row="1" Style="{StaticResource PanelStyle}"
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="FillAndExpand"
+                               Padding="0"
+                               BorderColor="{StaticResource TextUserBlue}"
+                               IsVisible="{Binding IsVisibleColumns, Mode=OneWay}"
+                               Margin="5, 5, 5, 0">
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource TextUserBlue}">
+                                <Label Text="C" TextColor="White" HorizontalOptions="CenterAndExpand" Padding="3, 0" Margin="6, 0"/>
+                                <CollectionView ItemsSource="{Binding HeadersColumns}"
+                                                HeightRequest="20"
+                                                InputTransparent="True"
+                                                BackgroundColor="{StaticResource TextUserBlue}"
+                                                HorizontalOptions="CenterAndExpand"
+                                                >
+                                    <CollectionView.ItemsLayout>
+                                        <GridItemsLayout Orientation="Horizontal"/>
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label HorizontalTextAlignment="Center"
+                                                       VerticalTextAlignment="Center"
+                                                       Text="{Binding Name}"
+                                                       TextColor="White"
+                                                       WidthRequest="{Binding SizeColumn}"
+                                                       LineBreakMode="TailTruncation">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Browse}" Value="0">
+                                                        <Setter Property="IsVisible" Value="False"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+                            <ListView ItemsSource="{Binding ElementsColumns}"
+                                          HasUnevenRows="True"
+                                          ItemSelected="ListView_ItemSelected"
+                                          SeparatorVisibility="None"
+                                          x:Name="listViewColumns"
+                                      RefreshCommand="{Binding RefreshList}"
+                                      IsPullToRefreshEnabled="True"
+                                      IsRefreshing="{Binding IsRefreshing}"
+                                      CachingStrategy="RecycleElement">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <ViewCell.View>
+                                                <StackLayout HorizontalOptions="StartAndExpand"
+                                                                 VerticalOptions="StartAndExpand"
+                                                                 IsEnabled="False"
+                                                                 BackgroundColor="{Binding ., Converter={StaticResource StripedBackgroundIndexConverter}, ConverterParameter={x:Reference listViewColumns}}"
+                                                                 Padding="0, 2"
+                                                                 Margin="2, 0, 3, 0"
+                                                                 Orientation="Horizontal">
+                                                    <Image HorizontalOptions="Center"
+                                                               VerticalOptions="Center"
+                                                               Margin="2, 0"
+                                                               WidthRequest="{OnPlatform iOS=30, Android=20}"
+                                                               Source="document_48px.png">
+                                                        <Image.Triggers>
+                                                            <DataTrigger TargetType="Image" Binding="{Binding IsStatusRow}" Value="1">
+                                                                <Setter Property="Source" Value="sync_48px.png"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Image" Binding="{Binding IsStatusRow}" Value="2">
+                                                                <Setter Property="Source" Value="edit_48px.png"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Image" Binding="{Binding IsStatusRow}" Value="3">
+                                                                <Setter Property="Source" Value="addElement_48px.png"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Image" Binding="{Binding IsStatusRow}" Value="4">
+                                                                <Setter Property="Source" Value="showdoc_48px.png"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Image" Binding="{Binding IsBlock}" Value="True">
+                                                                <Setter Property="Source" Value="processed_48px.png"/>
+                                                            </DataTrigger>
+                                                        </Image.Triggers>
+                                                    </Image>
+                                                    <CollectionView x:Name="collView"
+                                                                    ItemsSource="{Binding ColumnsElementBrowse}"
+                                                                    HorizontalScrollBarVisibility="Never"
+                                                                    IsEnabled="False"
+                                                                    HeightRequest="20"
+                                                                    VerticalOptions="Start"
+                                                                    HorizontalOptions="CenterAndExpand"
+                                                                    WidthRequest="{Binding SizeRow}">
+                                                        <CollectionView.ItemsLayout>
+                                                            <GridItemsLayout Orientation="Horizontal"/>
+                                                        </CollectionView.ItemsLayout>
+                                                        <CollectionView.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <StackLayout HorizontalOptions="StartAndExpand"
+                                                                             VerticalOptions="Start"
+                                                                             IsEnabled="False"
+                                                                             WidthRequest="{Binding SizeColumn}"
+                                                                             HeightRequest="20">
+                                                                    <Label HorizontalTextAlignment="Center"
+                                                                               VerticalTextAlignment="Center"
+                                                                               Text="{Binding Value}"
+                                                                               TextColor="{StaticResource TextUserBlue}"
+                                                                               LineBreakMode="TailTruncation"
+                                                                               IsEnabled="False"
+                                                                               FontAttributes="None">
+                                                                    </Label>
+                                                                </StackLayout>
+                                                            </DataTemplate>
+                                                        </CollectionView.ItemTemplate>
+                                                    </CollectionView>
+                                                </StackLayout>
+                                            </ViewCell.View>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <Frame BorderColor="{StaticResource TextUserBlue}"
+                                   Margin="0"
+                                   Padding="0"
+                                   CornerRadius="0"
+                                   BackgroundColor="{StaticResource TextUserBlue}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="42"/>
+                                    </Grid.RowDefinitions>
+                                    <ImageButton Command="{Binding DownPage}" 
+                                            IsEnabled="{Binding IsDown, Mode=TwoWay}"  
+                                            Style="{StaticResource ImageButtonMenuStyle}"
+                                            HorizontalOptions="EndAndExpand"  
+                                            Margin="1"
+                                            Source="triangleleft_48px.png"
+                                            Scale="0.9">
+                                    </ImageButton>
+                                    <Label Grid.Column="1" 
+                                           Text="{Binding Page, Mode=TwoWay, StringFormat='Стр. {0}'}" 
+                                           HorizontalOptions="Center" 
+                                           HorizontalTextAlignment="Center" 
+                                           VerticalTextAlignment="Center" 
+                                           VerticalOptions="Center" 
+                                           BackgroundColor="#0060cc" 
+                                           TextColor="White"/>
+                                    <ImageButton Grid.Column="2" 
+                                            Command="{Binding UpPage}" 
+                                            IsEnabled="{Binding IsUp, Mode=TwoWay}" 
+                                            Style="{StaticResource ImageButtonMenuStyle}"
+                                            HorizontalOptions="StartAndExpand" 
+                                            Margin="1"
+                                            Source="triangleright_48px.png"
+                                            Scale="0.9">
+                                    </ImageButton>
+                                </Grid>
+                            </Frame>
+                        </StackLayout>
+                    </Frame>
+                    <Button Grid.Row="2"
+                            Style="{StaticResource ButtonStyle}"
+                            Command="{Binding ActionsCommand}"
+                            IsVisible="{Binding IsVisibleActions, Mode=OneWay}"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="3, 3, 3, 3"
+                            Text="Операции"/>
+                </Grid>
+                <StackLayout HorizontalOptions="CenterAndExpand"
+                                 VerticalOptions="CenterAndExpand">
+                    <StackLayout.Triggers>
+                        <DataTrigger TargetType="StackLayout" Binding="{Binding IsVisibleHome, Mode=OneWay}" Value="True">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </DataTrigger>
+                    </StackLayout.Triggers>
+                    <ContentView>
+                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackLayout Grid.Row="0" HorizontalOptions="CenterAndExpand"
+                                             VerticalOptions="CenterAndExpand"
+                                         IsVisible="False">
+                                <StackLayout.Triggers>
+                                    <DataTrigger TargetType="StackLayout" Binding="{Binding IsSelectMenu}" Value="False">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </DataTrigger>
+                                </StackLayout.Triggers>
+                                <Image Source="screen.png"
+                                       Margin="10"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="CenterAndExpand"/>
+                                <Label Text="Добро пожаловать"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           HorizontalOptions="CenterAndExpand"
+                                           VerticalOptions="CenterAndExpand"/>
+                            </StackLayout>
+                            <StackLayout Grid.Row="0" HorizontalOptions="CenterAndExpand"
+                                             VerticalOptions="CenterAndExpand"
+                                         Margin="20, 0, 20, 0"
+                                         IsVisible="False">
+                                <StackLayout.Triggers>
+                                    <DataTrigger TargetType="StackLayout" Binding="{Binding IsSelectMenu}" Value="True">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </DataTrigger>
+                                </StackLayout.Triggers>
+                                <Image Source="screen.png"
+                                       Margin="10"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="CenterAndExpand"/>
+                                <Label Text="Перед началом работы, загрузите документ на ТСД"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="CenterAndExpand"
+                                       LineBreakMode="WordWrap"/>
+                            </StackLayout>
+                            <Button Grid.Row="1" 
+                                    Style="{StaticResource ButtonStyle}" 
+                                    VerticalOptions="EndAndExpand" 
+                                    HorizontalOptions="Center"
+                                    Text="Загрузка документов" 
+                                    Command="{Binding BatchLoad}" 
+                                    IsVisible="{Binding IsBatchLoad, Mode=OneWay}"
+                                    Margin="0, 20, 0, 0"
+                                    InputTransparent="{Binding IsBlock}">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button"
+                                                 Binding="{Binding IsBatchLoad, Mode=TwoWay}"
+                                                 Value="False">
+                                        <Setter Property="IsEnabled"
+                                                Value="False"/>
+                                        <Setter Property="BackgroundColor"
+                                                Value="LightGray"/>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </Grid>
+                    </ContentView>
+                </StackLayout>
+            </StackLayout>
+
+            <contentViews:SelectDocumentView IsVisible="{Binding IsSelectDocNetwork}"/>
+            <contentViews:SelectDocLocalView IsVisible="{Binding IsSelectDocLocal}"/>
+            <contentViews:TaskView IsVisible="{Binding IsTaskVisible}"/>
+            <contentViews:ActionsView IsVisible="{Binding IsActionsVisible}"/>
+            <contentViews:ContextMenuAddElement IsVisible="{Binding IsAddElementVisible}"/>
+            <contentViews:SelectFilter x:Name="filterView" IsVisible="{Binding IsOpenFilter}" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <contentViews:ExpireTokenView x:Name="expireView" IsVisible="{Binding IsExpire}"  HorizontalOptions="Center" VerticalOptions="Center"/>
+            <contentViews:LoadingView x:Name="indicator" IsVisible="{Binding IsActivity}" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

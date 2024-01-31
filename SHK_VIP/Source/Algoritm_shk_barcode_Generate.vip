@@ -1,0 +1,224 @@
+/*************************************************************************************************\
+  Наименование:
+  Контур/Модуль:
+  Примечание:
+  Вид работы  |Номер           |Дата    |Исполнитель              |Проект
+  -----------------------------------------------------------------------------------------------
+\*************************************************************************************************/
+/*
+*/
+#include shk_barcodeFunc.vih
+#include shk_barcode_Generate.vih
+#include SHK_BASE.vih
+#include SHK_TEMPLATES.vih
+#include shk_barcode_Print.vih
+
+#include Algor.vih
+#include StatLog.vih
+
+#component "M_MnPlan"
+
+table struct tmpGenShk
+(
+  isGen : word
+, name  : string
+, kol   : byte
+, kod : string
+)
+with index
+ (
+  ind0 = name
+ )
+ ;
+//#include SaldoFuncs.vih
+
+//***********************************
+VipInterface Algoritm_shk_barcode_Generate Implements oAlgoritm_Sys;
+//***********************************
+#doc
+Алгоритм для прикрепления файлов
+#end
+
+Interface Algoritm_shk_barcode_Generate;
+//***********************************
+
+Var
+ _TypeCpNrec : word;
+ _cpNrec     : comp;
+Create view
+Var
+ nrecFormPl    : Comp;//Настройка алгоритма
+ __ShkTidkGal  : word;
+
+As Select
+ FormPl.nrec
+From
+     FormPl
+   , spFormPl
+   , tmpGenShk
+Where
+((
+        nrecFormPl == FormPl.NRec
+   and FormPl.NRec == spFormPl.cFormPl
+  and __ShkTidkGal == spFormPl.TYPEREC (noIndex)
+
+))
+;
+//-------------------------
+//Номер системного алгоритма
+Function GetNum: Word;
+{ Result := 6101;
+} //Function GetNum: Word;
+
+
+//-------------------------
+Function GetName: String;
+{ Result := 'генерация штрихкодов к документам и вложенным объектам';
+}; //Function GetName: String;
+
+
+//-------------------------
+Function GetMemo(st: oSteckCommonString): Boolean;
+{ Result := True;
+  st.Push(GetName);
+  st.Push('   генерация штрихкодов к документам и вложенным объектам');
+}; //Function GetMemo(st: oSteckCommonString): Boolean;
+
+
+//-------------------------
+Function GetNameInter: String;
+{ Result := 'Algoritm_shk_barcode_Generate';
+} //Function GetNameInter: String;
+
+
+//-------------------------
+Function GetNameInterPr: String;
+{ Result := 'Algoritm_shk_barcode_Generate_Setup';
+} //Function GetNameInterPr: String;
+
+
+//-------------------------
+Function InitInter(Var pt: TRecAcc): Boolean;
+{ #__UNUSED__(pt)
+  Result := True;
+} //Function InitInter(Var pt: TRecAcc): Boolean;
+
+Window winPrintSetup 'Настройки печати ШК';
+Screen scrwinPrintSetup 'Настройки печати ШК';
+show at (,,,4) ;
+Fields
+ FormPl.RESLNGINT[2] : Skip;
+ FormPl.RESNAME[1]   : Skip;
+Buttons
+ cmValue1,,,;
+ cmCancel,,,;
+<<'Настройки печати ШК'
+ [:] - генерировать штрихкод при его отсутствии`
+`Имя печатной формы`
+.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  <. Продолжить .>    <. Отмена .>
+>>
+ end;
+
+ Browse brPrintSetup; // checkBox
+ show at (,5,,);
+ table tmpGenShk;
+  fields
+   tmpGenShk.name  'Наименование','объекта' ('наименование объекта по которому печатать штрихкод') : [ 6], Protect, nopickbutton;
+   tmpGenShk.isGen 'Печатать','штрихкод'    ('печатать или нет штрихкод') : [ 6], NoProtect,checkBox, nopickbutton;
+   tmpGenShk.kol   'кол-во','штрихкодов'    ('количество копий штрихкодов') : [ 6], NoProtect, nopickbutton;
+ end;
+end;
+tableevent table tmpGenShk;
+ cmUpdaterecord:   update current tmpGenShk;
+end;
+windowevent winPrintSetup;
+cmcheckfield: {
+  updatetable;
+  rescanpanel(tntmpGenShk);
+}
+cmValue1: {
+  updatetable;
+  closewindowex(winPrintSetup, cmDefault)
+}
+end;
+
+
+
+//Запуск алгоритма
+Function RunInter(wflag: Word; Var pt: TRecAcc): Boolean;
+{ #__UNUSED__(wflag,pt)
+  var _iSHK_BASE : SHK_BASE;
+  Result  := false;
+
+  set nrecFormPl := pt.cFormPl;
+  if getfirst FormPl <> tsOK {
+     message('Не найдена настройка алгоритма ' + string(nrecFormPl,0,0), error);
+     pt.Binding:=8;
+     result := false;
+     exit;
+   }
+
+  _TypeCpNrec := pt.TypeCpNrec;
+  _cpNrec     := pt.cpNrec;
+  set __ShkTidkGal := _iSHK_BASE.getShkTidkGalbyTypeCpNrec(_TypeCpNrec);
+//  message(_TypeCpNrec +' -> '+ __ShkTidkGal);
+  if  Getfirst spFormPl <> tsOK
+   or __ShkTidkGal = 0 { //  yу вдруг накосячили и 0 запись появилась
+     message('По данному типу документов "'+pt.TypeCpNrec+'" не настроен шаблон генерации/печати штрихкодов', error);
+     pt.Binding:=8;
+     result := false;
+    exit;
+  }
+
+delete all tmpGenShk;
+ Insert tmpGenShk set tmpGenShk.isGen := spFormPl.RESWORD1[1], tmpGenShk.kol := 1, tmpGenShk.name := 'документ', tmpGenShk.kod := '_GenDoc';
+ Insert tmpGenShk set tmpGenShk.isGen := spFormPl.RESWORD1[2], tmpGenShk.kol := 1, tmpGenShk.name := 'склады'  , tmpGenShk.kod := '_GenPodr';
+ Insert tmpGenShk set tmpGenShk.isGen := spFormPl.RESWORD1[3], tmpGenShk.kol := 1, tmpGenShk.name := 'МОЛы'    , tmpGenShk.kod := '_GenMol';
+ Insert tmpGenShk set tmpGenShk.isGen := spFormPl.RESWORD1[4], tmpGenShk.kol := 1, tmpGenShk.name := 'ячейки'  , tmpGenShk.kod := '_GenKatBox';
+ Insert tmpGenShk set tmpGenShk.isGen := spFormPl.RESWORD1[5], tmpGenShk.kol := 1, tmpGenShk.name := 'МЦ'      , tmpGenShk.kod := '_GenMC';
+ Insert tmpGenShk set tmpGenShk.isGen := spFormPl.RESWORD1[6], tmpGenShk.kol := 1, tmpGenShk.name := 'партии'  , tmpGenShk.kod := '_GenParty';
+
+
+
+if   FormPl.RESLNGINT[1] = 1 // печат ШК
+ and FormPl.RESLNGINT[3] = 1  // запрашивать окно типов объектов
+   then {
+     if runWindowModal(winPrintSetup) <> cmDefault then exit;
+   }
+
+var _TpTunePrintGen : TpTunePrintGen;
+  clearadvrecord(_TpTunePrintGen);
+   _loop tmpGenShk
+    {
+      if tmpGenShk.kod = '_GenDoc'    then {_TpTunePrintGen.GenDoc    := tmpGenShk.isGen; _TpTunePrintGen.KolDoc    := tmpGenShk.kol}
+      if tmpGenShk.kod = '_GenPodr'   then {_TpTunePrintGen.GenPodr   := tmpGenShk.isGen; _TpTunePrintGen.kolPodr   := tmpGenShk.kol}
+      if tmpGenShk.kod = '_GenMol'    then {_TpTunePrintGen.GenMol    := tmpGenShk.isGen; _TpTunePrintGen.KolMol    := tmpGenShk.kol}
+      if tmpGenShk.kod = '_GenKatBox' then {_TpTunePrintGen.GenKatBox := tmpGenShk.isGen; _TpTunePrintGen.KolKatBox := tmpGenShk.kol}
+      if tmpGenShk.kod = '_GenMC'     then {_TpTunePrintGen.GenMC     := tmpGenShk.isGen; _TpTunePrintGen.KolMC     := tmpGenShk.kol}
+      if tmpGenShk.kod = '_GenParty'  then {_TpTunePrintGen.GenParty  := tmpGenShk.isGen; _TpTunePrintGen.KolParty  := tmpGenShk.kol}
+    }
+
+ _TpTunePrintGen.SelectObjectsOnPrint := FormPl.RESLNGINT[4];
+
+var _markername : string = 'markernameforgeneratebarcodes';
+  var ishk_barcode_Generate : shk_barcode_Generate;
+   ishk_barcode_Generate.GetbarCodesByDoc(  __ShkTidkGal
+                                          , _cpNrec
+                                          , if(  FormPl.RESLNGINT[1] = 0 // если стоит алгоритм генерации ШК
+                                              or FormPl.RESLNGINT[2] = 1 // или при печати стоит "генерировать при отсутствии"
+                                              , true
+                                              , false
+                                              )
+                                          , _TpTunePrintGen
+                                          , _markername
+                                        );
+   if FormPl.RESLNGINT[1] = 1 // печат ШК
+    then {
+      var ishk_barcode_Print :shk_barcode_Print;
+       ishk_barcode_Print.PrintByMarkerBarcodeLink(_markername, _TpTunePrintGen, FormPl.RESNAME[1] );
+    }
+
+} //Function RunInter(wflag: Word; Var pt: TRecAcc): Boolean;
+
+End.

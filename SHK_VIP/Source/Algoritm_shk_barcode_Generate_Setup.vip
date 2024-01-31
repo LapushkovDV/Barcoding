@@ -1,0 +1,242 @@
+/*************************************************************************************************\
+  Наименование: Настройка алгоритма для контроля цены в накладной на соответствие данным договора
+  Контур/Модуль: КОУ
+  Примечание:
+  Вид работы  |Номер           |Дата    |Исполнитель              |Проект
+  -----------------------------------------------------------------------------------------------
+\*************************************************************************************************/
+/*
+*/
+#include AlgCalc.vih
+#include oAlgFldSys.vih
+#include TMnPlan.vih
+#include oAlgInDocList.vih
+#include Algor.vih
+
+#include shk_barcode_Print.vih
+#include Marker.vih
+#include GetKau.vih
+#include shk_barcodeFunc.vih
+#include shk_barcode_Generate.vih
+#include SHK_BASE.vih
+#include SHK_TEMPLATES.vih
+
+
+
+#component "M_MnPlan"
+
+VipInterface Algoritm_shk_barcode_Generate_Setup Implements oAlgoritmSetup;
+Interface Algoritm_shk_barcode_Generate_Setup 'Настройка алгоритма генерации ШК', EscClose, Blue;
+Show at (,,85,20);
+
+table struct tmpTypeObj
+(
+   name    : string
+ , tidkGal : word
+)
+ with index
+ (
+  ind0 = tidkGal
+ )
+ ;
+Create view
+Var
+ nrecFormPl : Comp;
+ __ShkTidkGal : word;
+ _logSHK_OUT : string = '';
+As Select
+   FormPl.nrec
+ , spFormPl.RESWORD1[1] (fieldname = GenDoc)
+ , spFormPl.RESWORD1[2] (fieldname = GenPodr)
+ , spFormPl.RESWORD1[3] (fieldname = GenMol )
+ , spFormPl.RESWORD1[4] (fieldname = GenKatBox)
+ , spFormPl.RESWORD1[5] (fieldname = GenMC    )
+ , spFormPl.RESWORD1[6] (fieldname = GenParty )
+
+From
+   FormPl
+ , spFormPl
+ , tmpTypeObj tTypeObj_select
+ , tmpTypeObj
+Where
+((
+      nrecFormPl  == FormPl.NRec
+  and __ShkTidkGal == tTypeObj_select.tidkGal
+
+              and FormPl.NRec == spFormPl.cFormPl
+  and tTypeObj_select.tidkGal == spFormPl.TYPEREC (noIndex)
+))
+;
+
+Parameters
+  nrecFormPl;
+Procedure MyLog(_str: string);
+{
+//  exit;// debud
+  if _logSHK_OUT = '' then _logSHK_OUT := GetStringParameter('Files','OutputFilesDirectory',0)+ '\SHK_LOG_ALGORITHM_SETUP'+DateToStr(cur_date,'YYYYMMDD')+'_'+timetostr(cur_time,'HHMMSS')+'.log';
+  LogStrToFile(_logSHK_OUT,shortstrtowin(_str));
+}
+procedure  ShowPrintSettings;
+{
+   cfssetprop('L_SCMAIN_Настройки_печати:'                                              , 'visible', (FormPl.RESLNGINT[1] = 1));
+   cfssetprop('ci_SCMAIN_FORMPL.RESLNGINT[2]_-_генерировать_штрихкод_при_его_отсутствии', 'visible', (FormPl.RESLNGINT[1] = 1));
+   cfssetprop('ci_SCMAIN_FORMPL.RESLNGINT[3]_-_запрашивать_типы_объектов_ШК_при_печати' , 'visible', (FormPl.RESLNGINT[1] = 1));
+   cfssetprop('ci_SCMAIN_FORMPL.RESLNGINT[4]_-_выбор_позиций_при_печати_(иначе_все)'    , 'visible', (FormPl.RESLNGINT[1] = 1));
+   cfssetprop('L_SCMAIN_Имя_печатной_формы_(если_пусто_будет_предложен_выбор)'          , 'visible', (FormPl.RESLNGINT[1] = 1));
+   cfssetprop('i_SCMAIN_FORMPL.RESNAME[1]'                                              , 'visible', (FormPl.RESLNGINT[1] = 1));
+}
+
+screen scMain ;
+Fields
+ FormPl.RESLNGINT[1] : [LIST 0 'Генерация штрихкодов',1 'Печать штрихкодов'],protect;
+ tTypeObj_select.name : Protect, PickButton;
+ GenDoc    : NoProtect;
+ GenPodr   : NoProtect;
+ GenMol    : NoProtect;
+ GenKatBox : NoProtect;
+ GenMC     : NoProtect;
+ GenParty  : NoProtect;
+ FormPl.RESLNGINT[2] : NoProtect;
+ FormPl.RESLNGINT[3] : NoProtect;
+ FormPl.RESLNGINT[4] : NoProtect;
+ FormPl.RESNAME[1]   : NoProtect;
+Buttons
+ cmValue1,,,;
+
+<<'Настройки алгоритма генерации ШК'
+Алгоритм в себе хранит настройки для всех типов документов
+,т.е. один его экземпляр можно использовать для всех типов
+Тип алгоритма.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Тип документа.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    Генерировать штрихкод для:
+     [:] - документ `
+     [:] - склады   `
+     [:] - МОЛы     `
+     [:] - ячейки   `
+     [:] - МЦ       `
+     [:] - партии   `
+
+`Настройки печати:`
+ [:] - генерировать штрихкод при его отсутствии`
+ [:] - запрашивать типы объектов ШК при печати `
+ [:] - выбор позиций при печати (иначе все)    `
+`Имя печатной формы (если пусто будет предложен выбор)`
+.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+          <. Закрыть .>
+>>
+end;
+handleevent
+cmInit: {
+  ShowPrintSettings;
+}
+cmCheckField: {
+  update current spFormPl;
+  update current FormPl;
+ ShowPrintSettings
+}
+end;
+
+
+
+
+Function asInitInter(p_cFormPl : Comp) : Boolean;
+{
+    asInitInter := True;
+}
+//Завершение работы с интерфейсом настройки. Освобождаются переменные.
+Function asDoneInter : Boolean;
+{
+ asDoneInter := True;
+}
+
+//Вызывается после создания новой настройки (записи в таблице FormPl). Используется для начальной инициализации полей.
+Procedure asOnCmSetDefault;
+{
+
+}
+//Вызывается после вставки настройки в шаблон документа на закладку "Параметры автоматического формирования \ Алгоритмы". Шаблоны документов хранятся в таблице WayAccou. В данной процедуре заполняются те поля настройки, которые зависят от конкретного шаблона. В нашем примере это поле "Тип документа".
+Procedure asOnSetWayAccou(p_cWayAccou : Comp);
+{
+#__UNUSED__(p_cWayAccou)
+}
+handleevent
+cminit: {
+  /*
+  В РАЗНЫХ КОМПОНЕНТАХ TypeObj И ЭТОТ ФЕЙС... НЕ СТАЛ ЗАМОРАЧИВАТЬСЯ, СДЕЛАЛ ТУТ ВРЕМЯНКУ.
+  ХОТЯ НАДОБЫ ЮЗАТЬ ИЗ ИЗНАЧАЛЬНОГО ФЕЙСА ВСЕ.
+  */
+    delete all tmpTypeObj;
+    insert tmpTypeObj set tidkGal:= 101, name:= 'Накладная на прием МЦ';
+    insert tmpTypeObj set tidkGal:= 201, name:= 'Накладная на отпуск МЦ';
+    insert tmpTypeObj set tidkGal:= 501, name:= 'Накладная на отпуск в производство';
+    insert tmpTypeObj set tidkGal:= 600, name:= 'Накладная на внутреннее перемещение /склад-склад';
+    insert tmpTypeObj set tidkGal:= 601, name:= 'Накладная на передачу МЦ в ОС';
+    insert tmpTypeObj set tidkGal:= 602, name:= 'Накладная на передачу МЦ в спецоснастку';
+    insert tmpTypeObj set tidkGal:= 615, name:= 'Инвентаризационная опись складского учета';
+
+      set __ShkTidkGal := 101;
+  MyLog(' cminit __ShkTidkGal='+__ShkTidkGal);
+      if getfirst spFormPl <> tsOK then
+       {
+         MyLog('if getfirst spFormPl <> tsOK then');
+         insert spFormPl set
+            spFormPl.cFormPl := FormPl.NRec
+          , spFormPl.TYPEREC := __ShkTidkGal
+         ;
+       }
+
+    MyLog('cminit tTypeObj_select.name = '+tTypeObj_select.name );
+
+  var iShk_base : Shk_base;
+  iShk_base.filltTypeObj;
+
+ rereadrecord;
+}
+cmPick: {
+  case curfield of
+    #tTypeObj_select.name: {
+    MyLog('cmPick:  tTypeObj_select.name = '+tTypeObj_select.name );
+
+      update current spFormPl;
+  update current FormPl;
+      var _iSHK_TEMPLATES : SHK_TEMPLATES new;
+      var __ShkTidkGalOld : word = __ShkTidkGal;
+
+      set __ShkTidkGal := _iSHK_TEMPLATES.SelectVIDDOC;
+      case __ShkTidkGal of
+           101 // Накладная на прием МЦ	101
+         , 201 // Накладная на отпуск МЦ	201
+         , 501 // Накладная на отпуск в производство	501
+         , 600 // Накладная на внутреннее перемещение /склад-склад	600
+         , 601 // Накладная на передачу МЦ в ОС	601
+         , 602 // Накладная на передачу МЦ в спецоснастку	602
+         , 615 // Инвентаризационная опись складского учета	615
+         : {set __ShkTidkGal := __ShkTidkGal;}
+      else {
+        set __ShkTidkGal := __ShkTidkGalOld;
+        message(' по данному типу автогенерация штрихкода не предусмотрена'
+         +''#13'' + 'это настраивается в документах', error);
+      }
+      end;
+      if getfirst spFormPl <> tsOK then
+       {
+         MyLog('cmPick if getfirst spFormPl <> tsOK then');
+           insert spFormPl set
+              spFormPl.cFormPl := FormPl.NRec
+            , spFormPl.TYPEREC := __ShkTidkGal
+           ;
+       }
+
+
+    }
+   end;
+   rereadrecord;
+}
+cmValue1 : {
+  update current spFormPl;
+  update current FormPl;
+  closeinterface(cmDefault)
+}
+end;
+
+End.

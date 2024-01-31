@@ -1,0 +1,30 @@
+﻿@inherits AddMenuModel
+
+<div>
+    <EditForm class="was-validated" Model="@MenuData" OnValidSubmit="AddMenu">
+        <DataAnnotationsValidator/>
+        <div class="modal-body">
+            <div class="input-group mb-2">
+                <span class="input-group-text fa fa-user-circle wd-40px"></span>
+                <InputText type="text" class="form-control is-invalid" placeholder="Название меню..." @bind-Value="MenuData.Name" required/>
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text fa fa-external-link wd-40px"></span>
+                <InputText type="text" class="form-control is-invalid" placeholder="Название действия..." @bind-Value="MenuData.Action" required/>
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text fa fa-file-text wd-40px"></span>
+                <InputText type="text" class="form-control is-invalid" placeholder="Описание..." @bind-Value="MenuData.Description"/>
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text fa fa-reorder wd-40px"></span>
+                <input type="number" class="form-control is-invalid" min="0" placeholder="№ порядка..." @bind="MenuData.Npp"/>
+            </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+            <button type="submit" class="btn btn-primary">
+                <span class="fa fa-plus"></span> Добавить меню
+            </button>
+        </div>
+    </EditForm>
+</div>

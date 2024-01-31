@@ -1,0 +1,69 @@
+<<<<<<< HEAD
+//------------------------------------------------------------------------------
+//                                                      (c) корпорация Галактика
+// Галактика 9.1 
+// Функции для работы с штрих кодом
+//------------------------------------------------------------------------------
+
+#ifndef _barcodeFunc_VIH_INCLUDED_
+#define _barcodeFunc_VIH_INCLUDED_
+
+#component "C_Barcode"
+
+objInterface oBarcodeFunc;
+#doc
+  Создание нового ШК. Можно использовать для абстрактных документов
+#end
+  function getNew: string;
+#doc
+  Получение ШК документа с типом = _type и NREC = _link. Параметр _create определяет создавать ли новый ШК при отсутствии
+#end
+  function getCode(_type: word; _link: comp; _create: boolean): string;
+#doc
+  Получение ШК документа по коду таблицы = _table и NREC = _link. ШК создается в зависимости от настройки
+#end
+  function getCodeEx(_table: word; _link: comp): string;
+#doc
+  Получение типа (_type) и NREC (_link) документа по ШК (_code). Результат - найден документ или нет
+#end
+  function getDoc(_code: string; var _type: word; var _link: comp): boolean;
+end;
+
+vipInterface iBarcodeFunc implements oBarcodeFunc licensed(free);
+=======
+//------------------------------------------------------------------------------
+//                                                      (c) корпорация Галактика
+// Галактика 9.1 
+// Функции для работы с штрих кодом
+//------------------------------------------------------------------------------
+
+#ifndef _barcodeFunc_VIH_INCLUDED_
+#define _barcodeFunc_VIH_INCLUDED_
+
+#component "C_Barcode"
+
+objInterface oBarcodeFunc;
+#doc
+  Создание нового ШК.
+  Можно использовать для абстрактных документов (отчеты и т.п.)
+#end
+  function getNew: string;
+#doc
+  Получение ШК документа с типом = _type и NREC = _link.
+  Параметр _create определяет создавать ли новый ШК при отсутствии
+#end
+  function getCode(_type: word; _link: comp; _create: boolean): string;
+#doc
+  Получение ШК документа по коду таблицы = _table и NREC = _link.
+  ШК создается в зависимости от настройки
+#end
+  function getCodeEx(_table: word; _link: comp): string;
+#doc
+  Получение типа (_type) и NREC (_link) документа по ШК (_code). Результат - найден документ или нет
+#end
+  function getDoc(_code: string; var _type: word; var _link: comp): boolean;
+end;
+
+vipInterface iBarcodeFunc implements oBarcodeFunc licensed(free);
+>>>>>>> master
+#end

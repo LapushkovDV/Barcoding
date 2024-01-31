@@ -1,0 +1,91 @@
+﻿{
+  "OBJECTDESCRIPTION": {
+    "OBJECTACTION": "WORK_WITH_NVP",
+    "ALLOWADDROWS": false,
+    "ACTIONS": [
+      {
+        "ROW": 1,
+        "SIZE": 10,
+        "NAME": "Сохранить документ",
+        "SYSNAME": "SAVEDOC",
+        "SYSNAMETBL": ""
+      }
+    ],
+    "FIELDS": [
+      {
+        "ROW": 1,
+        "SIZE": 10,
+        "NAME": "KATSOPR.номер накладной",
+        "SYSNAME": "KATSOPR_NSOPR"
+      },
+      {
+        "ROW": 1,
+        "SIZE": 5,
+        "NAME": "KATSOPR.дата накладной",
+        "SYSNAME": "KATSOPR_DSOPR"
+      },
+      {
+        "ROW": 2,
+        "SIZE": 4,
+        "NAME": "ID LD",
+        "SYSNAME": "VA_1109_.LD ID"
+      }
+    ],
+    "COLUMNS": [
+      {
+        "NPP": 1,
+        "NAME": "НПП",
+        "SYSNAME": "SPSOPR_NPP",
+        "SIZE": 10,
+        "MODIF": false,
+        "ACTION": "0",
+        "WISACTIVE": 1
+      },
+      {
+        "NPP": 2,
+        "NAME": "баркод",
+        "SYSNAME": "KATMC_BARKOD",
+        "SIZE": 20,
+        "MODIF": false,
+        "ACTION": "0",
+        "WISACTIVE": 1
+      },
+      {
+        "NPP": 3,
+        "NAME": "Наим МЦ",
+        "SYSNAME": "KATMC_NAME",
+        "SIZE": 12,
+        "MODIF": false,
+        "ACTION": "0",
+        "WISACTIVE": 1
+      },
+      {
+        "NPP": 4,
+        "NAME": "ШИФР ЗАКАЗА",
+        "SYSNAME": "CU_1110_KAU_2",
+        "SIZE": 2,
+        "MODIF": false,
+        "ACTION": "0",
+        "WISACTIVE": 1
+      },
+      {
+        "NPP": 5,
+        "NAME": "кол. факт",
+        "SYSNAME": "SPSOPR_KOLFACT",
+        "SIZE": 0,
+        "MODIF": true,
+        "ACTION": "0",
+        "WISACTIVE": 1
+      },
+      {
+        "NPP": 99,
+        "NAME": "SPSOPR.Номер записи",
+        "SYSNAME": "SPSOPR_NREC",
+        "SIZE": 0,
+        "MODIF": false,
+        "ACTION": "0",
+        "WISACTIVE": 0
+      }
+    ]
+  }
+}

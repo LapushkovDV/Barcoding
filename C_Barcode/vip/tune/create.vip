@@ -1,0 +1,38 @@
+//********************************************************************************
+//                                                        (c) корпорация Галактика
+// Галактика 9.1 - настройки
+// Создание/модификация настроек в компонентах
+//********************************************************************************
+
+#include createTune.vih
+
+//------------------------------------------------------------------------------
+Handler with replace C_Barcode_DateModifyTune on ExtensionPoint
+  epDateModifyTuneEx (TS : ObjStartCreateTuneEx)
+Action
+{
+  TS.SetLastDateModTune(3, 9, 2021);
+  result := true;
+}
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+handler with replace C_Barcode_CreateTune on extensionPoint
+  epCreateTuneComponent (TR: ObjCreateTuneEx) [17]
+action
+{
+  result := true;
+  TR.SetComponent('#__COMPONENT__');     // установить имя компонента
+
+//********************************************************************************
+//
+  TR.SetParent('GalCommon');
+//
+//********************************************************************************
+  TR.AddPartA('Barcode', 'Штрихкодирование', 'ALinkAdm_NastroikaGalaktiki');
+  TR.SetParent('Barcode');
+
+  TR.AddTuneU('Barcode.GenerateBarcodeOnPrint', 'Генерировать штрихкод при печати', ftBoolean, '0', '', 'ALinkAdm_NastrPolzPodsistIntegr');
+  TR.AddTuneU('Barcode.CanWorkWithDocs', 'Документы для штрихкодирования', ftString, '', '', 'ALinkAdm_NastrPolzPodsistIntegr');
+    TR.AddIntr('GetDocsForBarcode');
+}

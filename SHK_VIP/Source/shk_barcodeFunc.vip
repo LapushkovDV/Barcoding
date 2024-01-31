@@ -1,0 +1,250 @@
+#include shk_barcodeFunc.vih
+//------------------------------------------------------------------------------
+//                                                      (c) корпорация Галактика
+// Галактика 9.1
+// Функции для работы с штрих кодом 
+//------------------------------------------------------------------------------
+#include DOfuns.vih
+#include EditDoc.vih
+#include NalogRegDoc.vih
+
+interface iShk_BarcodeFunc 'Функции для работы с штрихкодом';
+show (,,46,5);
+#include DOfuns.var
+#include EditDoc.var
+
+create view v01
+var find_code: string;
+ as select
+   shk_barcode.nrec
+ from
+    shk_barcode
+  , shk_barcodeLink
+//, refTable
+  , basedoc
+  , katsopr
+  , sklorder
+  , invtab
+  , plpor
+  , dogovor
+  , moveos
+  , titledoc
+  , strtitle
+  , passports
+  , spallstaff
+  , factotpusk
+  , iski
+  //,schfact
+  , vvstroy
+  , mtract
+  , grsopr
+  , katbox
+  ;
+function CheckLic : boolean; {
+ #BodyfunctionCheckLic
+}
+
+function getNew: string;
+var tmp: string; rec: comp;
+{
+    if not CheckLic then exit;
+    result := '';
+    rec := getnextnrec(#shk_barcode, 0);
+    clearbuffer(#shk_barcode);
+    set shk_barcode.nrec = rec;
+    if (insert current shk_barcode <> tsOk) {
+      message('При генерации штрих-кода возникла ошибка. ' + chr(13) +
+              'Не удалось получить уникальный номер.', Error);
+      exit;
+    }
+    if getfirst shk_barcode where ((rec == shk_barcode.nrec)) <> tsOk {}
+
+    tmp := lpadch(shk_barcode.counter, '0', 12);
+    if (length(tmp) > 12) {
+      message('Не удалось создать штрих-код', error);
+      exit;
+    }
+
+    tmp += string(GetCheckDigitForBarcode(tmp));
+
+    if (getfirst shk_barcodeLink where (( 0 == shk_barcodelink.type
+                                    and tmp == shk_barcodelink.barcode(length = 250)))
+       ) = tsOk {
+      message('При генерации штрих-кода возникла ошибка. ' + chr(13) +
+              'Сгенерированный штрих-код ''' + tmp + ''' уже есть в БД', error);
+      exit;
+    }
+    result := tmp;
+}
+
+function getCode(_wTable, _type: word; _crec: comp; _create: boolean): string;
+var _code: string;
+{
+    if not CheckLic then exit;
+    result := '';
+    if (_type = 0) or (_crec = 0) exit;
+
+    if (getfirst shk_barcodelink where ((_wTable == shk_barcodelink.wTable
+                                       and _cRec == shk_barcodelink.cRec))
+                                       and shk_barcodelink.type = 0
+       )= tsOk {
+      result := shk_barcodelink.barcode;
+    //message('У документа есть ШК: ''' + result + '''');
+    }
+    else
+    if _create {
+      _code := getNew;
+      if (_code <> '') {
+        insert shk_barcodelink set
+           shk_barcodelink.tidkgal := _type
+          ,shk_barcodelink.crec    := _cRec
+          ,shk_barcodelink.barcode := _code
+          ,shk_barcodelink.wTable  := _wTable
+          ,shk_barcodelink.type    := 0
+          ;
+      }
+      result := shk_barcodelink.barcode;
+    //message('Документу присвоен ШК: ''' + result + '''');
+    }
+    //else message('У документа отсутствует ШК');
+}
+
+function getDoc(_type : byte; _code: string; var _wTable : word; var _tidkGal: word; var _cRec: comp): boolean;
+{
+    if not CheckLic then exit;
+  _type := 0; _cRec := 0;
+  result := (getfirst shk_barcodeLink where ((_type == shk_barcodeLink.type
+                                          and _code == shk_barcodeLink.barcode (length = 250) )) = tsOk);
+  if result {
+    _tidkGal := shk_barcodelink.tidkgal;
+       _cRec := shk_barcodelink.cRec;
+     _wTable := shk_barcodelink.wTable;
+  }
+}
+
+function getType(_table: word; _cRec: comp): word;
+{
+  result := 0;
+  case _table of
+    coBaseDoc: {
+      if (getfirst basedoc where ((_cRec == nrec)) = tsOK)
+        result := oDOfuns.GetTipHozOnVidDoc(basedoc.viddoc);
+    }
+    coKatSopr: {
+      if (getfirst katsopr where ((_cRec == nrec)) = tsOK)
+          result := katsopr.vidsopr;
+    }
+    coSklOrder: {
+      if (getfirst sklorder where ((_cRec == nrec)) = tsOK)
+        result := GetSoprHozTipDoc(sklorder.sp, sklorder.vidorder);
+    }
+    coInvTab: {
+      if (getfirst invtab where ((_cRec == nrec)) = tsOK)
+        case invtab.tipdoc of
+          cgDoc_0015: result := cgDoc_0715;
+          cgDoc_0016: result := cgDoc_0716;
+        else 
+          result := if(InvTab.TipDoc = 1, cgDoc_0616, cgDoc_0615);
+        end;
+    }
+    coPlPor: {
+      if (getfirst plpor where ((_cRec == nrec)) = tsOK)
+        result := plpor.tidkgal;
+    }
+    coDover: {
+      result := cgDoc_0760;
+    }
+    coDogovor: {
+      if (getfirst dogovor where ((_cRec == nrec)) = tsOK)
+        result := Dogovor.TiDk;
+    }
+    coMoveOs: {
+      if (getfirst MoveOs where ((_cRec == nrec)) = tsOK)
+        result := MoveOs.TipDoc*100 + MoveOs.SysOper;
+    }
+    coVvStroy: {
+        if (getfirst VvStroy where ((_cRec == nrec)) = tsOK)
+          result := 704 + if(VvStroy.wType = 5, 16, VvStroy.wType);
+    }
+    coTitleDoc: {
+      if (getfirst titledoc where ((_cRec == nrec)) = tsOK)
+          result := cgDoc_1800;
+    }
+    coStrTitle: {
+      if (getfirst STRTITLE where ((_cRec == nrec)) = tsOK)
+          result := cgDoc_1801;
+    }
+    coPassports: {
+      if (getfirst Passports where ((_cRec == nrec)) = tsOK)
+          result := cgDoc_1802;
+    }
+    coSpAllStaff: {
+      if (getfirst SpAllStaff where ((_cRec == nrec)) = tsOK)
+        result := cgDoc_1803;
+    }
+    /* coSchFact: {
+      if (getfirst SchFact where ((_cRec == nrec)) = tsOK)
+          result := if (SchFact.Direct = cwDirect_Sell, cwGlobalCodeSF_Sell, cwGlobalCodeSF_Buy);
+    } */
+    coFactOtpusk: {
+      if (getfirst factotpusk where ((_cRec == nrec)) = tsOK)
+        result := cgDoc_2006;
+    }
+    coIski: {
+      if (getfirst iski where ((_cRec == nrec)) = tsOK)
+        result := Iski.TiDk;
+    }
+    coMtrAct: {
+      if (getfirst mtract where ((_cRec == nrec)) = tsOK)
+        result := mtract.vidsopr;
+    }
+    coGrSopr: {
+      if (getfirst grsopr where ((_cRec == nrec)) = tsOK)
+        result := grsopr.vidsopr + 3000;
+    }
+  end;
+}
+
+//возможность формирования штрих кода по настройке и типу печатного документа в каталоге документов системы
+function canCreate(_type: word): boolean;
+{
+  result := true;
+  //(getfirst reftable where ((cgReg_Main == wAccount and cgSel_PrnBarCode == wMain
+  //  and _type == wSub and word(1) == wTable1)) = tsOk);
+}
+/*
+function getCodeEx(_table: word; _cRec: comp): string;
+var _type: word;
+{
+  _type := getType(_table, _cRec);
+            getCode(_wTable, _type: word; _crec: comp; _create: boolean): string;
+  result := getCode(_type, _cRec, canCreate(_type));
+}
+*/
+// показать документ
+procedure show_doc(_type: word; _cRec: comp);
+{
+    if not CheckLic then exit;
+  case _type of
+  coTypeDocMC    : runinterface('L_MCU::iViewMCUslCatal', 1, _cRec, 0, 0, 0); //coSpSopr, SpSopr.nRec
+  coTypeDocPARTY : runinterface('L_Katparty::katparty', _cRec);
+  coTypeDocPODR  : runinterface('Z_KATPODR::KATPODR'
+                                                 ,0      // режим работы 0 - редактирования, -1 - добавление подразделения, -2 - добавление склада, -3 - добавление торгового зала
+                                                 ,_cRec
+                               )  ;        // NRec подразделения по умолчанию
+  coTypeDocMOL   : RunInterface('L_MOL::GetMOL', _cRec, 0h, True);
+  coTypeDocBox   : {//runinterface('L_Box::GetBox1', _cRec);
+                    if (getfirst katbox where ((_cRec == nrec)) = tsOk)
+                    //runinterface('L_Box::GetBox2', _cRec, katbox.cpodr, 0);
+                      runinterface('L_Box::KatBoxesEdit', _cRec, katbox.cpodr);
+                    //runinterface('L_Box::GetBoxIer', katbox.cpodr, 1, false, false, _cRec);
+                  }
+//  cgDoc_1058     :  runinterface('F_NalogReg::NalogRegDoc', cgiSingleEdit, _type, _cRec);
+  600,101,201,
+  501,602,601,
+  615           :   iEditDoc.runEditHozDocEx(_type, _cRec);
+  else  { message('Тип объекта "'  +_type+'"  не зарегистрирован в системе', error);
+        }
+  end;
+}
+end.

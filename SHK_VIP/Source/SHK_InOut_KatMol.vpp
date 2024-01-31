@@ -1,0 +1,151 @@
+
+sql query queryKatMol =
+      select distinct
+        KatMol.NREC                           as SYS_KATMOL_NREC
+       ,%IdentityField                        as SYS_BARCODE
+
+       %SelectFields
+       from KatMol
+          left join Katpodr on KatPodr.nrec = KatMol.CSKL
+          left join attrnam on attrnam.wtable = 1424 and attrnam.name = :anName
+          left join attrval on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katMol.nrec
+          left join shk_barcodelink on shk_barcodelink.wtable = 1424 and shk_barcodelink.crec = KatMol.NREC and shk_barcodelink.type = 0
+          left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD
+          left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM
+          left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser
+          left join x$users on x$users.ATL_NREC = SHK_USER.cUser
+
+       where %IdentityField = :pIdent // •·´® ¨•≠Ô•‚• ß†Ø‡Æ·, ‚Æ Æ°Ôß†‚•´Ï≠Æ ®·Ø‡†¢Ï‚• ‰„≠™Ê®Ó Fill_fieldArray
+;
+
+function GetResultQueryForKatMol(_pcSHKObj: comp; _pIdent : string) : IResultSet;
+{
+
+   if not BoundActive(tbbySHKObjNrec) then
+   {
+    set _cSHKObj := _pcSHKObj;
+    pushbounds(tbbySHKObjNrec);
+   }
+
+  var qKatMol : iQuery = queryManager.createQuery(queryKatMol);
+    var SelectFields : longint = 0;
+
+   _loop SHKObjSP_HEAD
+      {
+        if pos('VA_1424',SHKObjSP_HEAD.SYSNAMETBL) = 1 then continue;
+        MysqlAddStr( SelectFields ,' ,  ' +SHKObjSP_HEAD.SYSNAMETBL + '.'+SHKObjSP_HEAD.SYSNAME + ' as ' +SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME  );
+     }
+ var _anName : string;
+  var Identificator : longint = 0;
+
+        if pos('VA_1424',SHKOBJ.SYSNAMETBL) = 1
+        then
+          {
+           _anName := SHKOBJ.SYSNAME;
+           MysqlAddStr( Identificator ,'attrval.vstring');
+           mylog('    %IdentityField =attrval.vstring');
+          }
+        else
+          {
+          _anName := '---';
+           MysqlAddStr( Identificator ,SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME ) ;
+           mylog('    %IdentityField =' + SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME );
+          }
+
+  qKatMol.setMacro('IdentityField', Identificator);
+
+  qKatMol.setMacro('SelectFields', SelectFields);
+
+  qKatMol.setParam('anName', _anName);
+   var _type : byte = GetTypeByTableAndField(SHKOBJ.SYSNAMETBL, SHKOBJ.SYSNAME);
+   mylog('    _type = '+_type) ;
+ case _type of
+        4 :  qKatMol.setParam('pIdent',    word(_pIdent) );
+        6 :  qKatMol.setParam('pIdent', longint(_pIdent) );
+       11 :  qKatMol.setParam('pIdent',  double(_pIdent) );
+       17 :  qKatMol.setParam('pIdent',    comp(_pIdent) );
+        else qKatMol.setParam('pIdent',  _pIdent);
+   end;
+
+   result := qKatMol.getResultSet;
+
+}
+
+function GenerateJSON_VALUES_KATMolOne(_ActionName: string; _pIdent: string; var _err : string) : TpTr;
+{
+ var iRes : IResultSet = GetResultQueryForKatMol(GetTMPLTByName(_ActionName), _pIdent);
+
+
+  var JSONObj_VALUES: TPtr = HttpConnect_JsonObjectCreate(m_service);
+//  var JSONObj_Array : TPtr = 0;
+//  var JSONObj_ArrayOneElement : tptr =0  ;
+
+ if NullVipRef(iRes) then
+ {
+
+//    HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'ERROR', 'éòàÅäÄ ÇõèéãçÖçàü áÄèêéëÄ Ç ÅÑ');
+    _err := 'éòàÅäÄ ÇõèéãçÖçàü áÄèêéëÄ Ç ÅÑ';
+    result := 0;
+    exit;
+
+ }
+
+ if iRes.getFirst <>  tsOk
+  {
+//    HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'ERROR', 'çÖ çÄâÑÖç éÅöÖäí èé '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = ' + _pIdent);
+    _err := 'çÖ çÄâÑÖç éÅöÖäí èé '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = ' + _pIdent;
+    result := 0;
+    exit;
+  }
+
+        var _SYS_KATMol_NREC      : comp = 0h;
+
+         _SYS_KATMol_NREC      := iRes.row.val('SYS_KATMOL_NREC');
+
+        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'OBJECTACTION', SHKObj.Action);
+        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'IDOBJECT'       , String(_SYS_KATMol_NREC));
+        var _SYS_BARCODE   : string = iRes.row.val('SYS_BARCODE');
+        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'SYS_BARCODE'       , String(_SYS_BARCODE));
+
+//       JSONObj_Array := HttpConnect_JsonArrayCreate(m_service);
+
+//      var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
+     var JSONObj_FIELDS : tptr = HttpConnect_JsonObjectCreate(m_service);
+       _loop SHKObjSP_HEAD
+         {
+           var _value : string = coUnRealString;
+//           var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
+
+           if pos('VA_1424',SHKObjSP_HEAD.SYSNAMETBL) = 1 then {
+                _value := piextattr.sgetattr(1424, _SYS_KATMol_NREC, SHKObjSP_HEAD.SYSNAME);
+             }
+
+
+             if _value = coUnRealString then _value := iRes.row.val(SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME);
+//             HttpConnect_JsonObjectAddString(m_service, JSONObj_ArrayOneElement, SHKObjSP_HEAD.SYSNAMETBL+'_'+SHKObjSP_HEAD.SYSNAME, _value);
+
+             HttpConnect_JsonObjectAddString(m_service, JSONObj_FIELDS, SHKObjSP_HEAD.SYSNAMETBL+'_'+SHKObjSP_HEAD.SYSNAME, _value);
+//           HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement);
+         }
+//         HttpConnect_JsonObjectAddObject(m_service, JSONObj_VALUES, 'FIELDS', JSONObj_Array);
+          HttpConnect_JsonObjectAddObject(m_service, JSONObj_VALUES, 'FIELDS', JSONObj_FIELDS);
+
+  result := JSONObj_VALUES;
+}
+
+
+function GenerateJSON_VALUES_KATMol(_ActionName: string; _pIdent: string; var _err : string; _login: string = ''; _imei : string = '') : TpTr;
+{
+
+  var JSONObj_Array           : TPtr = HttpConnect_JsonArrayCreate(m_service);
+  var JSONObj_ArrayOneElement : TPtr = HttpConnect_JsonObjectCreate(m_service);
+
+//   ØÆ ®§•• ‚„‚ ·‚†¢®¨ Ê®™´ §´Ô Ø†™•‚≠Æ© ¢Î£‡„ß™®
+   JSONObj_ArrayOneElement := GenerateJSON_VALUES_KATMolOne(_ActionName,_pIdent,_err);
+
+   if JSONObj_ArrayOneElement <> 0
+    then HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement)
+     else JSONObj_Array := 0;
+
+  result := JSONObj_Array;
+}

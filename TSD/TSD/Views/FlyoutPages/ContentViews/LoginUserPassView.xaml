@@ -1,0 +1,80 @@
+﻿<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:dependencyproperties="clr-namespace:TSD.Services.DependencyProperties"
+             x:Class="TSD.Views.FlyoutPages.ContentViews.LoginUserPassView">
+    <ContentView.Resources>
+        <ResourceDictionary Source="../../Resources/Resources_XML/ResourceDictionaryMobile.xaml"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout Orientation="Vertical"
+                     HorizontalOptions="FillAndExpand">
+            <StackLayout Orientation="Vertical"
+                         HorizontalOptions="FillAndExpand">
+                <dependencyproperties:ImageEntry x:Name="login"
+                                                 Placeholder="{Binding Source=XamlLabelLogin, Converter={StaticResource ResxLocalizationConverter}}"
+                                                 Image="login_48px"
+                                                 Text="{Binding Login, Mode=TwoWay}"
+                                                 TextColor="#0060cc"
+                                                 Keyboard="Default"
+                                                 LineColor="LightGray"
+                                                 HorizontalOptions="FillAndExpand">
+                    <dependencyproperties:ImageEntry.Triggers>
+                        <DataTrigger TargetType="dependencyproperties:ImageEntry"
+                                     Binding="{Binding IsOpenSetting}"
+                                     Value="True">
+                            <Setter Property="InputTransparent" Value="True"/>
+                        </DataTrigger>
+                    </dependencyproperties:ImageEntry.Triggers>
+                    <dependencyproperties:ImageEntry.Behaviors>
+                        <xct:TextValidationBehavior InvalidStyle="{StaticResource InvalidStyle}"/>
+                    </dependencyproperties:ImageEntry.Behaviors>
+                </dependencyproperties:ImageEntry>
+                <dependencyproperties:ImageEntry x:Name="password"
+                                                 Placeholder="{Binding Source=XamlLabelPassword, Converter={StaticResource ResxLocalizationConverter}}"
+                                                 Text="{Binding Password, Mode=TwoWay}"
+                                                 TextColor="#0060cc"
+                                                 Keyboard="Default"
+                                                 IsPassword="True"
+                                                 Image="password_48px"
+                                                 LineColor="LightGray"
+                                                 HorizontalOptions="FillAndExpand">
+                    <dependencyproperties:ImageEntry.Triggers>
+                        <DataTrigger TargetType="dependencyproperties:ImageEntry"
+                                     Binding="{Binding IsOpenSetting}"
+                                     Value="True">
+                            <Setter Property="InputTransparent" Value="True"/>
+                        </DataTrigger>
+                    </dependencyproperties:ImageEntry.Triggers>
+                    <dependencyproperties:ImageEntry.Behaviors>
+                        <xct:TextValidationBehavior InvalidStyle="{StaticResource InvalidStyle}"/>
+                    </dependencyproperties:ImageEntry.Behaviors>
+                </dependencyproperties:ImageEntry>
+            </StackLayout>
+            <Button Text="{Binding Source=XamlButtonAuth, Converter={StaticResource ResxLocalizationConverter}}"
+                    Style="{StaticResource ButtonStyle}"
+                    Command="{Binding Auth}"
+                    HorizontalOptions="FillAndExpand"
+                    FontSize="Small"
+                    IsVisible="True">
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding CheckLogin}"
+                                 Value="False">
+                        <Setter Property="Style" Value="{StaticResource ButtonStyleDisabled}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding IsActivity}"
+                                 Value="True">
+                        <Setter Property="Style" Value="{StaticResource ButtonStyleDisabled}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding IsOpenSetting}"
+                                 Value="True">
+                        <Setter Property="InputTransparent" Value="True"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

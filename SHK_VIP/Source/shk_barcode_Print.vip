@@ -1,0 +1,761 @@
+#include Marker.vih
+#include shk_barcodeFunc.vih
+#include shk_barcode_Generate.vih
+#include SHK_BASE.vih
+#include SHK_TEMPLATES.vih
+#include shk_barcode_Print.vih
+
+//------------------------------------------------------------------------------
+//                                                      (c) корпорация Галактика
+// Галактика 9.1
+// печать штрихкодов
+//------------------------------------------------------------------------------
+
+interface shk_barcode_Print 'Просмотр/создание штрихкодов в системе';
+
+
+table struct tForSelectObjects
+(
+   Nrec         : comp
+ , cBarCodeLink : comp
+ , Kol          : word
+)
+ with index
+ (
+    ind0 = Nrec (surrogate,unique)
+  , ind1 = cBarCodeLink
+ )
+;
+
+table struct tForPrint
+(
+ cBarCodeLink : comp
+)
+ with index
+ (
+  ind1 = cBarCodeLink
+ )
+;
+
+table struct tFieldsValue
+(
+   sField : string
+ , value  : string
+ , Descr  : string
+)
+ with index
+ (
+  ind1 = sField
+ )
+;
+
+Procedure FillFields(_wTable : word; _fillValue : boolean); forward;
+
+
+create view
+var
+   _wTableTune
+ , _tidkGalTune : word;
+
+   _sFieldTemplate
+ , _logSHK_OUT : string = '';
+
+ _curKatSopr : comp;
+ _shk_barcode_Generate : shk_barcode_Generate;
+ pMarkerBarCode_SelObj : IMarker(Marker) new;
+as select
+    shk_barcodeLink.nrec
+ , _shk_barcode_Generate.getStringObjectDescription(shk_barcodeLink_setObj.TidkGal, shk_barcodeLink_setObj.crec) (Fieldname = ObjectString)
+
+from
+   shk_barcodeLink
+ , SHK_TunePrint
+ , KatSopr
+ , KatPodr
+ , KatMol
+ , KatParty
+ , katMc MC_KatParty
+ , InvTab
+ , KatBox
+ , KatMc
+ , AttrNam Attrnam_print
+ , Katpodr Podr_KatBox
+ , KatMc MC_KatBox
+
+ , tForPrint
+ , tFieldsValue
+ , tTypeObj
+
+ , tForSelectObjects(ind0)
+ , tForSelectObjects tForSelectObjects_1
+ , shk_barcodeLink shk_barcodeLink_setObj
+ , tTypeObj tTypeObj_selObj
+
+ , tTypeObj tTypeObjNastr
+ , SHK_TunePrint SHK_TunePrint_Nastr
+
+ , spSopr
+ , INBOXP
+ where ((tForPrint.cBarCodeLink == shk_barcodeLink.nrec
+
+    and shk_barcodeLink.wTable  == SHK_TunePrint.wTable
+    and shk_barcodeLink.tidkGal == SHK_TunePrint.tidkGal
+
+    and shk_barcodeLink.tidkGal == tTypeObj.tidkGal
+
+       and shk_barcodeLink.cRec == KatSopr.nrec
+
+       and shk_barcodeLink.cRec == KatPodr.nrec
+
+       and shk_barcodeLink.cRec == KatMol.nrec
+
+       and shk_barcodeLink.cRec == KatParty.nrec
+               and KatParty.cmc == MC_KatParty.nrec
+
+       and shk_barcodeLink.cRec == InvTab.nrec
+
+       and shk_barcodeLink.cRec == KatBox.nrec
+       and KatBox.cPodr         == Podr_KatBox.nrec
+       and KatBox.cResMc        == MC_KatBox.nrec
+
+
+       and shk_barcodeLink.cRec == KatMc.nrec
+
+
+    and  _wTableTune == SHK_TunePrint_Nastr.wTable
+    and _tidkGalTune == SHK_TunePrint_Nastr.tidkGal
+    and SHK_TunePrint_Nastr.tidkGal == tTypeObjNastr.tidkGal
+
+    and tForSelectObjects.cBarCodeLink == shk_barcodeLink_setObj.nrec
+    and shk_barcodeLink_setObj.tidkGal == tTypeObj_selObj.tidkGal
+ ))
+;
+function CheckLic : boolean; {
+ #BodyfunctionCheckLic
+}
+
+Procedure MyLog(_str: string);
+{
+//  exit;// debud
+  if _logSHK_OUT = '' then _logSHK_OUT := GetStringParameter('Files','OutputFilesDirectory',0)+ '\SHK_LOG_barcode_print_'+DateToStr(cur_date,'YYYYMMDD')+'_'+timetostr(cur_time,'HHMMSS')+'.log';
+  LogStrToFile(_logSHK_OUT,shortstrtowin(_str));
+}
+
+Window winSetSField 'Настройка строки-шаблона печати штрихкодов';
+  Screen scrSetSField 'Настройка строки-шаблона печати штрихкодов';
+   show at (,,,1);
+    table tFieldsValue;
+   Fields
+    _sFieldTemplate: NoProtect, NoPickButton;
+   Buttons
+   cmValue2,,,;
+<<'Настройка строки-шаблона печати штрихкодов'
+.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ <. OK .>
+>>
+  end;
+  browse brtFieldsValue;
+  show at (,2,,);
+   table tFieldsValue;
+    Fields
+     tFieldsValue.sField 'Шаблон поля'             : [5]  , Protect, NoPickButton;
+     tFieldsValue.Descr  'Описание','дескрипторов' : [20] , Protect, NoPickButton;
+  end;
+  end;
+ windowevent winSetSField;
+   cmInit: {
+     if not CheckLic then {stop; abort; exit;}
+     if getfirst tFieldsValue = tsOK {};
+   }
+ cmDefault: {
+    case curfield of
+       #tFieldsValue.sField
+     , #tFieldsValue.Descr  : {
+       set _sFieldTemplate := _sFieldTemplate + ' ' + tFieldsValue.sField
+     }
+    end;
+   rescanpanel(tntFieldsValue);
+   rereadrecord;
+  }
+  cmValue2: {
+    CloseWindowEx(winSetSField, cmDefault);
+   }
+end;
+
+procedure SetsField(var _tmpsfield : string);
+{
+ set _sFieldTemplate := _tmpsfield;
+
+ FillFields(SHK_TunePrint_Nastr.wTable, false);
+
+ if runwindowmodal(winSetSField) = cmDefault then _tmpsfield := _sFieldTemplate
+}
+
+
+Window winSHK_selectObjects 'Выбор объектов для печати штрихкодов';
+  Screen scrSHK_selectObjects 'Выбор объектов для печати штрихкодов';
+   show at (,,,1);
+    table tForSelectObjects;
+   Buttons
+   cmValue1,,,;
+   cmCancel,,,;
+<<'Выбор объектов для печати штрихкодов'
+     <. Продолжить .>                  <. Отмена .>
+>>
+end;
+Browse brSHK_selectObjects 'Выбор объектов для печати штрихкодов';
+   show at (,2,,);
+ table tForSelectObjects;
+  recMarker = pMarkerBarCode_SelObj {tForSelectObjects.nrec};
+
+ Fields //{font = {color= if(SHKObjSP_HEAD.WISACTIVE = 0,colorsysgray,0)}};
+ // shk_barcodeLink.wTable     'Код таблицы'                    ('Код таблицы'                  ) : [3] ,Protect, NoDel;
+ // shk_barcodeLink.tiDkGal    'Системный код типа документа'   ('Системный код типа документа' ) : [3] ,Protect, NoDel;
+  tTypeObj_selObj.name              'Тип объекта'                  ('тип объекта' ) : [3] ,Protect, NoDel, NoPickButton;
+ // shk_barcodeLink.cRec       'Ссылка на объект'               ('Ссылка на объект'             ) : [4] ,Protect, NoDel;
+  ObjectString                      'Объект'                         ('Ссылка на объект'             ) : [6] ,Protect, NoDel, NoPickButton;
+  shk_barcodeLink_setObj.barcode    'Штрих код'            ('Штрих код документа'          ) : [5] ,Protect, NoDel, NoPickButton;
+  shk_barcodeLink_setObj.type       'Тип ШК: 0 - свой',' 1 - внешний'  ('Тип ШК: 0 - свой, 1 - внешний') : [1] ,Protect, NoDel, NoPickButton;
+  tForSelectObjects.kol             'Кол-во ','для печати'  ('количество этикеток для печати штрихкода') : [3] ,NoProtect, NoDel;
+ end;
+end;
+windowEvent winSHK_selectObjects;
+ cmInit    : {
+     if not CheckLic then {stop; abort; exit;}
+   _curKatSopr := 0h;
+   }
+ cmValue1  : {
+             if pMarkerBarCode_SelObj.count = 0 then {
+                message('Не выбрано ни одного объекта для печати!',error);
+               stop; abort; exit;
+              }
+             CloseWindowEx(winSHK_selectObjects, cmDefault);
+            }
+ cmDefault : {
+             if pMarkerBarCode_SelObj.count = 0 then {
+                message('Не выбрано ни одного объекта для печати!',error);
+               stop; abort; exit;
+              }
+              CloseWindowEx(winSHK_selectObjects, cmDefault);
+            }
+ cmHotKeys : {
+    pushPos(tntForSelectObjects);
+    disablecommand(cmValue3) ;
+     _loop tForSelectObjects
+      if getfirst shk_barcodeLink_setObj = tsOK
+       {
+         if shk_barcodeLink_setObj.wTable = coKatSopr
+          then {
+            _curKatSopr := shk_barcodeLink_setObj.Crec;
+            enablecommand(cmValue3);
+            break;
+           }
+       }
+     PutHotCommand(runMenu('mnu_shk_barcode_SelectObj'));
+    poppos(tntForSelectObjects);
+ }
+ cmValue2  : { //{- 'Проставить количество по всем позициям из текущей',cmValue2,'Проставить количество по всем позициям из текущей',,'',,sci1Esc;
+   _loop tForSelectObjects_1 update current tForSelectObjects_1 set tForSelectObjects_1.kol := tForSelectObjects.kol;
+
+    pMarkerBarCode_SelObj.SelectALl;
+   rescanpanel(tntForSelectObjects);
+ }
+ cmValue3  : { //- 'Приравнять количество ШК к Количеству по позиции',cmValue3,'Приравнять количество ШК к Количеству по позиции',,'',,sci1Esc;
+    if _curKatSopr = 0h {
+      stop;abort;exit;
+    }
+    pushPos(tntForSelectObjects);
+
+     _loop tForSelectObjects
+      if getfirst shk_barcodeLink_setObj = tsOK
+       {
+         var _kolfact : double = 0;
+         case shk_barcodeLink_setObj.wTable of
+          coKatMC:  {// KatMc
+            if getfirst spSopr where ((_curKatSopr == spsopr.cSopr
+                   and shk_barcodeLink_setObj.cRec == spsopr.cMcUsl (NoINdex)
+                                             and 1 == spsopr.prmc (NoINdex)
+                                     )) = tsOK then _kolfact := spSopr.kolFact;
+           }
+          coKatUsl: {// Katusl
+            if getfirst spSopr where ((_curKatSopr == spsopr.cSopr
+                   and shk_barcodeLink_setObj.cRec == spsopr.cMcUsl (NoINdex)
+                                             and 2 == spsopr.prmc (NoINdex)
+                                     )) = tsOK then _kolfact := spSopr.kolFact;
+           }
+           coKatParty: { // katparty
+              if getfirst spSopr where ((_curKatSopr == spsopr.cSopr
+                     and shk_barcodeLink_setObj.cRec == spsopr.cParty (NoINdex)
+                                       )) = tsOK then _kolfact := spSopr.kolFact;
+           }
+           coKatBox: { // katbox
+             _loop spSopr where ((_curKatSopr == spsopr.cSopr)) {
+                if getfirst INBOXP where ((spsopr.nrec == INBOXP.CSPSOPR
+                       and shk_barcodeLink_setObj.cRec == INBOXP.CBOX (noindex)
+                                         )) = tsOK then {
+                                              _kolfact := spSopr.kolFact;
+                                              break;
+                                           }
+              }
+           }
+          end;
+        if _kolfact <> 0 then {
+            pMarkerBarCode_SelObj.mark;
+            update current tForSelectObjects set tForSelectObjects.kol := _kolfact;
+          }
+       }
+
+    poppos(tntForSelectObjects);
+   rescanpanel(tntForSelectObjects);
+ }
+end;
+
+tableevent table tForSelectObjects ;
+ cmCheckField: {
+    if tForSelectObjects.kol = 0 then pMarkerBarCode_SelObj.unmark
+         else pMarkerBarCode_SelObj.mark;
+    Update current tForSelectObjects;
+   }
+end;
+
+
+Window winSHK_TunePrint_Nastr 'Настройка шаблона печати штрихкодов' ;
+Screen scrSHK_TunePrint_Nastr 'Настройка шаблона печати штрихкодов';
+ table SHK_TunePrint_Nastr;
+Fields
+ tTypeObjNastr.name    : Protect, PickButton;
+ SHK_TunePrint_Nastr.sfield[1]  : NoProtect, PickButton;
+ SHK_TunePrint_Nastr.sfield[2]  : NoProtect, PickButton;
+ SHK_TunePrint_Nastr.sfield[3]  : NoProtect, PickButton;
+ SHK_TunePrint_Nastr.sfield[4]  : NoProtect, PickButton;
+ SHK_TunePrint_Nastr.sfield[5]  : NoProtect, PickButton;
+ SHK_TunePrint_Nastr.sfield[6]  : NoProtect, PickButton;
+ SHK_TunePrint_Nastr.sfield[7]  : NoProtect, PickButton;
+ SHK_TunePrint_Nastr.sfield[8]  : NoProtect, PickButton;
+ SHK_TunePrint_Nastr.sfield[9]  : NoProtect, PickButton;
+ SHK_TunePrint_Nastr.sfield[10] : NoProtect, PickButton;
+
+Buttons
+ cmValue1,,,;
+<<'Настройка шаблона печати штрихкодов'
+
+Тип документа.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Поле 0                   Ш   Т   Р   И   Х   К   О   Д
+Поле 1  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Поле 2  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Поле 3  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Поле 4  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Поле 5  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Поле 6  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Поле 7  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Поле 8  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Поле 9  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Поле 10 .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+                               <. Закрыть .>
+>>
+end;
+end;
+
+windowevent winSHK_TunePrint_Nastr ;
+ cminit :{
+        if not CheckLic then {stop; abort; exit;}
+ }
+ cmCheckField: Update current SHK_TunePrint_Nastr;
+ cmpick: {
+   case curfield of
+    #tTypeObjNastr.name: {
+      Update current SHK_TunePrint_Nastr;
+      var _iSHK_TEMPLATES : SHK_TEMPLATES new;
+      var _iSHK_BASE : SHK_BASE new;
+      set _tidkGalTune := _iSHK_TEMPLATES.SelectVIDDOC;
+      set _wTableTune := _iSHK_BASE.getTableCodeByViddoc(_tidkGalTune);
+
+       if getfirst SHK_TunePrint_Nastr <> tsOK then
+        Insert SHK_TunePrint_Nastr set
+           SHK_TunePrint_Nastr.wTable  :=  _wTableTune
+         , SHK_TunePrint_Nastr.tidkGal := _tidkGalTune
+        ;
+
+    }
+   #SHK_TunePrint_Nastr.sfield[1] :  SetsField(SHK_TunePrint_Nastr.sfield[1])
+   #SHK_TunePrint_Nastr.sfield[2] :  SetsField(SHK_TunePrint_Nastr.sfield[2])
+   #SHK_TunePrint_Nastr.sfield[3] :  SetsField(SHK_TunePrint_Nastr.sfield[3])
+   #SHK_TunePrint_Nastr.sfield[4] :  SetsField(SHK_TunePrint_Nastr.sfield[4])
+   #SHK_TunePrint_Nastr.sfield[5] :  SetsField(SHK_TunePrint_Nastr.sfield[5])
+   #SHK_TunePrint_Nastr.sfield[6] :  SetsField(SHK_TunePrint_Nastr.sfield[6])
+   #SHK_TunePrint_Nastr.sfield[7] :  SetsField(SHK_TunePrint_Nastr.sfield[7])
+   #SHK_TunePrint_Nastr.sfield[8] :  SetsField(SHK_TunePrint_Nastr.sfield[8])
+   #SHK_TunePrint_Nastr.sfield[9] :  SetsField(SHK_TunePrint_Nastr.sfield[9])
+   #SHK_TunePrint_Nastr.sfield[10]:  SetsField(SHK_TunePrint_Nastr.sfield[10])
+   end;
+  update current SHK_TunePrint_Nastr;
+  rereadrecord;
+ }
+ cmValue1: {
+   Update current SHK_TunePrint_Nastr;
+  closewindowex(winSHK_TunePrint_Nastr, cmDefault);
+ }
+end;
+
+procedure InsertDescrValue(_sField, _Descr, _value : string);
+{
+ insert tFieldsValue set
+    tFieldsValue.sField := _sField
+  , tFieldsValue.Descr  := _Descr
+  , tFieldsValue.value  := _value
+ ;
+}
+Procedure FillFields(_wTable : word; _fillValue : boolean);
+{
+      if not CheckLic then exit;
+  if getfirst tTypeObj = tsOK {
+    InsertDescrValue('%TypeObj%',  'Тип объекта', tTypeObj.name);
+  }
+
+  delete all tFieldsValue;
+
+
+
+ case _wTable of
+  coKatSopr  :  {
+      if _fillValue
+      if getfirst katsopr <> tsOK then exit;
+
+      InsertDescrValue('%NSOPR%' , 'номер накладной'                , if(_fillValue,katsopr.nsopr,''));
+      InsertDescrValue('%DSOPR%' , 'дата накладной'                 , if(_fillValue,katsopr.DSOPR ,''));
+      InsertDescrValue('%DESCR%' , 'дескриптор к номеру документа'  , if(_fillValue,katsopr.DESCR ,''));
+      InsertDescrValue('%DESGR%' , 'код группы пользователей'       , if(_fillValue,katsopr.DESGR ,''));
+      InsertDescrValue('%NAME%'  , 'наименование накладной'         , if(_fillValue,katsopr.NAME  ,''));
+      InsertDescrValue('%SUMMA%' , 'общая сумма по накладной, в НДЕ', if(_fillValue,katsopr.SUMMA ,''));
+      InsertDescrValue('%DPRICE%', 'дата цен'                       , if(_fillValue,katsopr.DPRICE,''));
+      InsertDescrValue('%NDOVER%', 'номер доверенности'             , if(_fillValue,katsopr.NDOVER,''));
+    }
+  coKatPodr  :  {
+      if _fillValue
+      if getfirst KatPodr <> tsOK then exit;
+
+      InsertDescrValue('%NAME%', 'наименование подразделения' , if(_fillValue,katpodr.NAME,''));
+      InsertDescrValue('%KOD%' , 'код подразделения'          , if(_fillValue,katpodr.KOD,'' ));
+      InsertDescrValue('%ADDR%', 'адрес подразделения'        , if(_fillValue,katpodr.ADDR,''));
+    }
+  coKatMol   :  {
+      if _fillValue
+      if getfirst KatMol <> tsOK then exit;
+
+      InsertDescrValue('%KOD%' , 'код МОЛ'       , if(_fillValue, katmol.KOD  , ''));
+      InsertDescrValue('%NAME%', 'ФИО'           , if(_fillValue, katmol.NAME , ''));
+      InsertDescrValue('%TEL%' , 'телефон, факс' , if(_fillValue, katmol.TEL  , ''));
+
+    }
+  coKatParty :  {
+      if _fillValue
+      if getfirst KatParty <> tsOK then exit;
+
+      InsertDescrValue('%KOD%'      , 'код партии'                          , if(_fillValue, KatParty.KOD      ,'') );
+      InsertDescrValue('%NAME%'     , 'наименование партии'                 , if(_fillValue, KatParty.NAME     ,'') );
+      InsertDescrValue('%NSERTIF%'  , 'номер сертификата'                   , if(_fillValue, KatParty.NSERTIF  ,'') );
+      InsertDescrValue('%DSERTIF%'  , 'дата оконч срока дейст сертификата'  , if(_fillValue, KatParty.DSERTIF  ,'') );
+      InsertDescrValue('%WHOSERTIF%', 'кем выдан сертификат'                , if(_fillValue, KatParty.WHOSERTIF,'') );
+      InsertDescrValue('%NANALIZ%'  , 'номер лаб. анализа'                  , if(_fillValue, KatParty.NANALIZ  ,'') );
+      InsertDescrValue('%DANALIZ%'  , 'дата лаб. анализа'                   , if(_fillValue, KatParty.DANALIZ  ,'') );
+      InsertDescrValue('%DGODN%'    , 'дата ок. срока годн партии или серт.', if(_fillValue, KatParty.DGODN    ,'') );
+      InsertDescrValue('%RNPT%'     , 'Регистрационный номер партии товара' , if(_fillValue, KatParty.RNPT     ,'') );
+
+      InsertDescrValue('%MC_NAME%'     , 'МЦ. Наименование'       , if(_fillValue, MC_KatParty.name     ,'') );
+      InsertDescrValue('%MC_BARKOD%'   , 'МЦ. Баркод'             , if(_fillValue, MC_KatParty.barkod     ,'') );
+      InsertDescrValue('%MC_BARKOD2%'  , 'МЦ. Дополнительный код' , if(_fillValue, MC_KatParty.barkod2     ,'') );
+
+      _loop Attrnam_print where ((coKatParty == Attrnam_print.wTable))
+       {
+        InsertDescrValue('%VA:'+Attrnam_print.Name+'%'  , 'ВА:'+ Attrnam_print.Name, if(_fillValue, PiExtAttr.sGetAttr(coKatParty,KatParty.nrec,Attrnam_print.Name),'') );
+       }
+    }
+  coInvTab   :  {
+      if _fillValue
+      if getfirst InvTab <> tsOK then exit;
+
+      InsertDescrValue('%DINV%'   ,'дата начала инвентаризации'    , if(_fillValue, invTab.DINV  ,'') );
+      InsertDescrValue('%NINV%'   ,'номер инвентаризации'          , if(_fillValue, invTab.NINV  ,'') );
+      InsertDescrValue('%DESCR%'  ,'дескриптор к номеру документа' , if(_fillValue, invTab.DESCR ,'') );
+      InsertDescrValue('%DESGR%'  ,'код группы пользователей'      , if(_fillValue, invTab.DESGR ,'') );
+      InsertDescrValue('%NOPRK%'  ,'номер приказа'                 , if(_fillValue, invTab.NOPRK ,'') );
+      InsertDescrValue('%DATPRK%' ,'дата приказа'                  , if(_fillValue, invTab.DATPRK,'') );
+    }
+  coKatBox   :  {
+      if _fillValue
+      if getfirst KatBox <> tsOK then exit;
+
+      InsertDescrValue('%KOD%'   ,'код элемента'                         , if(_fillValue, KatBox.KOD   ,''));
+      InsertDescrValue('%NAME%'  ,'наименование элемента'                , if(_fillValue, KatBox.NAME  ,''));
+      InsertDescrValue('%SIZEX%' ,'линейные размеры элемента'            , if(_fillValue, KatBox.SIZEX ,''));
+      InsertDescrValue('%SIZEY%' ,'линейные размеры элемента'            , if(_fillValue, KatBox.SIZEY ,''));
+      InsertDescrValue('%SIZEZ%' ,'линейные размеры элемента'            , if(_fillValue, KatBox.SIZEZ ,''));
+      InsertDescrValue('%VIDVOL%' ,'объем,ширина,длина,диаметр и т.п.'   , if(_fillValue, KatBox.VIDVOL,''));
+      InsertDescrValue('%VOLUME%' ,'объем (или пл) эл-та (в м3  или м2)' , if(_fillValue, KatBox.VOLUME,''));
+      InsertDescrValue('%COUNT%' ,'максимальное кол-во МЦ'               , if(_fillValue, KatBox.COUNT ,''));
+      InsertDescrValue('%WEIGHT%','максимальный вес МЦ, помещ. в ячейку' , if(_fillValue, KatBox.WEIGHT,''));
+
+      if getfirst MC_KatBox = tsOK {}
+      InsertDescrValue('%MC_NAME%'    ,'МЦ:наименование товара'                  , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.NAME      ,''));
+      InsertDescrValue('%MC_OBOZN%'   ,'МЦ:Конструкторское обозначение'          , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.OBOZN     ,''));
+      InsertDescrValue('%MC_BARKOD%'  ,'МЦ:бар-код'                              , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.BARKOD    ,''));
+      InsertDescrValue('%MC_BARKOD2%' ,'МЦ:дополнительный бар-код'               , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.BARKOD2   ,''));
+      InsertDescrValue('%MC_REMMC%'   ,'МЦ:примечание'                           , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.REMMC     ,''));
+      InsertDescrValue('%MC_TNVED%'   ,'МЦ:код внешнеэкономической деятельности' , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.TNVED     ,''));
+      InsertDescrValue('%MC_MASSA%'   ,'МЦ:масса нетто'                          , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.MASSA     ,''));
+      InsertDescrValue('%MC_MTARA%'  ,'МЦ:масса брутто'                          , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.MTARA     ,''));
+      InsertDescrValue('%MC_SIZEX%'  ,'МЦ:линейные координаты (в метрах)'        , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.SIZEX     ,''));
+      InsertDescrValue('%MC_SIZEY%'  ,'МЦ:линейные координаты (в метрах)'        , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.SIZEY     ,''));
+      InsertDescrValue('%MC_SIZEZ%'  ,'МЦ:линейные координаты (в метрах)'        , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.SIZEZ     ,''));
+      InsertDescrValue('%MC_VOLUME%'  ,'МЦ:объем (в м3)'                         , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.VOLUME    ,''));
+      InsertDescrValue('%MC_ZAPASMIN%'  ,'МЦ:нормативный запас минимальный'      , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.ZAPASMIN  ,''));
+      InsertDescrValue('%MC_ZAPASMAX%'  ,'МЦ:нормативный запас максимальный'     , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.ZAPASMAX  ,''));
+      InsertDescrValue('%MC_OKDP%'     ,'МЦ:код ОКДП'                            , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.OKDP      ,''));
+      InsertDescrValue('%MC_GOST%'     ,'МЦ:ГОСТ'                                , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.GOST      ,''));
+      InsertDescrValue('%MC_OKVED%'    ,'МЦ:Код ОКВЭД'                           , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.OKVED     ,''));
+
+      if getfirst Podr_KatBox = tsOK {}
+      InsertDescrValue('%PODR_NAME%', 'Подразделение: наименование' , if(_fillValue and isvalidall(tnPodr_KatBox),Podr_KatBox.NAME,''));
+      InsertDescrValue('%PODR_KOD%' , 'Подразделение: код'          , if(_fillValue and isvalidall(tnPodr_KatBox),Podr_KatBox.KOD,'' ));
+      InsertDescrValue('%PODR_ADDR%', 'Подразделение: адрес'        , if(_fillValue and isvalidall(tnPodr_KatBox),Podr_KatBox.ADDR,''));
+    }
+
+  coKatMc    :  {
+      if _fillValue
+      if getfirst KatMc <> tsOK then exit;
+
+      InsertDescrValue('%NAME%'    ,'наименование товара'                  , if(_fillValue, KatMc.NAME      ,''));
+      InsertDescrValue('%OBOZN%'   ,'Конструкторское обозначение'          , if(_fillValue, KatMc.OBOZN     ,''));
+      InsertDescrValue('%BARKOD%'  ,'бар-код'                              , if(_fillValue, KatMc.BARKOD    ,''));
+      InsertDescrValue('%BARKOD2%' ,'дополнительный бар-код'               , if(_fillValue, KatMc.BARKOD2   ,''));
+      InsertDescrValue('%REMMC%'   ,'примечание'                           , if(_fillValue, KatMc.REMMC     ,''));
+      InsertDescrValue('%TNVED%'   ,'код внешнеэкономической деятельности' , if(_fillValue, KatMc.TNVED     ,''));
+      InsertDescrValue('%MASSA%'   ,'масса нетто'                          , if(_fillValue, KatMc.MASSA     ,''));
+      InsertDescrValue('%MTARA%'  ,'масса брутто'                          , if(_fillValue, KatMc.MTARA     ,''));
+      InsertDescrValue('%SIZEX%'  ,'линейные координаты (в метрах)'        , if(_fillValue, KatMc.SIZEX     ,''));
+      InsertDescrValue('%SIZEY%'  ,'линейные координаты (в метрах)'        , if(_fillValue, KatMc.SIZEY     ,''));
+      InsertDescrValue('%SIZEZ%'  ,'линейные координаты (в метрах)'        , if(_fillValue, KatMc.SIZEZ     ,''));
+      InsertDescrValue('%VOLUME%'  ,'объем (в м3)'                         , if(_fillValue, KatMc.VOLUME    ,''));
+      InsertDescrValue('%ZAPASMIN%'  ,'нормативный запас минимальный'      , if(_fillValue, KatMc.ZAPASMIN  ,''));
+      InsertDescrValue('%ZAPASMAX%'  ,'нормативный запас максимальный'     , if(_fillValue, KatMc.ZAPASMAX  ,''));
+      InsertDescrValue('%OKDP%'     ,'код ОКДП'                            , if(_fillValue, KatMc.OKDP      ,''));
+      InsertDescrValue('%GOST%'     ,'ГОСТ'                                , if(_fillValue, KatMc.GOST      ,''));
+      InsertDescrValue('%OKVED%'    ,'Код ОКВЭД'                           , if(_fillValue, KatMc.OKVED     ,''));
+    }
+ end;
+}
+
+function GetValueBysField(_sField : string) : string;
+{
+ FillFields(SHK_TunePrint.wTable, true);
+
+  _loop tFieldsValue
+   {
+    _sField := replace(_sField,tFieldsValue.sField,tFieldsValue.value)
+   }
+  result := _sField;
+}
+
+function getfield(_npp : byte): string;
+{
+  var iShk_base : Shk_base;
+  iShk_base.filltTypeObj;
+
+  result := '';
+  if getfirst SHK_TunePrint <> tsOK then exit;
+
+  case _npp of
+    1 : result := GetValueBysField(SHK_TunePrint.sField[1])
+    2 : result := GetValueBysField(SHK_TunePrint.sField[2])
+    3 : result := GetValueBysField(SHK_TunePrint.sField[3])
+    4 : result := GetValueBysField(SHK_TunePrint.sField[4])
+    5 : result := GetValueBysField(SHK_TunePrint.sField[5])
+    6 : result := GetValueBysField(SHK_TunePrint.sField[6])
+    7 : result := GetValueBysField(SHK_TunePrint.sField[7])
+    8 : result := GetValueBysField(SHK_TunePrint.sField[8])
+    9 : result := GetValueBysField(SHK_TunePrint.sField[9])
+    10: result := GetValueBysField(SHK_TunePrint.sField[10])
+   else result := '??'
+  end;
+}
+
+Procedure TunePrint(_wtable, _tidkGal : word);
+{
+    if not CheckLic then exit;
+  var iShk_base : Shk_base;
+  iShk_base.filltTypeObj;
+
+set  _wTableTune := _wtable;
+set _tidkGalTune := _tidkGal;
+
+ if getfirst SHK_TunePrint_Nastr <> tsOK then
+  Insert SHK_TunePrint_Nastr set
+     SHK_TunePrint_Nastr.wTable  :=  _wTableTune
+   , SHK_TunePrint_Nastr.tidkGal := _tidkGalTune
+  ;
+
+  RunwindowModal(winSHK_TunePrint_Nastr)
+//   надо таблицу с натсроками печати по каждому типу оъектов
+//   _wtable, _tidkGal
+}
+dataStream dsPrintShk(
+    [Date_Rep] Cur_Date;
+    [User_Name] UserName;
+      Table tForPrint
+       (
+        [sBARCODE] shk_barcodeLink.barcode;
+        [sField1]  getfield(1);
+        [sField2]  getfield(2);
+        [sField3]  getfield(3);
+        [sField4]  getfield(4);
+        [sField5]  getfield(5);
+        [sField6]  getfield(6);
+        [sField7]  getfield(7);
+        [sField8]  getfield(8);
+        [sField9]  getfield(9);
+        [sField10] getfield(10);
+
+       );
+
+    )
+
+    HandleEvent
+    cmPreProcess :
+    {
+      StartNewVisual(vtRotateVisual, vfTimer, 'Выполняется формирование отчета...', 0);
+    }
+    cmPostProcess : StopVisual('',0);
+    end; //HandleEvent DataStream
+
+ end;
+
+Procedure PrintBycRec(_wtable, _tidkGal : word; _cRec : comp; _type : byte = 0; _nameFR : string = '' );
+{
+      if not CheckLic then exit;
+  delete all tForPrint;
+ if getfirst fastfirstrow shk_barcodeLink where (( _wTable == shk_barcodeLink.wTable
+                                              and    _cRec == shk_barcodeLink.cRec
+                                              and _tidkGal == shk_barcodeLink.tidkGal (Noindex)
+                                              and    _type == shk_barcodeLink.type    (Noindex)
+                                                )) <> tsok then exit;
+ insert tForPrint set cBarcodeLink := shk_barcodeLink.nrec;
+ RunFReport(dsPrintShk, _nameFR, true)
+}
+
+Procedure inserttForSelectObjects(_shk_barcodeLinknrec: comp; _Kol : word ); //  считаем, что это документ
+{
+ insert tForSelectObjects set
+    tForSelectObjects.cBarCodeLink := _shk_barcodeLinknrec
+  , tForSelectObjects.Kol          := _kol
+ ;
+}
+
+Procedure inserttForPrintNraz(_shk_barcodeLinknrec: comp; _Kol : word ); //  считаем, что это документ
+{
+  mylog('inserttForPrintNraz _shk_barcodeLinknrec = '+_shk_barcodeLinknrec+' _Kol= ' +_Kol ); //  считаем, что это документ')
+ insert tForPrint set tForPrint.cBarcodeLink := _shk_barcodeLinknrec;
+ if _Kol <= 1 then exit;
+ var _i : word;
+  for(_i := 1; _i < _Kol; _i++) {
+    insert tForPrint set tForPrint.cBarcodeLink := _shk_barcodeLinknrec;
+    mylog('inserttForPrintNraz for(_i := 1; _i < _Kol; _i++) '+_shk_barcodeLinknrec); //  считаем, что это документ')
+   }
+
+}
+
+Procedure PrintByBarCode(_barcode : string; _type : byte = 0; _nameFR : string = '');
+{
+    if not CheckLic then exit;
+ delete all tForPrint;
+ if getfirst fastfirstrow shk_barcodeLink where ((_type    == shk_barcodeLink.type
+                                              and _barcode == shk_barcodeLink.barcode (Length = 250)
+                                                )) <> tsok then exit;
+
+        insert tForPrint set tForPrint.cBarcodeLink := shk_barcodeLink.nrec;
+
+ RunFReport(dsPrintShk, _nameFR, true)
+}
+
+Procedure PrintByMarkerBarcodeLink(_MakerName : string; _TpTunePrintGen : TpTunePrintGen;_nameFR : string = '' );
+{
+    if not CheckLic then exit;
+ StartNewVisual(vtRotateVisual,vfBreak+vftimer,''#3'Обработка маркера ШК'#13#3,0) ;
+ delete all tForPrint;
+ delete all tForSelectObjects;
+ var iShk_base : Shk_base;
+ iShk_base.filltTypeObj;
+   var _tmpMarker : tpTr = InitMarker( _MakerName, 8, 100, 10 );
+   var mrkCnt : longint = GetMarkerCount( _tmpMarker );
+//message('PrintByMarkerBarcodeLink mrkCnt = '+mrkCnt);
+   var _i : longint = 0;
+
+   For (_i := 0; _i < mrkCnt; _i++) {
+     var _cRec : comp = 0h;
+     if GetMarker( _tmpMarker, _i, _cRec )
+       if getfirst fastfirstrow shk_barcodeLink where ((_crec == shk_barcodeLink.nrec)) <> tsok then continue;
+          mylog('PrintByMarkerBarcodeLink ' + shk_barcodeLink.tidkgal);
+          mylog('KolMC    ='+ _TpTunePrintGen.KolMC);
+          mylog('kolPodr  ='+ _TpTunePrintGen.kolPodr);
+          mylog('KolMol   ='+ _TpTunePrintGen.KolMol );
+          mylog('KolParty ='+ _TpTunePrintGen.KolParty);
+          mylog('KolKatBox='+ _TpTunePrintGen.KolKatBox);
+          mylog('KolDoc   ='+ _TpTunePrintGen.KolDoc );
+
+
+        case _TpTunePrintGen.SelectObjectsOnPrint of
+         0: {
+             case shk_barcodeLink.tidkgal of
+               coTypeDocMC      : inserttForPrintNraz(shk_barcodeLink.nrec, _TpTunePrintGen.KolMC);
+               coTypeDocPODR    : inserttForPrintNraz(shk_barcodeLink.nrec, _TpTunePrintGen.kolPodr);
+               coTypeDocMOL     : inserttForPrintNraz(shk_barcodeLink.nrec, _TpTunePrintGen.KolMol );
+               coTypeDocPARTY   : inserttForPrintNraz(shk_barcodeLink.nrec, _TpTunePrintGen.KolParty);
+               coTypeDocBox     : inserttForPrintNraz(shk_barcodeLink.nrec, _TpTunePrintGen.KolKatBox);
+              else                inserttForPrintNraz(shk_barcodeLink.nrec, _TpTunePrintGen.KolDoc ); //  считаем, что это документ
+             end;
+           }
+         1: {
+             case shk_barcodeLink.tidkgal of
+               coTypeDocMC      : inserttForSelectObjects(shk_barcodeLink.nrec, _TpTunePrintGen.KolMC);
+               coTypeDocPODR    : inserttForSelectObjects(shk_barcodeLink.nrec, _TpTunePrintGen.kolPodr);
+               coTypeDocMOL     : inserttForSelectObjects(shk_barcodeLink.nrec, _TpTunePrintGen.KolMol );
+               coTypeDocPARTY   : inserttForSelectObjects(shk_barcodeLink.nrec, _TpTunePrintGen.KolParty);
+               coTypeDocBox     : inserttForSelectObjects(shk_barcodeLink.nrec, _TpTunePrintGen.KolKatBox);
+              else                inserttForSelectObjects(shk_barcodeLink.nrec, _TpTunePrintGen.KolDoc ); //  считаем, что это документ
+             end;
+           }
+       end;
+  }
+  ClearMarker( _tmpMarker ); // зачистим на будущее
+  DoneMarker( _tmpMarker, '');
+  stopvisual;
+
+   if _TpTunePrintGen.SelectObjectsOnPrint = 1
+    then  {
+       if runwindowModal(winSHK_selectObjects) <> cmDefault then exit;
+        if pMarkerBarCode_SelObj.count = 0 then exit;
+
+        var _tmpMarker : tpTr = InitMarker('PrintSeveralBarcodes', 8, 100, 10 );
+         ClearMarker(_tmpMarker);
+        pMarkerBarCode_SelObj.ExportTo(_tmpMarker);
+        pMarkerBarCode_SelObj.UnselectAll;
+
+
+       _loop tForSelectObjects
+        {
+         if not searchMarker(_tmpMarker, tForSelectObjects.nrec,0) then continue;
+         inserttForPrintNraz(tForSelectObjects.cBarCodeLink, tForSelectObjects.Kol);
+        }
+       DoneMarker( _tmpMarker, 'PrintSeveralBarcodes');
+     }
+
+ RunFReport(dsPrintShk, _nameFR, true)
+}
+
+
+end.
+
+
+mnu_shk_barcode_SelectObj Menu {
+ - 'Проставить количество по всем позициям из текущей',cmValue2,'Проставить количество по всем позициям из текущей',,'',,sci1Esc;
+ - 'Приравнять количество ШК к Количеству по позиции документа',cmValue3,'Приравнять количество ШК к Количеству по позиции документа',,'',,sci1Esc;
+}

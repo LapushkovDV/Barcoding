@@ -1,0 +1,36 @@
+#include ExtAttr.vih
+#Component "L_SOPRDOC"
+alter interface AktUsl ( '');
+
+var oExtAttr: iExtAttr;
+
+extendformats scrheader;
+
+window editsopr;
+screen scrheader;
+fields
+  [StampDate] oExtAttr.dGetAttr(coKatSopr, katsopr.nrec, 'Дата штампа'): skip;
+<<
+
+
+
+
+
+
+
+
+
+
+
+ `Дата штампа` .@@@@@@@@@@@
+>>
+end;
+end;
+
+handleevent
+cmInit: {
+  inherited::handleevent(cmInit);
+}
+end;
+
+end.

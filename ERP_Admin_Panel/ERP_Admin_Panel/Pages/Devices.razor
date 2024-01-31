@@ -1,0 +1,51 @@
+﻿@page "/devices"
+@inherits DevicesModel
+@layout BodyLayout
+
+<AuthorizeView>
+    <Authorized>
+        <div class="container-fluid">
+                <div class="mb-2">
+                    <button class="btn btn-primary btn-user btn-block" @onclick="@AddDevice">
+                        <span class="fa fa-plus"></span> Добавить новое устройство
+                    </button>
+                </div>
+
+                @if(Devices == null)
+                {
+                    <p><em>Loading...</em></p>
+                }
+                else
+                {
+                    <Table Items="@Devices" Context="device">
+                        <TableHeader>
+                            <th scope="col" class="text-center">Код устройства</th>
+                            <th scope="col" class="text-center">Описание</th>
+                            <th scope="col" class="text-center">Активный</th>
+                            <th scope="col" class="text-center">Операции</th>
+                        </TableHeader>
+                        <RowTemplate>
+                            <td>@device.DeviceCode</td>
+                            <td>@device.Description</td>
+                            <td scope="row">
+                                <div class="form-check">
+                                    <input class="form-check-input float-none" type="checkbox" checked="@device.IsActive" disabled/>
+                                </div>
+                            </td>
+                            <td scope="row">
+                               <button type="submit" class="btn btn-primary" @onclick="() => EditDevice(device)">
+                                    <span class="fa fa-edit"></span>
+                               </button>
+                               <button type="submit" class="btn btn-red" @onclick="() => RemoveDevice(device)">
+                                    <span class="fa fa-remove"></span>
+                               </button>
+                            </td>
+                        </RowTemplate>
+                    </Table>
+                }
+         </div>
+    </Authorized>
+    <NotAuthorized>
+        <RedirectToLogin/>
+    </NotAuthorized>
+</AuthorizeView>

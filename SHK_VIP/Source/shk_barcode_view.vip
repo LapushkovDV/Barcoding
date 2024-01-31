@@ -1,0 +1,43 @@
+/*************************************************************************************************\
+* Наименование: Ведение телефонного справочника                                                   *
+* Контур/Модуль: Кадры                                                                            *
+* Примечание:                                                                                     *
+*                                                                                                 *
+* Вид работы  |Номер         |Дата    |Исполнитель              |Проект                           *
+* ----------------------------------------------------------------------------------------------- *
+\_0.0_/
+
+-_-
+0_-
+-_0
+0_0
+
+\*************************************************************************************************/
+
+#include shk_barcode_Generate.vih
+
+Interface shk_barcode_view 'Просмотр и создание штрихкодов в системе' (,,sci17EnEsc), EscClose;
+//************************************************************
+Show At (,,120,30);
+//----------------------------------------
+create view
+var ishk_barcode_Generate : shk_barcode_Generate;
+;
+
+//Embedded emReportOstatki 'Просмотр остатков' Interface iReportOstatki.winMain;
+Embedded scremShowBarcodes 'Просмотр и создание штрихкодов в системе' Interface;
+//show at (,17,60,);
+end;
+function CheckLic : boolean; {
+ #BodyfunctionCheckLic
+}
+
+HandleEvent
+cminit:
+{
+ if not CheckLic then {stop ; abort; exit;}
+ ishk_barcode_Generate.InitBounds(0,0);
+ BindEmbeddedInterface(scremShowBarcodes,ishk_barcode_Generate,'winshk_barcodeLink');
+}
+end;
+end.
