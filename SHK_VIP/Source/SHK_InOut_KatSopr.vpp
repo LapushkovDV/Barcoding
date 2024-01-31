@@ -171,7 +171,8 @@ function GenerateJSON_VALUES_KATSOPRONE(_ActionName: string; _pIdent: string; va
  if iRes.getFirst <>  tsOk
   {
 //    HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'ERROR', 'НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = ' + _pIdent);
-    _err := 'НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = ' + _pIdent;
+//    _err := 'НЕ НАЙДЕН ОБЪЕКТ ПО '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = ' + _pIdent;
+    _err := 'По штрихкоду "' + _pIdent +'" не найден объект в Галактика ERP';
     result := 0;
     exit;
   }
