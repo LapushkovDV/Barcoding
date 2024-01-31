@@ -11,3 +11,4 @@ VipInterface SHK_ADMIN_PANEL            licensed (FREE) ;
 VipInterface shk_barcode_view           licensed (FREE) ;
 VipInterface shk_barcode_view_oneObject licensed (FREE) ;
 VipInterface SHK_USB_export_saldobox    licensed (FREE) ;
+VipInterface Shk_MenuDynamic            licensed (FREE) ;
