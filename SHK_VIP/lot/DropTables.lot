@@ -1,7 +1,0 @@
-drop table SHK_TMPLT_OBJ;
-drop table SHK_TMPLT_OBJSP;
-drop table SHK_barcode;
-drop table SHK_barcodeLink;
-drop table SHK_TSD_ARM_USER;
-drop table SHK_TunePrint;
-//drop table barcodeAttribute;

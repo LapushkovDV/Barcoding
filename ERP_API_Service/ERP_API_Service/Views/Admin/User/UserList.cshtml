@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ERP_API_Service.Objects.User>
+
+@{
+    ViewData["Title"] = "UserList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Пользователи</h2>
+<p>
+    <a type="button" class="btn btn-light" href="@Url.Action("UserCreate")">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Логин</th>
+            <th scope="col">Пароль</th>
+            <th scope="col">Админ</th>
+            <th scope="col">Активный</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Login)</td>
+            <td>@Html.DisplayFor(modelItem => item.Password)</td>
+            <td>@Html.DisplayFor(modelItem => item.IsAdmin)</td>
+            <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+            <td><button type="button" class="btn btn-light" style="font-size:15px" onclick="location.href='@Url.Action("UserEdit", new { id = item.Id })'">Изменить</button></td>
+            <td><button type="button" class="btn btn-light" style="font-size:15px" onclick="location.href='@Url.Action("UserDelete", new { id = item.Id })'">Удалить</button></td>
+        </tr>
+        }
+    </tbody>
+</table>
+

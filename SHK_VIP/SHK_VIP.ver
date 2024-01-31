@@ -1,3 +1,0 @@
-#version SHK 9.1.0.13 '#CompTitle'
-  required
-#include GloRequired.ver

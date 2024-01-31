@@ -1,7 +1,0 @@
-#component "SHK"
-
-VipInterface SHK_BASE licensed (FREE) ;
-VipInterface SHK_TEMPLATES         (FREE) ;
-VipInterface SHK_InOut             (FREE) ;
-VipInterface shk_barcode_Print     (FREE) ;
-VipInterface shk_barcode_Generate  (FREE) ;

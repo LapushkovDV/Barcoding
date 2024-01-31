@@ -1,5 +1,0 @@
-alter table SHK_TMPLT_OBJ
-  add (
-   UseBatchLoad   : word "Использовать пакетную загрузку"
-);
-

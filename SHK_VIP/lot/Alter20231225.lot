@@ -1,5 +1,0 @@
-alter table SHK_TMPLT_OBJSP
-  add (
-    isDeleteDoc : boolean "Удалять с ТСД после обработки"
-)
-;

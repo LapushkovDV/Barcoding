@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+@functions {
+public string ShowLoginError()
+{
+    if ((int)ViewData["ShowLoginError"] == 0)
+        return "";
+    else
+        return "Invalid Login or Password";
+}
+}
+
+
+<environment names="Development">
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+</environment>
+
+<div class="content" style="align-items:center;display:flex;justify-content:center; height:100%; width:100%">
+    <form method="post">
+        <div class="form-group">
+            <label for="inputLogin">Login</label>
+            <input name="login" type="text" class="form-control" id="inputLogin" placeholder="Enter Login">
+        </div>
+
+
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+        </div>
+        <div style="color:red; font-size:12px">@ShowLoginError()</div>
+
+        <br />
+        <button type="submit" class="btn btn-primary">Отправить</button>
+
+
+    </form>
+</div>
