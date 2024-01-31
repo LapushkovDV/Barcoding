@@ -1,9 +1,10 @@
-#include MakeMove.vih
 
 #ifndef __SHK_MakeMove_VIH__
 #define __SHK_MakeMove_VIH__
 
-#component "SHK"
+#include MakeMove.vih
+
+#component "C_BARCODE"
 
 ObjInterface SHK_ObjMakeMove;
 

@@ -1,4 +1,5 @@
 /*************************************************************************************************\
+
 * Наименование: Ведение телефонного справочника                                                   *
 * Контур/Модуль: Кадры                                                                            *
 * Примечание:                                                                                     *
@@ -36,7 +37,7 @@ where ((SHKObj.cGroup == SHKObj_UP.nrec
      and (SHKObj_group.nrec <> SHKObj.nrec)
 ))
 
-bounds showBrowse false == SHKObj.ISGROUP
+//bounds showBrowse false == SHKObj.ISGROUP
 
 bounds showTree _cParent == SHKObj.cGroup
 

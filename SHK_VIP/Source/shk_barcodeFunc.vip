@@ -1,4 +1,5 @@
 #include shk_barcodeFunc.vih
+
 //------------------------------------------------------------------------------
 //                                                      (c) корпорация Галактика
 // Галактика 9.1
@@ -59,7 +60,7 @@ var tmp: string; rec: comp;
     }
     if getfirst shk_barcode where ((rec == shk_barcode.nrec)) <> tsOk {}
 
-    tmp := lpadch(shk_barcode.counter, '0', 12);
+    tmp := lpadch(string(shk_barcode.counter,0,0) , '0', 12);
     if (length(tmp) > 12) {
       message('Не удалось создать штрих-код', error);
       exit;
@@ -243,7 +244,7 @@ procedure show_doc(_type: word; _cRec: comp);
   600,101,201,
   501,602,601,
   615           :   iEditDoc.runEditHozDocEx(_type, _cRec);
-  else  { message('Тип объекта "'  +_type+'"  не зарегистрирован в системе', error);
+  else  { message('Тип объекта "'  +string(_type)+'"  не зарегистрирован в системе', error);
         }
   end;
 }

@@ -7,7 +7,8 @@
 #ifndef _shk_barcode_Print_VIH_INCLUDED_
 #define _shk_barcode_Print_VIH_INCLUDED_
 
-#component "SHK"
+#component "C_BARCODE"
+#include shk_barcode_Generate.vih
 
 objInterface objshk_barcode_Print;
 

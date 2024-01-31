@@ -10,6 +10,8 @@
 #ifnDef _SHK_TEMPLATES_INCLUDED_
 #define _SHK_TEMPLATES_INCLUDED_
 #include SHK_BASE.vih
+#component "C_BARCODE"
+
 VipInterface SHK_TEMPLATES(SHK_Base);
 Public:
 #doc

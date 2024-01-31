@@ -1,9 +1,10 @@
 /*************************************************************************************************\
-  Наименование:
-  Контур/Модуль:
-  Примечание:
-  Вид работы  |Номер           |Дата    |Исполнитель              |Проект
-  -----------------------------------------------------------------------------------------------
+*
+*  Наименование:
+*  Контур/Модуль:
+*  Примечание:
+*  Вид работы  |Номер           |Дата    |Исполнитель              |Проект
+*  -----------------------------------------------------------------------------------------------
 \*************************************************************************************************/
 /*
 */
@@ -33,7 +34,7 @@ with index
 //#include SaldoFuncs.vih
 
 //***********************************
-VipInterface Algoritm_shk_barcode_Generate Implements oAlgoritm_Sys;
+VipInterface Algoritm_shk_barcode_Generate Implements oAlgoritm_Sys licensed (FREE);
 //***********************************
 #doc
 Алгоритм для прикрепления файлов
@@ -165,7 +166,7 @@ Function RunInter(wflag: Word; Var pt: TRecAcc): Boolean;
 //  message(_TypeCpNrec +' -> '+ __ShkTidkGal);
   if  Getfirst spFormPl <> tsOK
    or __ShkTidkGal = 0 { //  yу вдруг накосячили и 0 запись появилась
-     message('По данному типу документов "'+pt.TypeCpNrec+'" не настроен шаблон генерации/печати штрихкодов', error);
+     message('По данному типу документов "'+string(pt.TypeCpNrec,0,0)+'" не настроен шаблон генерации/печати штрихкодов', error);
      pt.Binding:=8;
      result := false;
     exit;
@@ -199,7 +200,7 @@ var _TpTunePrintGen : TpTunePrintGen;
       if tmpGenShk.kod = '_GenParty'  then {_TpTunePrintGen.GenParty  := tmpGenShk.isGen; _TpTunePrintGen.KolParty  := tmpGenShk.kol}
     }
 
- _TpTunePrintGen.SelectObjectsOnPrint := FormPl.RESLNGINT[4];
+ _TpTunePrintGen.SelectObjectsOnPrint := word(FormPl.RESLNGINT[4] );
 
 var _markername : string = 'markernameforgeneratebarcodes';
   var ishk_barcode_Generate : shk_barcode_Generate;

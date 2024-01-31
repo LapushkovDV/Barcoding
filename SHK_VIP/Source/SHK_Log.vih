@@ -47,7 +47,7 @@ interface ...
 #ifndef __SHK_LOG_VIH__
 #define __SHK_LOG_VIH__
 
-#component "SHK"
+#component "C_BARCODE"
 
 objInterface SHK_ObjLog;
 
@@ -105,5 +105,5 @@ objInterface SHK_ObjLog;
 
 end;
 
-vipInterface SHK_Log Implements SHK_ObjLog;
+vipInterface SHK_Log Implements SHK_ObjLog #Licensed_Free;
 #endif

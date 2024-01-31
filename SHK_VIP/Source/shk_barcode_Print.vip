@@ -300,7 +300,7 @@ windowEvent winSHK_selectObjects;
           end;
         if _kolfact <> 0 then {
             pMarkerBarCode_SelObj.mark;
-            update current tForSelectObjects set tForSelectObjects.kol := _kolfact;
+            update current tForSelectObjects set tForSelectObjects.kol := word(_kolfact);
           }
        }
 
@@ -422,12 +422,12 @@ Procedure FillFields(_wTable : word; _fillValue : boolean);
       if getfirst katsopr <> tsOK then exit;
 
       InsertDescrValue('%NSOPR%' , 'номер накладной'                , if(_fillValue,katsopr.nsopr,''));
-      InsertDescrValue('%DSOPR%' , 'дата накладной'                 , if(_fillValue,katsopr.DSOPR ,''));
+      InsertDescrValue('%DSOPR%' , 'дата накладной'                 , if(_fillValue,DateToStr(katsopr.DSOPR,'DD/MM/YYYY') ,''));
       InsertDescrValue('%DESCR%' , 'дескриптор к номеру документа'  , if(_fillValue,katsopr.DESCR ,''));
       InsertDescrValue('%DESGR%' , 'код группы пользователей'       , if(_fillValue,katsopr.DESGR ,''));
       InsertDescrValue('%NAME%'  , 'наименование накладной'         , if(_fillValue,katsopr.NAME  ,''));
-      InsertDescrValue('%SUMMA%' , 'общая сумма по накладной, в НДЕ', if(_fillValue,katsopr.SUMMA ,''));
-      InsertDescrValue('%DPRICE%', 'дата цен'                       , if(_fillValue,katsopr.DPRICE,''));
+      InsertDescrValue('%SUMMA%' , 'общая сумма по накладной, в НДЕ', if(_fillValue,string(katsopr.SUMMA,0,2) ,''));
+      InsertDescrValue('%DPRICE%', 'дата цен'                       , if(_fillValue,DateToStr(katsopr.DPRICE,'DD/MM/YYYY'),''));
       InsertDescrValue('%NDOVER%', 'номер доверенности'             , if(_fillValue,katsopr.NDOVER,''));
     }
   coKatPodr  :  {
@@ -454,11 +454,11 @@ Procedure FillFields(_wTable : word; _fillValue : boolean);
       InsertDescrValue('%KOD%'      , 'код партии'                          , if(_fillValue, KatParty.KOD      ,'') );
       InsertDescrValue('%NAME%'     , 'наименование партии'                 , if(_fillValue, KatParty.NAME     ,'') );
       InsertDescrValue('%NSERTIF%'  , 'номер сертификата'                   , if(_fillValue, KatParty.NSERTIF  ,'') );
-      InsertDescrValue('%DSERTIF%'  , 'дата оконч срока дейст сертификата'  , if(_fillValue, KatParty.DSERTIF  ,'') );
+      InsertDescrValue('%DSERTIF%'  , 'дата оконч срока дейст сертификата'  , if(_fillValue, DateToStr(KatParty.DSERTIF,'DD/MM/YYYY')  ,'') );
       InsertDescrValue('%WHOSERTIF%', 'кем выдан сертификат'                , if(_fillValue, KatParty.WHOSERTIF,'') );
       InsertDescrValue('%NANALIZ%'  , 'номер лаб. анализа'                  , if(_fillValue, KatParty.NANALIZ  ,'') );
-      InsertDescrValue('%DANALIZ%'  , 'дата лаб. анализа'                   , if(_fillValue, KatParty.DANALIZ  ,'') );
-      InsertDescrValue('%DGODN%'    , 'дата ок. срока годн партии или серт.', if(_fillValue, KatParty.DGODN    ,'') );
+      InsertDescrValue('%DANALIZ%'  , 'дата лаб. анализа'                   , if(_fillValue, DateToStr(KatParty.DANALIZ,'DD/MM/YYYY')  ,'') );
+      InsertDescrValue('%DGODN%'    , 'дата ок. срока годн партии или серт.', if(_fillValue, DateToStr(KatParty.DGODN,'DD/MM/YYYY')    ,'') );
       InsertDescrValue('%RNPT%'     , 'Регистрационный номер партии товара' , if(_fillValue, KatParty.RNPT     ,'') );
 
       InsertDescrValue('%MC_NAME%'     , 'МЦ. Наименование'       , if(_fillValue, MC_KatParty.name     ,'') );
@@ -474,12 +474,12 @@ Procedure FillFields(_wTable : word; _fillValue : boolean);
       if _fillValue
       if getfirst InvTab <> tsOK then exit;
 
-      InsertDescrValue('%DINV%'   ,'дата начала инвентаризации'    , if(_fillValue, invTab.DINV  ,'') );
+      InsertDescrValue('%DINV%'   ,'дата начала инвентаризации'    , if(_fillValue, DateToStr(invTab.DINV,'DD/MM/YYYY')  ,'') );
       InsertDescrValue('%NINV%'   ,'номер инвентаризации'          , if(_fillValue, invTab.NINV  ,'') );
       InsertDescrValue('%DESCR%'  ,'дескриптор к номеру документа' , if(_fillValue, invTab.DESCR ,'') );
       InsertDescrValue('%DESGR%'  ,'код группы пользователей'      , if(_fillValue, invTab.DESGR ,'') );
       InsertDescrValue('%NOPRK%'  ,'номер приказа'                 , if(_fillValue, invTab.NOPRK ,'') );
-      InsertDescrValue('%DATPRK%' ,'дата приказа'                  , if(_fillValue, invTab.DATPRK,'') );
+      InsertDescrValue('%DATPRK%' ,'дата приказа'                  , if(_fillValue, DateToStr(invTab.DATPRK,'DD/MM/YYYY'),'') );
     }
   coKatBox   :  {
       if _fillValue
@@ -487,13 +487,13 @@ Procedure FillFields(_wTable : word; _fillValue : boolean);
 
       InsertDescrValue('%KOD%'   ,'код элемента'                         , if(_fillValue, KatBox.KOD   ,''));
       InsertDescrValue('%NAME%'  ,'наименование элемента'                , if(_fillValue, KatBox.NAME  ,''));
-      InsertDescrValue('%SIZEX%' ,'линейные размеры элемента'            , if(_fillValue, KatBox.SIZEX ,''));
-      InsertDescrValue('%SIZEY%' ,'линейные размеры элемента'            , if(_fillValue, KatBox.SIZEY ,''));
-      InsertDescrValue('%SIZEZ%' ,'линейные размеры элемента'            , if(_fillValue, KatBox.SIZEZ ,''));
-      InsertDescrValue('%VIDVOL%' ,'объем,ширина,длина,диаметр и т.п.'   , if(_fillValue, KatBox.VIDVOL,''));
-      InsertDescrValue('%VOLUME%' ,'объем (или пл) эл-та (в м3  или м2)' , if(_fillValue, KatBox.VOLUME,''));
-      InsertDescrValue('%COUNT%' ,'максимальное кол-во МЦ'               , if(_fillValue, KatBox.COUNT ,''));
-      InsertDescrValue('%WEIGHT%','максимальный вес МЦ, помещ. в ячейку' , if(_fillValue, KatBox.WEIGHT,''));
+      InsertDescrValue('%SIZEX%' ,'линейные размеры элемента'            , if(_fillValue, string(KatBox.SIZEX) ,''));
+      InsertDescrValue('%SIZEY%' ,'линейные размеры элемента'            , if(_fillValue, string(KatBox.SIZEY) ,''));
+      InsertDescrValue('%SIZEZ%' ,'линейные размеры элемента'            , if(_fillValue, string(KatBox.SIZEZ) ,''));
+      InsertDescrValue('%VIDVOL%' ,'объем,ширина,длина,диаметр и т.п.'   , if(_fillValue, string(KatBox.VIDVOL),''));
+      InsertDescrValue('%VOLUME%' ,'объем (или пл) эл-та (в м3  или м2)' , if(_fillValue, string(KatBox.VOLUME),''));
+      InsertDescrValue('%COUNT%' ,'максимальное кол-во МЦ'               , if(_fillValue, string(KatBox.COUNT) ,''));
+      InsertDescrValue('%WEIGHT%','максимальный вес МЦ, помещ. в ячейку' , if(_fillValue, string(KatBox.WEIGHT),''));
 
       if getfirst MC_KatBox = tsOK {}
       InsertDescrValue('%MC_NAME%'    ,'МЦ:наименование товара'                  , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.NAME      ,''));
@@ -502,14 +502,14 @@ Procedure FillFields(_wTable : word; _fillValue : boolean);
       InsertDescrValue('%MC_BARKOD2%' ,'МЦ:дополнительный бар-код'               , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.BARKOD2   ,''));
       InsertDescrValue('%MC_REMMC%'   ,'МЦ:примечание'                           , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.REMMC     ,''));
       InsertDescrValue('%MC_TNVED%'   ,'МЦ:код внешнеэкономической деятельности' , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.TNVED     ,''));
-      InsertDescrValue('%MC_MASSA%'   ,'МЦ:масса нетто'                          , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.MASSA     ,''));
-      InsertDescrValue('%MC_MTARA%'  ,'МЦ:масса брутто'                          , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.MTARA     ,''));
-      InsertDescrValue('%MC_SIZEX%'  ,'МЦ:линейные координаты (в метрах)'        , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.SIZEX     ,''));
-      InsertDescrValue('%MC_SIZEY%'  ,'МЦ:линейные координаты (в метрах)'        , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.SIZEY     ,''));
-      InsertDescrValue('%MC_SIZEZ%'  ,'МЦ:линейные координаты (в метрах)'        , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.SIZEZ     ,''));
-      InsertDescrValue('%MC_VOLUME%'  ,'МЦ:объем (в м3)'                         , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.VOLUME    ,''));
-      InsertDescrValue('%MC_ZAPASMIN%'  ,'МЦ:нормативный запас минимальный'      , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.ZAPASMIN  ,''));
-      InsertDescrValue('%MC_ZAPASMAX%'  ,'МЦ:нормативный запас максимальный'     , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.ZAPASMAX  ,''));
+      InsertDescrValue('%MC_MASSA%'   ,'МЦ:масса нетто'                          , if(_fillValue and isvalidall(tnMC_KatBox), string(MC_KatBox.MASSA)     ,''));
+      InsertDescrValue('%MC_MTARA%'  ,'МЦ:масса брутто'                          , if(_fillValue and isvalidall(tnMC_KatBox), string(MC_KatBox.MTARA)     ,''));
+      InsertDescrValue('%MC_SIZEX%'  ,'МЦ:линейные координаты (в метрах)'        , if(_fillValue and isvalidall(tnMC_KatBox), string(MC_KatBox.SIZEX)     ,''));
+      InsertDescrValue('%MC_SIZEY%'  ,'МЦ:линейные координаты (в метрах)'        , if(_fillValue and isvalidall(tnMC_KatBox), string(MC_KatBox.SIZEY) ,''));
+      InsertDescrValue('%MC_SIZEZ%'  ,'МЦ:линейные координаты (в метрах)'        , if(_fillValue and isvalidall(tnMC_KatBox), string(MC_KatBox.SIZEZ) ,''));
+      InsertDescrValue('%MC_VOLUME%'  ,'МЦ:объем (в м3)'                         , if(_fillValue and isvalidall(tnMC_KatBox), string(MC_KatBox.VOLUME),''));
+      InsertDescrValue('%MC_ZAPASMIN%'  ,'МЦ:нормативный запас минимальный'      , if(_fillValue and isvalidall(tnMC_KatBox), string(MC_KatBox.ZAPASMIN)  ,''));
+      InsertDescrValue('%MC_ZAPASMAX%'  ,'МЦ:нормативный запас максимальный'     , if(_fillValue and isvalidall(tnMC_KatBox), string(MC_KatBox.ZAPASMAX)  ,''));
       InsertDescrValue('%MC_OKDP%'     ,'МЦ:код ОКДП'                            , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.OKDP      ,''));
       InsertDescrValue('%MC_GOST%'     ,'МЦ:ГОСТ'                                , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.GOST      ,''));
       InsertDescrValue('%MC_OKVED%'    ,'МЦ:Код ОКВЭД'                           , if(_fillValue and isvalidall(tnMC_KatBox), MC_KatBox.OKVED     ,''));
@@ -530,14 +530,14 @@ Procedure FillFields(_wTable : word; _fillValue : boolean);
       InsertDescrValue('%BARKOD2%' ,'дополнительный бар-код'               , if(_fillValue, KatMc.BARKOD2   ,''));
       InsertDescrValue('%REMMC%'   ,'примечание'                           , if(_fillValue, KatMc.REMMC     ,''));
       InsertDescrValue('%TNVED%'   ,'код внешнеэкономической деятельности' , if(_fillValue, KatMc.TNVED     ,''));
-      InsertDescrValue('%MASSA%'   ,'масса нетто'                          , if(_fillValue, KatMc.MASSA     ,''));
-      InsertDescrValue('%MTARA%'  ,'масса брутто'                          , if(_fillValue, KatMc.MTARA     ,''));
-      InsertDescrValue('%SIZEX%'  ,'линейные координаты (в метрах)'        , if(_fillValue, KatMc.SIZEX     ,''));
-      InsertDescrValue('%SIZEY%'  ,'линейные координаты (в метрах)'        , if(_fillValue, KatMc.SIZEY     ,''));
-      InsertDescrValue('%SIZEZ%'  ,'линейные координаты (в метрах)'        , if(_fillValue, KatMc.SIZEZ     ,''));
-      InsertDescrValue('%VOLUME%'  ,'объем (в м3)'                         , if(_fillValue, KatMc.VOLUME    ,''));
-      InsertDescrValue('%ZAPASMIN%'  ,'нормативный запас минимальный'      , if(_fillValue, KatMc.ZAPASMIN  ,''));
-      InsertDescrValue('%ZAPASMAX%'  ,'нормативный запас максимальный'     , if(_fillValue, KatMc.ZAPASMAX  ,''));
+      InsertDescrValue('%MASSA%'   ,'масса нетто'                          , if(_fillValue, string(KatMc.MASSA)     ,''));
+      InsertDescrValue('%MTARA%'  ,'масса брутто'                          , if(_fillValue, string(KatMc.MTARA)     ,''));
+      InsertDescrValue('%SIZEX%'  ,'линейные координаты (в метрах)'        , if(_fillValue, string(KatMc.SIZEX)     ,''));
+      InsertDescrValue('%SIZEY%'  ,'линейные координаты (в метрах)'        , if(_fillValue, string(KatMc.SIZEY)     ,''));
+      InsertDescrValue('%SIZEZ%'  ,'линейные координаты (в метрах)'        , if(_fillValue, string(KatMc.SIZEZ)     ,''));
+      InsertDescrValue('%VOLUME%'  ,'объем (в м3)'                         , if(_fillValue, string(KatMc.VOLUME)    ,''));
+      InsertDescrValue('%ZAPASMIN%'  ,'нормативный запас минимальный'      , if(_fillValue, string(KatMc.ZAPASMIN)  ,''));
+      InsertDescrValue('%ZAPASMAX%'  ,'нормативный запас максимальный'     , if(_fillValue, string(KatMc.ZAPASMAX)  ,''));
       InsertDescrValue('%OKDP%'     ,'код ОКДП'                            , if(_fillValue, KatMc.OKDP      ,''));
       InsertDescrValue('%GOST%'     ,'ГОСТ'                                , if(_fillValue, KatMc.GOST      ,''));
       InsertDescrValue('%OKVED%'    ,'Код ОКВЭД'                           , if(_fillValue, KatMc.OKVED     ,''));
@@ -652,13 +652,13 @@ Procedure inserttForSelectObjects(_shk_barcodeLinknrec: comp; _Kol : word ); // 
 
 Procedure inserttForPrintNraz(_shk_barcodeLinknrec: comp; _Kol : word ); //  считаем, что это документ
 {
-  mylog('inserttForPrintNraz _shk_barcodeLinknrec = '+_shk_barcodeLinknrec+' _Kol= ' +_Kol ); //  считаем, что это документ')
+  mylog('inserttForPrintNraz _shk_barcodeLinknrec = '+string(_shk_barcodeLinknrec,0,0)+' _Kol= ' +string(_Kol,0,5) ); //  считаем, что это документ')
  insert tForPrint set tForPrint.cBarcodeLink := _shk_barcodeLinknrec;
  if _Kol <= 1 then exit;
  var _i : word;
   for(_i := 1; _i < _Kol; _i++) {
     insert tForPrint set tForPrint.cBarcodeLink := _shk_barcodeLinknrec;
-    mylog('inserttForPrintNraz for(_i := 1; _i < _Kol; _i++) '+_shk_barcodeLinknrec); //  считаем, что это документ')
+    mylog('inserttForPrintNraz for(_i := 1; _i < _Kol; _i++) '+string(_shk_barcodeLinknrec,0,0) ); //  считаем, что это документ')
    }
 
 }
@@ -693,13 +693,13 @@ Procedure PrintByMarkerBarcodeLink(_MakerName : string; _TpTunePrintGen : TpTune
      var _cRec : comp = 0h;
      if GetMarker( _tmpMarker, _i, _cRec )
        if getfirst fastfirstrow shk_barcodeLink where ((_crec == shk_barcodeLink.nrec)) <> tsok then continue;
-          mylog('PrintByMarkerBarcodeLink ' + shk_barcodeLink.tidkgal);
-          mylog('KolMC    ='+ _TpTunePrintGen.KolMC);
-          mylog('kolPodr  ='+ _TpTunePrintGen.kolPodr);
-          mylog('KolMol   ='+ _TpTunePrintGen.KolMol );
-          mylog('KolParty ='+ _TpTunePrintGen.KolParty);
-          mylog('KolKatBox='+ _TpTunePrintGen.KolKatBox);
-          mylog('KolDoc   ='+ _TpTunePrintGen.KolDoc );
+          mylog('PrintByMarkerBarcodeLink ' + string(shk_barcodeLink.tidkgal) );
+          mylog('KolMC    ='+ string(_TpTunePrintGen.KolMC) );
+          mylog('kolPodr  ='+ string(_TpTunePrintGen.kolPodr) );
+          mylog('KolMol   ='+ string(_TpTunePrintGen.KolMol ) );
+          mylog('KolParty ='+ string(_TpTunePrintGen.KolParty) );
+          mylog('KolKatBox='+ string(_TpTunePrintGen.KolKatBox) );
+          mylog('KolDoc   ='+ string(_TpTunePrintGen.KolDoc ) );
 
 
         case _TpTunePrintGen.SelectObjectsOnPrint of

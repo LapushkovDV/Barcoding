@@ -16,7 +16,6 @@
 #include GetUsers.vih
 #include SHK_BASE.vih
 #include SHK_InOut.vih
-
 Interface SHK_ADMIN_PANEL 'Интерфейс администратора ШК' (,,sci178Esc), EscClose;
 //************************************************************
 
@@ -68,10 +67,10 @@ end; // end tabbed
 Screen scrSHK_ADMIN_PANEL ;
 Show At (,21,,);
 buttons
-  cmValue1,,,'Выгрузить справочники',,;
-  cmValue2,,,'Выгрузить меню',,;
-  cmValue3,,,'Выгрузить пользователей',,;
-  cmValue4,,,'Выгрузить документы',,;
+  cmValue1,[singleLine],,,'Выгрузить справочники',,;
+  cmValue2,[singleLine],,,'Выгрузить меню',,;
+  cmValue3,[singleLine],,,'Выгрузить пользователей',,;
+  cmValue4,[singleLine],,,'Выгрузить документы',,;
 <<
 <. Выгрузить справочники .>    <.  Выгрузить меню   .>
 <.Выгрузить пользователей.>    <.Выгрузить документы.>

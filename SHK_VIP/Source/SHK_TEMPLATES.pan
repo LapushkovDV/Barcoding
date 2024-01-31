@@ -1,4 +1,4 @@
-#declare tableeventtable(table)
+#declare tableeventtable (table)
 TableEvent table #table;
 cmSetDefault: {
   #table.WISACTIVE   := 1;
@@ -39,7 +39,7 @@ cmcheckfield: {
 end; //TableEvent table #table
 #end
 
-#declare colorneed(FldCondition)
+#declare colorneed (FldCondition)
 {Font={BackColor=if(#FldCondition,ColorNeed,0)}}
 #end
 window wintActions 'Выбор действия', cyan;
@@ -104,11 +104,11 @@ cmSetDefault:{
               {
                 //var _npp : word =0;
                 mylog('===================');
-                mylog('SHKObj.nrec           ' + SHKObj.nrec);
-                mylog('coVIDFIELD_AlloStatus ' + coVIDFIELD_AlloStatus);
-                mylog('string(SHKObj.nrec)   ' + string(_cNote));
-                mylog('string(SHKObj.nrec)   ' + string(_cNote));
-                mylog('_cNote                ' + _cNote);
+                mylog('SHKObj.nrec           ' + string(SHKObj.nrec,0,0) );
+                mylog('coVIDFIELD_AlloStatus ' + string(coVIDFIELD_AlloStatus) );
+                //mylog('string(SHKObj.nrec)   ' + string(_cNote,0,0) );
+                //mylog('string(SHKObj.nrec)   ' + string(_cNote,0,0) );
+                mylog('_cNote                ' + string(_cNote,0,0) );
                  insert SHKObjSP_AllowStatus set
                     SHKObjSP_AllowStatus.cSHK_TMPLT_OBJ := SHKObj.nrec
                   , SHKObjSP_AllowStatus.VIDFIELD       := coVIDFIELD_AlloStatus
@@ -271,7 +271,7 @@ buttons
  `Код` .@@@@@@@ `Наименование`.@@@@@@@@@@@@@@@@@@@@@@@`Идентификатор OBJECTACTION`.@@@@@@@@@@@@@@@@@@@@@@@@@@@  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
  `Тип документа` .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`Поле идентификации объекта`.@@@@@@@@@@@@@@.@@@@@@@@@@@@@@ [:] - использовать системный ШК     `
  `Описание` .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ [:] - использовать пакетную выгрузку`
- `Использовать в настройках шаблонов` .@@@@@       `Добавлять спецификацию на ТСД`.@@@@                            <.Условия для пакетной выгрузки.>
+ `Использовать в настройках шаблонов` .@@@@@       `Добавлять спецификацию на ТСД`.@@@@                               <.Условия для пакетной выгрузки.>
  `Блокировать позиции после обработки`.@@@@@   `Статусы для редактирования на ТСД`.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
  `Является пунктом меню на ТСД`       .@@@@@     `Наименование пункта меню на ТСД`.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   [.] вести лог по действиям данного шаблона ` `Дата последней пакетной выгрузки` .@@@@@@@@@@@  `После пакетной выгрузки изменить статус на` .@@@@@@@@@@@@@@@@   <.TEST EXPORT JSON.>
@@ -353,7 +353,7 @@ Browse brSHKObjSP_SP;
 Table SHKObjSP_SP;
  fixedLeft (SHKObjSP_SP.NPP, SHKObjSP_SP.NAME);
 Fields {font = {color= if(SHKObjSP_SP.WISACTIVE = 0,colorsysgray,0)}};
- SHKObjSP_SP.NPP        '№ колонки'              :[2] , NoProtect, nopickbutton    , #colorneed(SHKObjSP_SP.NPP    = 0);
+ SHKObjSP_SP.NPP        '№ колонки'              :[2] , NoProtect, nopickbutton    , #colorneed(word(SHKObjSP_SP.NPP)    = 0);
  SHKObjSP_SP.NAME       'Наименование'           :[10], NoProtect, nopickbutton    , #colorneed(SHKObjSP_SP.NAME   = '');
  SHKObjSP_SP.SYSNAMETBL 'Сист. имя','таблицы/функции' ('Системное имя таблицы или фукнции'):[10], Protect, NoPickButton, NoDel, #colorneed(SHKObjSP_HEAD.Name = '');
  SHKObjSP_SP.SYSNAME    'Сист. имя','поля' :[8] ,  Protect,    pickbutton    , #colorneed(SHKObjSP_SP.SYSNAME= '');
@@ -393,7 +393,7 @@ cmUpdateRecord:
                 insert SHKObjSP_SP set
                   SHKObjSP_SP.cSHK_TMPLT_OBJ := SHKObj.nrec
                 , SHKObjSP_SP.VIDFIELD   := coVIDFIELD_SP
-                , SHKObjSP_SP.npp        := 9999
+                , SHKObjSP_SP.npp        := '9999'
                 , SHKObjSP_SP.NAME       := _SpecFieldIDName
                 , SHKObjSP_SP.SYSNAMETBL := extractdelimitedword(_SpecFieldIDName,1,'_')
                 , SHKObjSP_SP.SYSNAME    := extractdelimitedword(_SpecFieldIDName,2,'_')

@@ -7,7 +7,10 @@
 #ifndef _shk_barcode_Generate_VIH_INCLUDED_
 #define _shk_barcode_Generate_VIH_INCLUDED_
 
-#component "SHK"
+#include SHK_Base.vih
+
+#component "C_BARCODE"
+
 
 objInterface oshk_barcode_Generate;
 

@@ -1,4 +1,5 @@
 /*************************************************************************************************\
+
   Наименование:
   Контур/Модуль:
   Примечание:
@@ -33,7 +34,7 @@ with index
 //#include SaldoFuncs.vih
 
 //***********************************
-VipInterface Algoritm_shk_barcode_SetParam Implements oAlgoritm_Sys;
+VipInterface Algoritm_shk_barcode_SetParam Implements oAlgoritm_Sys #Licensed_Free;
 //***********************************
 #doc
 Алгоритм для прикрепления файлов

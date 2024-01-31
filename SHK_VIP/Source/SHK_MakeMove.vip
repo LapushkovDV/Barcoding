@@ -1,9 +1,9 @@
 /*************************************************************************************************\
-  Наименование:  MakeMove для SHK
-  Контур/Модуль: SHK
-  Примечание:
-  Вид работы  |Номер           |Дата    |Исполнитель              |Проект
-  -----------------------------------------------------------------------------------------------
+*  Наименование:  MakeMove для SHK
+*  Контур/Модуль: SHK
+*  Примечание:
+*  Вид работы  |Номер           |Дата    |Исполнитель              |Проект
+* -----------------------------------------------------------------------------------------------
 \*************************************************************************************************/
 // по мотивам функции для ESB, сделанной на проекте ЭМ.
 // выделена функция ДЛЯ SHK. Любой запрос у пользователя, например "Message",  вешает
@@ -30,19 +30,26 @@
 #include vmMnfCheck.mem
 #include BranchSemaphores.vih
 #include autoplan.vih
-//#include GP_ControlSaldoSpSopr.vih
+#include MakeOrder.vih
+#include modifOrd.vih
 #include BoxFuncsFunctions.vih
 #include MakeOrdAktPer.vih
-
-#component "SHK"
+//component "C_BARCODE"
 
 Interface SHK_MakeMove;
-    var oMakeOrdAktPer: MakeOrdAktPer;
-    var _logSHK_OUT : string= '';
+
+var oMakeOrdAktPer: MakeOrdAktPer;
+var _logSHK_OUT : string= '';
+var pBoxFuncs1   : BoxFuncs;
+//include MakeOrder.var
+//include modifOrd.var
 
 Create view vSpOrder
 var _cSpOrder: comp;
-as select SpOrder.* from SpOrder where (( _cSpOrder == SpOrder.nRec));
+as select
+  SpOrder.*, KatSopr.Nrec
+from SpOrder , KatSopr
+where (( _cSpOrder == SpOrder.nRec));
 // Вызов AnySpOrder_Update по SpOrder.nRec
 Public Function AnySpOrderUpdateSHK(pSpOrder, pNewParty: comp): boolean;
 {
@@ -686,7 +693,7 @@ Public Function MakeMoveForSHK(cKatSopr : comp; wDefine, SkPr, wDel, wDate, wTXO
         else
        */
         {
-          MyLog('Измененено на дату dForm в закрытом периоде.' + dForm);// , Information);
+          MyLog('Измененено на дату dForm в закрытом периоде.' + DateToStr(dForm,'DD/MM/YYYY') );// , Information);
           KatSopr.dSopr := dForm;
         }
       }
@@ -2030,7 +2037,7 @@ set SoprHoz.kodValSp := cTMP1;
                 }
               }
 
-              if (not pBoxFuncs.RaspredSpisSpOrders(dForm, if((wDefine and 32) = 32, FALSE, TRUE), FALSE))
+              if (not pBoxFuncs1.RaspredSpisSpOrders(dForm, if((wDefine and 32) = 32, FALSE, TRUE), FALSE))
                 if (wGetTune('Oper.Box.MakeOrd') = 0)
                 {
                   //ShowTune('Запрещено создание ордеров при невозможности полного распределения по ячейкам хранения!', 'Oper.Box.MakeOrd');

@@ -298,7 +298,7 @@ function GenerateJSON_Description(_pcSHKObj : comp) : TPtr;
 {
     if not CheckLic then exit;
  GenerateNewOutFile;
-  mylog('function GenerateJSON_Description _pcSHKObj = ' + _pcSHKObj);
+  mylog('function GenerateJSON_Description _pcSHKObj = ' + string(_pcSHKObj,0,0) );
    if not BoundActive(tbbySHKObjNrec) then
    {
     set _cSHKObj := _pcSHKObj;
@@ -370,7 +370,7 @@ function GenerateJSON_Description(_pcSHKObj : comp) : TPtr;
      _loop SHKObjSP_SP
       {
        var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
-       HttpConnect_JsonObjectAddInteger(m_service, JSONObj_ArrayOneElement, 'NPP'        , SHKObjSP_SP.NPP      );
+       HttpConnect_JsonObjectAddInteger(m_service, JSONObj_ArrayOneElement, 'NPP'        , word(SHKObjSP_SP.NPP)      );
        HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'NAME'       , SHKObjSP_SP.NAME     );
 //       HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'SYSNAMETBL', SHKObjSP_SP.SYSNAMETBL);
        HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'SYSNAME'    , SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME   );
@@ -397,7 +397,7 @@ function GenerateJSON_Description(_pcSHKObj : comp) : TPtr;
 function GetTypeByTableAndField(_SYSNAMETBL, _SYSNAME : string) : byte;
 {
  result := 0;
- if getfirst x$fields where ((gettableCodebyTableName(_SYSNAMETBL) == x$fields.XE$FILECODE
+ if getfirst x$fields where (( word(gettableCodebyTableName(_SYSNAMETBL)) == x$fields.XE$FILECODE
                                  and _SYSNAME == x$fields.XE$NAME)) = tsOK
     then result := x$fields.XE$DATATYPE;
 }
@@ -496,8 +496,8 @@ function SetMacroValues(_BatchTerms : string;  _BatchDate: date; _BatchDays, _Ba
 
   if _pIdent = co_BatchMode then
    {
-    mylog('_pIdent = '+ _pIdent);
-    mylog('SHKObj.UseBatchLoad = ' + SHKObj.UseBatchLoad) ;
+    mylog('_pIdent = '+ string(_pIdent,0,0) );
+    mylog('SHKObj.UseBatchLoad = ' + string(SHKObj.UseBatchLoad) ) ;
     if SHKObj.UseBatchLoad = 0
      {
        _err := 'Ñãü ÑÄççéÉé éÅöÖäíÄ çÖ èêÖÑìëåéíêÖçÄ èÄäÖíçÄü áÄÉêìáäÄ';

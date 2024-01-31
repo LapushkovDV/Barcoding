@@ -44,7 +44,7 @@ var
  pMarkerBarCodeLink : IMarker(Marker) new;
  as select
    shk_barcodeLink.nrec
-  , _iSHK_BASE.getTableCodeByViddoc(__TidkGal) (Fieldname = __wTable)
+  , _iSHK_BASE.getTableCodeByViddoc(word(__TidkGal) ) (Fieldname = __wTable)
   , getStringObjectDescription(shk_barcodeLink.TidkGal, shk_barcodeLink.crec) (Fieldname = ObjectString)
  from
      shk_barcodeLink
@@ -95,7 +95,7 @@ where ((
   and shk_barcodeLink.tidkGal == tTypeObj.tidkGal
 
 
-  and __TidkGal == tTypeObj_select.tidkGal
+  and word(__TidkGal) == tTypeObj_select.tidkGal
 
             and _vidSoprSelect == KS_SELECT.vidSopr
                         and 0 <<= KS_SELECT.dsopr
@@ -131,11 +131,11 @@ where ((
    and shk_barcodeLink.cARM  == SHK_ARM.nrec
    and shk_barcodeLink.cUser == SHK_USER.nrec
 
-  and  _pTypeTSDARMUSER == SHK_Browse.type
+  and  byte(_pTypeTSDARMUSER) == SHK_Browse.type
 ))
 //, refTable
-bounds bywTable   pTable  == shk_barcodeLink.wTable (NoIndex)
-bounds bytidKGal ptiDkGal == shk_barcodeLink.tiDkGal (NoIndex)
+bounds bywTable   word(pTable)  == shk_barcodeLink.wTable (NoIndex)
+bounds bytidKGal word(ptiDkGal) == shk_barcodeLink.tiDkGal (NoIndex)
   ;
 #include shk_barcode_Generate.pan
 
@@ -329,9 +329,9 @@ Function getStringObjectDescription(__pTidkGal : word; _crec : comp): string; ca
 Function SelectObjects: string;
 {
  result := '';
-  Case __TidkGal of
+  Case word(__TidkGal) of
     600,101,201,
-    501,602,601       : SelectKatSoprs(__TidkGal);
+    501,602,601       : SelectKatSoprs(word(__TidkGal) );
     615               : SelectInvTabs;
     coTypeDocBox      : SelectKatBoxs;
     coTypeDocMC       : selectObjectsFromKau(cgKau_KatMC)
@@ -359,11 +359,11 @@ Procedure InitBounds(_wtable : word = 0; _tidkGal : word = 0);
  popbounds(tbbytidKGal);
  popbounds(tbbywTable);
 
- set  ptable  := _wtable;
- set ptidkGal := _tidkGal;
+ set  ptable  := string(_wtable);
+ set ptidkGal := string(_tidkGal);
 
-  if   ptable <> coNoFiltr_All then addbounds(tbbywTable);
-  if ptiDkGal <> coNoFiltr_All then addbounds(tbbytidKGal);
+  if   word(ptable) <> coNoFiltr_All then addbounds(tbbywTable);
+  if word(ptiDkGal) <> coNoFiltr_All then addbounds(tbbytidKGal);
 
    if getfirst shk_barcodeLink = tsOK then rereadrecord;
 
@@ -401,7 +401,7 @@ Procedure CreateBarcodes(__pwTable, __pTidkGal : word; __pMarkerName : String = 
 Procedure AddNewBarcodes;
 {
  if RunWindowModal(winAddNewBarcodes) = cmDefault {
-   CreateBarcodes(__wTable, __TidkGal, co_MarkerName); // тут создание по маркеру пойдет
+   CreateBarcodes(__wTable, word(__TidkGal), co_MarkerName); // тут создание по маркеру пойдет
   }
 }
 
@@ -409,7 +409,7 @@ handleevent
  cmInit: {
    InitBounds(coNoFiltr_All,coNoFiltr_All);
 //     RunWindowModal(winshk_barcodeLink)
-   closeinterface(-1);
+   closeinterface(cmDone);//-1);
  }
  cmdelonprotect: {
    case curfield of

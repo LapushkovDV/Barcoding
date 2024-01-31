@@ -1,4 +1,4 @@
-#declare windowevent(WindowName, objmarker,ImportFromName)
+#declare windowevent (WindowName, objmarker,ImportFromName)
 WindowEvent #WindowName;
 CmInit: {
    SetWindowTitle(#WindowName,'Выбор '+tTypeObj_select.name);
@@ -103,7 +103,7 @@ windowevent winAddNewBarcodes ;
      var _tmpMarker : tpTr = InitMarker( co_MarkerName, 8, 100, 10 );
      ClearMarker( _tmpMarker );
      DoneMarker( _tmpMarker, co_MarkerName);
-     set __TidkGal   := 0;
+     set __TidkGal   := '0';
      set __SelectedObject := '';
  }
  cmDelOnProtect: {
@@ -117,11 +117,11 @@ windowevent winAddNewBarcodes ;
          stop; abort; exit;
        }
       var _iSHK_TEMPLATES : SHK_TEMPLATES new;
-      set __TidkGal := _iSHK_TEMPLATES.SelectVIDDOC;
+      set __TidkGal := string(_iSHK_TEMPLATES.SelectVIDDOC) ;
     }
     #__SelectedObject: {
 
-        if __wTable = 0 and __TidkGal = 0 then  {
+        if __wTable = 0 and __TidkGal = '0' then  {
            Message('Выберите сначала тип документа', error);
            stop; abort; exit;
          }
