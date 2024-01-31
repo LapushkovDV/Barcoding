@@ -1,0 +1,132 @@
+//------------------------------------------------------------------------------
+//                                                      (c) Корпорация Галактика
+// Галактика ERP 9.1
+// Проектный файл сборки компонента
+//------------------------------------------------------------------------------
+
+#statusline "statgal"
+
+#include GalNet.inc end;
+#include GloVars.inc
+
+#define CompTitle Штрихкодирование
+#doc
+  #CompTitle
+#end
+
+#include C_Barcode.ver
+#include C_Barcode.vil
+
+#include ValFunc.Vih
+#include MTRFuncs.vih
+//--------------------
+#include oEdIzm.var        // fEdIzm - объект для работы с единицами измерения
+#include ValFunc.Var
+#include TMnPlan.vih
+#include OBJINTPL.VIN
+
+
+
+
+//#include Tabmem.tbl
+//#include TMnPlan.vih
+
+//#include OBJINTPL.VIN
+//******************************************
+#include GetKau.vih
+#include Query.vih
+//----------------------------------
+
+#params
+[vip]
+LicenseControlInclude=""
+#end
+
+
+
+#include L_SoprDoc.vil
+
+#include Extattr.vih
+#include Extattr.var
+#include Notes.vih
+#include Notes.var
+#include MakeOrder.vih
+
+const
+  coVIDFIELD_BTN    = 0 ; // вид поля - кнопка
+  coVIDFIELD_HEAD   = 1 ; // вид поля - поле шапки
+  coVIDFIELD_SP     = 2 ; // вид поля - поле спеицификации
+  coVIDFIELD_AlloStatus = 3; // вид поля - разрешенные статусы
+  coVIDFIELD_BatchTerms = 4; // вид поля - условия отбора для пакетной загрузки
+  coTypeDocMC       = 11411 ;//10000+1411
+  coTypeDocPODR     = 11413 ;//10000+1413
+  coTypeDocMOL      = 11424 ;//10000+1424
+  coTypeDocPARTY    = 11430 ;//10000+1430
+  coTypeDocBox      = 11423 ;//10000+1430 ячейас храения
+  coTypeDocBoxSaldo = 35887 ;//100000+1430 Сальдо по ячейкам хранения, но я забыл, что в функции параметр WORD, а word(101423)=
+  co_MarkerName = 'SHK_CreateBarcodes';
+  co_MarkerNameExportSaldoBox = 'SHK_CreateBarcodes_ExportSaldoBox';
+  co_BatchMode = '--BATCH--';
+end;
+
+#include SHK_MakeMove.vih
+#include statlog.vih
+#include StatLog.var          // oStatLog       работа со статусами документов
+#include Notes.var            // oNotes         пояснения к статусу
+#include BoxFuncsFunctions.vih
+
+
+
+
+#include BoxFuncsFunctions.vih
+
+#component "C_BARCODE"
+
+#declare BodyfunctionCheckLic
+  result := true;
+  exit; //- пока нет в лик файле секции , можно та
+  Var sLC : string;
+  Lic_GetAttribute(UpCase('BarcodeTermCount'), sLC);
+  IF sLC = '' {
+    message('Нет лицензии на модуль штрихкодирование', error);
+    Result := False;
+    exit;
+  } else {
+    if word(sLC) = 0 {
+      message('Нет лицензии на модуль штрихкодирование', error);
+      Result := False;
+      exit;
+    }
+  }
+#end
+
+#make "vip\Algoritm_5959_Setup.vip"
+#make "vip\Algoritm_5959.vip"
+#make "vip\SHK_Log.vip"
+
+#make "vip\test_make_order.vip"
+#make "vip\SHK_MakeMove.vip"
+
+#make "vip\SHK_CreateTune.vip"
+
+#make "vip\SHK_BASE.vip"
+#make "vip\SHK_TEMPLATES.vip"
+#make "vip\SHK_InOut.vip"
+
+#make "vip\shk_barcodeFunc.vip"
+#make "vip\shk_barcode_Generate.vip"
+#make "vip\shk_barcode_view.vip"
+#make "vip\shk_barcode_view_oneObject.vip"
+#make "vip\shk_barcode_Print.vip"
+
+#make "vip\Algoritm_shk_barcode_Generate_Setup.vip"
+#make "vip\Algoritm_shk_barcode_Generate.vip"
+
+#make "vip\Algoritm_shk_barcode_setParam_Setup.vip"
+#make "vip\Algoritm_shk_barcode_setParam.vip"
+
+// менюшка в модуль настройка
+#make "vip\SHK_MenuDynamic.vip"
+
+#make "vip\SHK_ADMIN_PANEL.vip"
+#make "vip\SHK_USB_export_saldobox.vip"

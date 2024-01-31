@@ -1,9 +1,10 @@
 /*************************************************************************************************\
-  Наименование: Алгоритм для смены статуса документов, при формировании и отмене складских ордеров
-  Контур/Модуль: КОУ
-  Примечание:
-  Вид работы  |Номер           |Дата    |Исполнитель              |Проект
-  -----------------------------------------------------------------------------------------------
+*
+*  Наименование: Алгоритм для смены статуса документов, при формировании и отмене складских ордеров
+*  Контур/Модуль: КОУ
+*  Примечание:
+*  Вид работы  |Номер           |Дата    |Исполнитель              |Проект
+*  -----------------------------------------------------------------------------------------------
 \*************************************************************************************************/
 // взято с проекта ЭМ
 /*
@@ -42,7 +43,7 @@
 
 #component "M_MnPlan"
 
-VipInterface Algoritm_5959 Implements oAlgoritm_Sys;
+VipInterface Algoritm_5959 Implements oAlgoritm_Sys #Licensed_Free;
 Interface Algoritm_5959;
 
 Var
@@ -58,7 +59,7 @@ Var
  tipDocOper    : Word;//хранится вид накладной для поиска по полю KatSopr.vidSopr
  sklOrderExist : Word;//0-Ордера удалены, 1-Ордера сформированы
 As Select
- If(isValid(tnKatDoc), KatDoc.name, tipDocOper+' KatDoc.name - ?????')(Fieldname=nameKatDoc)
+ If(isValid(tnKatDoc), KatDoc.name, string(tipDocOper)+' KatDoc.name - ?????')(Fieldname=nameKatDoc)
 ,If(isValid(tnKatNotesSopr), KatNotesSopr.Name, 'статус не определен')(FieldName=NotekatSopr)
 ,If(isValid(tnKatNaznaSopr), KatNaznaSopr.Name, 'Назначение не определен')(FieldName=NaznakatSopr)
 ,If(sklOrderExist=0, 'Ордера удалены', 'Ордера сформированы')(FieldName=sklOrderExistName)
@@ -122,12 +123,12 @@ End;
 
 Function GetNameInter: String;
 Begin
- GetNameInter := 'Algoritm_'+GetNum;
+ GetNameInter := 'Algoritm_'+string(GetNum);
 End;
 
 Function GetNameInterPr: String;
 Begin
- GetNameInterPr := 'Algoritm_'+GetNum+'_Setup';
+ GetNameInterPr := 'Algoritm_'+string(GetNum)+'_Setup';
 End;
 
 Function InitInter(Var pt: TRecAcc): Boolean;
@@ -200,15 +201,15 @@ Begin
 
  //If(isShowLog){IntInit;}
  oSHK_Log.Init('Alg5959.log', true, true, true);
- If(isShowLog){MyWriteLog('['+Cur_Date+' '+Cur_Time+' '+UserName+']');}
+ If(isShowLog){MyWriteLog('[' + DateToStr(Cur_Date,'DD.MM.YYYY ') + TimeToStr(Cur_Time,'HH:MM ') + UserName()+']');}
  If(isShowLog){MyWriteLog('Запуск алгоритма: '+GetNameInter+' "'+GetName+'"');}
 
  //Настройка алгоритма
  If(GetFirst FastFirstRow FormPl = TsOk)
  {
-  If(isShowLog){MyWriteLog('Номер настройки алгоритма (pt.cFormPl): '+pt.cFormPl);}
-  If(isShowLog){MyWriteLog('Номер ссылки (pt.cpNrec): '+pt.cpNrec);}
-  If(isShowLog){MyWriteLog('Тип ссылки (pt.TypeCpNrec): '+pt.TypeCpNrec);}
+  If(isShowLog){MyWriteLog('Номер настройки алгоритма (pt.cFormPl): '+string(pt.cFormPl,0,0) );}
+  If(isShowLog){MyWriteLog('Номер ссылки (pt.cpNrec): '+string(pt.cpNrec,0,0) );}
+  If(isShowLog){MyWriteLog('Тип ссылки (pt.TypeCpNrec): '+string(pt.TypeCpNrec,0,0) );}
 
   tipDocOper  := pt.TypeCpNrec-2000;
   nrecKatSopr := pt.cpNrec;
@@ -233,7 +234,7 @@ Begin
    }
   End;
 
-  If(isShowLog){MyWriteLog('Поиск документа: KatSopr.VidSopr='+tipDocOper+' KatSopr.Nrec='+nrecKatSopr);}
+  If(isShowLog){MyWriteLog('Поиск документа: KatSopr.VidSopr='+string(tipDocOper)+' KatSopr.Nrec='+string(nrecKatSopr,0,0) );}
 
   /*
   var GP9961_flag:word;
@@ -262,7 +263,7 @@ Begin
       {
        if getfirst katsoprKN where ((katsopr.cadoc == katsoprKN.nrec))=tsok then
         {
-          tStr:=' №'+KatSoprKN.Nsopr+' от '+katsoprKN.dsopr;
+          tStr:=' №'+KatSoprKN.Nsopr+' от '+DateToStr(katsoprKN.dsopr,'DD/MM/YYYY');
         }
       }
   if (KatSopr.wADoc = adSoprDocSNSell) or
@@ -276,7 +277,7 @@ Begin
   {
    nrecKatNotes := KatSopr.cNote;
    nrecKatNazna := KatSopr.cNazna;
-   If(isShowLog){MyWriteLog('Документ: '+nameKatDoc+' № '+KatSopr.nSopr+' от '+KatSopr.dSopr+' находится в статусе "'+notekatSopr+'" с назначением "'+naznakatSopr+'".');}
+   If(isShowLog){MyWriteLog('Документ: '+nameKatDoc+' № '+KatSopr.nSopr+' от '+DateToStr(KatSopr.dSopr,'DD/MM/YYYY')+' находится в статусе "'+notekatSopr+'" с назначением "'+naznakatSopr+'".');}
 
    //Наличие складских ордеров у накладной
    If(GetFirst FastFirstRow SklOrder = TsOk)
@@ -311,7 +312,7 @@ Begin
        }
        If(RunInter)//Выполнено изменение статуса
        { RereadRecord(tnKatNotesSopr);
-         If(isShowLog){MyWriteLog('Для изменения статуса выбрана настройка с номером (№ п/п): '+Word(SpFormPl.descr)+' SpFormPl.nrec='+SpFormPl.nrec);}
+         If(isShowLog){MyWriteLog('Для изменения статуса выбрана настройка с номером (№ п/п): '+string(SpFormPl.descr)+' SpFormPl.nrec='+string(SpFormPl.nrec,0,0) );}
          If(isShowLog){MyWriteLog('Статус изменен на "'+NotekatSopr+'"');}
          Break;
        } //If(RunInter)//Выполнено изменение статуса
@@ -337,7 +338,7 @@ Begin
  }
  Else
  {
-  If(isShowLog){MyWriteLog('Не найдена настройка алгоритма (pt.cFormPl): '+pt.cFormPl);}
+  If(isShowLog){MyWriteLog('Не найдена настройка алгоритма (pt.cFormPl): '+string(pt.cFormPl,0,0) );}
  }
 
  If(RunInter)

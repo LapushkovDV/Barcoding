@@ -1,4 +1,3 @@
-
 #include CreateTune.vih
 
 Handler with replace SHK_CreateTune on extensionPoint
@@ -16,7 +15,7 @@ Action
 
   TR.SetParent('SHK');
 
-  TR.AddTuneS('SHK.CONNECTIONTYPE', 'Способ подключения', ftList,0,'','');
+  TR.AddTuneS('SHK.CONNECTIONTYPE', 'Способ подключения', ftList,'0','','');
       TR.AddList(0, 'REST API - подключение через REST API');
       TR.AddList(1, 'USB - обмен файлами, подключение ТСД к АРМ');
   TR.AddTuneS('SHK.FILEPATHEXPORT', 'Папка для выгрузки файлов (обмен через USB)', ftString,'','','');

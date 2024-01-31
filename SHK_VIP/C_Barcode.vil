@@ -1,0 +1,13 @@
+// Галактика 9.1
+// Описание экспортируемых интерфейсов компонента C_Diadoc
+
+#component "C_BARCODE"
+//VipInterface SHK_BASE             licensed (FREE) ;
+//VipInterface SHK_TEMPLATES        licensed (FREE) ;
+//VipInterface SHK_InOut            licensed (FREE) ;
+//VipInterface shk_barcode_Print    licensed (FREE) ;
+//VipInterface shk_barcode_Generate licensed (FREE) ;
+VipInterface SHK_ADMIN_PANEL            licensed (FREE) ;
+VipInterface shk_barcode_view           licensed (FREE) ;
+VipInterface shk_barcode_view_oneObject licensed (FREE) ;
+VipInterface SHK_USB_export_saldobox    licensed (FREE) ;

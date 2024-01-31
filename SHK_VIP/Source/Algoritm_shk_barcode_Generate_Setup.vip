@@ -1,9 +1,9 @@
 /*************************************************************************************************\
-  Наименование: Настройка алгоритма для контроля цены в накладной на соответствие данным договора
-  Контур/Модуль: КОУ
-  Примечание:
-  Вид работы  |Номер           |Дата    |Исполнитель              |Проект
-  -----------------------------------------------------------------------------------------------
+* Наименование: Настройка алгоритма для контроля цены в накладной на соответствие данным договора
+*  Контур/Модуль: КОУ
+*  Примечание:
+*  Вид работы  |Номер           |Дата    |Исполнитель              |Проект
+*  -----------------------------------------------------------------------------------------------
 \*************************************************************************************************/
 /*
 */
@@ -25,7 +25,8 @@
 
 #component "M_MnPlan"
 
-VipInterface Algoritm_shk_barcode_Generate_Setup Implements oAlgoritmSetup;
+VipInterface Algoritm_shk_barcode_Generate_Setup Implements oAlgoritmSetup
+Parameters ( nrecFormPl : comp) licensed (FREE);
 Interface Algoritm_shk_barcode_Generate_Setup 'Настройка алгоритма генерации ШК', EscClose, Blue;
 Show at (,,85,20);
 
@@ -175,7 +176,7 @@ cminit: {
     insert tmpTypeObj set tidkGal:= 615, name:= 'Инвентаризационная опись складского учета';
 
       set __ShkTidkGal := 101;
-  MyLog(' cminit __ShkTidkGal='+__ShkTidkGal);
+  MyLog(' cminit __ShkTidkGal='+string( __ShkTidkGal) );
       if getfirst spFormPl <> tsOK then
        {
          MyLog('if getfirst spFormPl <> tsOK then');

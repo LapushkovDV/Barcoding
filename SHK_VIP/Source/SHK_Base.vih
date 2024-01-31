@@ -9,7 +9,34 @@
 
 #ifnDef _SHK_BASE_INCLUDED_
 #define _SHK_BASE_INCLUDED_
+#component "C_BARCODE"
+type
+  TpTunePrintGen = record
+   GenDoc    : word;
+   KolDoc    : word;
+   GenPodr   : word;
+   kolPodr   : word;
+   GenMol    : word;
+   KolMol    : word;
+   GenKatBox : word;
+   KolKatBox : word;
+   GenMC     : word;
+   KolMC     : word;
+   GenParty  : word;
+   KolParty  : word;
+   SelectObjectsOnPrint : word;
+  end;
 
+table struct tTypeObj
+(
+   name    : string
+ , tidkGal : word
+)
+ with index
+ (
+  ind0 = tidkGal
+ )
+ ;
 
 ObjInterface oSHK_Base;
 public:

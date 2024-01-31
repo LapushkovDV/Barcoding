@@ -9,7 +9,9 @@
 
 #ifnDef _SHK_InOut_INCLUDED_
 #define _SHK_InOut_INCLUDED_
+
 #include SHK_BASE.vih
+#component "C_BARCODE"
 
 ObjInterface oSHK_InOut;
 Public:

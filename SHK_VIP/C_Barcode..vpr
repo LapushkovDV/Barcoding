@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<Viper Version="5005020000">
+	<ProjectManager>
+		<ProjectName>C_BARCODE</ProjectName>
+		<ProjectVarList>
+			<ProjectVar Name="$[GalExe]" Value="d:\Galaxy\Gal910\exe"/>
+			<ProjectVar Name="$[Tmp]" Value="d:\SRC\Work910\Project\TMP\"/>
+			<ProjectVar Name="$[GalSrc]" Value="d:\SRC\Work910\910\"/>
+		</ProjectVarList>
+		<CoreVip>
+			<VipParameters>
+				<AtlDir>D:\Galaxy\Viper\bin\5.5.41.0\Exe</AtlDir>
+				<StrictVip>True</StrictVip>
+				<DebugInfo>False</DebugInfo>
+				<LocalInfo>False</LocalInfo>
+				<MakeUseAllFiles>True</MakeUseAllFiles>
+				<ComponentName>C_BARCODE</ComponentName>
+			</VipParameters>
+			<VipDebug>
+				<ActiveConfigure>по умолчанию</ActiveConfigure>
+				<DebugConfigList>
+					<DebugConfig Name="по умолчанию"/>
+				</DebugConfigList>
+			</VipDebug>
+			<VipFiles>
+				<OutputResource>$[ProjectPath]\$[ProjectName]$[ExtRes]</OutputResource>
+				<SubServientResource>$[ProjectPath]\Atlantis.res</SubServientResource>
+				<ConfWorkResource>$[ProjectPath]\Viper.crf</ConfWorkResource>
+				<OutputDirectory>$[ProjectPath]\$[ProjectName]</OutputDirectory>
+				<TemporaryDirectory>$[Tmp]</TemporaryDirectory>
+				<IncludeList>
+					$[GalSrc]\INC\*
+					$[GalSrc]\Components\lih
+					$[AtlPath]\*
+					$[AtlPath]\..\Source\*
+					$[GalSrc]\CompSrc\*
+					$[ProjectPath]\*
+					$[GalSrc]\!Sborka\incviplo\*
+				</IncludeList>
+				<ResourceList>
+					$[GalExe]\compdata.res
+					$[GalExe]\C_ALTERCUMULATIVE.RES
+					$[GalExe]\F_DISTACT.RES
+					$[GalExe]\Z_HARM.RES
+					$[GalExe]\Z_PAYFSS.RES
+					$[GalExe]\Z_ZARNASTR.RES
+					$[GalExe]\Z_ZAR.RES
+					$[GalExe]\Z_ZARREP.RES
+					$[GalExe]\Z_WT.RES
+					$[GalExe]\Z_TARSTAV.RES
+					$[GalExe]\Z_STATIS.RES
+					$[GalExe]\Z_STAFFTEST.RES
+					$[GalExe]\Z_STAFFSHR.RES
+					$[GalExe]\Z_STAFFREPORTS.RES
+					$[GalExe]\Z_STAFFREPEAT.RES
+					$[GalExe]\Z_STAFFRECRUITING.RES
+					$[GalExe]\Z_STAFFPENSIONER.RES
+					$[GalExe]\Z_STAFFORDERS.RES
+					$[GalExe]\Z_STAFFNASTR.RES
+					$[GalExe]\Z_STAFFMOVES.RES
+					$[GalExe]\Z_STAFFMENU.RES
+					$[GalExe]\Z_STAFFIF.RES
+					$[GalExe]\Z_STAFFIERREP.RES
+					$[GalExe]\Z_STAFFDOPREPORTS.RES
+					$[GalExe]\Z_STAFFCAT.RES
+					$[GalExe]\Z_STAFFBUILDER.RES
+					$[GalExe]\Z_STAFF.RES
+					$[GalExe]\Z_SREDN.RES
+					$[GalExe]\Z_SERVICE.RES
+					$[GalExe]\Z_RLIST.RES
+					$[GalExe]\Z_RESERV.RES
+					$[GalExe]\Z_PIVOT.RES
+					$[GalExe]\Z_PFREP.RES
+					$[GalExe]\Z_PAYREP.RES
+					$[GalExe]\Z_NDFL.RES
+					$[GalExe]\Z_MP.RES
+					$[GalExe]\Z_MENU.RES
+					$[GalExe]\Z_LSCHET.RES
+					$[GalExe]\Z_KATPODR.RES
+					$[GalExe]\Z_FOT.RES
+					$[GalExe]\Z_CHART.RES
+					$[GalExe]\Z_CALENDAR.RES
+					$[GalExe]\Z_CALC.RES
+					$[GalExe]\M_UP.RES
+					$[GalExe]\M_TRANSP.RES
+					$[GalExe]\M_TPP.RES
+					$[GalExe]\M_SKLPLAN.RES
+					$[GalExe]\M_SERV.RES
+					$[GalExe]\M_SCRIPTS.RES
+					$[GalExe]\M_QUALITY.RES
+					$[GalExe]\M_MNPLAN.RES
+					$[GalExe]\M_MES.RES
+					$[GalExe]\M_MDADOC.RES
+					$[GalExe]\M_GETPOTR.RES
+					$[GalExe]\M_EIXML.RES
+					$[GalExe]\M_DVS.RES
+					$[GalExe]\M_CONTROL.RES
+					$[GalExe]\F_XLSREP.RES
+					$[GalExe]\F_VZACHET.RES
+					$[GalExe]\F_VEKS.RES
+					$[GalExe]\F_VEDOM.RES
+					$[GalExe]\F_VALUTDOC.RES
+					$[GalExe]\F_UTILS.RES
+					$[GalExe]\F_USERREPORT.RES
+					$[GalExe]\F_TXOAPI.RES
+					$[GalExe]\F_TXO.RES
+					$[GalExe]\F_TREENEW.RES
+					$[GalExe]\F_TEMPLATE.RES
+					$[GalExe]\F_TAXES.RES
+					$[GalExe]\F_TAXREPORT.RES
+					$[GalExe]\F_SOPRHOZ.RES
+					$[GalExe]\F_SHTRAF.RES
+					$[GalExe]\F_SFO.RES
+					$[GalExe]\F_SALDO.RES
+					$[GalExe]\F_RTXO.RES
+					$[GalExe]\F_POST.RES
+					$[GalExe]\F_PODOT.RES
+					$[GalExe]\F_PLPORREP.RES
+					$[GalExe]\F_PLPOR.RES
+					$[GalExe]\F_PLANSSCH.RES
+					$[GalExe]\F_PAT.RES
+					$[GalExe]\F_OSREP.RES
+					$[GalExe]\F_OSOPER.RES
+					$[GalExe]\F_OSMOVE.RES
+					$[GalExe]\F_OSINVCARD.RES
+					$[GalExe]\F_OS.RES
+					$[GalExe]\F_OFPPR.RES
+					$[GalExe]\F_OFP.RES
+					$[GalExe]\F_OBOROT.RES
+					$[GalExe]\F_NALOGREG.RES
+					$[GalExe]\F_MBPPUB.RES
+					$[GalExe]\F_MBP.RES
+					$[GalExe]\F_KATKOD.RES
+					$[GalExe]\F_KATDOC.RES
+					$[GalExe]\F_ISKI.RES
+					$[GalExe]\F_GETAN.RES
+					$[GalExe]\F_FPOBOROT.RES
+					$[GalExe]\F_FPKATH.RES
+					$[GalExe]\F_FPHASHAN.RES
+					$[GalExe]\F_FPCATALOG.RES
+					$[GalExe]\F_FPBUDGET.RES
+					$[GalExe]\F_FPADDFLD.RES
+					$[GalExe]\F_FPABSTR.RES
+					$[GalExe]\F_FILIAL.RES
+					$[GalExe]\F_FA.RES
+					$[GalExe]\F_EXTAN.RES
+					$[GalExe]\F_DRAGM.RES
+					$[GalExe]\F_DISTPL.RES
+					$[GalExe]\F_DISTCRED.RES
+					$[GalExe]\F_DIFFRATE.RES
+					$[GalExe]\F_COMMON.RES
+					$[GalExe]\F_CLOSCH.RES
+					$[GalExe]\F_CASHBANK.RES
+					$[GalExe]\F_BUHSCHET.RES
+					$[GalExe]\F_BUHREP.RES
+					$[GalExe]\F_BANKDOCF.RES
+					$[GalExe]\F_BACKLOG.RES
+					$[GalExe]\F_AVIZO.RES
+					$[GalExe]\F_AN.RES
+					$[GalExe]\F_ALG.RES
+					$[GalExe]\L_SOPRBASE.RES
+					$[GalExe]\L_WOOD.RES
+					$[GalExe]\L_VPR.RES
+					$[GalExe]\L_VAL.RES
+					$[GalExe]\L_UKSREP.RES
+					$[GalExe]\L_UKSPLANS.RES
+					$[GalExe]\L_UKSMTO.RES
+					$[GalExe]\L_UKS.RES
+					$[GalExe]\L_TTNDOC.RES
+					$[GalExe]\L_SPEXCH.RES
+					$[GalExe]\L_SOPRDOC.RES
+					$[GalExe]\L_SMETA.RES
+					$[GalExe]\L_SKLREP.RES
+					$[GalExe]\L_SKLAD.RES
+					$[GalExe]\L_SKID.RES
+					$[GalExe]\L_SF.RES
+					$[GalExe]\L_SERIALN.RES
+					$[GalExe]\L_SALDOMTR.RES
+					$[GalExe]\L_ROZN.RES
+					$[GalExe]\L_RETTARA.RES
+					$[GalExe]\L_RESERVE.RES
+					$[GalExe]\L_REPOPER.RES
+					$[GalExe]\L_REPBASEDOC.RES
+					$[GalExe]\L_REMREP.RES
+					$[GalExe]\L_REMPOTR.RES
+					$[GalExe]\L_REMONT.RES
+					$[GalExe]\L_REMDOC.RES
+					$[GalExe]\L_REALTING.RES
+					$[GalExe]\L_PRNSOPR.RES
+					$[GalExe]\L_PRICES.RES
+					$[GalExe]\L_PLANPR.RES
+					$[GalExe]\L_OSTATKI.RES
+					$[GalExe]\L_NIOKR.RES
+					$[GalExe]\L_NALOG.RES
+					$[GalExe]\L_NALNAKL.RES
+					$[GalExe]\L_MOVECELL.RES
+					$[GalExe]\L_MOL.RES
+					$[GalExe]\L_MCU.RES
+					$[GalExe]\L_MAKENAKL.RES
+					$[GalExe]\L_MAKEDO.RES
+					$[GalExe]\L_KONTRBAL.RES
+					$[GalExe]\L_KATPARTY.RES
+					$[GalExe]\L_KATORG.RES
+					$[GalExe]\L_KATNAZNA.RES
+					$[GalExe]\L_KASSA.RES
+					$[GalExe]\L_GRSOPR.RES
+					$[GalExe]\L_GRSCH.RES
+					$[GalExe]\L_GRPLAT.RES
+					$[GalExe]\L_DOVER.RES
+					$[GalExe]\L_DOGOVOR.RES
+					$[GalExe]\L_CRM.RES
+					$[GalExe]\L_CONSIG.RES
+					$[GalExe]\L_COMMON.RES
+					$[GalExe]\L_CESSIA.RES
+					$[GalExe]\L_CALCUSL.RES
+					$[GalExe]\L_BOX.RES
+					$[GalExe]\L_BASEDOC.RES
+					$[GalExe]\L_ADVREP.RES
+					$[GalExe]\C_WEBSERVICES.RES
+					$[GalExe]\C_USERMANUAL.RES
+					$[GalExe]\C_TUNE.RES
+					$[GalExe]\C_TREETUNE.RES
+					$[GalExe]\C_TREE.RES
+					$[GalExe]\C_TEMPLATE.RES
+					$[GalExe]\C_STATLINE.RES
+					$[GalExe]\C_SPLASH_RU.RES
+					$[GalExe]\C_PARTNER.RES
+					$[GalExe]\C_PALETTE.RES
+					$[GalExe]\C_OLAP.RES
+					$[GalExe]\C_MAILER.RES
+					$[GalExe]\C_JOIN.RES
+					$[GalExe]\C_GALHELP.RES
+					$[GalExe]\C_EXTFUN.RES
+					$[GalExe]\C_EXTCLASS.RES
+					$[GalExe]\C_EXPIMP.RES
+					$[GalExe]\C_CORPO.RES
+					$[GalExe]\C_CONST.RES
+					$[GalExe]\C_COMMON.RES
+					$[GalExe]\C_CHECKOPER.RES
+					$[GalExe]\C_CHECKKBU.RES
+					$[GalExe]\U_UNIVERSITY.RES
+					$[GalExe]\U_RECEIVING.RES
+					$[GalExe]\U_PROGRESS.RES
+					$[GalExe]\U_STUDENT.RES
+					$[GalExe]\U_DOGUSL.RES
+					$[GalExe]\U_STPROC.RES
+					$[GalExe]\U_ALTER.RES
+				</ResourceList>
+			</VipFiles>
+			<VipMessages>
+				<VerboseMake>True</VerboseMake>
+				<ErrorLevel>2</ErrorLevel>
+				<BreakFirstError>False</BreakFirstError>
+				<WarnNoInterfaceLicense>True</WarnNoInterfaceLicense>
+				<WarnScreenDuplicateNames>True</WarnScreenDuplicateNames>
+				<WarnConvertInteger>True</WarnConvertInteger>
+				<WarnConvertReal>True</WarnConvertReal>
+				<WarnConvertString>True</WarnConvertString>
+				<WarnConvertDateTime>True</WarnConvertDateTime>
+			</VipMessages>
+			<VipDatabase>
+				<Name>по умолчанию</Name>
+			</VipDatabase>
+			<VipFR>
+				<PackFR>True</PackFR>
+			</VipFR>
+		</CoreVip>
+		<ActiveIndex>1</ActiveIndex>
+		<ProjectItems>
+			<ProjectCompileFile FileName="..\910\CompSrc\C\C_BARCODE\C_BARCODE.prj" Priority="0">
+				<CoreVip>
+					<VipParameters>
+						<StrictVip>True</StrictVip>
+					</VipParameters>
+					<VipFR>
+						<PackFR>True</PackFR>
+						<SourceFR>$[FilePath]Fr3</SourceFR>
+					</VipFR>
+				</CoreVip>
+			</ProjectCompileFile>
+		</ProjectItems>
+		<DatabaseConfiguration>
+			<ConfigurationList>
+				<VipDatabase>
+					<Name>по умолчанию</Name>
+					<DatabaseName>..\..\..\DataBase\-910\Test_New</DatabaseName>
+					<DatabaseID>ERPDEV</DatabaseID>
+					<SqlServerParameters>ncacn_ip_tcp:DEP968-GALSRV1[1997]</SqlServerParameters>
+					<LogPas>True</LogPas>
+					<UserOffice>1</UserOffice>
+					<HwKeyDirectory>D:\Galaxy\HWServer\HWDir</HwKeyDirectory>
+					<LicFileName>..\..\..\Galaxy\Gal910\_Lic\Pervasive\Sup5514\license.lic</LicFileName>
+				</VipDatabase>
+				<VipDatabase>
+					<Name>MSSQL</Name>
+					<DatabaseDriver>1</DatabaseDriver>
+					<DatabaseID>ERPDEV</DatabaseID>
+					<SqlServerParameters>ncacn_ip_tcp:DEP968-GALSRV[1997]</SqlServerParameters>
+					<LogPas>True</LogPas>
+					<UserOffice>1</UserOffice>
+					<UserName>eduard.kirillov</UserName>
+					<Password>1qaz@WSX</Password>
+					<HwKeyTransport>1</HwKeyTransport>
+					<HwKeyDirectory>dep968-galsrv:80</HwKeyDirectory>
+					<LicFileName>\\dep968-galsrv3\Sup5514\exe\LICENSE.lic</LicFileName>
+				</VipDatabase>
+			</ConfigurationList>
+		</DatabaseConfiguration>
+		<DebugOptions StopOnStartup="False"/>
+		<FileList>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_ADMIN_PANEL.vip" PosX="27" PosY="73" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\Algoritm_5959_Setup.vip" PosX="54" PosY="357" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\Algoritm_5959.vip" PosX="53" PosY="46" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_Barcode\C_Barcode.vil" PosX="56" PosY="13" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_TEMPLATES.vip" PosX="3" PosY="40" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_Barcode\vip\shk_barcode_Generate.vih" PosX="52" PosY="61" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\shk_barcode_Print.vip" PosX="115" PosY="655" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\Algoritm_shk_barcode_Generate.vip" PosX="84" PosY="37" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_InOut_KatSopr.vpp" PosX="138" PosY="2" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_TEMPLATES.pan" PosX="118" PosY="274" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_Barcode\vip\SHK_InOut.vip" PosX="65" PosY="500" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_InOut_KatMC.vpp" PosX="16" PosY="251" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\shk_barcode_Generate.vip" PosX="5" PosY="425" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\shk_barcode_view_oneObject.vip" PosX="5" PosY="69" OpenEditor="True"/>
+			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_MakeMove.vip" PosX="33" PosY="2042" OpenEditor="True" Active="True"/>
+		</FileList>
+		<CompileMessengerList>
+			<CompileMessenger Name="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\C_BARCODE.prj" DateTimeStart="45322,7782354861" DateTimeCompile="0,000526087962498423" StateHistory="False">
+				<CompileMessageList>
+					<CompileMessage MessageType="mtWarning" MessageText="Родительский интерфейс MakeMove из другого компонента L_SKLAD не будет пересобран" SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\VIP\SHK_MakeMove.vip" SourceLine="39" SourceColumn="23"/>
+					<CompileMessage MessageType="mtError" MessageText="ожидалось : &quot;;&quot;" SourceFileName="D:\SRC\WORK910\910\COMPSRC\C\C_BARCODE\VIP\SHK_InOut_KatSopr.vpp" SourceLine="2" SourceColumn="138">
+						<StackIncludeList>
+							<StackInclude FileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\VIP\SHK_InOut.vip" Line="635" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 102х51 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 102х51 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 51x32 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 51x32 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 57x32 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 57x32 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x25 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x25 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x51 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x51 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5 QR.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5 QR.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 38_25 QR.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 38_25 QR.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtEndCompile" MessageText="31.01.2024 18:41:25"/>
+				</CompileMessageList>
+			</CompileMessenger>
+		</CompileMessengerList>
+	</ProjectManager>
+</Viper>

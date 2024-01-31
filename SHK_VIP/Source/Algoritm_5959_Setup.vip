@@ -5,7 +5,6 @@
   Вид работы  |Номер           |Дата    |Исполнитель              |Проект
   -----------------------------------------------------------------------------------------------
 \*************************************************************************************************/
-// взято с проекта ЭМ
 /*
 Параметры настройки алгоритма смены статуса
 Тип документа - Выбор из списка документов (единичный выбор)
@@ -27,7 +26,7 @@
 
 #component "M_MnPlan"
 
-VipInterface Algoritm_5959_Setup Implements oAlgoritmSetup parameters (nrecFormPl : comp);
+VipInterface Algoritm_5959_Setup Implements oAlgoritmSetup parameters (nrecFormPl : comp) #Licensed_Free;
 Interface Algoritm_5959_Setup 'Настройка алгоритма', EscClose, Blue;
 Show at (,,105,20);
 
@@ -138,7 +137,7 @@ CmExprFieldChanged:
    Case(tmpNum)Of
     1..999:
     {
-     Set SpFormPl.descr := LPadCh(tmpNum, '0', 3);
+     Set SpFormPl.descr := LPadCh(string(tmpNum), '0', 3);
     }
     Else
     {
@@ -190,26 +189,26 @@ CmInit:
  SetLimit(strArray, 0);
  SetLimit(wrdArray, 0);
 
- j:=0;wrdArray[j] := 101; strArray[j] := wrdArray[j]+' '+'Накладная на прием МЦ (Управление снабжением)';
- j++; wrdArray[j] := 206; strArray[j] := wrdArray[j]+' '+'Накладная на возврат по рекламации (Управление снабжением)';
- j++; wrdArray[j] := 201; strArray[j] := wrdArray[j]+' '+'Накладная на отпуск МЦ (Управление сбытом)';
- j++; wrdArray[j] := 115; strArray[j] := wrdArray[j]+' '+'Акт о приемке материалов (Складской учет)';
- j++; wrdArray[j] := 204; strArray[j] := wrdArray[j]+' '+'Акт на списание МЦ со склада (Складской учет)';
- j++; wrdArray[j] := 600; strArray[j] := wrdArray[j]+' '+'Накладная на внутреннее перемещение (Складской учет)';
- j++; wrdArray[j] := 601; strArray[j] := wrdArray[j]+' '+'Накладная на передачу МЦ в ОС (Складской учет)';
- j++; wrdArray[j] := 602; strArray[j] := wrdArray[j]+' '+'Накладная на передачу МЦ в спецоснастку (Складской учет)';
- j++; wrdArray[j] := 605; strArray[j] := wrdArray[j]+' '+'Накладная на передачу МЦ в НМА (Складской учет)';
- j++; wrdArray[j] := 611; strArray[j] := wrdArray[j]+' '+'Акт инвентаризации об излишке МЦ (Складской учет)';
- j++; wrdArray[j] := 612; strArray[j] := wrdArray[j]+' '+'Акт инвентаризации о недостаче МЦ (Складской учет)';
- j++; wrdArray[j] := 630; strArray[j] := wrdArray[j]+' '+'Акт на пересортицу (Складской учет)';
- j++; wrdArray[j] := 632; strArray[j] := wrdArray[j]+' '+'Акт на перемещение между объектами (Складской учет)';
- j++; wrdArray[j] := 210; strArray[j] := wrdArray[j]+' '+'Акт передачи оборудования в монтаж (Складской учет)';
- j++; wrdArray[j] := 606; strArray[j] := wrdArray[j]+' '+'Транзитная накладная (Складской учет)';
- j++; wrdArray[j] := 501; strArray[j] := wrdArray[j]+' '+'Накладная на отпуск в производство (УПЛ)';
- j++; wrdArray[j] := 502; strArray[j] := wrdArray[j]+' '+'Накладная на приход готовой продукции (УПЛ)';
- j++; wrdArray[j] := 503; strArray[j] := wrdArray[j]+' '+'Накладная на возврат сырья из производства (УПЛ)';   // new
- j++; wrdArray[j] := 504; strArray[j] := wrdArray[j]+' '+'Акт на списание МЦ из производства (УПЛ)';
- j++; wrdArray[j] := 505; strArray[j] := wrdArray[j]+' '+'Межцеховая накладная (УПЛ)';                         // new
+ j:=0;wrdArray[j] := 101; strArray[j] := string(wrdArray[j])+' '+'Накладная на прием МЦ (Управление снабжением)';
+ j++; wrdArray[j] := 206; strArray[j] := string(wrdArray[j])+' '+'Накладная на возврат по рекламации (Управление снабжением)';
+ j++; wrdArray[j] := 201; strArray[j] := string(wrdArray[j])+' '+'Накладная на отпуск МЦ (Управление сбытом)';
+ j++; wrdArray[j] := 115; strArray[j] := string(wrdArray[j])+' '+'Акт о приемке материалов (Складской учет)';
+ j++; wrdArray[j] := 204; strArray[j] := string(wrdArray[j])+' '+'Акт на списание МЦ со склада (Складской учет)';
+ j++; wrdArray[j] := 600; strArray[j] := string(wrdArray[j])+' '+'Накладная на внутреннее перемещение (Складской учет)';
+ j++; wrdArray[j] := 601; strArray[j] := string(wrdArray[j])+' '+'Накладная на передачу МЦ в ОС (Складской учет)';
+ j++; wrdArray[j] := 602; strArray[j] := string(wrdArray[j])+' '+'Накладная на передачу МЦ в спецоснастку (Складской учет)';
+ j++; wrdArray[j] := 605; strArray[j] := string(wrdArray[j])+' '+'Накладная на передачу МЦ в НМА (Складской учет)';
+ j++; wrdArray[j] := 611; strArray[j] := string(wrdArray[j])+' '+'Акт инвентаризации об излишке МЦ (Складской учет)';
+ j++; wrdArray[j] := 612; strArray[j] := string(wrdArray[j])+' '+'Акт инвентаризации о недостаче МЦ (Складской учет)';
+ j++; wrdArray[j] := 630; strArray[j] := string(wrdArray[j])+' '+'Акт на пересортицу (Складской учет)';
+ j++; wrdArray[j] := 632; strArray[j] := string(wrdArray[j])+' '+'Акт на перемещение между объектами (Складской учет)';
+ j++; wrdArray[j] := 210; strArray[j] := string(wrdArray[j])+' '+'Акт передачи оборудования в монтаж (Складской учет)';
+ j++; wrdArray[j] := 606; strArray[j] := string(wrdArray[j])+' '+'Транзитная накладная (Складской учет)';
+ j++; wrdArray[j] := 501; strArray[j] := string(wrdArray[j])+' '+'Накладная на отпуск в производство (УПЛ)';
+ j++; wrdArray[j] := 502; strArray[j] := string(wrdArray[j])+' '+'Накладная на приход готовой продукции (УПЛ)';
+ j++; wrdArray[j] := 503; strArray[j] := string(wrdArray[j])+' '+'Накладная на возврат сырья из производства (УПЛ)';   // new
+ j++; wrdArray[j] := 504; strArray[j] := string(wrdArray[j])+' '+'Акт на списание МЦ из производства (УПЛ)';
+ j++; wrdArray[j] := 505; strArray[j] := string(wrdArray[j])+' '+'Межцеховая накладная (УПЛ)';                         // new
 
 
  SetEnumList(scParam, fnTipDocOper, strArray, wrdArray);  
@@ -355,7 +354,7 @@ Begin
  }
  If(n>1)
  {
-  GetSelectNazna := 'Множественный выбор ('+n+')';
+  GetSelectNazna := 'Множественный выбор ('+string(n)+')';
  }
 End;
 End.

@@ -100,7 +100,7 @@ function GetResultQueryForKatMC(_pcSHKObj: comp; _pIdent : string) : IResultSet;
   qKatMC.setMacro('WhereFields', WhereFields);
 
        var _type : byte = GetTypeByTableAndField(SHKOBJ.SYSNAMETBL, SHKOBJ.SYSNAME);
-       mylog('    _type = '+_type) ;
+       mylog('    _type = '+string(_type) ) ;
        case _type of
               4 :  qKatMC.setParam('pIdent',    word(_pIdent) );
               6 :  qKatMC.setParam('pIdent', longint(_pIdent) );
@@ -140,7 +140,7 @@ function GetMCNRECByIdent(_ActionName: string; _pIdent: string) : comp;
     exit;
   }
  Result    := iRes.row.val('SYS_KATMC_NREC');
- mylog('  GetMCNRECByIdent: Result = ' + Result);
+ mylog('  GetMCNRECByIdent: Result = ' + string(Result) );
 }
 
 function GenerateJSON_VALUES_KATMCONE(_ActionName: string; _pIdent: string; var _err : string) : TpTr;
@@ -250,4 +250,128 @@ function GetResultQueryForKatMcBatch(_pcSHKObj: comp; _pIdent : string;  _login:
 function GenerateJSON_VALUES_KATMC(_ActionName: string; _pIdent: string; var _err : string; _login: string = ''; _imei : string = '') : TpTr;
 {
   #Function_GenerateJSON_VALUES_Body(GetResultQueryForKatMcBatch,GenerateJSON_VALUES_KATMCONE,SYS_KATMC_NREC,coKatMC)
+/*
+#define Function_GetResultQueryForBatch GetResultQueryForKatMcBatch
+#define Funcion_GenerateJSON_VALUES_ONE GenerateJSON_VALUES_KATMCONE
+#define Sys_field_name SYS_KATMC_NREC
+#define tableNumber coKatMC
+
+  var JSONObj_Array           : TPtr = HttpConnect_JsonArrayCreate(m_service);
+  var JSONObj_ArrayOneElement : TPtr = HttpConnect_JsonObjectCreate(m_service);
+
+//   по идее тут ставим цикл для пакетной выгрузки
+
+
+  if _pIdent = co_BatchMode then
+   {
+    mylog('_pIdent = '+ string(_pIdent,0,0) );
+    mylog('SHKObj.UseBatchLoad = ' + string(SHKObj.UseBatchLoad) ) ;
+    if SHKObj.UseBatchLoad = 0
+     {
+       _err := 'ДЛЯ ДАННОГО ОБЪЕКТА НЕ ПРЕДУСМОТРЕНА ПАКЕТНАЯ ЗАГРУЗКА';
+       result := 0;
+       exit;
+     }
+
+     var _isEmptyTerms : boolean = true;
+     _loop SHKObjSP_BatchTerms {
+       if SHKObjSP_BatchTerms.name <> '' then  {
+         _isEmptyTerms := false;
+         break;
+       }
+     }
+
+    if _isEmptyTerms
+     {
+       _err := 'ДЛЯ ДАННОГО ОБЪЕКТА НЕ УКАЗАНЫ УСЛОВИЯ ОТБОРА';
+       result := 0;
+       exit;
+
+     }
+
+    var _iShk_BarcodeFunc : iShk_BarcodeFunc;
+      var iRes : IResultSet = #Function_GetResultQueryForBatch(GetTMPLTByName(_ActionName), _pIdent, _login, _IMEI);
+
+      if nullvipref(iRes)
+       {
+        _err := 'ОШИБКА В УСЛОВИЯХ ОТБОРА';
+        result := 0;
+        exit;
+       }
+
+     if SHKObj.BatchDate <> cur_date then update current SHKObj set SHKObj.BatchDate := cur_date;
+
+
+     if iRes.getfirst <> tsOK {
+       _err := 'НЕТ ОБЪЕКТОВ ПО УСЛОВИЯМ ПАКЕТНОГО ВЫБОРА';
+       result := 0;
+
+       exit;
+     }
+     do
+      {
+        var _SYS_BARCODE : string = iRes.row.val('SYS_BARCODE');
+        var _cRec        : comp   = iRes.row.val('#Sys_field_name');
+         if isvalidall(tnNoteAfterBatch) then {
+            clearbuffer(#statlog_makeAction) ;
+              statlog_makeAction.NEWSTATUS := NoteAfterBatch.status;
+              statlog_makeAction.CNEWNOTE  := NoteAfterBatch.nrec;
+              statlog_makeAction.DOCTYPE   := oNotes.GetVidNoteByVidDoc(SHKObj.viddoc);
+              statlog_makeAction.DESCR     := sGetTune('USER.DESCR');
+              statlog_makeAction.DESGR     := sGetTune('USER.DESGR');
+              statlog_makeAction.DOPER     := Cur_date;
+              statlog_makeAction.TIMEOPER  := Cur_time;
+              statlog_makeAction.COMMENT   := 'Изменение при пакетной выгрузке. Шаблон ' + SHKObj.Action;
+              statlog_makeAction.LASTUSER  := UserName;
+           case SHKObj.viddoc of
+            600,101,201,
+            501,602,601  : {
+                             if getfirst katSopr_makeAction where ((_cRec == katSopr_makeAction.nrec)) = tsOK {
+
+                                     statlog_makeAction.cdoc      := katSopr_makeAction.nrec;
+                                     statlog_makeAction.OLDSTATUS := katSopr_makeAction.status;
+                                     statlog_makeAction.COLDNOTE  := katSopr_makeAction.cnote;
+                                    insert current statlog_makeAction;
+                                    katSopr_makeAction.Status := NoteAfterBatch.Status;
+                                    katSopr_makeAction.cNote  := NoteAfterBatch.nrec;
+                                   update current katSopr_makeAction;
+                                 }
+                          }
+           615 :          {
+                             if getfirst INVTAB_makeAction where ((_cRec == INVTAB_makeAction.nrec)) = tsOK {
+                                     statlog_makeAction.cdoc      := INVTAB_makeAction.nrec;
+                                     statlog_makeAction.OLDSTATUS := INVTAB_makeAction.status;
+                                     statlog_makeAction.COLDNOTE  := INVTAB_makeAction.cnote;
+                                    insert current statlog_makeAction;
+                                    INVTAB_makeAction.Status := NoteAfterBatch.Status;
+                                    INVTAB_makeAction.cNote  := NoteAfterBatch.nrec;
+                                   update current INVTAB_makeAction;
+                                 }
+                          }
+           end;
+         }
+
+
+
+       if _SYS_BARCODE = '' then { //  считаем, что используют системный баркод       вот тут возникает вопрос.. а если нет ШК еще в системе... ну не сгенерировали его, чисто теоретически можно нагенерировать их... но точно ли все будут пользоваться нашими баркодами
+         _SYS_BARCODE := _iShk_BarcodeFunc.getCode(#tableNumber, SHKOBJ.VIDDOC, _cRec, true);
+          if _SYS_BARCODE = '' then continue;
+       }
+
+        JSONObj_ArrayOneElement := #Funcion_GenerateJSON_VALUES_ONE(_ActionName,_SYS_BARCODE,_err);
+         if JSONObj_ArrayOneElement <> 0
+         then HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement)
+          else JSONObj_Array := 0;
+      } while iRes.getNext = tsOk;
+   }
+   else {
+     JSONObj_ArrayOneElement := #Funcion_GenerateJSON_VALUES_ONE(_ActionName,_pIdent,_err);
+     if JSONObj_ArrayOneElement <> 0
+      then HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement)
+     else JSONObj_Array := 0;
+   }
+
+
+  result := JSONObj_Array;
+*/
 }
