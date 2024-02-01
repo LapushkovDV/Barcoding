@@ -309,32 +309,10 @@
 		</DatabaseConfiguration>
 		<DebugOptions StopOnStartup="False"/>
 		<CompileMessengerList>
-			<CompileMessenger Name="D:\Galaxy\RedMine\Barcoding\SHK_VIP\C_BARCODE.prj" DateTimeStart="45323,5532825116" DateTimeCompile="0,000536932871909812" StateHistory="False">
+			<CompileMessenger Name="D:\Galaxy\RedMine\Barcoding\SHK_VIP\C_BARCODE.prj" DateTimeStart="45323,5686120023" DateTimeCompile="0,000531516205228399" StateHistory="False">
 				<CompileMessageList>
 					<CompileMessage MessageType="mtWarning" MessageText="Родительский интерфейс MakeMove из другого компонента L_SKLAD не будет пересобран" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="39" SourceColumn="23"/>
-					<CompileMessage MessageType="mtWarning" MessageText="Приведение типа с возможной потерей точности (LongInt -&gt; Word)" SourceFileName="D:\GALAXY\REDMINE\BARCODING\SHK_VIP\VIP\SHK_InOut_KatSopr.vpp" SourceLine="586" SourceColumn="151">
-						<StackIncludeList>
-							<StackInclude FileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="637" Column="1"/>
-						</StackIncludeList>
-					</CompileMessage>
-					<CompileMessage MessageType="mtWarning" MessageText="Значение преобразовано к строке" SourceFileName="D:\GALAXY\REDMINE\BARCODING\SHK_VIP\VIP\SHK_InOut_KatBoxSaldo.vpp" SourceLine="434" SourceColumn="53">
-						<StackIncludeList>
-							<StackInclude FileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="643" Column="1"/>
-						</StackIncludeList>
-					</CompileMessage>
-					<CompileMessage MessageType="mtWarning" MessageText="Значение преобразовано к строке" SourceFileName="D:\GALAXY\REDMINE\BARCODING\SHK_VIP\VIP\SHK_InOut_KatBoxSaldo.vpp" SourceLine="683" SourceColumn="87">
-						<StackIncludeList>
-							<StackInclude FileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="643" Column="1"/>
-						</StackIncludeList>
-					</CompileMessage>
-					<CompileMessage MessageType="mtWarning" MessageText="Значение преобразовано к строке" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="731" SourceColumn="31"/>
 					<CompileMessage MessageType="mtWarning" MessageText="Приведение типа с возможной потерей точности (LongInt -&gt; Word)" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="770" SourceColumn="20"/>
-					<CompileMessage MessageType="mtWarning" MessageText="Приведение строки к числу" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="862" SourceColumn="106"/>
-					<CompileMessage MessageType="mtWarning" MessageText="Значение преобразовано к строке" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="864" SourceColumn="5"/>
-					<CompileMessage MessageType="mtWarning" MessageText="Значение преобразовано к строке" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="874" SourceColumn="91"/>
-					<CompileMessage MessageType="mtWarning" MessageText="Значение преобразовано к строке" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="874" SourceColumn="149"/>
-					<CompileMessage MessageType="mtWarning" MessageText="Значение преобразовано к строке" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="907" SourceColumn="42"/>
-					<CompileMessage MessageType="mtWarning" MessageText="Значение преобразовано к строке" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="909" SourceColumn="46"/>
 					<CompileMessage MessageType="mtWarning" MessageText="Не могу подобрать индекс, не усекая по умолчанию ключ для таблицы SHK_BARCODELINK_GEN" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\shk_barcode_Generate.vip" SourceLine="425" SourceColumn="5"/>
 					<CompileMessage MessageType="mtWarning" MessageText="Не могу подобрать индекс, не усекая по умолчанию ключ для таблицы SHK_BARCODELINK" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\shk_barcode_view_oneObject.vip" SourceLine="69" SourceColumn="5"/>
 					<CompileMessage MessageType="mtWarning" MessageText="Не могу подобрать индекс, не усекая по умолчанию ключ для таблицы SHK_BARCODELINK" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\Algoritm_shk_barcode_setParam.vip" SourceLine="235" SourceColumn="5"/>
@@ -350,19 +328,19 @@
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtEndCompile" MessageText="01.02.2024 13:17:30"/>
+					<CompileMessage MessageType="mtEndCompile" MessageText="01.02.2024 13:39:34"/>
 				</CompileMessageList>
 			</CompileMessenger>
 		</CompileMessengerList>
 		<FileList>
 			<File Name="vip\SHK_InOut_KatMC.vpp" PosX="9" PosY="243" OpenEditor="True"/>
 			<File Name="vip\test_make_order.vip" PosX="67" PosY="51" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut_KatSopr.vpp" PosX="55" PosY="587" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut.vip" PosX="54" PosY="909" OpenEditor="True" Active="True"/>
+			<File Name="vip\SHK_InOut_KatSopr.vpp" PosX="77" PosY="522" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut.vip" PosX="149" PosY="874" OpenEditor="True" Active="True"/>
 			<File Name="C_Barcode.vil" PosX="34" PosY="15" OpenEditor="True"/>
 			<File Name="vip\SHK_InOut.vih" PosX="28" PosY="64" OpenEditor="True"/>
 			<File Name="vip\SHK_InOut_InvTab.vpp" PosX="89" PosY="487" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut_KatBoxSaldo.vpp" PosX="99" PosY="683" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_KatBoxSaldo.vpp" PosX="64" PosY="701" OpenEditor="True"/>
 			<File Name="vip\SHK_InOut_KatParty.vpp" PosX="59" PosY="191" OpenEditor="True"/>
 			<File Name="vip\SHK_InOut_KatMol.vpp" PosX="38" PosY="61" OpenEditor="True"/>
 			<File Name="vip\SHK_InOut_KatPodr.vpp" PosX="38" PosY="77" OpenEditor="True"/>
