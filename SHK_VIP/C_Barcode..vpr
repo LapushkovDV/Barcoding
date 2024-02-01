@@ -309,7 +309,7 @@
 		</DatabaseConfiguration>
 		<DebugOptions StopOnStartup="False"/>
 		<CompileMessengerList>
-			<CompileMessenger Name="D:\Galaxy\RedMine\Barcoding\SHK_VIP\C_BARCODE.prj" DateTimeStart="45323,5686120023" DateTimeCompile="0,000531516205228399" StateHistory="False">
+			<CompileMessenger Name="D:\Galaxy\RedMine\Barcoding\SHK_VIP\C_BARCODE.prj" DateTimeStart="45323,5787565741" DateTimeCompile="0,000479537033243105" StateHistory="False">
 				<CompileMessageList>
 					<CompileMessage MessageType="mtWarning" MessageText="Родительский интерфейс MakeMove из другого компонента L_SKLAD не будет пересобран" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="39" SourceColumn="23"/>
 					<CompileMessage MessageType="mtWarning" MessageText="Приведение типа с возможной потерей точности (LongInt -&gt; Word)" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="770" SourceColumn="20"/>
@@ -328,23 +328,15 @@
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;."/>
 					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtEndCompile" MessageText="01.02.2024 13:39:34"/>
+					<CompileMessage MessageType="mtEndCompile" MessageText="01.02.2024 13:54:06"/>
 				</CompileMessageList>
 			</CompileMessenger>
 		</CompileMessengerList>
 		<FileList>
 			<File Name="vip\SHK_InOut_KatMC.vpp" PosX="9" PosY="243" OpenEditor="True"/>
 			<File Name="vip\test_make_order.vip" PosX="67" PosY="51" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut_KatSopr.vpp" PosX="77" PosY="522" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut.vip" PosX="149" PosY="874" OpenEditor="True" Active="True"/>
-			<File Name="C_Barcode.vil" PosX="34" PosY="15" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut.vih" PosX="28" PosY="64" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut_InvTab.vpp" PosX="89" PosY="487" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut_KatBoxSaldo.vpp" PosX="64" PosY="701" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut_KatParty.vpp" PosX="59" PosY="191" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut_KatMol.vpp" PosX="38" PosY="61" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut_KatPodr.vpp" PosX="38" PosY="77" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut_KatBox.vpp" PosX="60" PosY="200" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_KatSopr.vpp" PosX="53" PosY="593" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut.vip" PosX="56" PosY="909" OpenEditor="True" Active="True"/>
 		</FileList>
 	</ProjectManager>
 </Viper>
