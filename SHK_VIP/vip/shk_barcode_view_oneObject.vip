@@ -55,7 +55,7 @@ cminit:
 }
 cmValue1:{
   if(getfirst shk_barcodeLink where ((       0 == shk_barcodeLink.TYPE
-                                  and _ShkCode == shk_barcodeLink.BARCODE
+                                  and substr(_ShkCode,1,250) == shk_barcodeLink.BARCODE(length=250)
                                     ))
     ) = tsOK then {
       _iShk_BarcodeFunc.show_doc(shk_barcodeLink.TidkGal, shk_barcodeLink.crec);

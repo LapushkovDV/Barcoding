@@ -6,6 +6,7 @@
 // Функции для работы с штрих кодом 
 //------------------------------------------------------------------------------
 #include DOfuns.vih
+#include KatParty.vih
 #include EditDoc.vih
 #include NalogRegDoc.vih
 
@@ -228,7 +229,8 @@ procedure show_doc(_type: word; _cRec: comp);
     if not CheckLic then exit;
   case _type of
   coTypeDocMC    : runinterface('L_MCU::iViewMCUslCatal', 1, _cRec, 0, 0, 0); //coSpSopr, SpSopr.nRec
-  coTypeDocPARTY : runinterface('L_Katparty::katparty', _cRec);
+  //KatPartyParameters: IKatPartyParameters = NullRef
+  coTypeDocPARTY : runinterface('Katparty', _cRec );
   coTypeDocPODR  : runinterface('Z_KATPODR::KATPODR'
                                                  ,0      // режим работы 0 - редактирования, -1 - добавление подразделения, -2 - добавление склада, -3 - добавление торгового зала
                                                  ,_cRec
