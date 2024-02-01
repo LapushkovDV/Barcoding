@@ -58,6 +58,9 @@ function JSON_Export_SaldoBox(_ActionName, _SHKcode, _idTSD, _idARM, _idUser : s
 end;
 
 
-VipInterface SHK_InOut(SHK_Base) implements oSHK_InOut;
+VipInterface SHK_InOut(SHK_Base) implements oSHK_InOut
+parameters ( _AutoExport : string
+           ; _ActionName :string
+           ) #Licensed_Free ;
 
 #end

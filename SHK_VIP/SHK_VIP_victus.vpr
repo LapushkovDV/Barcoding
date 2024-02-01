@@ -67,7 +67,7 @@
 		</CoreVip>
 		<ActiveIndex>1</ActiveIndex>
 		<ProjectItems>
-			<ProjectCompileFile FileName="SHK_VIP.prj" Priority="0">
+			<ProjectCompileFile FileName="C_Barcode.prj" Priority="0">
 				<CoreVip>
 					<VipParameters>
 						<StrictVip>True</StrictVip>
@@ -90,7 +90,7 @@
 			</ConfigurationList>
 		</DatabaseConfiguration>
 		<FileList>
-			<File Name="SHK_VIP.prj" PosX="19" PosY="187" OpenEditor="True"/>
+			<File Name="C_Barcode.prj" PosX="19" PosY="187" OpenEditor="True"/>
 			<File Name="Source\SHK_InOut.vip" PosX="13" PosY="222" OpenEditor="True"/>
 			<File Name="Source\SHK_InOut_KatBoxSaldo.vpp" PosX="3" PosY="120" OpenEditor="True"/>
 			<File Name="Source\test_make_order.vip" PosX="51" PosY="47" OpenEditor="True"/>
@@ -137,7 +137,7 @@
 			<Marker FileName="Source\SHK_InOut.vip" Caption="Нумерованная закладка 2" Line="1135" NumIndex="2" MarkerType="mtNumBookmark" Comment="if _pIdent = co_BatchMode and"/>
 			<Marker FileName="Source\SHK_USB_export_saldobox.vip" Caption="Нумерованная закладка 1" Line="86" NumIndex="1" MarkerType="mtNumBookmark" Comment="set _cSHKObj := _iSHK_TEMPLATES.fnSelObjActions(coTypeDocBoxSaldo);"/>
 			<Marker FileName="Source\SHK_ADMIN_PANEL.vip" Caption="Нумерованная закладка 1" Line="143" NumIndex="1" MarkerType="mtNumBookmark" Comment="if not checkDestPathfromTune then processtext(_JSONfile, vfNewTitle Or vfMacroSize, 'Сгенерированный JSON OBJECTVALUES');"/>
-			<Marker FileName="SHK_VIP.prj" Caption="Нумерованная закладка 1" Line="100" NumIndex="1" MarkerType="mtNumBookmark" Comment="coTypeDocBoxSaldo = 101423 ;//100000+1430 Сальдо по ячейкам хранения"/>
+			<Marker FileName="C_Barcode.prj" Caption="Нумерованная закладка 1" Line="100" NumIndex="1" MarkerType="mtNumBookmark" Comment="coTypeDocBoxSaldo = 101423 ;//100000+1430 Сальдо по ячейкам хранения"/>
 			<Marker FileName="Source\SHK_Base.vip" Caption="Нумерованная закладка 1" Line="597" NumIndex="1" MarkerType="mtNumBookmark"/>
 			<Marker FileName="Source\shk_barcode_Generate.vip" Caption="Нумерованная закладка 1" Line="312" NumIndex="1" MarkerType="mtNumBookmark" Comment="if getfirst fastfirstrow k"/>
 			<Marker FileName="Source\SHK_InOut_KatSopr.vpp" Caption="Нумерованная закладка 2" Line="451" NumIndex="2" MarkerType="mtNumBookmark" Comment="}"/>

@@ -58,7 +58,7 @@ function GetResultQueryForKatMol(_pcSHKObj: comp; _pIdent : string) : IResultSet
 
   qKatMol.setParam('anName', _anName);
    var _type : byte = GetTypeByTableAndField(SHKOBJ.SYSNAMETBL, SHKOBJ.SYSNAME);
-   mylog('    _type = '+_type) ;
+   mylog('    _type = '+string(_type) ) ;
  case _type of
         4 :  qKatMol.setParam('pIdent',    word(_pIdent) );
         6 :  qKatMol.setParam('pIdent', longint(_pIdent) );

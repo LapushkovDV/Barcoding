@@ -116,7 +116,7 @@ function GetResultQueryForInvTab(_pcSHKObj: comp; _pIdent : string) : IResultSet
 //  qInvTab.setParam('VIDSOPR',  SHKObj.viddoc);
   qInvTab.setParam('anName', _anName);
    var _type : byte = GetTypeByTableAndField(SHKOBJ.SYSNAMETBL, SHKOBJ.SYSNAME);
-   mylog('    _type = '+_type) ;
+   mylog('    _type = '+string(_type) ) ;
  case _type of
         4 :  qInvTab.setParam('pIdent',    word(_pIdent) );
         6 :  qInvTab.setParam('pIdent', longint(_pIdent) );
@@ -235,13 +235,13 @@ function GenerateJSON_VALUES_InvTabOne(_ActionName: string; _pIdent: string; var
 
               if pos('CU_1124',SHKObjSP_SP.SYSNAMETBL) = 1 then {
                mylog(' pos(CU_1124,SHKObjSP_SP.SYSNAMETBL) = 1 ' + SHKObjSP_SP.SYSNAMETBL);
-               mylog('  _SYS_SPINVTAB_cSaldTune = ' + _SYS_SPINVTAB_cSaldTune);
+               mylog('  _SYS_SPINVTAB_cSaldTune = ' + string(_SYS_SPINVTAB_cSaldTune,0,0) );
                  if getfirst SaldTuneSP where ((_SYS_SPINVTAB_cSaldTune == SaldTuneSP.nrec)) = tsOK {
                     mylog('  if getfirst SaldTuneSP where ((_SYS_SPINVTAB_cSaldTune == SaldTuneSP.nrec)) = tsOK {');
                      var _cKau : comp = iRes.row.val(SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME);
                      var _iKau : integer = Integer(extractdelimitedword(SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME,4,'_')); // CU_1010_KAU_2
                     mylog('  iRes.row.val(  '+SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME );
-                    mylog('  _cKau = ' + _cKau);
+                    mylog('  _cKau = ' + string(_cKau,0,0) );
 
                       case _iKau  of
                        1    : _value := ShowKau(SaldTuneSP.WOBJ         , _cKau    )
@@ -398,7 +398,7 @@ var _ActionBody : string = _tElements.value;
           ,'KOLL'   : {
                       var _retstr, _retstrRus : string = '';
                        if not isNumber(_tElements.value, _retstr, _retstrRus) {
-                         #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле количество '+ _retstrRus + '. Позиция ' + _npp)
+                         #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле количество '+ _retstrRus + '. Позиция ' + string(_npp) )
                          result := JSONObj;
                          exit;
                        }
@@ -407,8 +407,8 @@ var _ActionBody : string = _tElements.value;
                          if getfirst kated where ((katMc.cEd == kated.nrec)) = tsOK {
                            if kated.diskret = 1 then {
                               if round(_tmpkol,0)  <> _tmpkol {
-                                 #WRITE_JSONERROR(JSONObj,'The KOL field is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpkol),'Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+_npp)
-                                 mylog('check: Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+_npp);
+                                 #WRITE_JSONERROR(JSONObj,'The KOL field is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpkol),'Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+string(_npp) )
+                                 mylog('check: Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+string(_npp) );
                                  result := JSONObj;
                                  exit;
                               }
@@ -425,7 +425,7 @@ var _ActionBody : string = _tElements.value;
           ,'PPRICE' : {
                         var _retstr, _retstrRus : string = '';
                        if not isNumber(_tElements.value, _retstr, _retstrRus) {
-                         #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле цена '+ _retstrRus + '. Позиция ' + _npp)
+                         #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле цена '+ _retstrRus + '. Позиция ' + string(_npp))
                          result := JSONObj;
                          exit;
                        }
@@ -467,7 +467,7 @@ var _ActionBody : string = _tElements.value;
 //             , SPINVTAB_makeAction.prMc  := 1 // вот тут вопрос конечно....
             ;
         }
-        mylog(' _getfirst SPINVTAB_makeAction _cSPINVTAB = ' + _cSPINVTAB)
+        mylog(' _getfirst SPINVTAB_makeAction _cSPINVTAB = ' + string(_cSPINVTAB,0,0) )
      }
      else
       {
@@ -482,9 +482,9 @@ var _ActionBody : string = _tElements.value;
        }
        */
 #declare updateSpInvTab_makeActionDouble(FieldName)
- mylog('  SpInvTab_makeAction.#FieldName  = '+ SpInvTab_makeAction.#FieldName +' _   _tElements.value = ' + _tElements.value);
+ mylog('  SpInvTab_makeAction.#FieldName  = '+ string(SpInvTab_makeAction.#FieldName,0,5) +' _   _tElements.value = ' + string(_tElements.value,0,5) );
 if SpInvTab_makeAction.#FieldName <> double(_tElements.value) then {
-     mylog('  SpInvTab_makeAction.#FieldName -> ' + double(_tElements.value));
+     mylog('  SpInvTab_makeAction.#FieldName -> ' + string(double(_tElements.value),0,5) );
    update current SpInvTab_makeAction set SpInvTab_makeAction.#FieldName := double(_tElements.value);
   }
 #end

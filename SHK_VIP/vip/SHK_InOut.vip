@@ -158,6 +158,7 @@ const
 coUnRealString = 'ТАКОЙ СТРОКИ НЕ БЫВАЕ В РАБОЧЕЙ БАЗЕ, НУЕТ НУ ВАЩЕ НЕ БЫВАЕТ ВЕДЬ НЕТ ТАКИХ УДМАКОВ ЧТОБЫ ТИАКМ ПОПАСТЬ В СТРОКУ ТАКУЮ ИНТЕРСЕСНУЮ';
 end;
 Interface SHK_InOut 'Штрихкодирование. Обработка входных и выходных файлов';
+#include MakeOrder.var
 
 table struct tgroup_TSD_ARM_USER
 (
@@ -238,6 +239,7 @@ var
   , SHK_TSD_ARM_USER SHK_USER
   , KatEd
   , KatOtpEd
+  , KatSopr
 
   , _tElements
   , tJSON_ID
@@ -726,7 +728,7 @@ function GenerateJSON_DescriptionFILE( _ActionName: String) : string;
 
   var _pcSHKObj : comp = GetTMPLTByName(_ActionName);
 
-  mylog('_pcSHKObj='+_pcSHKObj);
+  mylog('_pcSHKObj='+string(_pcSHKObj,0,0) );
 
   result := '';
    if not BoundActive(tbbySHKObjNrec) then
@@ -827,8 +829,8 @@ if (_longValue = 0) {
        result := MakeAction_GenerateJSONERROR('TEMPLATE "' +_OBJECTACTION+'" does not exists','шаблона "' +_OBJECTACTION+'" не существует');
        exit;
       }
-
-     if not IsExistSHKObjbyNREC(_pcSHKObj, '') {  // тут ставится баунд
+     var _str :string = '';
+     if not IsExistSHKObjbyNREC(_pcSHKObj, _str) {  // тут ставится баунд
        result := MakeAction_GenerateJSONERROR('0_o ','o_0');
        exit;
      }
@@ -858,7 +860,7 @@ if (_longValue = 0) {
 
 
     var _IDOBJECTSTR : comp   = HttpConnect_JsonObjectValueByName(m_service,JSON_OBJECTVALUES,'IDOBJECT');
-    if _IDOBJECTSTR = ''
+    if _IDOBJECTSTR = 0
     {
      // предусмотретьситуацию, когда  _IDOBJECT - пустой значит должны создавать новый
      // но тут видимо надо созаватьсделать признак разрешения создания документа прям на стйройстве
@@ -902,9 +904,9 @@ if (_longValue = 0) {
 
   for (i_JSONARRAY := 0; i_JSONARRAY <= lCount - 1; i_JSONARRAY++)
    {
-     MyLog('i_JSONARRAY = ' + i_JSONARRAY)  ;
+     MyLog('i_JSONARRAY = ' + string(i_JSONARRAY) )  ;
      var _JSON_Element : TPtr = HttpConnect_JSONObjectByIndexOfArray(m_service, lJsonArray, i_JSONARRAY);
-     MyLog('_JSON_Element = ' + _JSON_Element)    ;
+     MyLog('_JSON_Element = ' + string(_JSON_Element)    ;
      _loop SHKObjSP_SP
       {
         //цикл по модифицируемым полям настройки шаблона JSON element  = название поля, которое можно модифицировать
@@ -927,7 +929,7 @@ if (_longValue = 0) {
          ;
         MyLog('_tElements.Name  = ' + _tElements.Name );
         MyLog('_tElements.value = ' + _tElements.value);
-        MyLog('_tElements.npp   = ' + _tElements.npp  );
+        MyLog('_tElements.npp   = ' + string(_tElements.npp)  );
 
       }
    }
@@ -948,9 +950,9 @@ procedure setFilter_TSD_ARM_USER(_cTSD, _cARM, _cUser: comp);
  set fltARM  := _cARM ;
  set fltUser := _cUser;
 
-    mylog(' setFilter_TSD_ARM_USER fltTSD  ' + fltTSD );
-    mylog(' setFilter_TSD_ARM_USER fltARM  ' + fltARM );
-    mylog(' setFilter_TSD_ARM_USER fltUser ' + fltUser);
+    mylog(' setFilter_TSD_ARM_USER fltTSD  ' + string(fltTSD) );
+    mylog(' setFilter_TSD_ARM_USER fltARM  ' + string(fltARM) );
+    mylog(' setFilter_TSD_ARM_USER fltUser ' + string(fltUser) );
 }
 
 
@@ -992,7 +994,7 @@ procedure generate_batch_files_group_TSD_ARM_USER(_ActionName : string);
    }
   var _tidkgal : word = SHKObj.VIDDOC ;
   delete all tgroup_TSD_ARM_USER;
-  mylog('   generate_batch_files_group_TSD_ARM_USER _tidkgal = ' + _tidkgal);
+  mylog('   generate_batch_files_group_TSD_ARM_USER _tidkgal = ' + string(_tidkgal) );
   if _tidkgal <> coTypeDocBoxSaldo
   {
     sql
@@ -1029,7 +1031,7 @@ procedure generate_batch_files_group_TSD_ARM_USER(_ActionName : string);
        , tgroup_TSD_ARM_USER.USER_ID := 'COMMON'
     ;
   }
-  mylog('   generate_batch_files_group_TSD_ARM_USER recordsintable(tntgroup_TSD_ARM_USER) = ' + recordsintable(tntgroup_TSD_ARM_USER));
+  mylog('   generate_batch_files_group_TSD_ARM_USER recordsintable(tntgroup_TSD_ARM_USER) = ' + string(recordsintable(tntgroup_TSD_ARM_USER) ) );
 
   var _destFolder : string = get_destFolder ;
   var _isPathOK   : boolean = checkDestPathfromTune;
@@ -1072,11 +1074,15 @@ function GenerateJSON_VALUESFILE(_ActionName: string; _pIdent: string; _login: s
   var JSONObj : TPtr = HttpConnect_JsonObjectCreate(m_service);
      mylog('   _sfileout = ' + _sfileout);
      mylog(' before GenerateJSON_VALUES');
-  var JSONObj_VALUES : tptr = GenerateJSON_VALUES(_cSHKObj, _pIdent, _err, _login, _imei );
+  var JSONObj_VALUES : tptr = GenerateJSON_VALUES(string(_cSHKObj)
+                                                , string(_pIdent)
+                                                , _err
+                                                , _login
+                                                , _imei );
 
-     mylog(' after GenerateJSON_VALUES JSONObj_VALUES = ' + JSONObj_VALUES);
+     mylog(' after GenerateJSON_VALUES JSONObj_VALUES = ' + string(JSONObj_VALUES) );
     mylog(' HttpConnect_LastErrorText =' + HttpConnect_LastErrorText(m_service));
-     mylog('      HttpConnect_JsonCount(m_service, JSONObj_VALUES) =' + HttpConnect_JsonCount(m_service, JSONObj_VALUES));
+     mylog('      HttpConnect_JsonCount(m_service, JSONObj_VALUES) =' + string(HttpConnect_JsonCount(m_service, JSONObj_VALUES) ) );
   var _setResultEmpty : boolean = False;
   if JSONObj_VALUES <> 0 then
    {
@@ -1090,7 +1096,7 @@ function GenerateJSON_VALUESFILE(_ActionName: string; _pIdent: string; _login: s
     var JSONSJSON     : TPtr    = HttpConnect_JSONObjectToJSON(m_service,JSONObj);
 //    var JSONSJSON     : TPtr    =     HttpConnect_JSONObjectToString(m_service,JSONObj);
 
-    mylog('JSONSJSON =' + JSONSJSON);
+    mylog('JSONSJSON =' + string(JSONSJSON) );
      mylog(' HttpConnect_LastErrorText =' + HttpConnect_LastErrorText(m_service));
 //    var _res : boolean = false;
 
@@ -1145,6 +1151,7 @@ function GenerateJSON_VALUESFILE(_ActionName: string; _pIdent: string; _login: s
 
 function JSON_Import_Docs(): string;
 {
+    Result := '';
     var Folder_input   : string = AddSlashToPath(sgettune('SHK.FILEPATHIMPORT'));
     var Folder_archive : string = AddSlashToPath(sgettune('SHK.FILEPATHARCHIVE'));
     var Folder_log     : string = AddSlashToPath(sgettune('SHK.FILEPATHLOG'));

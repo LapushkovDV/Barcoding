@@ -1,14 +1,14 @@
-sql query queryKatBOX =
+sql query queryKatParty =
       select distinct
-        %SelectFieldsSys // KatBox.NREC as SYS_KATBOX_NREC
+        %SelectFieldsSys
        ,%IdentityField                        as SYS_BARCODE
         %SelectFields
-       from katbox
-          left join katpodr          on katpodr.nrec = katbox.CPODR
-          left join katbox katbox_UP on katbox_UP.nrec = katbox.cBox
-          left join attrnam          on attrnam.wtable = 1423 and attrnam.name = :anName
-          left join attrval          on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katBox.nrec
-          left join shk_barcodelink  on shk_barcodelink.wtable = 1423 and shk_barcodelink.crec = katbox.NREC and shk_barcodelink.type = 0
+       from KatParty
+          left join katmc                on katmc.nrec        = KatParty.cMC
+          left join GROUPPARTY  on GROUPPARTY.nrec = KatParty.CGROUPPARTY
+          left join attrnam     on attrnam.wtable = 1430 and attrnam.name = :anName
+          left join attrval     on attrval.cattrnam = attrnam.nrec and attrval.wtable = attrnam.wtable and attrval.crec = katParty.nrec
+          left join shk_barcodelink on shk_barcodelink.wtable = 1430 and shk_barcodelink.crec = KatParty.NREC and shk_barcodelink.type = 0
           left join SHK_TSD_ARM_USER SHK_TSD on SHK_TSD.nrec = shk_barcodeLink.cTSD
           left join SHK_TSD_ARM_USER SHK_ARM on SHK_ARM.nrec = shk_barcodeLink.cARM
           left join SHK_TSD_ARM_USER SHK_USER on SHK_USER.nrec = shk_barcodeLink.cUser
@@ -20,7 +20,7 @@ sql query queryKatBOX =
              )
 ;
 
-function GetResultQueryForKatBOX(_pcSHKObj: comp; _pIdent : string) : IResultSet;
+function GetResultQueryForKatParty(_pcSHKObj: comp; _pIdent : string) : IResultSet;
 {
 
    if not BoundActive(tbbySHKObjNrec) then
@@ -29,29 +29,18 @@ function GetResultQueryForKatBOX(_pcSHKObj: comp; _pIdent : string) : IResultSet
     pushbounds(tbbySHKObjNrec);
    }
 
-  var qKatBOX : iQuery = queryManager.createQuery(queryKatBOX);
+  var qKatParty : iQuery = queryManager.createQuery(queryKatParty);
     var SelectFields : longint = 0;
 
    _loop SHKObjSP_HEAD
-      {
-        if pos('VA_1423',SHKObjSP_HEAD.SYSNAMETBL) = 1 then continue;
-        if pos('VA_1413',SHKObjSP_HEAD.SYSNAMETBL) = 1 then continue;
+     {
+        if pos('VA_1430',SHKObjSP_HEAD.SYSNAMETBL) = 1 then continue;
         MysqlAddStr( SelectFields ,' ,  ' +SHKObjSP_HEAD.SYSNAMETBL + '.'+SHKObjSP_HEAD.SYSNAME + ' as ' +SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME  );
      }
-
-     _loop SHKObjSP_SP
-      {
-        mylog('    _loop SHKObjSP_SP  ->  SHKObjSP_SP.SYSNAMETBL = ' + SHKObjSP_SP.SYSNAMETBL + '    SHKObjSP_SP.SYSNAME = ' + SHKObjSP_SP.SYSNAME );
-        if pos('VA_1430',SHKObjSP_SP.SYSNAMETBL) = 1 then continue;
-        if pos('VA_1411',SHKObjSP_SP.SYSNAMETBL) = 1 then continue;
-        MysqlAddStr( SelectFields ,' ,  ' +SHKObjSP_SP.SYSNAMETBL + '.'+SHKObjSP_SP.SYSNAME + ' as ' +SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME  )
-
-      }
-
  var _anName : string;
   var Identificator : longint = 0;
 
-        if pos('VA_1423',SHKOBJ.SYSNAMETBL) = 1
+        if pos('VA_1430',SHKOBJ.SYSNAMETBL) = 1
         then
           {
            _anName := SHKOBJ.SYSNAME;
@@ -65,40 +54,41 @@ function GetResultQueryForKatBOX(_pcSHKObj: comp; _pIdent : string) : IResultSet
            mylog('    %IdentityField =' + SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME );
           }
 
-   var SelectFieldsSys : longint = 0;
-   MysqlAddStr( SelectFieldsSys, ' KatBox.NREC as SYS_KATBOX_NREC');
+  qKatParty.setMacro('IdentityField', Identificator);
 
-  qKatBOX.setMacro('SelectFieldsSys', SelectFieldsSys);
-  qKatBOX.setMacro('IdentityFieldWhere', Identificator);
+  qKatParty.setMacro('SelectFields', SelectFields);
+
+
+   var SelectFieldsSys : longint = 0;
+   MysqlAddStr( SelectFieldsSys, ' KatParty.NREC                           as SYS_KATPARTY_NREC');
+
+  qKatParty.setMacro('SelectFieldsSys', SelectFieldsSys);
+  qKatParty.setMacro('IdentityFieldWhere', Identificator);
    var WhereFields : longint = 0;
        MysqlAddStr( WhereFields ,' 1=1');
 
-  qKatBOX.setMacro('WhereFields', WhereFields);
+  qKatParty.setMacro('WhereFields', WhereFields);
 
 
 
-  qKatBOX.setMacro('IdentityField', Identificator);
-
-  qKatBOX.setMacro('SelectFields', SelectFields);
-
-  qKatBOX.setParam('anName', _anName);
+  qKatParty.setParam('anName', _anName);
    var _type : byte = GetTypeByTableAndField(SHKOBJ.SYSNAMETBL, SHKOBJ.SYSNAME);
-   mylog('    _type = '+_type) ;
+   mylog('    _type = '+string(_type) ) ;
  case _type of
-        4 :  qKatBOX.setParam('pIdent',    word(_pIdent) );
-        6 :  qKatBOX.setParam('pIdent', longint(_pIdent) );
-       11 :  qKatBOX.setParam('pIdent',  double(_pIdent) );
-       17 :  qKatBOX.setParam('pIdent',    comp(_pIdent) );
-        else qKatBOX.setParam('pIdent',  _pIdent);
+        4 :  qKatParty.setParam('pIdent',    word(_pIdent) );
+        6 :  qKatParty.setParam('pIdent', longint(_pIdent) );
+       11 :  qKatParty.setParam('pIdent',  double(_pIdent) );
+       17 :  qKatParty.setParam('pIdent',    comp(_pIdent) );
+        else qKatParty.setParam('pIdent',  _pIdent);
    end;
 
-   result := qKatBOX.getResultSet;
+   result := qKatParty.getResultSet;
 
 }
 
-function GenerateJSON_VALUES_KatBOXOne(_ActionName: string; _pIdent: string; var _err : string) : TpTr;
+function GenerateJSON_VALUES_KATPartyOne(_ActionName: string; _pIdent: string; var _err : string) : TpTr;
 {
- var iRes : IResultSet = GetResultQueryForKatBOX(GetTMPLTByName(_ActionName), _pIdent);
+ var iRes : IResultSet = GetResultQueryForKatParty(GetTMPLTByName(_ActionName), _pIdent);
 
 
   var JSONObj_VALUES: TPtr = HttpConnect_JsonObjectCreate(m_service);
@@ -124,12 +114,12 @@ function GenerateJSON_VALUES_KatBOXOne(_ActionName: string; _pIdent: string; var
     exit;
   }
 
-        var _SYS_KatBOX_NREC      : comp = 0h;
+        var _SYS_KATParty_NREC      : comp = 0h;
 
-         _SYS_KatBOX_NREC      := iRes.row.val('SYS_KATBOX_NREC');
+         _SYS_KATParty_NREC      := iRes.row.val('SYS_KATPARTY_NREC');
 
         HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'OBJECTACTION', SHKObj.Action);
-        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'IDOBJECT'       , String(_SYS_KATBOX_NREC));
+        HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'IDOBJECT'       , String(_SYS_KATParty_NREC));
         var _SYS_BARCODE   : string = iRes.row.val('SYS_BARCODE');
         HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'SYS_BARCODE'       , String(_SYS_BARCODE));
 
@@ -142,8 +132,8 @@ function GenerateJSON_VALUES_KatBOXOne(_ActionName: string; _pIdent: string; var
            var _value : string = coUnRealString;
 //           var JSONObj_ArrayOneElement : tptr = HttpConnect_JsonObjectCreate(m_service);
 
-           if pos('VA_1423',SHKObjSP_HEAD.SYSNAMETBL) = 1 then {
-                _value := piextattr.sgetattr(1423, _SYS_KatBOX_NREC, SHKObjSP_HEAD.SYSNAME);
+           if pos('VA_1430',SHKObjSP_HEAD.SYSNAMETBL) = 1 then {
+                _value := piextattr.sgetattr(1430, _SYS_KATParty_NREC, SHKObjSP_HEAD.SYSNAME);
              }
 
 
@@ -159,13 +149,14 @@ function GenerateJSON_VALUES_KatBOXOne(_ActionName: string; _pIdent: string; var
   result := JSONObj_VALUES;
 }
 
-function GetResultQueryForKatBoxBatch(_pcSHKObj: comp; _pIdent : string;  _login: string; _imei : string) : IResultSet;
+
+function GetResultQueryForKatPartyBatch(_pcSHKObj: comp; _pIdent : string;  _login: string; _imei : string) : IResultSet;
 {
   // 1 ß†ØÆ´≠Ô•¨ ·®·‚•¨≠Î• ØÆ´Ô ¢Î°Æ‡™®
    var SelectFieldsSys : longint = 0;
-  MysqlAddStr( SelectFieldsSys, ' KatBox.NREC as SYS_KATBOX_NREC');
+   MysqlAddStr( SelectFieldsSys, '  KatParty.NREC                           as SYS_KATPARTY_NREC');
 
-  #BatchBodyFunctionGetResultQuery(queryKatBox,1423)
+  #BatchBodyFunctionGetResultQuery(queryKatParty,1430)
  // 2 §Æ°†¢´Ô•¨ Ø†‡†¨•‚‡Î ¢ ß†Ø‡Æ·
  //  _Query.setParam('',  SHKObj.viddoc); --  ‚„‚ ≠•Á•£Æ §Æ°†¢´Ô‚Ï
 
@@ -174,28 +165,28 @@ function GetResultQueryForKatBoxBatch(_pcSHKObj: comp; _pIdent : string;  _login
 //  message(qKatMC.errorCode)
 }
 
-function GenerateJSON_VALUES_KatBox(_ActionName: string; _pIdent: string; var _err : string;_login: string = ''; _imei : string = '') : TpTr;
+function GenerateJSON_VALUES_KatParty(_ActionName: string; _pIdent: string; var _err : string; _login: string = ''; _imei : string = '') : TpTr;
 {
-  #Function_GenerateJSON_VALUES_Body(GetResultQueryForKatBoxBatch,GenerateJSON_VALUES_KatBoxOne,SYS_KATBOX_NREC,coKatBox)
+  #Function_GenerateJSON_VALUES_Body(GetResultQueryForKatPartyBatch,GenerateJSON_VALUES_KatPartyOne,SYS_KATPARTY_NREC,coKatParty)
 }
 
 
-function GetKATBOXNRECByIdent(_ActionName: string; _pIdent: string; _needlog : boolean = false) : comp;
+function GetPARTYNRECByIdent(_ActionName: string; _pIdent: string) : comp;
 {
- mylog('  GetKATBOXNRECByIdent: _ActionName='+_ActionName+ '  _pIdent=' +_pIdent , _needlog);
+ mylog('  GetPARTYNRECByIdent: _ActionName='+_ActionName+ '  _pIdent=' +_pIdent );
  result := 0h;
- var iRes : IResultSet = GetResultQueryForKatBOX(GetTMPLTByName(_ActionName), _pIdent);
+ var iRes : IResultSet = GetResultQueryForKatParty(GetTMPLTByName(_ActionName), _pIdent);
  Setvisualheader('¢ÎØÆ´≠•≠®• ß†Ø‡Æ·† ¢ ëìÅÑ');
  if NullVipRef(iRes) then {
-   mylog('  GetKATBOXNRECByIdent: éòàÅäÄ ÇõèéãçÖçàü áÄèêéëÄ Ç ÅÑ', _needlog);
+   mylog('  GetPARTYNRECByIdent: éòàÅäÄ ÇõèéãçÖçàü áÄèêéëÄ Ç ÅÑ');
 //    _err := 'éòàÅäÄ ÇõèéãçÖçàü áÄèêéëÄ Ç ÅÑ';
     exit;
  }
  if iRes.getFirst <>  tsOk {
 //    _err := 'çÖ çÄâÑÖç éÅöÖäí èé '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = "' + _pIdent+'"';
-    mylog('  GetKATBOXNRECByIdent: çÖ çÄâÑÖç éÅöÖäí èé '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = "' + _pIdent+'"', _needlog);
+    mylog('  GetPARTYNRECByIdent: çÖ çÄâÑÖç éÅöÖäí èé '+SHKOBJ.SYSNAMETBL+'.'+SHKOBJ.SYSNAME +' = "' + _pIdent+'"');
     exit;
   }
- Result    := iRes.row.val('SYS_KATBOX_NREC');
- mylog('  GetKATBOXNRECByIdent: Result = ' + Result, _needlog);
+ Result    := iRes.row.val('SYS_KATPARTY_NREC');
+ mylog('  GetPARTYNRECByIdent: Result = ' + string(Result) );
 }

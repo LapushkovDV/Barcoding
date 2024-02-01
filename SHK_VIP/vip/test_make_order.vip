@@ -7,11 +7,12 @@
 * ----------------------------------------------------------------------------------------------- *
 
 \*************************************************************************************************/
-
+#include MakeOrder.vih
 //************************************************************
 const
 end;
 Interface test_make_order 'тестирование make_order MakeReceivingOrder MakeIssueOrder';
+#include MakeOrder.var
 
 create view
  var
@@ -44,10 +45,10 @@ cminit: {
 
 }
 cmValue1: {
-  message(oMakeOrder.MakeReceivingOrder(_cKatsopr,_dateOrder));
+  message(string(oMakeOrder.MakeReceivingOrder(_cKatsopr,_dateOrder) ) );
 }
 cmValue2: {
-  message(oMakeOrder.MakeIssueOrder(_cKatsopr,_dateOrder));
+  message(string(oMakeOrder.MakeIssueOrder(_cKatsopr,_dateOrder) ) );
 }
 cmValue3: {
   var _wideString : wideString  = oMakeOrder.LastErrorDescription;

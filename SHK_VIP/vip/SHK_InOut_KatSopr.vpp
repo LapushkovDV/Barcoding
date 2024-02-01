@@ -137,7 +137,7 @@ function GetResultQueryForKatSopr(_pcSHKObj: comp; _pIdent : string) : IResultSe
   qKatSopr.setParam('VIDSOPR',  SHKObj.viddoc);
   qKatSopr.setParam('anName', _anName);
    var _type : byte = GetTypeByTableAndField(SHKOBJ.SYSNAMETBL, SHKOBJ.SYSNAME);
-   mylog('    _type = '+_type) ;
+   mylog('    _type = '+string(_type) ) ;
  case _type of
         4 :  qKatSopr.setParam('pIdent',    word(_pIdent) );
         6 :  qKatSopr.setParam('pIdent', longint(_pIdent) );
@@ -260,13 +260,13 @@ function GenerateJSON_VALUES_KATSOPRONE(_ActionName: string; _pIdent: string; va
 
               if pos('CU_1110',SHKObjSP_SP.SYSNAMETBL) = 1 then {
                mylog(' pos(CU_1110,SHKObjSP_SP.SYSNAMETBL) = 1 ' + SHKObjSP_SP.SYSNAMETBL);
-               mylog('  _SYS_SPSOPR_cSaldTune = ' + _SYS_SPSOPR_cSaldTune);
+               mylog('  _SYS_SPSOPR_cSaldTune = ' + string(_SYS_SPSOPR_cSaldTune,0,0) );
                  if getfirst SaldTuneSP where ((_SYS_SPSOPR_cSaldTune == SaldTuneSP.nrec)) = tsOK {
                     mylog('  if getfirst SaldTuneSP where ((_SYS_SPSOPR_cSaldTune == SaldTuneSP.nrec)) = tsOK {');
                      var _cKau : comp = iRes.row.val(SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME);
                      var _iKau : integer = Integer(extractdelimitedword(SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME,4,'_')); // CU_1010_KAU_2
                     mylog('  iRes.row.val(  '+SHKObjSP_SP.SYSNAMETBL + '_'+SHKObjSP_SP.SYSNAME );
-                    mylog('  _cKau = ' + _cKau);
+                    mylog('  _cKau = ' + string(_cKau,0,0) );
 
                       case _iKau  of
                        1    : _value := ShowKau(SaldTuneSP.WOBJ         , _cKau    )
@@ -373,9 +373,9 @@ Function MakeAction_MakeAction_KATSOPR(_login, _IMEI : string) : TPtr;
      exit;
    }
 
- mylog('katSopr_makeAction.nrec  = ' + katSopr_makeAction.nrec);
+ mylog('katSopr_makeAction.nrec  = ' + string( katSopr_makeAction.nrec,0,0) );
  mylog('katSopr_makeAction.nsopr = ' + katSopr_makeAction.nsopr);
- mylog('katSopr_makeAction.cnote = ' + katSopr_makeAction.cNote);
+ mylog('katSopr_makeAction.cnote = ' + string(katSopr_makeAction.cNote,0,0) );
 
 var _ERRORENG,_ERRORRUS : string = '';
   if not checkkatSopr_makeAction(_ERRORENG,_ERRORRUS) // тут все проверки типа статуса, оприхордлования и т.д.
@@ -399,7 +399,7 @@ var _ActionBody : string = _tElements.value;
   do
   {
 // check
-    mylog(' check _npp = ' + _npp);
+    mylog(' check _npp = ' + string(_npp) );
     var _SpecFieldIDName : string = GetSpecFieldIDName;
      var _retstr, _retstrRus : string = '';
      var _cSpSopr : comp = 0h;
@@ -426,18 +426,18 @@ var _ActionBody : string = _tElements.value;
 //              'KOLNORMA', 'OILPLOT', 'PROCNAC', 'SUMNDS', 'SUMVNDS', 'RPRICE',
               'KOL','KOLOPL','KOLFACT', 'KOL2', 'KOLFACT2', 'KOLGRM', 'KOLPOV', 'KOLDOP'     : {
                              if not isNumber(_tElements.value, _retstr, _retstrRus) {
-                               #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле количество '+ _retstrRus + '. Позиция ' + _npp)
+                               #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле количество '+ string(_retstrRus,0,2) + '. Позиция ' + string(_npp) )
                                result := JSONObj;
                                exit;
                              }
                              var _tmpDbl : double = double(_tElements.value);
-                              mylog(' check _tmpDbl = ' + _tmpDbl);
+                              mylog(' check _tmpDbl = ' + string(_tmpDbl) );
                              if getfirst katotped where ((SpSopr_makeAction.cotpEd == katotped.nrec)) = tsOK {
                                  mylog(' check if getfirst katotped where ((SpSopr_makeAction.cotpEd == katotped.nrec)) = tsOK ');
                                  if katotped.diskret = 1 then {
                                     if round(_tmpDbl,0)  <> _tmpDbl {
-                                       #WRITE_JSONERROR(JSONObj,'The KOL '+_field+' is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpDbl),'Указано дробное число '+string(_tmpDbl)+' при неделимой единице измерения. Позиция '+_npp)
-                                       mylog('Указано дробное число '+string(_tmpDbl)+' при неделимой единице измерения. Позиция '+_npp);
+                                       #WRITE_JSONERROR(JSONObj,'The KOL '+string(_field)+' is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpDbl),'Указано дробное число '+string(_tmpDbl)+' при неделимой единице измерения. Позиция '+string(_npp) )
+                                       mylog('Указано дробное число '+string(_tmpDbl)+' при неделимой единице измерения. Позиция '+string(_npp) );
                                        result := JSONObj;
                                        exit;
                                     }
@@ -476,7 +476,7 @@ var _ActionBody : string = _tElements.value;
 //             , SpSopr_makeAction.prMc  := 1 // вот тут вопрос конечно....
             ;
         }
-        mylog(' _getfirst SpSopr_makeAction _cSpSopr = ' + _cSpSopr)
+        mylog(' _getfirst SpSopr_makeAction _cSpSopr = ' + string(_cSpSopr,0,0) )
      }
      else
       {
@@ -502,12 +502,20 @@ var _ActionBody : string = _tElements.value;
        }
        */
 #declare updateSpSopr_makeActionDouble(FieldName)
- mylog('  SpSopr_makeAction.#FieldName  = '+ SpSopr_makeAction.#FieldName +' _   _tElements.value = ' + _tElements.value);
+ mylog('  SpSopr_makeAction.#FieldName  = '+ string(SpSopr_makeAction.#FieldName,0,5) +' _   _tElements.value = ' + string(_tElements.value,0,5) );
 if SpSopr_makeAction.#FieldName <> double(_tElements.value) then {
-     mylog('  SpSopr_makeAction.#FieldName -> ' + double(_tElements.value));
+     mylog('  SpSopr_makeAction.#FieldName -> ' + string(double(_tElements.value),0,5) );
    update current SpSopr_makeAction set SpSopr_makeAction.#FieldName := double(_tElements.value);
   }
 #end
+#declare updateSpSopr_makeActionlongint(FieldName)
+ mylog('  SpSopr_makeAction.#FieldName  = '+ string(SpSopr_makeAction.#FieldName,0,5) +' _   _tElements.value = ' + string(_tElements.value,0,5) );
+if SpSopr_makeAction.#FieldName <> double(_tElements.value) then {
+     mylog('  SpSopr_makeAction.#FieldName -> ' + string(double(_tElements.value),0,5) );
+   update current SpSopr_makeAction set SpSopr_makeAction.#FieldName := longint(_tElements.value);
+  }
+#end
+
 #declare updateSpSopr_makeActionString(FieldName)
 if SpSopr_makeAction.#FieldName <> _tElements.value then update current SpSopr_makeAction set SpSopr_makeAction.#FieldName := _tElements.value;
 #end
@@ -575,7 +583,7 @@ if SpSopr_makeAction.#FieldName <> _tElements.value then update current SpSopr_m
                         }
                        }
           'PRICE'    : {#updateSpSopr_makeActionDouble(PRICE)    }
-          'NPP'      : {#updateSpSopr_makeActionDouble(NPP)      }
+          'NPP'      : {#updateSpSopr_makeActionLongint(NPP)      }
           'PROCUB'   : {#updateSpSopr_makeActionDouble(PROCUB)   }
           'NVAGON'   : {#updateSpSopr_makeActionString(NVAGON)   }
           'NKVIT'    : {#updateSpSopr_makeActionString(NKVIT)    }
@@ -668,7 +676,7 @@ if SpSopr_makeAction.#FieldName <> _tElements.value then update current SpSopr_m
             var iSHK_MakeMove : SHK_MakeMove;
             var _skPr, _wOrder : word;
             GetParamSkPr_wOrder(katSopr_makeAction.vidsopr, _skPr, _wOrder);
-            mylog('CREATEORDERS GetParamSkPr_wOrder . _skPr='+_skPr+', _wOrder ='+ _wOrder );
+            mylog('CREATEORDERS GetParamSkPr_wOrder . _skPr='+string(_skPr)+', _wOrder ='+ string(_wOrder) );
             var _error : string = '';
 
             if katSopr_makeAction.vidsopr = 101 { // для приходной накладной MakeMove не катит

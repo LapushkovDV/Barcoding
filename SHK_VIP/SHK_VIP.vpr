@@ -60,7 +60,7 @@
 		</CoreVip>
 		<ActiveIndex>1</ActiveIndex>
 		<ProjectItems>
-			<ProjectCompileFile FileName="SHK_VIP.prj" Priority="0">
+			<ProjectCompileFile FileName="C_Barcode.prj" Priority="0">
 				<CoreVip>
 					<VipParameters>
 						<StrictVip>True</StrictVip>
@@ -83,7 +83,7 @@
 			</ConfigurationList>
 		</DatabaseConfiguration>
 		<FileList>
-			<File Name="SHK_VIP.prj" PosX="21" PosY="159" OpenEditor="True"/>
+			<File Name="C_Barcode.prj" PosX="21" PosY="159" OpenEditor="True"/>
 			<File Name="Source\SHK_TEMPLATES.vip" PosX="27" PosY="48" OpenEditor="True" Active="True"/>
 			<File Name="Source\SHK_TEMPLATES.pan" PosX="27" PosY="244" OpenEditor="True"/>
 			<File Name="Source\SHK_Base.vip" PosX="45" PosY="82" OpenEditor="True"/>
@@ -124,7 +124,7 @@
 			<Marker FileName="Source\SHK_InOut_KatBox.vpp" Caption="Нумерованная закладка 2" Line="159" NumIndex="2" MarkerType="mtNumBookmark" Comment="MysqlAddStr( SelectFieldsSys, '  KatParty.NREC                           as SYS_KATPARTY_NREC');"/>
 			<Marker FileName="Source\shk_barcode_Generate.vip" Caption="Нумерованная закладка 1" Line="248" NumIndex="1" MarkerType="mtNumBookmark" Comment="var ishk_barcode_Print : shk_barcode_Print;"/>
 			<Marker FileName="Source\shk_barcode_Print.vip" Caption="Нумерованная закладка 1" Line="224" NumIndex="1" MarkerType="mtNumBookmark" Comment="cmValue1  : {if CloseWindowEx(winSHK_selectObjects, cmDefault);}"/>
-			<Marker FileName="SHK_VIP.prj" Caption="Нумерованная закладка 1" Line="96" NumIndex="1" MarkerType="mtNumBookmark" Comment="coTypeDocBoxSaldo = 101423 ;//100000+1430 Сальдо по ячейкам хранения"/>
+			<Marker FileName="C_Barcode.prj" Caption="Нумерованная закладка 1" Line="96" NumIndex="1" MarkerType="mtNumBookmark" Comment="coTypeDocBoxSaldo = 101423 ;//100000+1430 Сальдо по ячейкам хранения"/>
 			<Marker FileName="Source\SHK_TEMPLATES.vip" Caption="Нумерованная закладка 1" Line="106" NumIndex="1" MarkerType="mtNumBookmark" Comment="_loop      update current SHKObj set SHKObj.BlockRows := true"/>
 		</MarkerList>
 		<BreakPointList>

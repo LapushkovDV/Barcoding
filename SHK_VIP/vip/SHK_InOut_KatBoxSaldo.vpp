@@ -82,7 +82,7 @@ function GetResultQueryForKatBOXSaldo(_pcSHKObj: comp; _pIdent : string) : IResu
 
   qKatBOXSaldo.setParam('anName', _anName);
    var _type : byte = GetTypeByTableAndField(SHKOBJ.SYSNAMETBL, SHKOBJ.SYSNAME);
-   mylog('    _type = '+_type) ;
+   mylog('    _type = '+string(_type) ) ;
  case _type of
         4 :  qKatBOXSaldo.setParam('pIdent',    word(_pIdent) );
         6 :  qKatBOXSaldo.setParam('pIdent', longint(_pIdent) );
@@ -413,7 +413,7 @@ var _ActionBody : string = _tElements.value;
 
             do
             {
-             mylog('check:  _npp = '+ _npp);
+             mylog('check:  _npp = '+ string(_npp) );
               var _ckatBox_to : comp = 0;
               var _needThisRow : boolean = false;
               _loop _tElements where ((_npp == _tElements.npp)) and pos('KATBOX_TO_',_tElements.name) = 1 {   // указана ячейка куда
@@ -430,8 +430,8 @@ var _ActionBody : string = _tElements.value;
                        }
                        else {
                          if _tElements.value <> '' {
-                             #WRITE_JSONERROR(JSONObj,'does not exist SaldoBox_to where nrec = ' + _tElements.value,'В позиции '+_npp+' введен некорректный штрихкод ячейки-получателя ('+_tElements.value+'). Ячейки с таким штрихкодом не существует')
-                             mylog('В позиции '+_npp+' введен некорректный штрихкод ячейки-получателя ('+_tElements.value+'). Ячейки с таким штрихкодом не существует');
+                             #WRITE_JSONERROR(JSONObj,'does not exist SaldoBox_to where nrec = ' + string(_tElements.value),'В позиции '+string(_npp)+' введен некорректный штрихкод ячейки-получателя ('+string(_tElements.value)+'). Ячейки с таким штрихкодом не существует')
+                             mylog('В позиции '+string(_npp)+' введен некорректный штрихкод ячейки-получателя ('+string(_tElements.value)+'). Ячейки с таким штрихкодом не существует');
                              result := JSONObj;
                              exit;
                          }
@@ -439,7 +439,7 @@ var _ActionBody : string = _tElements.value;
                        mylog('check:  _needThisRow='+ string(_needThisRow));
                     }
                  }
-              mylog('check:   _ckatBox_to = ' + _ckatBox_to);
+              mylog('check:   _ckatBox_to = ' + string(_ckatBox_to,0,0) );
 
               var _tmpkol : double = 0;
               if _needThisRow then {
@@ -456,20 +456,20 @@ var _ActionBody : string = _tElements.value;
                                   }
                                 _except
                                   on ExNumberConvert: {
-                                     #WRITE_JSONERROR(JSONObj,'Field KOL value not a number : "'  +_tElements.value+ '"','В поле "Перемещаемое кол-во" введено не числовое значение: '+_tElements.value+'. Позиция '+_npp)
-                                     mylog('check: В поле "Перемещаемое кол-во" введено не числовое значение: '+_tElements.value+'. Позиция '+_npp);
+                                     #WRITE_JSONERROR(JSONObj,'Field KOL value not a number : "'  +_tElements.value+ '"','В поле "Перемещаемое кол-во" введено не числовое значение: '+string(_tElements.value)+'. Позиция '+string(_npp) )
+                                     mylog('check: В поле "Перемещаемое кол-во" введено не числовое значение: '+string(_tElements.value)+'. Позиция '+string(_npp) );
                                      result := JSONObj;
                                      exit;
                                    }
                                  if _tmpkol < 0 then {
-                                     #WRITE_JSONERROR(JSONObj,'Field KOL value less then 0 : "'  +_tElements.value+ '"','В поле "Перемещаемое кол-во" введено отрицательное значение: ' +_tElements.value+ '. Позиция ' +_npp)
-                                     mylog('check: В поле "Перемещаемое кол-во" введено отрицательное значение:' +_tElements.value+ '". Позиция' +_npp);
+                                     #WRITE_JSONERROR(JSONObj,'Field KOL value less then 0 : "'  +_tElements.value+ '"','В поле "Перемещаемое кол-во" введено отрицательное значение: ' +string(_tElements.value)+ '. Позиция ' +string(_npp) )
+                                     mylog('check: В поле "Перемещаемое кол-во" введено отрицательное значение:' +string(_tElements.value)+ '". Позиция' + string(_npp) );
                                      result := JSONObj;
                                      exit;
                                    }
                                  if _tmpkol = 0 then {
-                                     #WRITE_JSONERROR(JSONObj,'Field KOL value less then 0 : "'  +_tElements.value+ '"','В позиции '+_npp+' перемещаемое количество равно 0')
-                                     mylog('check: В позиции '+_npp+' перемещаемое количество равно 0');
+                                     #WRITE_JSONERROR(JSONObj,'Field KOL value less then 0 : "'  +_tElements.value+ '"','В позиции '+string(_npp)+' перемещаемое количество равно 0')
+                                     mylog('check: В позиции '+string(_npp)+' перемещаемое количество равно 0');
                                      result := JSONObj;
                                      exit;
                                    }
@@ -480,7 +480,7 @@ var _ActionBody : string = _tElements.value;
                                 }
                           }
                         else {
-                         #WRITE_JSONERROR(JSONObj,'field "'+_field+'" doesnot allow to modify','поле "'+_field+'" не предусмотрено для модификации/ позиция' +_npp)
+                         #WRITE_JSONERROR(JSONObj,'field "'+_field+'" doesnot allow to modify','поле "'+_field+'" не предусмотрено для модификации/ позиция' +string(_npp) )
                          mylog('check: поле "'+_field+'" не предусмотрено для модификации');
                          result := JSONObj;
                          exit;
@@ -499,11 +499,11 @@ var _ActionBody : string = _tElements.value;
                     mylog('check: if (getfirst _tElements where ((_npp == _tElements.npp)) and _tElements.name = _SpecFieldIDName) = tsOK');
 
                      _cSaldoBox := comp(_tElements.value);
-                     mylog('check: _cSaldoBox='+_cSaldoBox);
+                     mylog('check: _cSaldoBox='+string(_cSaldoBox,0,0) );
                      if _cSaldoBox <> 0h then {
                          if getfirst SaldoBox_makeAction where ((_cSaldoBox == SaldoBox_makeAction.nrec)) <> tsOK
                           {
-                             #WRITE_JSONERROR(JSONObj,'does not exist SaldoBox where nrec = ' + _tElements.value,'не найдена запись SaldoBox с nrec = ' + _tElements.value + '/позиция' +_npp)
+                             #WRITE_JSONERROR(JSONObj,'does not exist SaldoBox where nrec = ' + string(_tElements.value),'не найдена запись SaldoBox с nrec = ' + string(_tElements.value) + '/позиция' + string(_npp) )
                              mylog('не найдена запись SaldoBox с nrec = ' + _tElements.value);
                              result := JSONObj;
                              exit;
@@ -512,8 +512,8 @@ var _ActionBody : string = _tElements.value;
                          if getfirst kated where ((katMc.cEd == kated.nrec)) = tsOK {
                            if kated.diskret = 1 then {
                               if round(_tmpkol,0)  <> _tmpkol {
-                                 #WRITE_JSONERROR(JSONObj,'The KOL field is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpkol),'Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+_npp)
-                                 mylog('check: Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+_npp);
+                                 #WRITE_JSONERROR(JSONObj,'The KOL field is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpkol),'Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+string(_npp) )
+                                 mylog('check: Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+string(_npp) );
                                  result := JSONObj;
                                  exit;
                               }
@@ -522,10 +522,10 @@ var _ActionBody : string = _tElements.value;
                        }
 
 
-                       mylog('check: cbox from = ' + SaldoBox_makeAction.cbox);
+                       mylog('check: cbox from = ' + string(SaldoBox_makeAction.cbox,0,0) );
                        if _ckatBox_to = SaldoBox_makeAction.cbox {
-                         #WRITE_JSONERROR(JSONObj,'the cell from where and where is the same','В позиции '+ _npp +' совпадают ячейка-отправитель и ячейка-получатель')
-                         mylog('check: В позиции'+ _npp +' совпадают ячейка-отправитель и ячейка-получатель');
+                         #WRITE_JSONERROR(JSONObj,'the cell from where and where is the same','В позиции '+ string(_npp) +' совпадают ячейка-отправитель и ячейка-получатель')
+                         mylog('check: В позиции'+ string(_npp) +' совпадают ячейка-отправитель и ячейка-получатель');
                          result := JSONObj;
                          exit;
                        }
@@ -541,15 +541,15 @@ var _ActionBody : string = _tElements.value;
                             }
 
                        if _cPodr_to <> _cPodr_from {
-                         #WRITE_JSONERROR(JSONObj,'The movement is performed between the cells of different warehouses','В позиции '+_npp+' в качестве ячейки-получателя указана ячейка другого склада')
-                         mylog('check: В позиции '+_npp+' в качестве ячейки-получателя указана ячейка другого склада');
+                         #WRITE_JSONERROR(JSONObj,'The movement is performed between the cells of different warehouses','В позиции '+string(_npp)+' в качестве ячейки-получателя указана ячейка другого склада')
+                         mylog('check: В позиции '+string(_npp)+' в качестве ячейки-получателя указана ячейка другого склада');
                          result := JSONObj;
                          exit;
                        }
 
                        if SaldoBox_makeAction.Kol < _tmpkol {
-                         #WRITE_JSONERROR(JSONObj,'The specified amount is greater than the balance in the cell '+string(SaldoBox_makeAction.Kol) +'<'+ string(_tmpkol),'В позиции '+_npp+' перемещаемое количество '+string(_tmpkol)+' превышает остаток '+string(SaldoBox_makeAction.Kol))
-                         mylog('check: В позиции '+_npp+' перемещаемое количество '+string(_tmpkol)+' превышает остаток '+string(SaldoBox_makeAction.Kol));
+                         #WRITE_JSONERROR(JSONObj,'The specified amount is greater than the balance in the cell '+string(SaldoBox_makeAction.Kol) +'<'+ string(_tmpkol),'В позиции '+string(_npp)+' перемещаемое количество '+string(_tmpkol)+' превышает остаток '+string(SaldoBox_makeAction.Kol))
+                         mylog('check: В позиции '+string(_npp)+' перемещаемое количество '+string(_tmpkol)+' превышает остаток '+string(SaldoBox_makeAction.Kol));
                          result := JSONObj;
                          exit;
                        }
@@ -559,7 +559,7 @@ var _ActionBody : string = _tElements.value;
                    }
                    else
                     {
-                         #WRITE_JSONERROR(JSONObj,'does not exist system field _SpecFieldIDName= ' + _SpecFieldIDName,'не найдено служебное поле _SpecFieldIDName= ' + _SpecFieldIDName+'/позиция' +_npp)
+                         #WRITE_JSONERROR(JSONObj,'does not exist system field _SpecFieldIDName= ' + _SpecFieldIDName,'не найдено служебное поле _SpecFieldIDName= ' + _SpecFieldIDName+'/позиция' +string(_npp) )
                          mylog('check: не найдено служебное поле _SpecFieldIDName= ' + _SpecFieldIDName);
                          result := JSONObj;
                          exit;
@@ -591,7 +591,7 @@ var _ActionBody : string = _tElements.value;
             _npp := 1;
             do
             {
-             mylog('_npp = '+ _npp);
+             mylog('_npp = '+ string(_npp) );
               var _ckatBox_to : comp = 0;
               var _needThisRow : boolean = false;
               _loop _tElements where ((_npp == _tElements.npp)) and pos('KATBOX_TO_',_tElements.name) = 1 {   // указана ячейка куда
@@ -610,12 +610,12 @@ var _ActionBody : string = _tElements.value;
                        }
                     }
                  }
-              mylog(' _ckatBox_to = ' + _ckatBox_to);
+              mylog(' _ckatBox_to = ' + string(_ckatBox_to,0,0) );
              if getfirst KatBox_tmp where ((_ckatBox_to == KatBox_tmp.nrec)) = tsOK {
                    mylog(' KatBox_to.name = ' + KatBox_tmp.name);
                   }
                   else {
-                   mylog(' ERROR! не нашли ячейку KatBox_to.nrec = ' + _ckatBox_to);
+                   mylog(' ERROR! не нашли ячейку KatBox_to.nrec = ' + string(_ckatBox_to,0,0) );
                   }
 
               var _tmpkol : double = 0;
@@ -644,7 +644,7 @@ var _ActionBody : string = _tElements.value;
                        mylog('if (getfirst _tElements where ((_npp == _tElements.npp)) and _tElements.name = _SpecFieldIDName) = tsOK');
 
                        _cSaldoBox := comp(_tElements.value);
-                         mylog('_cSaldoBox='+_cSaldoBox);
+                         mylog('_cSaldoBox='+string(_cSaldoBox,0,0) );
                          if _cSaldoBox <> 0h then {
                              if getfirst SaldoBox_makeAction where ((_cSaldoBox == SaldoBox_makeAction.nrec)) <> tsOK {
                                  mylog('Не найдена ячейка откуда по _cSaldoBox ');
@@ -680,11 +680,11 @@ var _ActionBody : string = _tElements.value;
                          ;
                        mylog('insert SpBox_makeAction set');
 
-                       mylog(' _getfirst SpSopr_makeAction _cSaldoBox = ' + _cSaldoBox)
+                       mylog(' _getfirst SpSopr_makeAction _cSaldoBox = ' + string(_cSaldoBox,0,0) )
                     }
                    else
                     {
-                         #WRITE_JSONERROR(JSONObj,'does not exist system field _SpecFieldIDName= ' + _SpecFieldIDName,'не найдено служебное поле _SpecFieldIDName= ' + _SpecFieldIDName + '/позиция' +_npp)
+                         #WRITE_JSONERROR(JSONObj,'does not exist system field _SpecFieldIDName= ' + _SpecFieldIDName,'не найдено служебное поле _SpecFieldIDName= ' + _SpecFieldIDName + '/позиция' +string(_npp) )
                          mylog('не найдено служебное поле _SpecFieldIDName= ' + _SpecFieldIDName);
                          result := JSONObj;
                          exit;
