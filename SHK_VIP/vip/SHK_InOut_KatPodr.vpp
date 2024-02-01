@@ -74,7 +74,7 @@ function GetResultQueryForKatPODR(_pcSHKObj: comp; _pIdent : string) : IResultSe
 
   qKatPODR.setParam('anName', _anName);
    var _type : byte = GetTypeByTableAndField(SHKOBJ.SYSNAMETBL, SHKOBJ.SYSNAME);
-   mylog('    _type = '+_type) ;
+   mylog('    _type = '+string(_type) ) ;
  case _type of
         4 :  qKatPODR.setParam('pIdent',    word(_pIdent) );
         6 :  qKatPODR.setParam('pIdent', longint(_pIdent) );

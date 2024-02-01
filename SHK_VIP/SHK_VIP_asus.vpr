@@ -60,7 +60,7 @@
 		</CoreVip>
 		<ActiveIndex>1</ActiveIndex>
 		<ProjectItems>
-			<ProjectCompileFile FileName="SHK_VIP.prj" Priority="0">
+			<ProjectCompileFile FileName="C_Barcode.prj" Priority="0">
 				<CoreVip>
 					<VipParameters>
 						<StrictVip>True</StrictVip>
@@ -83,7 +83,7 @@
 			</ConfigurationList>
 		</DatabaseConfiguration>
 		<FileList>
-			<File Name="SHK_VIP.prj" PosX="15" PosY="85" OpenEditor="True"/>
+			<File Name="C_Barcode.prj" PosX="15" PosY="85" OpenEditor="True"/>
 			<File Name="Source\shk_barcode_Generate.vip" PosX="31" PosY="16" OpenEditor="True"/>
 			<File Name="Source\shk_barcode_view.vip" PosX="8" PosY="22" OpenEditor="True"/>
 			<File Name="Source\Algoritm_shk_barcode_Generate_Setup.vip" PosX="16" PosY="164" OpenEditor="True"/>
@@ -116,7 +116,7 @@
 			<Marker FileName="Source\SHK_TEMPLATES.vip" Caption="Нумерованная закладка 1" Line="212" NumIndex="1" MarkerType="mtNumBookmark"/>
 			<Marker FileName="Source\SHK_InOut_KatSopr.vpp" Caption="Нумерованная закладка 1" Line="513" NumIndex="1" MarkerType="mtNumBookmark" Comment=", 28 // 28  для НОП - 168"/>
 			<Marker FileName="Source\SHK_InOut_KatBoxSaldo.vpp" Caption="Нумерованная закладка 1" Line="383" NumIndex="1" MarkerType="mtNumBookmark" Comment="if (getfirst _tElements where ((_npp == _tElements.npp)) and _tElements.name = _SpecFieldIDName) = tsOK"/>
-			<Marker FileName="SHK_VIP.prj" Caption="Нумерованная закладка 1" Line="95" NumIndex="1" MarkerType="mtNumBookmark" Comment="coTypeDocBoxSaldo = 101423 ;//100000+1430 Сальдо по ячейкам хранения"/>
+			<Marker FileName="C_Barcode.prj" Caption="Нумерованная закладка 1" Line="95" NumIndex="1" MarkerType="mtNumBookmark" Comment="coTypeDocBoxSaldo = 101423 ;//100000+1430 Сальдо по ячейкам хранения"/>
 			<Marker FileName="Source\shk_barcodeFunc.vip" Caption="Нумерованная закладка 1" Line="47" NumIndex="1" MarkerType="mtNumBookmark" Comment="if (getfirst shk_barcodeLink where ((tmp == shk_barcodelink.barcode(length = 250))) = tsOk) {"/>
 			<Marker FileName="Source\SHK_Base.vip" Caption="Нумерованная закладка 1" Line="218" NumIndex="1" MarkerType="mtNumBookmark" Comment="if getfirst SHKObjSP_AllowStatus &lt;&gt; tsOK then"/>
 			<Marker FileName="Source\Algoritm_shk_barcode_Generate_Setup.vip" Caption="Нумерованная закладка 1" Line="199" NumIndex="1" MarkerType="mtNumBookmark" Comment="var __ShkTidkGalOld : word = __ShkTidkGal;"/>

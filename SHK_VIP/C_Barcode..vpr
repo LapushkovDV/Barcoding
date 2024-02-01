@@ -15,6 +15,7 @@
 				<LocalInfo>False</LocalInfo>
 				<MakeUseAllFiles>True</MakeUseAllFiles>
 				<ComponentName>C_BARCODE</ComponentName>
+				<ClearResource>True</ClearResource>
 			</VipParameters>
 			<VipDebug>
 				<ActiveConfigure>по умолчанию</ActiveConfigure>
@@ -267,7 +268,7 @@
 		</CoreVip>
 		<ActiveIndex>1</ActiveIndex>
 		<ProjectItems>
-			<ProjectCompileFile FileName="..\910\CompSrc\C\C_BARCODE\C_BARCODE.prj" Priority="0">
+			<ProjectCompileFile FileName="C_BARCODE.prj" Priority="0">
 				<CoreVip>
 					<VipParameters>
 						<StrictVip>True</StrictVip>
@@ -283,13 +284,13 @@
 			<ConfigurationList>
 				<VipDatabase>
 					<Name>по умолчанию</Name>
-					<DatabaseName>..\..\..\DataBase\-910\Test_New</DatabaseName>
+					<DatabaseName>..\..\..\..\DataBase\-910\Test_New</DatabaseName>
 					<DatabaseID>ERPDEV</DatabaseID>
 					<SqlServerParameters>ncacn_ip_tcp:DEP968-GALSRV1[1997]</SqlServerParameters>
 					<LogPas>True</LogPas>
 					<UserOffice>1</UserOffice>
 					<HwKeyDirectory>D:\Galaxy\HWServer\HWDir</HwKeyDirectory>
-					<LicFileName>..\..\..\Galaxy\Gal910\_Lic\Pervasive\Sup5514\license.lic</LicFileName>
+					<LicFileName>..\..\..\Gal910\_Lic\Pervasive\Sup5514\license.lic</LicFileName>
 				</VipDatabase>
 				<VipDatabase>
 					<Name>MSSQL</Name>
@@ -307,46 +308,43 @@
 			</ConfigurationList>
 		</DatabaseConfiguration>
 		<DebugOptions StopOnStartup="False"/>
-		<FileList>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_ADMIN_PANEL.vip" PosX="27" PosY="73" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\Algoritm_5959_Setup.vip" PosX="54" PosY="357" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\Algoritm_5959.vip" PosX="53" PosY="46" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_Barcode\C_Barcode.vil" PosX="56" PosY="13" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_TEMPLATES.vip" PosX="3" PosY="40" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_Barcode\vip\shk_barcode_Generate.vih" PosX="52" PosY="61" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\shk_barcode_Print.vip" PosX="115" PosY="655" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\Algoritm_shk_barcode_Generate.vip" PosX="84" PosY="37" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_InOut_KatSopr.vpp" PosX="138" PosY="2" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_TEMPLATES.pan" PosX="118" PosY="274" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_Barcode\vip\SHK_InOut.vip" PosX="65" PosY="500" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_InOut_KatMC.vpp" PosX="16" PosY="251" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\shk_barcode_Generate.vip" PosX="5" PosY="425" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\shk_barcode_view_oneObject.vip" PosX="5" PosY="69" OpenEditor="True"/>
-			<File Name="..\910\CompSrc\C\C_BARCODE\vip\SHK_MakeMove.vip" PosX="33" PosY="2042" OpenEditor="True" Active="True"/>
-		</FileList>
 		<CompileMessengerList>
-			<CompileMessenger Name="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\C_BARCODE.prj" DateTimeStart="45322,7782354861" DateTimeCompile="0,000526087962498423" StateHistory="False">
+			<CompileMessenger Name="D:\Galaxy\RedMine\Barcoding\SHK_VIP\C_BARCODE.prj" DateTimeStart="45323,5686120023" DateTimeCompile="0,000531516205228399" StateHistory="False">
 				<CompileMessageList>
-					<CompileMessage MessageType="mtWarning" MessageText="Родительский интерфейс MakeMove из другого компонента L_SKLAD не будет пересобран" SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\VIP\SHK_MakeMove.vip" SourceLine="39" SourceColumn="23"/>
-					<CompileMessage MessageType="mtError" MessageText="ожидалось : &quot;;&quot;" SourceFileName="D:\SRC\WORK910\910\COMPSRC\C\C_BARCODE\VIP\SHK_InOut_KatSopr.vpp" SourceLine="2" SourceColumn="138">
-						<StackIncludeList>
-							<StackInclude FileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\VIP\SHK_InOut.vip" Line="635" Column="1"/>
-						</StackIncludeList>
-					</CompileMessage>
-					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 102х51 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 102х51 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 51x32 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 51x32 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 57x32 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 57x32 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x25 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x25 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x51 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x51 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5 QR.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5 QR.fr3&quot;."/>
-					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5.fr3&quot;."/>
-					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 38_25 QR.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 38_25 QR.fr3&quot;."/>
-					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;."/>
-					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;."/>
-					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;." SourceFileName="D:\SRC\Work910\910\CompSrc\C\C_BARCODE\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;."/>
-					<CompileMessage MessageType="mtEndCompile" MessageText="31.01.2024 18:41:25"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Родительский интерфейс MakeMove из другого компонента L_SKLAD не будет пересобран" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="39" SourceColumn="23"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Приведение типа с возможной потерей точности (LongInt -&gt; Word)" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="770" SourceColumn="20"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Не могу подобрать индекс, не усекая по умолчанию ключ для таблицы SHK_BARCODELINK_GEN" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\shk_barcode_Generate.vip" SourceLine="425" SourceColumn="5"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Не могу подобрать индекс, не усекая по умолчанию ключ для таблицы SHK_BARCODELINK" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\shk_barcode_view_oneObject.vip" SourceLine="69" SourceColumn="5"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Не могу подобрать индекс, не усекая по умолчанию ключ для таблицы SHK_BARCODELINK" SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\VIP\Algoritm_shk_barcode_setParam.vip" SourceLine="235" SourceColumn="5"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Разное количеств" SourceLine="-1" SourceColumn="-1"/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 102х51 мм.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 102х51 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 51x32 мм.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 51x32 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 57x32 мм.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 57x32 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x25 мм.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x25 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x51 мм.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x51 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5 QR.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5 QR.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 10_5.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 38_25 QR.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 38_25 QR.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25 без цифрового кода.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод 76_25.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;." SourceFileName="D:\Galaxy\RedMine\Barcoding\SHK_VIP\Fr3\SHK!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtEndCompile" MessageText="01.02.2024 13:39:34"/>
 				</CompileMessageList>
 			</CompileMessenger>
 		</CompileMessengerList>
+		<FileList>
+			<File Name="vip\SHK_InOut_KatMC.vpp" PosX="9" PosY="243" OpenEditor="True"/>
+			<File Name="vip\test_make_order.vip" PosX="67" PosY="51" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_KatSopr.vpp" PosX="77" PosY="522" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut.vip" PosX="149" PosY="874" OpenEditor="True" Active="True"/>
+			<File Name="C_Barcode.vil" PosX="34" PosY="15" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut.vih" PosX="28" PosY="64" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_InvTab.vpp" PosX="89" PosY="487" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_KatBoxSaldo.vpp" PosX="64" PosY="701" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_KatParty.vpp" PosX="59" PosY="191" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_KatMol.vpp" PosX="38" PosY="61" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_KatPodr.vpp" PosX="38" PosY="77" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_KatBox.vpp" PosX="60" PosY="200" OpenEditor="True"/>
+		</FileList>
 	</ProjectManager>
 </Viper>
