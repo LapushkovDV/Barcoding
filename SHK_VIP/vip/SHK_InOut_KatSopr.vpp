@@ -515,6 +515,13 @@ if SpSopr_makeAction.#FieldName <> double(_tElements.value) then {
    update current SpSopr_makeAction set SpSopr_makeAction.#FieldName := longint(_tElements.value);
   }
 #end
+#declare updateSpSopr_makeActionWord(FieldName)
+ mylog('  SpSopr_makeAction.#FieldName  = '+ string(SpSopr_makeAction.#FieldName,0,5) +' _   _tElements.value = ' + string(_tElements.value,0,5) );
+if SpSopr_makeAction.#FieldName <> double(_tElements.value) then {
+     mylog('  SpSopr_makeAction.#FieldName -> ' + string(double(_tElements.value),0,5) );
+   update current SpSopr_makeAction set SpSopr_makeAction.#FieldName := Word(_tElements.value);
+  }
+#end
 
 #declare updateSpSopr_makeActionString(FieldName)
 if SpSopr_makeAction.#FieldName <> _tElements.value then update current SpSopr_makeAction set SpSopr_makeAction.#FieldName := _tElements.value;
@@ -583,7 +590,7 @@ if SpSopr_makeAction.#FieldName <> _tElements.value then update current SpSopr_m
                         }
                        }
           'PRICE'    : {#updateSpSopr_makeActionDouble(PRICE)    }
-          'NPP'      : {#updateSpSopr_makeActionLongint(NPP)      }
+          'NPP'      : {#updateSpSopr_makeActionWord(NPP)      }
           'PROCUB'   : {#updateSpSopr_makeActionDouble(PROCUB)   }
           'NVAGON'   : {#updateSpSopr_makeActionString(NVAGON)   }
           'NKVIT'    : {#updateSpSopr_makeActionString(NKVIT)    }

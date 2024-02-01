@@ -859,8 +859,8 @@ if (_longValue = 0) {
     }
 
 
-    var _IDOBJECTSTR : comp   = HttpConnect_JsonObjectValueByName(m_service,JSON_OBJECTVALUES,'IDOBJECT');
-    if _IDOBJECTSTR = 0
+    var _IDOBJECTSTR : string  = HttpConnect_JsonObjectValueByName(m_service,JSON_OBJECTVALUES,'IDOBJECT');
+    if _IDOBJECTSTR = ''
     {
      // предусмотретьситуацию, когда  _IDOBJECT - пустой значит должны создавать новый
      // но тут видимо надо созаватьсделать признак разрешения создания документа прям на стйройстве
@@ -906,7 +906,7 @@ if (_longValue = 0) {
    {
      MyLog('i_JSONARRAY = ' + string(i_JSONARRAY) )  ;
      var _JSON_Element : TPtr = HttpConnect_JSONObjectByIndexOfArray(m_service, lJsonArray, i_JSONARRAY);
-     MyLog('_JSON_Element = ' + string(_JSON_Element)    ;
+     MyLog('_JSON_Element = ' + string(_JSON_Element) )    ;
      _loop SHKObjSP_SP
       {
         //цикл по модифицируемым полям настройки шаблона JSON element  = название поля, которое можно модифицировать
