@@ -144,7 +144,8 @@ Procedure InsertMarkerBarcodeLink(_wTable, _tidkgal : word; _crec : comp; _creat
   if _crec = 0h then exit;
  var _cBarCode : string = _iShk_BarcodeFunc.getCode(_wTable, _tidkgal, _crec, _create);
   if _cBarCode = '' then exit;
-  if getfirst shk_barcodeLink_gen where ((0 == shk_barcodeLink_gen.type and _cBarCode == shk_barcodeLink_gen.barcode)) = tsOK
+  if getfirst shk_barcodeLink_gen where ((0 == shk_barcodeLink_gen.type and
+    substr(_cBarCode,1,250) == shk_barcodeLink_gen.barcode(length=250) )) = tsOK
    then insertMarker(_MarkerID, shk_barcodeLink_gen.nrec)
 }
 

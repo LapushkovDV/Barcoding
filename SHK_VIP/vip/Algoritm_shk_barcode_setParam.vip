@@ -68,7 +68,7 @@ Where
 ((
      nrecFormPl == FormPl.NRec
    and 0 == shk_barcodeLink.TYPE
-   and _ShkCode == shk_barcodeLink.BARCODE
+   and substr(_ShkCode,1,250) == shk_barcodeLink.BARCODE(length=250)
    and shk_barcodeLink.cTSD  == SHK_TSD.nrec
    and shk_barcodeLink.cARM  == SHK_ARM.nrec
    and shk_barcodeLink.cUser == SHK_USER.nrec
