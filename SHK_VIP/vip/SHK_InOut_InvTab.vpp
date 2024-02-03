@@ -399,6 +399,8 @@ var _ActionBody : string = _tElements.value;
                       var _retstr, _retstrRus : string = '';
                        if not isNumber(_tElements.value, _retstr, _retstrRus) {
                          #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле количество '+ _retstrRus + '. Позиция ' + string(_npp) )
+                         HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                         HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
                          result := JSONObj;
                          exit;
                        }
@@ -408,6 +410,9 @@ var _ActionBody : string = _tElements.value;
                            if kated.diskret = 1 then {
                               if round(_tmpkol,0)  <> _tmpkol {
                                  #WRITE_JSONERROR(JSONObj,'The KOL field is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpkol),'Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+string(_npp) )
+                                 HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                                 HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                                  mylog('check: Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+string(_npp) );
                                  result := JSONObj;
                                  exit;
@@ -426,6 +431,9 @@ var _ActionBody : string = _tElements.value;
                         var _retstr, _retstrRus : string = '';
                        if not isNumber(_tElements.value, _retstr, _retstrRus) {
                          #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле цена '+ _retstrRus + '. Позиция ' + string(_npp))
+                         HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                         HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                          result := JSONObj;
                          exit;
                        }

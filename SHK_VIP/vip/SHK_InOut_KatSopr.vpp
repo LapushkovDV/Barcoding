@@ -427,6 +427,9 @@ var _ActionBody : string = _tElements.value;
               'KOL','KOLOPL','KOLFACT', 'KOL2', 'KOLFACT2', 'KOLGRM', 'KOLPOV', 'KOLDOP'     : {
                              if not isNumber(_tElements.value, _retstr, _retstrRus) {
                                #WRITE_JSONERROR(JSONObj,'field '+ _field +' ' + _retstr,'В поле количество '+ string(_retstrRus,0,2) + '. Позиция ' + string(_npp) )
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                                result := JSONObj;
                                exit;
                              }
@@ -437,6 +440,9 @@ var _ActionBody : string = _tElements.value;
                                  if katotped.diskret = 1 then {
                                     if round(_tmpDbl,0)  <> _tmpDbl {
                                        #WRITE_JSONERROR(JSONObj,'The KOL '+string(_field)+' is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpDbl),'Указано дробное число '+string(_tmpDbl)+' при неделимой единице измерения. Позиция '+string(_npp) )
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                                        mylog('Указано дробное число '+string(_tmpDbl)+' при неделимой единице измерения. Позиция '+string(_npp) );
                                        result := JSONObj;
                                        exit;

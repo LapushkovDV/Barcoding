@@ -431,6 +431,9 @@ var _ActionBody : string = _tElements.value;
                        else {
                          if _tElements.value <> '' {
                              #WRITE_JSONERROR(JSONObj,'does not exist SaldoBox_to where nrec = ' + string(_tElements.value),'В позиции '+string(_npp)+' введен некорректный штрихкод ячейки-получателя ('+string(_tElements.value)+'). Ячейки с таким штрихкодом не существует')
+                             HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                             HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                              mylog('В позиции '+string(_npp)+' введен некорректный штрихкод ячейки-получателя ('+string(_tElements.value)+'). Ячейки с таким штрихкодом не существует');
                              result := JSONObj;
                              exit;
@@ -457,6 +460,9 @@ var _ActionBody : string = _tElements.value;
                                 _except
                                   on ExNumberConvert: {
                                      #WRITE_JSONERROR(JSONObj,'Field KOL value not a number : "'  +_tElements.value+ '"','В поле "Перемещаемое кол-во" введено не числовое значение: '+string(_tElements.value)+'. Позиция '+string(_npp) )
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                                      mylog('check: В поле "Перемещаемое кол-во" введено не числовое значение: '+string(_tElements.value)+'. Позиция '+string(_npp) );
                                      result := JSONObj;
                                      exit;
@@ -464,11 +470,17 @@ var _ActionBody : string = _tElements.value;
                                  if _tmpkol < 0 then {
                                      #WRITE_JSONERROR(JSONObj,'Field KOL value less then 0 : "'  +_tElements.value+ '"','В поле "Перемещаемое кол-во" введено отрицательное значение: ' +string(_tElements.value)+ '. Позиция ' +string(_npp) )
                                      mylog('check: В поле "Перемещаемое кол-во" введено отрицательное значение:' +string(_tElements.value)+ '". Позиция' + string(_npp) );
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                                      result := JSONObj;
                                      exit;
                                    }
                                  if _tmpkol = 0 then {
                                      #WRITE_JSONERROR(JSONObj,'Field KOL value less then 0 : "'  +_tElements.value+ '"','В позиции '+string(_npp)+' перемещаемое количество равно 0')
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                                      mylog('check: В позиции '+string(_npp)+' перемещаемое количество равно 0');
                                      result := JSONObj;
                                      exit;
@@ -513,6 +525,9 @@ var _ActionBody : string = _tElements.value;
                            if kated.diskret = 1 then {
                               if round(_tmpkol,0)  <> _tmpkol {
                                  #WRITE_JSONERROR(JSONObj,'The KOL field is not an integer, although the unit of measurement MC is indivisible  = ' + string(_tmpkol),'Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+string(_npp) )
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                                  mylog('check: Указано дробное число '+string(_tmpkol)+' при неделимой единице измерения. Позиция '+string(_npp) );
                                  result := JSONObj;
                                  exit;
@@ -526,6 +541,9 @@ var _ActionBody : string = _tElements.value;
                        if _ckatBox_to = SaldoBox_makeAction.cbox {
                          #WRITE_JSONERROR(JSONObj,'the cell from where and where is the same','В позиции '+ string(_npp) +' совпадают ячейка-отправитель и ячейка-получатель')
                          mylog('check: В позиции'+ string(_npp) +' совпадают ячейка-отправитель и ячейка-получатель');
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                          result := JSONObj;
                          exit;
                        }
@@ -543,12 +561,18 @@ var _ActionBody : string = _tElements.value;
                        if _cPodr_to <> _cPodr_from {
                          #WRITE_JSONERROR(JSONObj,'The movement is performed between the cells of different warehouses','В позиции '+string(_npp)+' в качестве ячейки-получателя указана ячейка другого склада')
                          mylog('check: В позиции '+string(_npp)+' в качестве ячейки-получателя указана ячейка другого склада');
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                          result := JSONObj;
                          exit;
                        }
 
                        if SaldoBox_makeAction.Kol < _tmpkol {
                          #WRITE_JSONERROR(JSONObj,'The specified amount is greater than the balance in the cell '+string(SaldoBox_makeAction.Kol) +'<'+ string(_tmpkol),'В позиции '+string(_npp)+' перемещаемое количество '+string(_tmpkol)+' превышает остаток '+string(SaldoBox_makeAction.Kol))
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                                     HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+
                          mylog('check: В позиции '+string(_npp)+' перемещаемое количество '+string(_tmpkol)+' превышает остаток '+string(SaldoBox_makeAction.Kol));
                          result := JSONObj;
                          exit;
