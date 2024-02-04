@@ -125,13 +125,13 @@ end.
 
 Shk_Menu Menu
 { //#3727 такой же пункт есть в УП - НПО Энергомаш - Мотивация - Настройка
-   - 'Шаблоны объектов штрихкодирования', cmRunInterface('SHK::SHK_TEMPLATES'), 'Шаблоны объектов штрихкодирования. Просмотр/редактирование',,,, scMenuCtx,,,;
-   - 'Просмотр и создание штрихкодов в системе', cmRunInterface('SHK::shk_barcode_view'), 'Просмотр и создание штрихкодов в системе',,,, scMenuCtx,,,;
-   - 'Панель администратора', cmRunInterface('SHK::SHK_ADMIN_PANEL'), 'Панель администратора',,,, scMenuCtx,,,;
-   - 'Выгрузка сальдо ячеек хранения', cmRunInterface('SHK::SHK_USB_export_saldobox'), 'Выгрузка сальдо ячеек хранения',,,, scMenuCtx,,,;
+   - 'Шаблоны объектов штрихкодирования', cmRunInterface('C_BARCODE::SHK_TEMPLATES'), 'Шаблоны объектов штрихкодирования. Просмотр/редактирование',,,, scMenuCtx,,,;
+   - 'Просмотр и создание штрихкодов в системе', cmRunInterface('C_BARCODE::shk_barcode_view'), 'Просмотр и создание штрихкодов в системе',,,, scMenuCtx,,,;
+   - 'Панель администратора', cmRunInterface('C_BARCODE::SHK_ADMIN_PANEL'), 'Панель администратора',,,, scMenuCtx,,,;
+   - 'Выгрузка сальдо ячеек хранения', cmRunInterface('C_BARCODE::SHK_USB_export_saldobox'), 'Выгрузка сальдо ячеек хранения',,,, scMenuCtx,,,;
 }
 
 Shk_Menu_add_SkladOper Menu
 {
-   - 'Выгрузка сальдо ячеек хранения', cmRunInterface('SHK::SHK_USB_export_saldobox'), 'Выгрузка сальдо ячеек хранения',,,, scMenuCtx,,,;
+   - 'Выгрузка сальдо ячеек хранения', cmRunInterface('C_BARCODE::SHK_USB_export_saldobox'), 'Выгрузка сальдо ячеек хранения',,,, scMenuCtx,,,;
 }
