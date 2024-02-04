@@ -185,6 +185,7 @@ Setvisualheader('выполнение запроса в СУБД');
       {
        _SYS_KATMC_NREC    := iRes.row.val('SYS_KATMC_NREC');
        _SYS_KATOTPED_NREC := iRes.row.val('SYS_KATOTPED_NREC');
+        if _SYS_KATMC_NREC = 0h then continue;
         var _SYS_BARCODE   : string = iRes.row.val('SYS_BARCODE');
         HttpConnect_JsonObjectAddString(m_service, JSONObj_VALUES, 'SYS_BARCODE'       , String(_SYS_BARCODE));
 

@@ -233,6 +233,7 @@ function GenerateJSON_VALUES_KATSOPRONE(_ActionName: string; _pIdent: string; va
       {
          var _SYS_SPSOPRNREC        : comp = iRes.row.val('SYS_SPSOPRNREC');
          var _SYS_SPSOPR_cSaldTune  : comp = iRes.row.val('SYS_SPSOPR_cSaldTune');
+         if _SYS_SPSOPRNREC = 0h then continue;
          JSONObj_ArrayOneElement := HttpConnect_JsonObjectCreate(m_service);
          _loop SHKObjSP_SP
            {

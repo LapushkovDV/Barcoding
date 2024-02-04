@@ -180,6 +180,7 @@ function GenerateJSON_VALUES_KatBOXSaldoONE(_ActionName: string; _pIdent: string
 
          var _SYS_KATMCNREC         : comp = iRes.row.val('SYS_KATMCNREC');
          var _SYS_KATPARTYNREC      : comp = iRes.row.val('SYS_KATPARTYNREC');
+         if _SYS_KATMCNREC = 0h then continue;
 
          JSONObj_ArrayOneElement := HttpConnect_JsonObjectCreate(m_service);
          _loop SHKObjSP_SP

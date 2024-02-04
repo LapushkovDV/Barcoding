@@ -208,6 +208,7 @@ function GenerateJSON_VALUES_InvTabOne(_ActionName: string; _pIdent: string; var
       {
          var _SYS_SPINVTABNREC        : comp = iRes.row.val('SYS_SPINVTABNREC');
          var _SYS_SPINVTAB_cSaldTune  : comp = iRes.row.val('SYS_SPINVTAB_cSaldTune');
+         if _SYS_SPINVTABNREC = 0h then continue;
          JSONObj_ArrayOneElement := HttpConnect_JsonObjectCreate(m_service);
          _loop SHKObjSP_SP
            {
