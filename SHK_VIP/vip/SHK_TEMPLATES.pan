@@ -300,7 +300,7 @@ Fields {font = {color= if(SHKObjSP_HEAD.WISACTIVE = 0,colorsysgray,0)}};
   SHKObjSP_HEAD.SYSNAMETBL 'Сист. имя','таблицы/функции' ('Системное имя таблицы или фукнции'):[10], Protect, NoPickButton, NoDel, #colorneed(SHKObjSP_HEAD.Name = '');
   SHKObjSP_HEAD.SysName    'Сист. имя','поля' ('Системное наименование поля для ()')     : [8],   Protect, PickButton  , NoDel, #colorneed(SHKObjSP_HEAD.SysName = '');
   SHKObjSP_HEAD.SIZE       'Размерность','поля' ('Нименование поля для отображения на ТСД')        : [5], NoProtect, NoPickButton, NoDel, #colorneed(SHKObjSP_HEAD.SIZE = 0);
-  SHKObjSP_HEAD.WISACTIVE   'Отображать'                                                  : [3] , [List 0 'Нет','Да'],Protect;
+  SHKObjSP_HEAD.WISACTIVE   'Отображать','в списке'                                                : [3] , [List 0 'Нет','Да'],Protect;
   SHKObjSP_HEAD.ISIdentifier 'Идентификатор' ('Поле является идентификатором') : [3] , [List 0 'Нет','Да'],Protect;
   SHKObjSP_HEAD.nullable   'Обнуляемое','поле'                :[3] , [List 0 'Нет','Да'],Protect;
   SHKObjSP_HEAD.BROWSE_CARD  'Отображать','в карточке ТСД'                       : [3] , [List 0 'Нет','Да'],Protect;

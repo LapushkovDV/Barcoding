@@ -359,6 +359,7 @@ function GenerateJSON_Description(_pcSHKObj : comp) : TPtr;
        HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'NAME'        , SHKObjSP_HEAD.NAME);
        HttpConnect_JsonObjectAddString( m_service, JSONObj_ArrayOneElement, 'SYSNAME'     , SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME);
        HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'ISIDENTIFIER', SHKObjSP_HEAD.ISIdentifier  );
+       HttpConnect_JsonObjectAddInteger(m_service, JSONObj_ArrayOneElement, 'BROWSE_LIST' , SHKObjSP_HEAD.WISACTIVE );
        HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'BROWSE_CARD' , SHKObjSP_HEAD.BROWSE_CARD );
        HttpConnect_JsonObjectAddBoolean(m_service, JSONObj_ArrayOneElement, 'NULLABLE'    , SHKObjSP_HEAD.NULLABLE );
        HttpConnect_JsonArrayAddObject(m_service, JSONObj_Array, JSONObj_ArrayOneElement);
