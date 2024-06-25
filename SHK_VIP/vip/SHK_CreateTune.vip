@@ -24,4 +24,6 @@ Action
   TR.AddTuneS('SHK.FILEPATHARCHIVE', 'Папка для перемещения файлов импорта (архив) (обмен через USB)', ftString,'','','');
   TR.AddTuneS('SHK.FILEPATHLOG', 'Папка для логов файлов импорта (обмен через USB)', ftString,'','','');
 
+  TR.AddTuneS('SHK.RENUMINVTAB', 'Перенумеровывать инвентарную ведомость перед выполнением запроса', ftBoolean, '0', '', '');
+
 }

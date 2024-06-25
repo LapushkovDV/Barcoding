@@ -90,18 +90,19 @@
 			</ConfigurationList>
 		</DatabaseConfiguration>
 		<FileList>
-			<File Name="C_Barcode.prj" PosX="20" PosY="114" OpenEditor="True"/>
+			<File Name="C_Barcode.prj" PosX="19" PosY="114" OpenEditor="True"/>
 			<File Name="vip\SHK_TEMPLATES.vip" PosX="20" PosY="107" OpenEditor="True"/>
 			<File Name="vip\SHK_TEMPLATES.vih" PosX="20" PosY="12" OpenEditor="True"/>
 			<File Name="vip\SHK_Base.vip" PosX="59" PosY="24" OpenEditor="True"/>
-			<File Name="vip\SHK_Base.vih" PosX="30" PosY="86" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut.vip" PosX="53" PosY="793" OpenEditor="True" Active="True"/>
-			<File Name="vip\SHK_InOut_KatSopr.vpp" PosX="48" PosY="193" OpenEditor="True"/>
-			<File Name="vip\SHK_TEMPLATES.pan" PosX="52" PosY="303" OpenEditor="True"/>
-			<File Name="vip\shk_barcode_Print.vip" PosX="36" PosY="211" OpenEditor="True"/>
-			<File Name="vip\shk_barcode_Generate.pan" PosX="42" PosY="168" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut_KatBoxSaldo.vpp" PosX="1" PosY="371" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut.vih" PosX="28" PosY="32" OpenEditor="True"/>
+			<File Name="vip\SHK_Base.vih" PosX="5" PosY="107" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_KatSopr.vpp" PosX="1" PosY="1" OpenEditor="True"/>
+			<File Name="vip\SHK_TEMPLATES.pan" PosX="1" PosY="1" OpenEditor="True"/>
+			<File Name="vip\shk_barcode_Print.vip" PosX="1" PosY="1" OpenEditor="True"/>
+			<File Name="vip\shk_barcode_Generate.pan" PosX="62" PosY="13" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_KatBoxSaldo.vpp" PosX="2" PosY="734" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut.vip" PosX="14" PosY="226" OpenEditor="True" Active="True"/>
+			<File Name="vip\SHK_CreateTune.vip" PosX="31" PosY="27" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_InvTab.vpp" PosX="8" PosY="138" OpenEditor="True"/>
 		</FileList>
 		<DebugOptions StopOnStartup="False"/>
 		<MarkerList>
@@ -146,6 +147,7 @@
 			<Marker FileName="Source\SHK_InOut.vip" Caption="Нумерованная закладка 1" Line="425" NumIndex="1" MarkerType="mtNumBookmark" Comment="_BatchTerms := replace(_BatchTerms ,'#(CurDateBatchDays)',datetostr(add_day(cur_date,(-1)*BatchDays),'DD,MM,YYYY'));"/>
 			<Marker FileName="Source\SHK_InOut_KatBoxSaldo.vpp" Caption="Нумерованная закладка 1" Line="619" NumIndex="1" MarkerType="mtNumBookmark" Comment="if"/>
 			<Marker FileName="Source\SHK_InOut_KatSopr.vpp" Caption="Нумерованная закладка 1" Line="680" NumIndex="1" MarkerType="mtNumBookmark"/>
+			<Marker FileName="vip\SHK_InOut_InvTab.vpp" Caption="Нумерованная закладка 1" Line="141" NumIndex="1" MarkerType="mtNumBookmark" Comment="_loop"/>
 		</MarkerList>
 		<BreakPointList>
 			<BreakPoint FileName="Vip.prj" Line="90"/>
@@ -155,10 +157,164 @@
 			<BreakPoint FileName="Source\SHK_MakeMove.vip" Line="802"/>
 		</BreakPointList>
 		<CompileMessengerList>
-			<CompileMessenger Name="C:\Galaktika\_git\Barcoding\SHK_VIP\C_Barcode.prj" DateTimeStart="45365,8034495139" DateTimeCompile="3,4282413253095E-5" StateHistory="False">
+			<CompileMessenger Name="C:\Galaktika\_git\Barcoding\SHK_VIP\C_Barcode.prj" DateTimeStart="45468,3563307176" DateTimeCompile="0,000150763888086658" StateHistory="False">
 				<CompileMessageList>
-					<CompileMessage MessageType="mtError" MessageText="Компиляция прервана в результате ошибки процесса компиляции."/>
-					<CompileMessage MessageType="mtEndCompile" MessageText="14.03.2024 19:17:01"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\Algoritm_5959_Setup.vip" SourceLine="36" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\Algoritm_5959.vip" SourceLine="104" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Log.vip" SourceLine="29" SourceColumn="3"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\test_make_order.vip" SourceLine="24" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="43" SourceColumn="1"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Переменная p3 не была инициализирована" SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIH\MakeZam.vpp" SourceLine="255" SourceColumn="4">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" Line="970" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная Stopped:Boolean, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip(162), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="2177" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная nal:Double, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip(163), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="2177" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная procN:Double, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip(163), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="2177" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная koefp:Double, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip(163), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="2177" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная pd:Comp, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip(164), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="2177" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная ml:Comp, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip(164), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="2177" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная pr:Comp, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip(164), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="2177" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная reservOk:Boolean, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip(167), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="2177" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_MAKEMOVE_SHK_ObjMakeMove_MakeMoveForSHK локальная переменная ret:Word, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip(168), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MakeMove.vip" SourceLine="2177" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip" SourceLine="19" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;SHK_BASE.Fill_fieldArray&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip(123), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip" SourceLine="831" SourceColumn="5"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;SHK_BASE.GetTMPLTByName&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip(356), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip" SourceLine="831" SourceColumn="5"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;SHK_BASE.isStatusAllow&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip(518), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip" SourceLine="831" SourceColumn="5"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;SHK_BASE.GetSpecFieldIDName&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip(541), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip" SourceLine="831" SourceColumn="5"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;SHK_BASE.getspActionName&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip(551), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip" SourceLine="831" SourceColumn="5"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;SHK_BASE.getdatatypebyTableField&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip(637), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_Base.vip" SourceLine="831" SourceColumn="5"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_TEMPLATES.vip" SourceLine="19" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;SHK_TEMPLATES.SelectGroup&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_TEMPLATES.vip(128), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_TEMPLATES.vip" SourceLine="455" SourceColumn="5"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="163" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) GenerateJSON_VALUES_KATMCONE локальная переменная _SYS_KATMC_NREC_prev:Comp, объявленная в C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_INOUT_KATMC.VPP(180), не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_KatMC.vpp" SourceLine="234" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="637" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) GenerateJSON_VALUES_KATMCONE локальная переменная _count:LongInt, объявленная в C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_INOUT_KATMC.VPP(182), не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_KatMC.vpp" SourceLine="234" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="637" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - GetResultQueryForKatMcBatch входящий параметр: _pIdent:String не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_KatMC.vpp" SourceLine="249" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="637" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - GetResultQueryForKatSoprBatch входящий параметр: _pIdent:String не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_KatSopr.vpp" SourceLine="305" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="638" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtWarning" MessageText="Неявное добавление таблицы SPINVTAB в логическую таблицу SHK_BASE" SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_InvTab.vpp" SourceLine="144" SourceColumn="23">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="639" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtWarning" MessageText="Приведение типа с возможной потерей точности (LongInt -&gt; Word)" SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_InvTab.vpp" SourceLine="148" SourceColumn="31">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="639" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) renumInvTab локальная переменная JSONObj_VALUES:TPtr, объявленная в C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_INOUT_INVTAB.VPP(134), не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_InvTab.vpp" SourceLine="152" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="639" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) renumInvTab локальная переменная JSONObj_Array:TPtr, объявленная в C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_INOUT_INVTAB.VPP(135), не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_InvTab.vpp" SourceLine="152" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="639" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) renumInvTab локальная переменная JSONObj_ArrayOneElement:TPtr, объявленная в C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_INOUT_INVTAB.VPP(136), не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_InvTab.vpp" SourceLine="152" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="639" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - GetResultQueryForInvTabBatch входящий параметр: _pIdent:String не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_InvTab.vpp" SourceLine="305" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="639" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - GetResultQueryForKatPartyBatch входящий параметр: _pIdent:String не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_KatParty.vpp" SourceLine="166" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="640" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - GenerateJSON_VALUES_KATMol входящий параметр: _login:String не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_KatMol.vpp" SourceLine="152" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="641" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - GenerateJSON_VALUES_KATMol входящий параметр: _imei:String не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_KatMol.vpp" SourceLine="152" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="641" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - GetResultQueryForKatPodrBatch входящий параметр: _pIdent:String не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_KatPodr.vpp" SourceLine="168" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="642" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - GetResultQueryForKatBoxBatch входящий параметр: _pIdent:String не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_KatBox.vpp" SourceLine="175" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="643" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - GenerateJSON_VALUES_KatBOXSaldo входящий параметр: _login:String не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_KatBoxSaldo.vpp" SourceLine="225" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="644" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - GenerateJSON_VALUES_KatBOXSaldo входящий параметр: _imei:String не используется." SourceFileName="C:\GALAKTIKA\_GIT\BARCODING\SHK_VIP\VIP\SHK_InOut_KatBoxSaldo.vpp" SourceLine="225" SourceColumn="1">
+						<StackIncludeList>
+							<StackInclude FileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" Line="644" Column="1"/>
+						</StackIncludeList>
+					</CompileMessage>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_INOUT_oSHK_InOut_GenerateJSON_UsersArrayFILE локальная переменная JSONObj_Descriptions:TPtr, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip(699), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="722" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) m_SHK_INOUT_oSHK_InOut_GenerateJSON_UsersArrayFILE локальная переменная JSONObj_DescriptionsArray:TPtr, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip(700), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="722" SourceColumn="1"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Приведение типа с возможной потерей точности (LongInt -&gt; Word)" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="771" SourceColumn="20"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Скобки без параметров &quot;()&quot; необязательны" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="1153" SourceColumn="28"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции (процедуре) JSON_Import_Docs локальная переменная _JSONfile:String, объявленная в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip(1180), не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="1184" SourceColumn="10"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;SHK_INOUT.insert_tJSON_ID&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip(255), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_InOut.vip" SourceLine="1430" SourceColumn="5"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\shk_barcodeFunc.vip" SourceLine="18" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - canCreate входящий параметр: _type:Word не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\shk_barcodeFunc.vip" SourceLine="216" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;ISHK_BARCODEFUNC.getType&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\shk_barcodeFunc.vip(127), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\shk_barcodeFunc.vip" SourceLine="253" SourceColumn="5"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Метод интерфейса &quot;ISHK_BARCODEFUNC.canCreate&quot;, объявленный в C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\shk_barcodeFunc.vip(211), не был использован" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\shk_barcodeFunc.vip" SourceLine="253" SourceColumn="5"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\shk_barcode_Generate.vip" SourceLine="19" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\shk_barcode_view.vip" SourceLine="28" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\shk_barcode_view_oneObject.vip" SourceLine="31" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\shk_barcode_Print.vip" SourceLine="17" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\Algoritm_shk_barcode_Generate_Setup.vip" SourceLine="33" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - m_ALGORITM_SHK_BARCODE_GENERATE_SETUP_oAlgoritmSetup_asInitInter входящий параметр: p_cFormPl:Comp не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\Algoritm_shk_barcode_Generate_Setup.vip" SourceLine="146" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\Algoritm_shk_barcode_Generate.vip" SourceLine="70" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\Algoritm_shk_barcode_setParam_Setup.vip" SourceLine="28" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="В функции(процедуре) - m_ALGORITM_SHK_BARCODE_SETPARAM_SETUP_oAlgoritmSetup_asInitInter входящий параметр: p_cFormPl:Comp не используется." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\Algoritm_shk_barcode_setParam_Setup.vip" SourceLine="45" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\Algoritm_shk_barcode_setParam.vip" SourceLine="80" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_MenuDynamic.vip" SourceLine="21" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_ADMIN_PANEL.vip" SourceLine="37" SourceColumn="1"/>
+					<CompileMessage MessageType="mtInfo" MessageText="Компиляция ведется без файла контроля лицензий!" SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\VIP\SHK_USB_export_saldobox.vip" SourceLine="44" SourceColumn="1"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Не найден объект" SourceLine="-1" SourceColumn="-1"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Не найден объект" SourceLine="-1" SourceColumn="-1"/>
+					<CompileMessage MessageType="mtWarning" MessageText="и еще" SourceFileName="C:\G" SourceLine="232" SourceColumn="151"/>
+					<CompileMessage MessageType="mtWarning" MessageText="и еще" SourceFileName="C:\G" SourceLine="320" SourceColumn="129"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Не найден объект" SourceLine="-1" SourceColumn="-1"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Не найден объект" SourceLine="-1" SourceColumn="-1"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Не найден объект" SourceLine="-1" SourceColumn="-1"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Не найден объект" SourceLine="-1" SourceColumn="-1"/>
+					<CompileMessage MessageType="mtWarning" MessageText="и еще" SourceFileName="C:\" SourceLine="1790" SourceColumn="102"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Не найден объект" SourceLine="-1" SourceColumn="-1"/>
+					<CompileMessage MessageType="mtWarning" MessageText="и еще" SourceFileName="C:\G" SourceLine="1975" SourceColumn="55"/>
+					<CompileMessage MessageType="mtWarning" MessageText="Не найден объект" SourceLine="-1" SourceColumn="-1"/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 51х32 мм.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 51х32 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 57x32 мм.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 57x32 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 75x75 мм.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 75x75 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x51 мм.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 76x51 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 90х25 мм.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk QR-код под этикетку 90х25 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtFR" MessageText="Добавлен: &quot;C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;." SourceFileName="C:\Galaktika\_git\Barcoding\SHK_VIP\Fr3\C_BARCODE!!SHK_BARCODE_PRINT dsPrintShk Штрихкод под этикетку 70х70 мм.fr3&quot;."/>
+					<CompileMessage MessageType="mtEndCompile" MessageText="25.06.2024 8:33:20"/>
 				</CompileMessageList>
 			</CompileMessenger>
 		</CompileMessengerList>

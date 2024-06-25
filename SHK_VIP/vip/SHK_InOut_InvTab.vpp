@@ -128,9 +128,37 @@ function GetResultQueryForInvTab(_pcSHKObj: comp; _pIdent : string) : IResultSet
    result := qInvTab.getResultSet;
 
 }
+procedure renumInvTab(_SYS_InvTab_NREC  : comp); {
+ var _npp : longint = 1;
+ _loop SpInvTab_renum where ((_SYS_InvTab_NREC == SpInvTab_renum.CINVTAB )) ordered by SpInvTab_renum.dDay, SpInvTab_renum.tDay {
+   if longint(SpInvTab_renum.tDay) div 100 <> _npp or SpInvTab_renum.npp <> _npp then {
+      update current SpInvTab_renum set
+          SpInvTab_renum.tDay := from_sec100(_npp * 100)
+        , SpInvTab_renum.npp := _npp;
+       ;
+    }
+   _npp++;
+  }
+}
 
 function GenerateJSON_VALUES_InvTabOne(_ActionName: string; _pIdent: string; var _err : string) : TpTr;
 {
+  if bogettune('SHK.RENUMINVTAB') {
+   var iRes : IResultSet = GetResultQueryForInvTab(GetTMPLTByName(_ActionName), _pIdent);
+
+   var JSONObj_VALUES: TPtr = HttpConnect_JsonObjectCreate(m_service);
+   var JSONObj_Array : TPtr = 0;
+   var JSONObj_ArrayOneElement : tptr =0  ;
+
+   if not NullVipRef(iRes)
+   if iRes.getFirst = tsOk {
+    var _SYS_InvTab_NREC      : comp = 0h;
+    _SYS_InvTab_NREC      := iRes.row.val('SYS_INVTAB_NREC');
+     if _SYS_InvTab_NREC  <> 0h then
+      renumInvTab(_SYS_InvTab_NREC);
+    }
+  }
+
  var iRes : IResultSet = GetResultQueryForInvTab(GetTMPLTByName(_ActionName), _pIdent);
 
 
@@ -540,6 +568,7 @@ if SpInvTab_makeAction.#FieldName <> _tElements.value then update current SpInvT
     _npp++;
   } while getfirst _tElements where ((_npp == _tElements.npp)) = tsOK
 
+    renumInvTab(INVTAB_makeAction.nrec);
 #declare SetStatus_invtab
           _loop SHKObjSP_BTN
            {

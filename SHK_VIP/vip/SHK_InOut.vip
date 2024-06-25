@@ -223,6 +223,7 @@ var
   , soprOrdB
   , statlog statlog_makeAction
   , INVTAB INVTAB_makeAction
+  , SPINVTAB SpInvTab_renum
   , SPINVTAB SPINVTAB_makeAction
   , SaldoBox SaldoBox_makeAction
   , KatBox KatBox_tmp
