@@ -221,7 +221,12 @@ function GenerateJSON_VALUES_InvTabOne(_ActionName: string; _pIdent: string; var
                 }
              }
 */
-             if _value = coUnRealString then _value := iRes.row.val(SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME);
+             if _value = coUnRealString then {
+                   _value := iRes.row.val(SHKObjSP_HEAD.SYSNAMETBL + '_'+SHKObjSP_HEAD.SYSNAME);
+                   if GetTypeByTableAndField(SHKObjSP_HEAD.SYSNAMETBL, SHKObjSP_HEAD.SYSNAME)  = 7
+                     then _value  := datetostr(strtodate(_value,'DD/MM/YYYY'),'DD/MM/YYYY');
+                 }
+
 //             HttpConnect_JsonObjectAddString(m_service, JSONObj_ArrayOneElement, SHKObjSP_HEAD.SYSNAMETBL+'_'+SHKObjSP_HEAD.SYSNAME, _value);
 
              HttpConnect_JsonObjectAddString(m_service, JSONObj_FIELDS, SHKObjSP_HEAD.SYSNAMETBL+'_'+SHKObjSP_HEAD.SYSNAME, _value);
