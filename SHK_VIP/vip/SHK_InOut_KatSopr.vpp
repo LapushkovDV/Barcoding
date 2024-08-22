@@ -458,6 +458,34 @@ var _ActionBody : string = _tElements.value;
                                 }
                            }
              end;
+#declare checkkol(field)
+                  '#field'        : {
+                       if SpSopr_makeAction.#field <> double(_tElements.value) {
+                             HttpConnect_JsonObjectAddInteger(m_service, JSONObj, 'RESULT_CODE', 0);
+                             HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG' ,     'when there is a distribution by position, you cannot change the quantity');
+                             HttpConnect_JsonObjectAddString( m_service, JSONObj, 'RESULT_MSG_RUS' , 'когда существует распределение по позиции, то нельзя изменять количество');
+                             HttpConnect_JsonObjectAddString( m_service, JSONObj, 'ROW_NUMBER' , string(_npp));
+                             HttpConnect_JsonObjectAddString( m_service, JSONObj, 'SYSNAME' , _tElements.name);
+                             result := JSONObj;
+                             MyLog('ERROR:  '+'когда существует распределение по позиции, то нельзя изменять количество' );
+                             exit;
+                       }
+                   }
+
+#end
+             if _cSpSopr <> 0h {
+               if getfirst SOPRORDB where ((_cSpSopr == SOPRORDB.CSPSOPR)) = tsOK // если есть распределение, то кол-во нельзя изменять с ТСД иначе будет коллизия
+                 case _field of
+                  #checkkol(KOL)
+                  #checkkol(KOLOPL)
+                  #checkkol(KOLFACT)
+                  #checkkol(KOL2)
+                  #checkkol(KOLFACT2)
+                  #checkkol(KOLGRM)
+                  #checkkol(KOLPOV)
+                  #checkkol(KOLDOP)
+                 end;
+              }
           }
      }
    _npp++;

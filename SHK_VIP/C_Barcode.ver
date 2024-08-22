@@ -1,4 +1,4 @@
-#version C_Barcode 9.1.1.0 '#CompTitle'
+#version C_Barcode 9.1.1.1 '#CompTitle'
   required
     C_AlterCumulative >= 9.1.26.0,
     C_Common >=  9.1.130.0,
