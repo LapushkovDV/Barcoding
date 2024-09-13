@@ -1,0 +1,2461 @@
+                                         Полный отчет о компонентах:
+                                        _____________________________
+
+
+Тип     Имя                    Версия           Размер(б)       Относительный путь
+ DLL   ATLAX                  5.5.29.0               125 984   .\ATLAX.DLL
+       требует:                       версии:            наличие:
+       + DLL   streams_               >= 5.5.19.0        5.5.29.0       
+ DLL   ATLCORE_               5.5.29.2             2 428 960   .\ATLCORE_.DLL
+       требует:                       версии:            наличие:
+       + DLL   atlCore_Stub           >= 5.5.29.0        5.5.29.0       
+       + DLL   atlDll                 >= 5.5.29.2        5.5.29.3       
+       + DLL   atlMQ                  >= 5.5.28.0        5.5.28.0       
+       + DLL   AtlSock                >= 5.5.11.0        5.5.11.0       
+       + DLL   AtVipObj               >= 5.5.20.0        5.5.28.0       
+       + RES   compdata               >= 5.5.29.0        5.5.29.0       
+       + DLL   ecc_                   >= 5.5.20.0        5.5.27.0       
+       + DLL   ExlLib_                >= 5.5.29.0        5.5.29.0       
+       + DLL   Forms_                 >= 5.5.28.0        5.5.29.0       
+       + DLL   FReport3               >= 9.1.23.0        9.1.26.0       
+       + DLL   Galnet                 >= 9.1.6.0         9.2.4.0        
+       + EXE   galsrv                 >= 5.5.27.0        5.5.29.0       
+       + DLL   ibmMQ                  >= 5.5.28.0        5.5.29.0       
+       + DLL   IntOLAP                >= 5.5.19.0        5.5.27.0       
+       + DLL   lotdll_                >= 5.5.18.0        5.5.29.3       
+       + DLL   streams_               >= 5.5.29.0        5.5.29.0       
+       + DLL   vision_w               >= 5.5.27.0        5.5.29.1       
+ DLL   ATLCORE_STUB           5.5.29.0               217 120   .\ATLCORE_STUB.DLL
+       требует:                       версии:            наличие:
+       + DLL   atlCore_               >= 5.5.29.0        5.5.29.2       
+       + EXE   AtlExec                >= 5.5.29.0        5.5.29.3       
+ DLL   ATLDLL                 5.5.29.3             1 257 504   .\ATLDLL.DLL
+       требует:                       версии:            наличие:
+       + DLL   AtlAX                  >= 5.5.11.0        5.5.29.0       
+       + DLL   atlCore_               >= 5.5.29.2        5.5.29.2       
+       + DLL   AtlPOP                 >= 5.5.11.0        5.5.12.0       
+       + DLL   cliAgent               >= 5.5.14.0        5.5.25.0       
+       + DLL   ecc_                   >= 5.5.11.0        5.5.27.0       
+       + DLL   FReport3               >= 9.1.23.0        9.1.26.0       
+       + DLL   IntOLAP                >= 5.5.19.0        5.5.27.0       
+       + DLL   streams_               >= 5.5.29.0        5.5.29.0       
+       + DLL   vision_                >= 5.5.28.0        5.5.28.0       
+       + DLL   vision_w               >= 5.5.27.0        5.5.29.1       
+ DLL   ATLEXTDB               9.2.0.0                743 936   .\ATLEXTDB.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   ATLLIB_                5.5.29.0                84 512   .\ATLLIB_.DLL
+       требует:                       версии:            наличие:
+       + RTL   atlantis               >= 5.5.11.0        5.5.27.0       
+       + DLL   Nation_                >= 5.5.11.0        5.5.11.0       
+ DLL   ATLMQ                  5.5.28.0                96 768   .\ATLMQ.DLL
+       требует:                       версии:            наличие:
+       + RTL   atlantis               >= 5.5.27.0        5.5.27.0       
+       + DLL   qpid-proton            >= 0.13.1.0        0.13.1.0       
+       + DLL   streams_               >= 5.5.27.0        5.5.29.0       
+ DLL   ATLODBC                5.5.12.0                81 920   .\ATLODBC.DLL
+       требует:                       версии:            наличие:
+       + DLL   proxy_atldb            >= 5.5.12.0        5.5.12.0       
+ DLL   ATLPOP                 5.5.12.0               523 808   .\ATLPOP.DLL
+ DLL   ATLSOCK                5.5.11.0                44 032   .\ATLSOCK.DLL
+       требует:                       версии:            наличие:
+       + RTL   atlantis               >= 5.5.11.0        5.5.27.0       
+ DLL   ATVIPOBJ               5.5.28.0                51 744   .\ATVIPOBJ.DLL
+       требует:                       версии:            наличие:
+       + RTL   atlantis               >= 5.5.11.0        5.5.27.0       
+       + DLL   SiDriver               >= 5.5.21.0        5.5.24.0       
+ DLL   BASE                   5.5.29.0               414 752   .\BASE.DLL
+       требует:                       версии:            наличие:
+       + DLL   btrv_drv               >= 5.5.14.0        5.5.29.2       
+       + RES   compdata               >= 5.5.23.0        5.5.29.0       
+       + DLL   ecc_                   >= 5.5.12.0        5.5.27.0       
+       + DLL   ms70drv                >= 5.5.20.0        5.5.29.0       
+       + DLL   mt_drv                 >= 5.5.11.0        5.5.28.0       
+       + DLL   ora90drv               >= 5.5.16.0        5.5.29.4       
+       + DLL   pg90drv                >= 5.5.20.0        5.5.29.0       
+       + DLL   protect_               >= 5.5.11.0        5.5.16.0       
+       + DLL   PSQL9drv               >= 5.5.16.0        5.5.29.0       
+       + DLL   streams_               >= 5.5.29.0        5.5.29.0       
+ DLL   BTRV_DRV               5.5.29.2               217 120   .\BTRV_DRV.DLL
+       требует:                       версии:            наличие:
+       + DLL   base                   >= 5.5.14.0        5.5.29.0       
+ DLL   CLIAGENT               5.5.25.0               131 584   .\CLIAGENT.DLL
+       требует:                       версии:            наличие:
+       + DLL   AtlODBC                >= 5.5.12.0        5.5.12.0       
+       + DLL   comdrv                 >= 5.5.12.0        5.5.12.0       
+       + DLL   httpdrv                >= 5.5.12.0        5.5.12.0       
+       + DLL   pxcomdrv               >= 5.5.12.0        5.5.12.0       
+       + DLL   streams_               >= 5.5.19.0        5.5.29.0       
+       + DLL   wsdrv                  >= 5.5.25.0        5.5.25.0       
+ DLL   COMDRV                 5.5.12.0                88 064   .\COMDRV.DLL
+       требует:                       версии:            наличие:
+       + DLL   cliAgent               >= 5.5.12.0        5.5.25.0       
+       + DLL   pxcomdrv               >= 5.5.12.0        5.5.12.0       
+ DLL   DAILYINFOCOM           9.2.0.0                155 648   .\DAILYINFOCOM.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   DDELIB                 9.2.0.0                386 048   .\DDELIB.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   ECC_                   5.5.27.0               131 616   .\ECC_.DLL
+       требует:                       версии:            наличие:
+       + DLL   streams_               >= 5.5.18.0        5.5.29.0       
+ DLL   EDITOR_                5.5.29.1               134 688   .\EDITOR_.DLL
+       требует:                       версии:            наличие:
+       + DLL   streams_               >= 5.5.11.0        5.5.29.0       
+ DLL   EXCELLIB3X             9.2.0.0                 79 904   .\EXCELLIB3X.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   EXLLIB_                5.5.29.0             2 212 352   .\EXLLIB_.DLL
+       требует:                       версии:            наличие:
+       + DLL   atlCore_               >= 5.5.29.0        5.5.29.2       
+       + EXE   AtlExec                >= 5.5.29.0        5.5.29.3       
+ DLL   EXPORTCIK              9.2.0.0                368 640   .\EXPORTCIK.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   EXRATESCOM             9.2.0.0                 57 344   .\EXRATESCOM.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   FIAS                   9.2.1.0              1 849 856   .\FIAS.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_FIAS                 >= 9.2.3.0         9.2.4.0        
+ DLL   FNSNDSCAWS_2COM        9.2.0.0                 13 312   .\FNSNDSCAWS_2COM.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   FORMS_                 5.5.29.0               549 408   .\FORMS_.DLL
+       требует:                       версии:            наличие:
+       + EXE   aSQL                   >= 5.5.28.0        5.5.29.0       
+       + DLL   atlCore_               >= 5.5.28.0        5.5.29.2       
+       + EXE   AtlExec                >= 5.5.28.0        5.5.29.3       
+       + DLL   base                   >= 5.5.11.0        5.5.29.0       
+       + DLL   streams_               >= 5.5.20.0        5.5.29.0       
+ DLL   FPSERV                 9.2.0.0                 17 920   .\FPSERV.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   FPSTATISTICALG         9.2.0.0                359 424   .\FPSTATISTICALG.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   FPSTATISTICARR         9.2.0.0                119 808   .\FPSTATISTICARR.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   FREPORT3               9.1.26.0            17 077 760   .\FREPORT3.DLL
+       требует:                       версии:            наличие:
+       + DLL   ATLCORE_               >= 5.5.28.0        5.5.29.2       
+       + DLL   ATLDLL                 >= 5.5.28.0        5.5.29.3       
+       + EXE   ATLEXEC                >= 5.5.28.0        5.5.29.3       
+       + DLL   ATLLIB_                >= 5.5.26.0        5.5.29.0       
+       + RES   COMPDATA               >= 5.5.28.0        5.5.29.0       
+       + EXE   FREASYEDIT             >= 9.1.26.0        9.1.26.0       
+       + DLL   STREAMS_               >= 5.5.26.0        5.5.29.0       
+       + DLL   VISION_W               >= 5.5.26.0        5.5.29.1       
+ DLL   GALAXYGANTTCONTROL     9.2.0.0                647 168   .\GALAXYGANTTCONTROL.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   GALAXYGANTTMANUF       9.2.0.0              1 351 680   .\GALAXYGANTTMANUF.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   GALAXYGANTTMODULE      9.2.0.0                 32 768   .\GALAXYGANTTMODULE.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   GALMAILER              9.2.0.0                148 480   .\GALMAILER.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   GALNET                 9.2.4.0                101 408   .\GALNET.DLL
+       требует:                       версии:            наличие:
+       + EXE   aSQL                   >= 5.5.29.0        5.5.29.0       
+       + DLL   AtlCore_               >= 5.5.29.0        5.5.29.2       
+       + DLL   AtlDll                 >= 5.5.29.0        5.5.29.3       
+       + EXE   AtlExec                >= 5.5.29.0        5.5.29.3       
+       + DLL   Base                   >= 5.5.29.0        5.5.29.0       
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   Forms_                 >= 5.5.29.0        5.5.29.0       
+       + DLL   Freport3               >= 9.1.23.0        9.1.26.0       
+       + DLL   LotDll_                >= 5.5.29.0        5.5.29.3       
+       + DLL   Streams_               >= 5.5.29.0        5.5.29.0       
+ DLL   GALRTF                 9.2.0.0                395 776   .\GALRTF.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   GALRTSLIB              9.2.0.0                136 192   .\GALRTSLIB.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   GALSIGNEDO             9.2.0.0                 18 432   .\GALSIGNEDO.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   GALSIGNINVOICE         9.2.0.0                129 536   .\GALSIGNINVOICE.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   GALXLSLIB              9.2.1.0                384 512   .\GALXLSLIB.DLL
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.0.0         9.2.3.0        
+ DLL   GDESK                  5.5.26.0                94 720   .\GDESK.DLL
+       требует:                       версии:            наличие:
+       + DLL   atlLib_                >= 5.5.11.0        5.5.29.0       
+ DLL   G_BUH                  9.2.4.0                329 248   .\G_BUH.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + RES   F_BUHREP               >= 9.2.9.0         9.2.11.0       
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_CACHE                9.2.0.0                 12 832   .\G_CACHE.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   G_COMMON               9.2.3.0                 90 656   .\G_COMMON.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_CONTEXTS             9.2.0.0                 27 168   .\G_CONTEXTS.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   G_EXPIMP               9.2.5.0                104 992   .\G_EXPIMP.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_EXTATTR              9.2.3.0                 39 968   .\G_EXTATTR.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_EXTVIS               9.2.0.0                 10 272   .\G_EXTVIS.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   G_FA                   9.2.3.0                 61 984   .\G_FA.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_FIN                  9.2.3.0                256 544   .\G_FIN.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_KAU                  9.2.10.0               186 912   .\G_KAU.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + RES   C_EXPIMP               >= 9.2.5.0         9.2.16.0       
+       + RES   C_EXTFUN               >= 9.2.3.0         9.2.7.0        
+       + RES   F_GetAn                >= 9.2.12.0        9.2.15.0       
+       + RES   F_PAT                  >= 9.2.3.0         9.2.8.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_TXO                  >= 9.2.5.0         9.2.13.0       
+ DLL   G_LASTNUMD             9.2.4.0                 39 456   .\G_LASTNUMD.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_DOGOVOR              >= 9.2.8.0         9.2.15.0       
+ DLL   G_MD5                  9.2.0.0                 13 856   .\G_MD5.DLL
+ DLL   G_MNF                  9.2.0.0                 11 296   .\G_MNF.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   G_NALOG                9.2.4.0                 53 280   .\G_NALOG.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_Common               >= 9.2.9.0         9.2.15.0       
+ DLL   G_NIOKR                9.2.3.0                 50 208   .\G_NIOKR.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_OPER                 9.2.3.0                113 696   .\G_OPER.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_RLFUN                9.2.3.0                 51 232   .\G_RLFUN.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_SCALES               9.2.0.0                  8 224   .\G_SCALES.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   G_SKL                  9.2.3.0                 64 032   .\G_SKL.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_SREDN                9.2.11.0               856 096   .\G_SREDN.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_SUMDIVIDE            >= 9.2.2.0         9.2.9.0        
+       + RES   Z_Calc                 >= 9.2.4.0         9.2.7.0        
+       + RES   Z_SREDN                >= 9.2.4.0         9.2.10.0       
+       + RES   Z_ZarNastr             >= 9.2.7.0         9.2.10.0       
+ DLL   G_STAFF                9.2.3.0                 75 296   .\G_STAFF.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_SUMDIVIDE            9.2.9.0              1 031 200   .\G_SUMDIVIDE.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_SREDN                >= 9.2.2.0         9.2.11.0       
+       + DLL   G_ZARPL                >= 9.2.3.0         9.2.13.0       
+       + RES   Z_Sredn                >= 9.2.6.0         9.2.10.0       
+ DLL   G_TABLEMANAGER         9.2.4.0                 53 792   .\G_TABLEMANAGER.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_ZARPL                >= 9.2.6.0         9.2.13.0       
+       + RES   Z_BASEMENT             >= 9.2.4.0         9.2.8.0        
+ DLL   G_TREE                 9.2.3.0                 94 752   .\G_TREE.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_TUNE                 9.2.4.0                 62 496   .\G_TUNE.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_TXO                  9.2.13.0               656 416   .\G_TXO.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ExtFun               >= 9.2.5.0         9.2.7.0        
+       + RES   F_OS                   >= 9.2.2.0         9.2.9.0        
+       + RES   F_PAT                  >= 9.2.5.0         9.2.8.0        
+       + RES   F_TXO                  >= 9.2.6.0         9.2.10.0       
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_KAU                  >= 9.2.7.0         9.2.10.0       
+       + RES   L_SoprDoc              >= 9.2.13.0        9.2.20.0       
+ DLL   G_UNIVERSITY           9.2.3.0                 24 096   .\G_UNIVERSITY.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_VAL                  9.2.3.0                 33 312   .\G_VAL.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_VDE                  9.2.3.0                272 928   .\G_VDE.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_WEIGHT               9.2.0.0                 12 320   .\G_WEIGHT.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   G_WORKTABLE            9.2.5.0                339 488   .\G_WORKTABLE.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ExtFun               >= 9.2.4.0         9.2.7.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_LSCHET               >= 9.2.3.0         9.2.11.0       
+       + RES   Z_WT                   >= 9.2.4.0         9.2.7.0        
+ DLL   G_ZARCACHE             9.2.4.0                 97 312   .\G_ZARCACHE.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+ DLL   G_ZARPL                9.2.13.0             3 409 952   .\G_ZARPL.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+       + DLL   GalNet                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_SUMDIVIDE            >= 9.2.3.0         9.2.9.0        
+       + DLL   G_TableManager         >= 9.2.2.0         9.2.4.0        
+       + RES   Z_Basement             >= 9.2.6.0         9.2.8.0        
+       + RES   Z_Calc                 >= 9.2.6.0         9.2.7.0        
+       + RES   Z_LSchet               >= 9.2.8.0         9.2.11.0       
+       + RES   Z_MP                   >= 9.2.6.0         9.2.8.0        
+       + RES   Z_PayFSS               >= 9.2.5.0         9.2.8.0        
+       + RES   Z_PayRep               >= 9.2.5.0         9.2.9.0        
+       + RES   Z_Service              >= 9.2.4.0         9.2.8.0        
+       + RES   Z_Sredn                >= 9.2.7.0         9.2.10.0       
+       + RES   Z_StaffCat             >= 9.2.4.0         9.2.8.0        
+       + RES   Z_ZAR                  >= 9.2.1.0         9.2.7.0        
+       + RES   Z_ZARNASTR             >= 9.2.6.0         9.2.10.0       
+       + RES   Z_ZarRep               >= 9.2.6.0         9.2.9.0        
+ DLL   HTTPDRV                5.5.12.0                40 480   .\HTTPDRV.DLL
+       требует:                       версии:            наличие:
+       + DLL   cliAgent               >= 5.5.12.0        5.5.25.0       
+ DLL   IBMMQ                  5.5.29.0                88 576   .\IBMMQ.DLL
+       требует:                       версии:            наличие:
+       + RTL   atlantis               >= 5.5.27.0        5.5.27.0       
+       + DLL   streams_               >= 5.5.28.0        5.5.29.0       
+ DLL   INTOLAP                5.5.27.0               122 368   .\INTOLAP.DLL
+       требует:                       версии:            наличие:
+       + DLL   atlCore_               >= 5.5.19.0        5.5.29.2       
+       + DLL   atlDll                 >= 5.5.19.0        5.5.29.3       
+       + EXE   AtlExec                >= 5.5.19.0        5.5.29.3       
+ DLL   LOTDLL_                5.5.29.3               164 384   .\LOTDLL_.DLL
+       требует:                       версии:            наличие:
+       + EXE   aSQL                   >= 5.5.11.0        5.5.29.0       
+       + DLL   atlCore_               >= 5.5.11.0        5.5.29.2       
+       + EXE   AtlExec                >= 5.5.11.0        5.5.29.3       
+       + DLL   base                   >= 5.5.16.0        5.5.29.0       
+       + DLL   streams_               >= 5.5.18.0        5.5.29.0       
+ DLL   MAILMANAGER            9.2.0.0                551 424   .\MAILMANAGER.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   MQDRV                  5.5.27.0                41 472   .\MQDRV.DLL
+       требует:                       версии:            наличие:
+       + RTL   atlantis               >= 5.5.27.0        5.5.27.0       
+       + DLL   cliAgent               >= 5.5.25.0        5.5.25.0       
+ DLL   MS70DRV                5.5.29.0             1 129 984   .\MS70DRV.DLL
+       требует:                       версии:            наличие:
+       + DLL   base                   >= 5.5.20.0        5.5.29.0       
+       + DLL   streams_               >= 5.5.14.0        5.5.29.0       
+ DLL   MSOUTLOOKLIB           9.2.0.0                116 224   .\MSOUTLOOKLIB.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   MT_DRV                 5.5.28.0               272 384   .\MT_DRV.DLL
+       требует:                       версии:            наличие:
+       + DLL   lotdll_                >= 5.5.12.0        5.5.29.3       
+ DLL   NATION_                5.5.11.0                 7 200   .\NATION_.DLL
+       требует:                       версии:            наличие:
+       + RTL   atlantis               >= 5.5.11.0        5.5.27.0       
+ DLL   ORA90DRV               5.5.29.4             1 098 752   .\ORA90DRV.DLL
+       требует:                       версии:            наличие:
+       + DLL   base                   >= 5.5.20.0        5.5.29.0       
+       + DLL   streams_               >= 5.5.14.0        5.5.29.0       
+ DLL   PG90DRV                5.5.29.0             1 026 048   .\PG90DRV.DLL
+       требует:                       версии:            наличие:
+       + DLL   base                   >= 5.5.20.0        5.5.29.0       
+       + DLL   streams_               >= 5.5.14.0        5.5.29.0       
+ DLL   PROTECT_               5.5.16.0                27 680   .\PROTECT_.DLL
+       требует:                       версии:            наличие:
+       + DLL   streams_               >= 5.5.11.0        5.5.29.0       
+ DLL   PROXY_ATLDB            5.5.12.0               948 768   .\PROXY_ATLDB.DLL
+       требует:                       версии:            наличие:
+       + DLL   AtlPOP                 >= 5.5.11.0        5.5.12.0       
+       + DLL   cliAgent               >= 5.5.12.0        5.5.25.0       
+       + DLL   ecc_                   >= 5.5.11.0        5.5.27.0       
+       + DLL   Editor_                >= 5.5.11.0        5.5.29.1       
+ DLL   PSQL9DRV               5.5.29.0               139 264   .\PSQL9DRV.DLL
+       требует:                       версии:            наличие:
+       + DLL   base                   >= 5.5.20.0        5.5.29.0       
+ DLL   PXCOMDRV               5.5.12.0                59 392   .\PXCOMDRV.DLL
+       требует:                       версии:            наличие:
+       + DLL   comdrv                 >= 5.5.12.0        5.5.12.0       
+ DLL   QPID-PROTON            0.13.1.0               280 064   .\QPID-PROTON.DLL
+ DLL   RTSFILERLIB            9.2.0.0                 41 472   .\RTSFILERLIB.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   SCALES05               9.2.0.0                310 784   .\SCALES05.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   SIDRIVER               5.5.24.0                14 368   .\SIDRIVER.DLL
+       требует:                       версии:            наличие:
+       + RTL   atlantis               >= 5.5.20.0        5.5.27.0       
+       + DLL   SILog                  >= 5.5.20.0        5.5.29.0       
+ DLL   SILOG                  5.5.29.0               558 112   .\SILOG.DLL
+ DLL   SOCKFILE               5.5.28.0               140 800   .\SOCKFILE.DLL
+ DLL   STREAMS_               5.5.29.0               673 312   .\STREAMS_.DLL
+       требует:                       версии:            наличие:
+       + EXE   aSQL                   >= 5.5.29.0        5.5.29.0       
+       + DLL   atlCore_               >= 5.5.29.0        5.5.29.2       
+       + EXE   AtlExec                >= 5.5.29.0        5.5.29.3       
+       + DLL   atlLib_                >= 5.5.16.0        5.5.29.0       
+ DLL   TOOLRES                5.5.11.0                 7 200   .\TOOLRES.DLL
+       требует:                       версии:            наличие:
+       + RTL   atlantis               >= 5.5.11.0        5.5.27.0       
+ DLL   VISION_                5.5.28.0               128 000   .\HTML\EXE\VISION_.DLL
+       требует:                       версии:            наличие:
+       + DLL   atlDll                 >= 5.5.28.0        5.5.29.3       
+       + DLL   Editor_                >= 5.5.11.0        5.5.29.1       
+ DLL   VISION_W               5.5.29.1             2 344 448   .\VISION_W.DLL
+       требует:                       версии:            наличие:
+       + DLL   atlDll                 >= 5.5.29.0        5.5.29.3       
+       + EXE   AtlExec                >= 5.5.29.0        5.5.29.3       
+       + DLL   Editor_                >= 5.5.11.0        5.5.29.1       
+       + DLL   gdesk                  >= 5.5.11.0        5.5.26.0       
+       + DLL   toolres                >= 5.5.11.0        5.5.11.0       
+       + DLL   xl_grum                >= 5.5.11.0        5.5.11.0       
+       + DLL   zColorer               >= 5.5.11.0        5.5.29.0       
+       + DLL   zprint_w               >= 5.5.13.0        5.5.29.3       
+       + DLL   _cfg                   >= 5.5.16.0        5.5.16.0       
+ DLL   WORDLIB                9.2.0.0                168 960   .\WORDLIB.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   WSDRV                  5.5.25.0               110 592   .\WSDRV.DLL
+       требует:                       версии:            наличие:
+       + DLL   cliAgent               >= 5.5.12.0        5.5.25.0       
+ DLL   XL_GRUM                5.5.11.0               171 008   .\XL_GRUM.DLL
+       требует:                       версии:            наличие:
+       + DLL   streams_               >= 5.5.11.0        5.5.29.0       
+ DLL   ZARDISTRIBUTE          9.2.0.0              1 077 248   .\ZARDISTRIBUTE.DLL
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ DLL   ZCOLORER               5.5.29.0               384 000   .\ZCOLORER.DLL
+       требует:                       версии:            наличие:
+       + DLL   Editor_                >= 5.5.11.0        5.5.29.1       
+ DLL   ZPRINT_W               5.5.29.3               128 000   .\ZPRINT_W.DLL
+       требует:                       версии:            наличие:
+       + DLL   Editor_                >= 5.5.11.0        5.5.29.1       
+ DLL   _CFG                   5.5.16.0                78 336   .\_CFG.DLL
+       требует:                       версии:            наличие:
+       + DLL   streams_               >= 5.5.11.0        5.5.29.0       
+ EXE   ALTER_CUMULATIVE       9.2.3.0             15 343 616   .\ALTER_CUMULATIVE.EXE
+       требует:                       версии:            наличие:
+       + EXE   aSQL                   >= 5.5.28.0        5.5.29.0       
+       + RES   C_AlterCumulative      >= 9.2.3.0         9.2.3.0        
+ EXE   ALTER_ZREPORT          9.2.1.0              6 539 776   .\ALTER_ZREPORT.EXE
+       требует:                       версии:            наличие:
+       + EXE   ASQL                   >= 5.5.29.0        5.5.29.0       
+       + RES   C_AlterCumulative      >= 9.2.2.0         9.2.3.0        
+       + RES   Z_PFRep                >= 9.2.4.0         9.2.5.0        
+       + RES   Z_Report               >= 9.2.2.0         9.2.4.0        
+ EXE   ASQL                   5.5.29.0             3 002 912   .\ASQL.EXE
+       требует:                       версии:            наличие:
+       + DLL   AtlPOP                 >= 5.5.11.0        5.5.12.0       
+       + RES   compdata               >= 5.5.29.0        5.5.29.0       
+       + DLL   ecc_                   >= 5.5.12.0        5.5.27.0       
+       + DLL   Forms_                 >= 5.5.22.0        5.5.29.0       
+       + DLL   lotdll_                >= 5.5.14.0        5.5.29.3       
+       + DLL   streams_               >= 5.5.29.0        5.5.29.0       
+       + DLL   _cfg                   >= 5.5.11.0        5.5.16.0       
+ EXE   ATLEXEC                5.5.29.3             3 067 936   .\ATLEXEC.EXE
+       требует:                       версии:            наличие:
+       + DLL   AtlAX                  >= 5.5.11.0        5.5.29.0       
+       + DLL   atlCore_Stub           >= 5.5.29.0        5.5.29.0       
+       + DLL   atlMQ                  >= 5.5.28.0        5.5.28.0       
+       + DLL   AtlPOP                 >= 5.5.11.0        5.5.12.0       
+       + DLL   AtlSock                >= 5.5.11.0        5.5.11.0       
+       + DLL   AtVipObj               >= 5.5.20.0        5.5.28.0       
+       + RES   compdata               >= 5.5.29.0        5.5.29.0       
+       + DLL   ecc_                   >= 5.5.20.0        5.5.27.0       
+       + DLL   ExlLib_                >= 5.5.29.0        5.5.29.0       
+       + DLL   Forms_                 >= 5.5.28.0        5.5.29.0       
+       + DLL   FReport3               >= 9.1.23.0        9.1.26.0       
+       + DLL   Galnet                 >= 9.1.6.0         9.2.4.0        
+       + DLL   ibmMQ                  >= 5.5.28.0        5.5.29.0       
+       + DLL   IntOLAP                >= 5.5.19.0        5.5.27.0       
+       + DLL   lotdll_                >= 5.5.18.0        5.5.29.3       
+       + DLL   streams_               >= 5.5.29.0        5.5.29.0       
+       + DLL   vision_w               >= 5.5.27.0        5.5.29.1       
+ EXE   FREASYEDIT             9.1.26.0            16 762 368   .\FREASYEDIT.EXE
+ EXE   GALFNS                 9.2.0.0                194 560   .\GALFNS.EXE
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ EXE   GALSRV                 5.5.29.0               397 312   .\GALSRV.EXE
+       требует:                       версии:            наличие:
+       + DLL   atlCore_               >= 5.5.27.0        5.5.29.2       
+       + DLL   cliAgent               >= 5.5.19.0        5.5.25.0       
+       + DLL   mqdrv                  >= 5.5.27.0        5.5.27.0       
+ OCX   AXBRWPROJ1             9.2.0.0                441 344   .\OCX\AXBRWPROJ1.OCX
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ OCX   FPCUBEVIEW02PROJ1      9.2.1.0                695 296   .\OCX\FPCUBEVIEW02PROJ1.OCX
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.0.0         9.2.3.0        
+ OCX   GALXHTMLPROJ1          9.2.0.0                540 672   .\OCX\GALXHTMLPROJ1.OCX
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ OCX   JSGAL                  9.2.0.0                555 520   .\OCX\JSGAL.OCX
+       требует:                       версии:            наличие:
+       + RES   C_AlterCumulative      >= 9.2.0.0         9.2.3.0        
+ RES   ATLHELP                5.5.29.0                15 151   .\ATLHELP.RES
+       требует:                       версии:            наличие:
+       + RES   COMPDATA               >= 5.5.29.0        5.5.29.0       
+       + RES   C_GALHELP              >= 9.1.27.0        9.2.4.0        
+ RES   COMPDATA               5.5.29.0             2 789 312   .\COMPDATA.RES
+       требует:                       версии:            наличие:
+       + EXE   aSQL                   >= 5.5.29.0        5.5.29.0       
+       + DLL   ATLCORE_               >= 5.5.29.0        5.5.29.2       
+       + EXE   AtlExec                >= 5.5.29.0        5.5.29.3       
+       + RES   ATLHELP                >= 5.5.11.0        5.5.29.0       
+       + DLL   BASE                   >= 5.5.27.0        5.5.29.0       
+       + DLL   SOCKFILE               >= 5.5.23.0        5.5.28.0       
+ RES   C_ALTERCUMULATIVE      9.2.3.0                 88 322   .\C_ALTERCUMULATIVE.RES
+       требует:                       версии:            наличие:
+       + EXE   Alter_Cumulative       >= 9.2.3.0         9.2.3.0        
+       + EXE   aSQL                   >= 5.5.29.0        5.5.29.0       
+       + DLL   ATLEXTDB               >= 9.2.0.0         9.2.0.0        
+       + OCX   AXBrwProj1             >= 9.2.0.0         9.2.0.0        
+       + RES   C_ARCHIVELINK          >= 9.2.9.0         9.2.10.0       
+       + RES   C_CHECKKBU             >= 9.2.4.0         9.2.4.0        
+       + RES   C_CHECKOPER            >= 9.2.7.0         9.2.7.0        
+       + RES   C_COMMON               >= 9.2.13.0        9.2.13.0       
+       + RES   C_CONST                >= 9.2.3.0         9.2.3.0        
+       + RES   C_CORPO                >= 9.2.3.0         9.2.3.0        
+       + RES   C_DENOMINATOR          >= 9.2.3.0         9.2.3.0        
+       + RES   C_ESB                  >= 9.2.3.0         9.2.3.0        
+       + RES   C_EXPIMP               >= 9.2.15.0        9.2.16.0       
+       + RES   C_EXTCLASS             >= 9.2.3.0         9.2.4.0        
+       + RES   C_EXTFUN               >= 9.2.7.0         9.2.7.0        
+       + RES   C_GALHELP              >= 9.2.4.0         9.2.4.0        
+       + RES   C_GANTT                >= 9.2.3.0         9.2.3.0        
+       + RES   C_JOIN                 >= 9.2.5.0         9.2.5.0        
+       + RES   C_MAILER               >= 9.2.3.0         9.2.3.0        
+       + RES   C_MQLINK               >= 9.2.23.0        9.2.26.0       
+       + RES   C_OLAP                 >= 9.2.4.0         9.2.4.0        
+       + RES   C_PALETTE              >= 9.2.3.0         9.2.3.0        
+       + RES   C_PARTNER              >= 9.2.3.0         9.2.3.0        
+       + RES   C_SPLASH_BY            >= 9.2.3.0         9.2.3.0        
+       + RES   C_SPLASH_RU            >= 9.2.3.0         9.2.3.0        
+       + RES   C_STATLINE             >= 9.2.5.0         9.2.5.0        
+       + RES   C_TEMPLATE             >= 9.2.3.0         9.2.3.0        
+       + RES   C_TREE                 >= 9.2.3.0         9.2.3.0        
+       + RES   C_TREETUNE             >= 9.2.5.0         9.2.5.0        
+       + RES   C_TUNE                 >= 9.2.7.0         9.2.7.0        
+       + RES   C_USERMANUAL           >= 9.2.3.0         9.2.3.0        
+       + RES   C_WEBSERVICES          >= 9.2.3.0         9.2.3.0        
+       + DLL   DAILYINFOCOM           >= 9.2.0.0         9.2.0.0        
+       + DLL   DDELIB                 >= 9.2.0.0         9.2.0.0        
+       + DLL   EXCELLIB3X             >= 9.2.0.0         9.2.0.0        
+       + DLL   EXPORTCIK              >= 9.2.0.0         9.2.0.0        
+       + DLL   EXRATESCOM             >= 9.2.0.0         9.2.0.0        
+       + DLL   FIAS                   >= 9.2.0.0         9.2.1.0        
+       + DLL   FNSNDSCAWS_2COM        >= 9.2.0.0         9.2.0.0        
+       + OCX   FpCubeView02Proj1      >= 9.2.0.0         9.2.1.0        
+       + DLL   FPSERV                 >= 9.2.0.0         9.2.0.0        
+       + DLL   FPSTATISTICALG         >= 9.2.0.0         9.2.0.0        
+       + DLL   FPSTATISTICARR         >= 9.2.0.0         9.2.0.0        
+       + RES   F_ALG                  >= 9.2.4.0         9.2.5.0        
+       + RES   F_AN                   >= 9.2.10.0        9.2.10.0       
+       + RES   F_AVIZO                >= 9.2.3.0         9.2.3.0        
+       + RES   F_BACKLOG              >= 9.2.4.0         9.2.4.0        
+       + RES   F_BANKDOCF             >= 9.2.12.0        9.2.14.0       
+       + RES   F_BUHREP               >= 9.2.11.0        9.2.11.0       
+       + RES   F_BUHSCHET             >= 9.2.3.0         9.2.3.0        
+       + RES   F_CASHBANK             >= 9.2.3.0         9.2.4.0        
+       + RES   F_CLOSCH               >= 9.2.3.0         9.2.3.0        
+       + RES   F_COMMON               >= 9.2.14.0        9.2.15.0       
+       + RES   F_DIFFRATE             >= 9.2.3.0         9.2.3.0        
+       + RES   F_DISTACT              >= 9.2.3.0         9.2.3.0        
+       + RES   F_DISTCRED             >= 9.2.3.0         9.2.3.0        
+       + RES   F_DISTPL               >= 9.2.12.0        9.2.13.0       
+       + RES   F_DISTZACHET           >= 9.2.10.0        9.2.10.0       
+       + RES   F_DRAGM                >= 9.2.3.0         9.2.3.0        
+       + RES   F_EXTAN                >= 9.2.4.0         9.2.4.0        
+       + RES   F_FA                   >= 9.2.3.0         9.2.3.0        
+       + RES   F_FILIAL               >= 9.2.3.0         9.2.3.0        
+       + RES   F_FPABSTR              >= 9.2.3.0         9.2.4.0        
+       + RES   F_FPADDFLD             >= 9.2.3.0         9.2.3.0        
+       + RES   F_FPBUDDOC             >= 9.2.5.0         9.2.6.0        
+       + RES   F_FPBUDGET             >= 9.2.15.0        9.2.16.0       
+       + RES   F_FPCATALOG            >= 9.2.5.0         9.2.6.0        
+       + RES   F_FPDBI                >= 9.2.11.0        9.2.12.0       
+       + RES   F_FPHASHAN             >= 9.2.3.0         9.2.3.0        
+       + RES   F_FPKATH               >= 9.2.3.0         9.2.3.0        
+       + RES   F_FPLIMIT              >= 9.2.11.0        9.2.12.0       
+       + RES   F_FPOBOROT             >= 9.2.4.0         9.2.5.0        
+       + RES   F_GETAN                >= 9.2.13.0        9.2.15.0       
+       + RES   F_ISKI                 >= 9.2.3.0         9.2.3.0        
+       + RES   F_KATDOC               >= 9.2.12.0        9.2.12.0       
+       + RES   F_KATKOD               >= 9.2.3.0         9.2.3.0        
+       + RES   F_MBP                  >= 9.2.12.0        9.2.13.0       
+       + RES   F_MBPPUB               >= 9.2.3.0         9.2.3.0        
+       + RES   F_NALOGREG             >= 9.2.3.0         9.2.3.0        
+       + RES   F_OBOROT               >= 9.2.4.0         9.2.4.0        
+       + RES   F_OFP                  >= 9.2.20.0        9.2.23.1       
+       + RES   F_OFPPR                >= 9.2.3.0         9.2.3.0        
+       + RES   F_OS                   >= 9.2.9.0         9.2.9.0        
+       + RES   F_OSINVCARD            >= 9.2.5.0         9.2.5.0        
+       + RES   F_OSMOVE               >= 9.2.3.0         9.2.3.0        
+       + RES   F_OSOPER               >= 9.2.15.0        9.2.15.1       
+       + RES   F_OSREP                >= 9.2.7.0         9.2.7.0        
+       + RES   F_OSRESERV             >= 9.2.7.0         9.2.8.0        
+       + RES   F_PAT                  >= 9.2.8.0         9.2.8.0        
+       + RES   F_PLANSSCH             >= 9.2.3.0         9.2.3.0        
+       + RES   F_PLPOR                >= 9.2.21.0        9.2.23.0       
+       + RES   F_PLPORREP             >= 9.2.8.0         9.2.9.0        
+       + RES   F_PODOT                >= 9.2.13.0        9.2.13.0       
+       + RES   F_POST                 >= 9.2.3.0         9.2.3.0        
+       + RES   F_RTXO                 >= 9.2.4.0         9.2.4.0        
+       + RES   F_SALDO                >= 9.2.3.0         9.2.3.0        
+       + RES   F_SFO                  >= 9.2.10.0        9.2.11.0       
+       + RES   F_SHTRAF               >= 9.2.4.0         9.2.4.0        
+       + RES   F_SOPRHOZ              >= 9.2.16.0        9.2.17.0       
+       + RES   F_TAXES                >= 9.2.5.0         9.2.5.0        
+       + RES   F_TAXREPORT            >= 9.2.4.0         9.2.5.0        
+       + RES   F_TBYREPORT            >= 9.2.3.0         9.2.3.0        
+       + RES   F_TEMPLATE             >= 9.2.5.0         9.2.6.0        
+       + RES   F_TREENEW              >= 9.2.3.0         9.2.3.0        
+       + RES   F_TXO                  >= 9.2.10.0        9.2.10.0       
+       + RES   F_TXOAPI               >= 9.2.4.0         9.2.4.0        
+       + RES   F_USERREPORT           >= 9.2.3.0         9.2.3.0        
+       + RES   F_UTILS                >= 9.2.6.0         9.2.6.0        
+       + RES   F_VALUTDOC             >= 9.2.3.0         9.2.3.0        
+       + RES   F_VEDOM                >= 9.2.6.0         9.2.6.0        
+       + RES   F_VEKS                 >= 9.2.16.0        9.2.17.0       
+       + RES   F_VZACHET              >= 9.2.3.0         9.2.3.0        
+       + RES   F_XLSREP               >= 9.2.3.0         9.2.3.0        
+       + DLL   GALAXYGANTTCONTROL     >= 9.2.0.0         9.2.0.0        
+       + DLL   GALAXYGANTTMANUF       >= 9.2.0.0         9.2.0.0        
+       + DLL   GALAXYGANTTMODULE      >= 9.2.0.0         9.2.0.0        
+       + EXE   GalFNS                 >= 9.2.0.0         9.2.0.0        
+       + DLL   GALMAILER              >= 9.2.0.0         9.2.0.0        
+       + DLL   GALNET                 >= 9.2.4.0         9.2.4.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   GALRTF                 >= 9.2.0.0         9.2.0.0        
+       + DLL   GALRTSLIB              >= 9.2.0.0         9.2.0.0        
+       + DLL   GALSIGNEDO             >= 9.2.0.0         9.2.0.0        
+       + DLL   GALSIGNINVOICE         >= 9.2.0.0         9.2.0.0        
+       + OCX   GalXHTMLProj1          >= 9.2.0.0         9.2.0.0        
+       + DLL   GALXLSLIB              >= 9.2.0.0         9.2.1.0        
+       + DLL   G_BUH                  >= 9.2.4.0         9.2.4.0        
+       + DLL   G_CACHE                >= 9.2.0.0         9.2.0.0        
+       + DLL   G_COMMON               >= 9.2.3.0         9.2.3.0        
+       + DLL   G_CONTEXTS             >= 9.2.0.0         9.2.0.0        
+       - DLL   G_DOTNET4VIP           >= 9.2.0.0         отсутствует                         
+       + DLL   G_EXPIMP               >= 9.2.5.0         9.2.5.0        
+       + DLL   G_EXTATTR              >= 9.2.3.0         9.2.3.0        
+       + DLL   G_EXTVIS               >= 9.2.0.0         9.2.0.0        
+       + DLL   G_FA                   >= 9.2.3.0         9.2.3.0        
+       + DLL   G_FIN                  >= 9.2.3.0         9.2.3.0        
+       + DLL   G_KAU                  >= 9.2.10.0        9.2.10.0       
+       + DLL   G_LASTNUMD             >= 9.2.4.0         9.2.4.0        
+       + DLL   G_MD5                  >= 9.2.0.0         9.2.0.0        
+       + DLL   G_MNF                  >= 9.2.0.0         9.2.0.0        
+       + DLL   G_NALOG                >= 9.2.4.0         9.2.4.0        
+       + DLL   G_NIOKR                >= 9.2.3.0         9.2.3.0        
+       + DLL   G_OPER                 >= 9.2.3.0         9.2.3.0        
+       + DLL   G_RLFUN                >= 9.2.3.0         9.2.3.0        
+       + DLL   G_SCALES               >= 9.2.0.0         9.2.0.0        
+       + DLL   G_SKL                  >= 9.2.3.0         9.2.3.0        
+       + DLL   G_SREDN                >= 9.2.10.0        9.2.11.0       
+       + DLL   G_STAFF                >= 9.2.3.0         9.2.3.0        
+       + DLL   G_SUMDIVIDE            >= 9.2.8.0         9.2.9.0        
+       + DLL   G_TABLEMANAGER         >= 9.2.4.0         9.2.4.0        
+       + DLL   G_TREE                 >= 9.2.3.0         9.2.3.0        
+       + DLL   G_TUNE                 >= 9.2.4.0         9.2.4.0        
+       + DLL   G_TXO                  >= 9.2.13.0        9.2.13.0       
+       + DLL   G_UNIVERSITY           >= 9.2.3.0         9.2.3.0        
+       + DLL   G_VAL                  >= 9.2.3.0         9.2.3.0        
+       + DLL   G_VDE                  >= 9.2.3.0         9.2.3.0        
+       + DLL   G_WEIGHT               >= 9.2.0.0         9.2.0.0        
+       + DLL   G_WORKTABLE            >= 9.2.5.0         9.2.5.0        
+       + DLL   G_ZARCACHE             >= 9.2.4.0         9.2.4.0        
+       + DLL   G_ZARPL                >= 9.2.13.0        9.2.13.0       
+       + OCX   JSGal                  >= 9.2.0.0         9.2.0.0        
+       + RES   L_ADVREP               >= 9.2.6.0         9.2.7.0        
+       + RES   L_BASEDOC              >= 9.2.9.0         9.2.9.0        
+       + RES   L_BOX                  >= 9.2.4.0         9.2.4.0        
+       + RES   L_CALCUSL              >= 9.2.3.0         9.2.3.0        
+       + RES   L_CESSIA               >= 9.2.3.0         9.2.3.0        
+       + RES   L_COMMON               >= 9.2.14.0        9.2.15.0       
+       + RES   L_CONSIG               >= 9.2.6.0         9.2.6.0        
+       + RES   L_CRM                  >= 9.2.3.0         9.2.3.0        
+       + RES   L_DOGOVOR              >= 9.2.14.0        9.2.15.0       
+       + RES   L_DOVER                >= 9.2.5.0         9.2.5.0        
+       + RES   L_GRPLAT               >= 9.2.3.0         9.2.3.0        
+       + RES   L_GRSCH                >= 9.2.3.0         9.2.3.0        
+       + RES   L_GRSOPR               >= 9.2.5.0         9.2.5.0        
+       + RES   L_KASSA                >= 9.2.3.0         9.2.3.0        
+       + RES   L_KATNAZNA             >= 9.2.4.0         9.2.5.0        
+       + RES   L_KATORG               >= 9.2.5.0         9.2.5.0        
+       + RES   L_KATPARTY             >= 9.2.9.0         9.2.9.0        
+       + RES   L_KONTRBAL             >= 9.2.3.0         9.2.3.0        
+       + RES   L_MAKEDO               >= 9.2.8.0         9.2.8.0        
+       + RES   L_MAKENAKL             >= 9.2.6.0         9.2.7.0        
+       + RES   L_MCU                  >= 9.2.12.0        9.2.12.0       
+       + RES   L_MILK                 >= 9.2.5.0         9.2.6.0        
+       + RES   L_MOL                  >= 9.2.4.0         9.2.4.0        
+       + RES   L_MOVECELL             >= 9.2.3.0         9.2.3.0        
+       + RES   L_NALNAKL              >= 9.2.3.0         9.2.3.0        
+       + RES   L_NALOG                >= 9.2.9.0         9.2.11.0       
+       + RES   L_NIOKR                >= 9.2.4.0         9.2.4.0        
+       + RES   L_OSTATKI              >= 9.2.8.0         9.2.8.0        
+       + RES   L_PLANPR               >= 9.2.3.0         9.2.3.0        
+       + RES   L_PRICES               >= 9.2.4.0         9.2.4.0        
+       + RES   L_PRNSOPR              >= 9.2.7.0         9.2.7.0        
+       + RES   L_RASP                 >= 9.2.15.0        9.2.15.1       
+       + RES   L_REALTING             >= 9.2.3.0         9.2.3.0        
+       + RES   L_REMDOC               >= 9.2.6.0         9.2.6.0        
+       + RES   L_REMONT               >= 9.2.4.0         9.2.4.0        
+       + RES   L_REMPOTR              >= 9.2.3.0         9.2.3.0        
+       + RES   L_REMREP               >= 9.2.3.0         9.2.3.0        
+       + RES   L_REPBASEDOC           >= 9.2.3.0         9.2.3.0        
+       + RES   L_REPOPER              >= 9.2.9.0         9.2.9.0        
+       + RES   L_RESERVE              >= 9.2.14.0        9.2.14.0       
+       + RES   L_RETTARA              >= 9.2.3.0         9.2.3.0        
+       + RES   L_ROZN                 >= 9.2.5.0         9.2.5.0        
+       + RES   L_SALDOMTR             >= 9.2.19.0        9.2.21.0       
+       + RES   L_SERIALN              >= 9.2.8.0         9.2.9.0        
+       + RES   L_SF                   >= 9.2.12.0        9.2.13.0       
+       + RES   L_SKID                 >= 9.2.3.0         9.2.3.0        
+       + RES   L_SKLAD                >= 9.2.20.0        9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.14.0        9.2.15.0       
+       + RES   L_SMETA                >= 9.2.4.0         9.2.4.0        
+       + RES   L_SOPRBASE             >= 9.2.17.0        9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.19.0        9.2.20.0       
+       + RES   L_SPEXCH               >= 9.2.5.0         9.2.5.0        
+       + RES   L_TTNDOC               >= 9.2.5.0         9.2.5.0        
+       + RES   L_UKS                  >= 9.2.18.0        9.2.19.0       
+       + RES   L_UKSMTO               >= 9.2.16.0        9.2.17.0       
+       + RES   L_UKSPLANS             >= 9.2.5.0         9.2.6.0        
+       + RES   L_UKSREP               >= 9.2.14.0        9.2.15.0       
+       + RES   L_VAL                  >= 9.2.4.0         9.2.4.0        
+       + RES   L_VPR                  >= 9.2.3.0         9.2.3.0        
+       + RES   L_WOOD                 >= 9.2.11.0        9.2.12.0       
+       + DLL   MAILMANAGER            >= 9.2.0.0         9.2.0.0        
+       + DLL   MSOUTLOOKLIB           >= 9.2.0.0         9.2.0.0        
+       + RES   M_CONTROL              >= 9.2.5.0         9.2.5.0        
+       + RES   M_DVS                  >= 9.2.9.0         9.2.10.0       
+       + RES   M_EIXML                >= 9.2.6.0         9.2.6.0        
+       + RES   M_GETPOTR              >= 9.2.3.0         9.2.3.0        
+       + RES   M_MDADOC               >= 9.2.3.0         9.2.3.0        
+       + RES   M_MES                  >= 9.2.3.0         9.2.3.0        
+       + RES   M_MNPLAN               >= 9.2.11.0        9.2.12.0       
+       + RES   M_QUALITY              >= 9.2.4.0         9.2.4.0        
+       + RES   M_SCRIPTS              >= 9.2.9.0         9.2.9.0        
+       + RES   M_SERV                 >= 9.2.5.0         9.2.5.0        
+       + RES   M_SKLPLAN              >= 9.2.3.0         9.2.3.0        
+       + RES   M_TPP                  >= 9.2.3.0         9.2.3.0        
+       + RES   M_TRANSP               >= 9.2.7.0         9.2.7.0        
+       + RES   M_UP                   >= 9.2.6.0         9.2.6.0        
+       + DLL   RTSFILERLIB            >= 9.2.0.0         9.2.0.0        
+       + DLL   SCALES05               >= 9.2.0.0         9.2.0.0        
+       + DLL   WORDLIB                >= 9.2.0.0         9.2.0.0        
+       + DLL   ZARDISTRIBUTE          >= 9.2.0.0         9.2.0.0        
+       + RES   Z_BASEMENT             >= 9.2.8.0         9.2.8.0        
+       + RES   Z_CALC                 >= 9.2.7.0         9.2.7.0        
+       + RES   Z_CALENDAR             >= 9.2.4.0         9.2.4.0        
+       + RES   Z_CHART                >= 9.2.3.0         9.2.3.0        
+       + RES   Z_DISTRIBUTE           >= 9.2.3.0         9.2.3.0        
+       + RES   Z_EXPIMP               >= 9.2.8.0         9.2.8.0        
+       + RES   Z_FIAS                 >= 9.2.4.0         9.2.4.0        
+       + RES   Z_FOT                  >= 9.2.4.0         9.2.5.0        
+       + RES   Z_FSZN                 >= 9.2.4.0         9.2.4.0        
+       + RES   Z_HARM                 >= 9.2.4.0         9.2.4.0        
+       + RES   Z_KATPODR              >= 9.2.4.0         9.2.4.0        
+       + RES   Z_LSCHET               >= 9.2.11.0        9.2.11.0       
+       + RES   Z_MENU                 >= 9.2.7.0         9.2.7.0        
+       + RES   Z_MP                   >= 9.2.8.0         9.2.8.0        
+       + RES   Z_NDFL                 >= 9.2.5.0         9.2.5.0        
+       + RES   Z_PAYFSS               >= 9.2.8.0         9.2.8.0        
+       + RES   Z_PAYREP               >= 9.2.9.0         9.2.9.0        
+       + RES   Z_PFREP                >= 9.2.5.0         9.2.5.0        
+       + RES   Z_PIVOT                >= 9.2.3.0         9.2.3.0        
+       + RES   Z_REPORT               >= 9.2.4.0         9.2.4.0        
+       + RES   Z_RESERV               >= 9.2.5.0         9.2.5.0        
+       + RES   Z_RLIST                >= 9.2.8.0         9.2.9.0        
+       + RES   Z_SERVICE              >= 9.2.8.0         9.2.8.0        
+       + RES   Z_SREDN                >= 9.2.10.0        9.2.10.0       
+       + RES   Z_STAFF                >= 9.2.13.0        9.2.13.0       
+       + RES   Z_STAFFBUILDER         >= 9.2.6.0         9.2.6.0        
+       + RES   Z_STAFFCAT             >= 9.2.8.0         9.2.8.0        
+       + RES   Z_STAFFDOPREPORTS      >= 9.2.5.0         9.2.5.0        
+       + RES   Z_STAFFIERREP          >= 9.2.3.0         9.2.4.0        
+       + RES   Z_STAFFIF              >= 9.2.3.0         9.2.3.0        
+       + RES   Z_STAFFMENU            >= 9.2.4.0         9.2.4.0        
+       + RES   Z_STAFFMOVES           >= 9.2.3.0         9.2.3.0        
+       + RES   Z_STAFFNASTR           >= 9.2.6.0         9.2.6.0        
+       + RES   Z_STAFFORDERS          >= 9.2.7.0         9.2.7.0        
+       + RES   Z_STAFFPENSIONER       >= 9.2.4.0         9.2.4.0        
+       + RES   Z_STAFFRECRUITING      >= 9.2.5.0         9.2.5.0        
+       + RES   Z_STAFFREPEAT          >= 9.2.3.0         9.2.3.0        
+       + RES   Z_STAFFREPORTS         >= 9.2.9.0         9.2.10.0       
+       + RES   Z_STAFFSHR             >= 9.2.7.0         9.2.7.0        
+       + RES   Z_STAFFTEST            >= 9.2.3.0         9.2.3.0        
+       + RES   Z_STATIS               >= 9.2.6.0         9.2.7.0        
+       + RES   Z_TARSTAV              >= 9.2.3.0         9.2.3.0        
+       + RES   Z_WT                   >= 9.2.7.0         9.2.7.0        
+       + RES   Z_ZAR                  >= 9.2.7.0         9.2.7.0        
+       + RES   Z_ZARNASTR             >= 9.2.10.0        9.2.10.0       
+       + RES   Z_ZARREP               >= 9.2.9.0         9.2.9.0        
+ RES   C_ARCHIVELINK          9.2.10.0             1 240 579   .\C_ARCHIVELINK.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_CHECKOPER            >= 9.2.1.0         9.2.7.0        
+       + RES   C_JOIN                 >= 9.2.1.0         9.2.5.0        
+       + RES   F_COMMON               >= 9.2.11.0        9.2.15.0       
+       + RES   F_KATDOC               >= 9.2.10.0        9.2.12.0       
+       + RES   F_MBP                  >= 9.2.2.0         9.2.13.0       
+       + RES   F_OFP                  >= 9.2.18.0        9.2.23.1       
+       + RES   F_SFO                  >= 9.2.8.0         9.2.11.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_DOGOVOR              >= 9.2.1.0         9.2.15.0       
+       + RES   L_MCU                  >= 9.2.1.0         9.2.12.0       
+       + RES   L_OSTATKI              >= 9.2.1.0         9.2.8.0        
+       + RES   L_SKLAD                >= 9.2.1.0         9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.1.0         9.2.15.0       
+       + RES   L_SOPRDOC              >= 9.2.1.0         9.2.20.0       
+ RES   C_CHECKKBU             9.2.4.0                338 397   .\C_CHECKKBU.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_CHECKOPER            9.2.7.0              1 023 857   .\C_CHECKOPER.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.1.0         9.2.10.0       
+       + RES   C_JOIN                 >= 9.2.1.0         9.2.5.0        
+       + RES   C_MQLINK               >= 9.2.5.0         9.2.26.0       
+       + RES   F_COMMON               >= 9.2.1.0         9.2.15.0       
+       + RES   F_KATDOC               >= 9.2.1.0         9.2.12.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.1.0         9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.1.0         9.2.15.0       
+       + RES   L_MCU                  >= 9.2.1.0         9.2.12.0       
+       + RES   L_OSTATKI              >= 9.2.1.0         9.2.8.0        
+       + RES   L_SKLAD                >= 9.2.1.0         9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.1.0         9.2.15.0       
+       + RES   L_SOPRDOC              >= 9.2.1.0         9.2.20.0       
+ RES   C_COMMON               9.2.13.0             1 445 622   .\C_COMMON.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_TUNE                 >= 9.2.6.0         9.2.7.0        
+       + RES   F_SOPRHOZ              >= 9.2.12.0        9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.11.0        9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.13.0        9.2.15.0       
+       + RES   Z_ZARNASTR             >= 9.2.4.0         9.2.10.0       
+ RES   C_CONST                9.2.3.0                267 705   .\C_CONST.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_CORPO                9.2.3.0                527 955   .\C_CORPO.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_DENOMINATOR          9.2.3.0              1 566 848   .\C_DENOMINATOR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_ESB                  9.2.3.0                126 648   .\C_ESB.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_EXPIMP               9.2.16.0             9 220 960   .\C_EXPIMP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_MQLINK               >= 9.2.13.0        9.2.26.0       
+       + RES   F_AN                   >= 9.2.7.0         9.2.10.0       
+       + RES   F_PODOT                >= 9.2.2.0         9.2.13.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_KAU                  >= 9.2.3.0         9.2.10.0       
+ RES   C_EXTCLASS             9.2.4.0                686 221   .\C_EXTCLASS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_EXTFUN               9.2.7.0                774 165   .\C_EXTFUN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_PAT                  >= 9.2.5.0         9.2.8.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_EXPIMP               >= 9.2.1.0         9.2.5.0        
+       + DLL   G_KAU                  >= 9.2.2.0         9.2.10.0       
+       + DLL   G_TXO                  >= 9.2.9.0         9.2.13.0       
+       + DLL   G_WORKTABLE            >= 9.2.3.0         9.2.5.0        
+ RES   C_GALHELP              9.2.4.0                 31 103   .\C_GALHELP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_GANTT                9.2.3.0                 79 396   .\C_GANTT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_JOIN                 9.2.5.0              2 892 225   .\C_JOIN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.1.0         9.2.10.0       
+       + RES   C_CHECKOPER            >= 9.2.1.0         9.2.7.0        
+       + RES   F_COMMON               >= 9.2.1.0         9.2.15.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_DOGOVOR              >= 9.2.1.0         9.2.15.0       
+       + RES   L_MCU                  >= 9.2.1.0         9.2.12.0       
+       + RES   L_OSTATKI              >= 9.2.1.0         9.2.8.0        
+       + RES   L_SKLAD                >= 9.2.1.0         9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.1.0         9.2.15.0       
+       + RES   L_SOPRDOC              >= 9.2.1.0         9.2.20.0       
+ RES   C_MAILER               9.2.3.0                390 830   .\C_MAILER.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_MQLINK               9.2.26.0             2 474 550   .\C_MQLINK.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_CHECKOPER            >= 9.2.2.0         9.2.7.0        
+       + RES   C_EXPIMP               >= 9.2.7.0         9.2.16.0       
+       + RES   C_EXTFUN               >= 9.2.1.0         9.2.7.0        
+       + RES   C_TREETUNE             >= 9.2.2.0         9.2.5.0        
+       + RES   F_FPBUDGET             >= 9.2.16.0        9.2.16.0       
+       + RES   F_OFP                  >= 9.2.22.0        9.2.23.1       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.11.0        9.2.15.0       
+       + RES   Z_LSCHET               >= 9.2.6.0         9.2.11.0       
+       + RES   Z_STAFFREPORTS         >= 9.2.10.0        9.2.10.0       
+ RES   C_OLAP                 9.2.4.0              2 117 766   .\C_OLAP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_TUNE                 >= 9.2.5.0         9.2.7.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_PALETTE              9.2.3.0                550 736   .\C_PALETTE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_PARTNER              9.2.3.0                  2 394   .\C_PARTNER.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_SPLASH_BY            9.2.3.0                383 894   .\C_SPLASH_BY.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_SPLASH_RU            9.2.3.0                379 812   .\C_SPLASH_RU.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_STATLINE             9.2.5.0                 22 831   .\C_STATLINE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_DOGOVOR              >= 9.2.8.0         9.2.15.0       
+ RES   C_TEMPLATE             9.2.3.0                343 638   .\C_TEMPLATE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_TREE                 9.2.3.0                107 199   .\C_TREE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_TREETUNE             9.2.5.0                451 909   .\C_TREETUNE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_OFP                  >= 9.2.16.0        9.2.23.1       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_TUNE                 9.2.7.0              1 226 756   .\C_TUNE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_COMMON               >= 9.2.10.0        9.2.13.0       
+       + RES   C_OLAP                 >= 9.2.3.0         9.2.4.0        
+       + RES   C_STATLINE             >= 9.2.4.0         9.2.5.0        
+       + RES   F_OS                   >= 9.2.9.0         9.2.9.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_TUNE                 >= 9.2.3.0         9.2.4.0        
+       + RES   L_BASEDOC              >= 9.2.9.0         9.2.9.0        
+       + RES   L_SOPRDOC              >= 9.2.19.0        9.2.20.0       
+       + RES   M_TRANSP               >= 9.2.5.0         9.2.7.0        
+       + RES   Z_STAFF                >= 9.2.11.0        9.2.13.0       
+ RES   C_USERMANUAL           9.2.3.0                250 470   .\C_USERMANUAL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   C_WEBSERVICES          9.2.3.0                221 461   .\C_WEBSERVICES.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_ALG                  9.2.5.0                547 507   .\F_ALG.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_AN                   9.2.10.0               710 570   .\F_AN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_EXPIMP               >= 9.2.8.1         9.2.16.0       
+       + RES   F_COMMON               >= 9.2.8.0         9.2.15.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_AVIZO                9.2.3.0                591 970   .\F_AVIZO.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_BACKLOG              9.2.4.0                536 548   .\F_BACKLOG.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_BANKDOCF             9.2.14.0             4 089 343   .\F_BANKDOCF.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_DISTPL               >= 9.2.11.0        9.2.13.0       
+       + RES   F_FPBUDGET             >= 9.2.9.0         9.2.16.0       
+       + RES   F_FPCATALOG            >= 9.2.3.0         9.2.6.0        
+       + RES   F_FPDBI                >= 9.2.1.0         9.2.12.0       
+       + RES   F_FPLIMIT              >= 9.2.4.0         9.2.12.0       
+       + RES   F_OFP                  >= 9.2.14.0        9.2.23.1       
+       + RES   F_PLPOR                >= 9.2.20.0        9.2.23.0       
+       + RES   F_SOPRHOZ              >= 9.2.13.0        9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_BUHREP               9.2.11.0             8 590 885   .\F_BUHREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_PAT                  >= 9.2.6.0         9.2.8.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_BUH                  >= 9.2.3.0         9.2.4.0        
+       + RES   L_UKS                  >= 9.2.13.0        9.2.19.0       
+ RES   F_BUHSCHET             9.2.3.0                511 439   .\F_BUHSCHET.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_CASHBANK             9.2.4.0                535 712   .\F_CASHBANK.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_CLOSCH               9.2.3.0                519 238   .\F_CLOSCH.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_COMMON               9.2.15.0             2 050 464   .\F_COMMON.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.1.0         9.2.10.0       
+       + RES   C_CHECKOPER            >= 9.2.1.0         9.2.7.0        
+       + RES   C_COMMON               >= 9.2.9.0         9.2.13.0       
+       + RES   C_JOIN                 >= 9.2.1.0         9.2.5.0        
+       + RES   F_AN                   >= 9.2.7.0         9.2.10.0       
+       + RES   F_DISTPL               >= 9.2.13.0        9.2.13.0       
+       + RES   F_KATDOC               >= 9.2.5.0         9.2.12.0       
+       + RES   F_MBP                  >= 9.2.5.0         9.2.13.0       
+       + RES   F_OFP                  >= 9.2.11.0        9.2.23.1       
+       + RES   F_OS                   >= 9.2.2.0         9.2.9.0        
+       + RES   F_PLPOR                >= 9.2.23.0        9.2.23.0       
+       + RES   F_SOPRHOZ              >= 9.2.12.0        9.2.17.0       
+       + RES   F_VEKS                 >= 9.2.3.0         9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.11.0        9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.14.0        9.2.15.0       
+       + RES   L_DOVER                >= 9.2.4.0         9.2.5.0        
+       + RES   L_MCU                  >= 9.2.1.0         9.2.12.0       
+       + RES   L_OSTATKI              >= 9.2.1.0         9.2.8.0        
+       + RES   L_PRNSOPR              >= 9.2.6.0         9.2.7.0        
+       + RES   L_SKLAD                >= 9.2.14.0        9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.1.0         9.2.15.0       
+       + RES   L_SOPRDOC              >= 9.2.13.0        9.2.20.0       
+ RES   F_DIFFRATE             9.2.3.0                553 404   .\F_DIFFRATE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_DISTACT              9.2.3.0                724 219   .\F_DISTACT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_DISTCRED             9.2.3.0                729 880   .\F_DISTCRED.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_DISTPL               9.2.13.0             2 204 461   .\F_DISTPL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_BANKDOCF             >= 9.2.10.0        9.2.14.0       
+       + RES   F_COMMON               >= 9.2.15.0        9.2.15.0       
+       + RES   F_DISTZACHET           >= 9.2.2.0         9.2.10.0       
+       + RES   F_PLPOR                >= 9.2.23.0        9.2.23.0       
+       + RES   F_PODOT                >= 9.2.6.0         9.2.13.0       
+       + RES   F_SOPRHOZ              >= 9.2.13.0        9.2.17.0       
+       + RES   F_VEKS                 >= 9.2.8.0         9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_SF                   >= 9.2.9.0         9.2.13.0       
+ RES   F_DISTZACHET           9.2.10.0             1 234 613   .\F_DISTZACHET.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_DISTPL               >= 9.2.7.0         9.2.13.0       
+       + RES   F_PLPOR                >= 9.2.15.0        9.2.23.0       
+       + RES   F_SOPRHOZ              >= 9.2.12.0        9.2.17.0       
+       + RES   F_VEKS                 >= 9.2.8.0         9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_DOGOVOR              >= 9.2.13.0        9.2.15.0       
+ RES   F_DRAGM                9.2.3.0                855 866   .\F_DRAGM.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_EXTAN                9.2.4.0                424 079   .\F_EXTAN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_OS                   >= 9.2.2.0         9.2.9.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_FA                   9.2.3.0              1 086 406   .\F_FA.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_FILIAL               9.2.3.0                321 527   .\F_FILIAL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_FPABSTR              9.2.4.0                320 896   .\F_FPABSTR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_FPADDFLD             9.2.3.0                151 351   .\F_FPADDFLD.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_FPBUDDOC             9.2.6.0                565 241   .\F_FPBUDDOC.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_FPABSTR              >= 9.2.4.0         9.2.4.0        
+       + RES   F_FPBUDGET             >= 9.2.16.0        9.2.16.0       
+       + RES   F_FPCATALOG            >= 9.2.6.0         9.2.6.0        
+       + RES   F_FPDBI                >= 9.2.12.0        9.2.12.0       
+       + RES   F_FPLIMIT              >= 9.2.12.0        9.2.12.0       
+       + RES   F_FPOBOROT             >= 9.2.5.0         9.2.5.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_FPBUDGET             9.2.16.0            13 862 742   .\F_FPBUDGET.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_EXPIMP               >= 9.2.13.0        9.2.16.0       
+       + RES   C_MQLINK               >= 9.2.26.0        9.2.26.0       
+       + RES   F_BANKDOCF             >= 9.2.2.0         9.2.14.0       
+       + RES   F_FPABSTR              >= 9.2.4.0         9.2.4.0        
+       + RES   F_FPBUDDOC             >= 9.2.6.0         9.2.6.0        
+       + RES   F_FPCATALOG            >= 9.2.6.0         9.2.6.0        
+       + RES   F_FPDBI                >= 9.2.12.0        9.2.12.0       
+       + RES   F_FPLIMIT              >= 9.2.12.0        9.2.12.0       
+       + RES   F_FPOBOROT             >= 9.2.5.0         9.2.5.0        
+       + RES   F_GETAN                >= 9.2.2.0         9.2.15.0       
+       + RES   F_OFP                  >= 9.2.6.0         9.2.23.1       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_FPCATALOG            9.2.6.0              2 172 025   .\F_FPCATALOG.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_FPABSTR              >= 9.2.4.0         9.2.4.0        
+       + RES   F_FPBUDDOC             >= 9.2.6.0         9.2.6.0        
+       + RES   F_FPBUDGET             >= 9.2.16.0        9.2.16.0       
+       + RES   F_FPDBI                >= 9.2.12.0        9.2.12.0       
+       + RES   F_FPLIMIT              >= 9.2.12.0        9.2.12.0       
+       + RES   F_FPOBOROT             >= 9.2.5.0         9.2.5.0        
+       + RES   F_GETAN                >= 9.2.2.0         9.2.15.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_FPDBI                9.2.12.0               447 129   .\F_FPDBI.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_BANKDOCF             >= 9.2.2.0         9.2.14.0       
+       + RES   F_FPABSTR              >= 9.2.4.0         9.2.4.0        
+       + RES   F_FPBUDDOC             >= 9.2.6.0         9.2.6.0        
+       + RES   F_FPBUDGET             >= 9.2.16.0        9.2.16.0       
+       + RES   F_FPCATALOG            >= 9.2.6.0         9.2.6.0        
+       + RES   F_FPLIMIT              >= 9.2.12.0        9.2.12.0       
+       + RES   F_FPOBOROT             >= 9.2.5.0         9.2.5.0        
+       + RES   F_OFP                  >= 9.2.16.2        9.2.23.1       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_FPHASHAN             9.2.3.0                192 079   .\F_FPHASHAN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_FPKATH               9.2.3.0                300 462   .\F_FPKATH.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_FPLIMIT              9.2.12.0             1 581 144   .\F_FPLIMIT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_BANKDOCF             >= 9.2.2.0         9.2.14.0       
+       + RES   F_FPABSTR              >= 9.2.4.0         9.2.4.0        
+       + RES   F_FPBUDDOC             >= 9.2.6.0         9.2.6.0        
+       + RES   F_FPBUDGET             >= 9.2.16.0        9.2.16.0       
+       + RES   F_FPCATALOG            >= 9.2.6.0         9.2.6.0        
+       + RES   F_FPDBI                >= 9.2.12.0        9.2.12.0       
+       + RES   F_FPOBOROT             >= 9.2.5.0         9.2.5.0        
+       + RES   F_OFP                  >= 9.2.14.0        9.2.23.1       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_DOGOVOR              >= 9.2.1.0         9.2.15.0       
+ RES   F_FPOBOROT             9.2.5.0              1 873 184   .\F_FPOBOROT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_FPABSTR              >= 9.2.4.0         9.2.4.0        
+       + RES   F_FPBUDDOC             >= 9.2.6.0         9.2.6.0        
+       + RES   F_FPBUDGET             >= 9.2.16.0        9.2.16.0       
+       + RES   F_FPCATALOG            >= 9.2.6.0         9.2.6.0        
+       + RES   F_FPDBI                >= 9.2.12.0        9.2.12.0       
+       + RES   F_FPLIMIT              >= 9.2.12.0        9.2.12.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_GETAN                9.2.15.0             3 349 459   .\F_GETAN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_FPBUDGET             >= 9.2.3.0         9.2.16.0       
+       + RES   F_FPCATALOG            >= 9.2.1.0         9.2.6.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_KAU                  >= 9.2.9.0         9.2.10.0       
+       + RES   L_DOGOVOR              >= 9.2.7.0         9.2.15.0       
+       + RES   L_UKS                  >= 9.2.7.0         9.2.19.0       
+ RES   F_ISKI                 9.2.3.0                816 301   .\F_ISKI.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_KATDOC               9.2.12.0               525 727   .\F_KATDOC.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.1.0         9.2.10.0       
+       + RES   C_CHECKOPER            >= 9.2.1.0         9.2.7.0        
+       + RES   C_JOIN                 >= 9.2.1.0         9.2.5.0        
+       + RES   F_COMMON               >= 9.2.1.0         9.2.15.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.9.0         9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.10.0        9.2.15.0       
+       + RES   L_MCU                  >= 9.2.1.0         9.2.12.0       
+       + RES   L_OSTATKI              >= 9.2.1.0         9.2.8.0        
+       + RES   L_SKLAD                >= 9.2.1.0         9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.1.0         9.2.15.0       
+       + RES   L_SOPRDOC              >= 9.2.1.0         9.2.20.0       
+ RES   F_KATKOD               9.2.3.0                378 328   .\F_KATKOD.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_MBP                  9.2.13.0             6 575 664   .\F_MBP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_COMMON               >= 9.2.5.0         9.2.15.0       
+       + RES   F_KATDOC               >= 9.2.5.0         9.2.12.0       
+       + RES   F_SFO                  >= 9.2.8.0         9.2.11.0       
+       + RES   F_SHTRAF               >= 9.2.2.0         9.2.4.0        
+       + RES   F_UTILS                >= 9.2.3.0         9.2.6.0        
+       + RES   F_VEKS                 >= 9.2.17.0        9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.5.0         9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.5.0         9.2.15.0       
+       + RES   L_RASP                 >= 9.2.6.0         9.2.15.1       
+       + RES   L_UKS                  >= 9.2.10.0        9.2.19.0       
+ RES   F_MBPPUB               9.2.3.0                256 755   .\F_MBPPUB.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_NALOGREG             9.2.3.0                823 821   .\F_NALOGREG.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_OBOROT               9.2.4.0              1 131 072   .\F_OBOROT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_OFP                  9.2.23.1            16 893 136   .\F_OFP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.8.0         9.2.10.0       
+       + RES   C_MQLINK               >= 9.2.25.0        9.2.26.0       
+       + RES   C_TREETUNE             >= 9.2.4.0         9.2.5.0        
+       + RES   C_TUNE                 >= 9.2.6.0         9.2.7.0        
+       + RES   F_BANKDOCF             >= 9.2.9.0         9.2.14.0       
+       + RES   F_DISTPL               >= 9.2.11.0        9.2.13.0       
+       + RES   F_FPBUDGET             >= 9.2.16.0        9.2.16.0       
+       + RES   F_FPDBI                >= 9.2.5.0         9.2.12.0       
+       + RES   F_FPLIMIT              >= 9.2.8.0         9.2.12.0       
+       + RES   F_PLPOR                >= 9.2.20.0        9.2.23.0       
+       + RES   F_SOPRHOZ              >= 9.2.15.0        9.2.17.0       
+       + RES   F_VEKS                 >= 9.2.9.0         9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.9.0         9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.12.0        9.2.15.0       
+       + RES   L_SKLAD                >= 9.2.16.0        9.2.21.0       
+       + RES   L_SOPRBASE             >= 9.2.13.0        9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.15.0        9.2.20.0       
+ RES   F_OFPPR                9.2.3.0              1 287 646   .\F_OFPPR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_OS                   9.2.9.0              5 252 272   .\F_OS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_COMMON               >= 9.2.7.0         9.2.13.0       
+       + RES   C_TUNE                 >= 9.2.7.0         9.2.7.0        
+       + RES   F_EXTAN                >= 9.2.2.0         9.2.4.0        
+       + RES   F_OSOPER               >= 9.2.13.0        9.2.15.1       
+       + RES   F_OSRESERV             >= 9.2.5.0         9.2.8.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_TXO                  >= 9.2.7.0         9.2.13.0       
+       + RES   L_MAKENAKL             >= 9.2.1.0         9.2.7.0        
+       + RES   L_UKS                  >= 9.2.18.0        9.2.19.0       
+ RES   F_OSINVCARD            9.2.5.0              1 347 624   .\F_OSINVCARD.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_OSMOVE               9.2.3.0                545 235   .\F_OSMOVE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_OSOPER               9.2.15.1             8 538 056   .\F_OSOPER.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_OS                   >= 9.2.8.0         9.2.9.0        
+       + RES   F_OSREP                >= 9.2.5.0         9.2.7.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_MAKENAKL             >= 9.2.2.0         9.2.7.0        
+       + RES   L_RASP                 >= 9.2.3.0         9.2.15.1       
+       + RES   L_UKSMTO               >= 9.2.2.0         9.2.17.0       
+ RES   F_OSREP                9.2.7.0              3 777 047   .\F_OSREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_OS                   >= 9.2.8.0         9.2.9.0        
+       + RES   F_OSOPER               >= 9.2.12.0        9.2.15.1       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_OSRESERV             9.2.8.0                171 639   .\F_OSRESERV.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_PAT                  9.2.8.0              2 543 781   .\F_PAT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_EXTFUN               >= 9.2.5.0         9.2.7.0        
+       + RES   F_BUHREP               >= 9.2.7.0         9.2.11.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_KAU                  >= 9.2.2.0         9.2.10.0       
+       + DLL   G_TXO                  >= 9.2.9.0         9.2.13.0       
+ RES   F_PLANSSCH             9.2.3.0                198 166   .\F_PLANSSCH.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_PLPOR                9.2.23.0             6 359 078   .\F_PLPOR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_COMMON               >= 9.2.15.0        9.2.15.0       
+       + RES   F_DISTPL               >= 9.2.13.0        9.2.13.0       
+       + RES   F_DISTZACHET           >= 9.2.4.0         9.2.10.0       
+       + RES   F_OFP                  >= 9.2.18.0        9.2.23.1       
+       + RES   F_PLPORREP             >= 9.2.9.0         9.2.9.0        
+       + RES   F_PODOT                >= 9.2.10.0        9.2.13.0       
+       + RES   F_SOPRHOZ              >= 9.2.15.0        9.2.17.0       
+       + RES   F_VEDOM                >= 9.2.2.0         9.2.6.0        
+       + RES   F_VEKS                 >= 9.2.17.0        9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_PLPORREP             9.2.9.0              1 738 509   .\F_PLPORREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_PLPOR                >= 9.2.23.0        9.2.23.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_PODOT                9.2.13.0             3 882 484   .\F_PODOT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_DISTPL               >= 9.2.3.0         9.2.13.0       
+       + RES   F_FPDBI                >= 9.2.3.0         9.2.12.0       
+       + RES   F_PLPOR                >= 9.2.15.0        9.2.23.0       
+       + RES   F_SOPRHOZ              >= 9.2.1.0         9.2.17.0       
+       + RES   F_UTILS                >= 9.2.4.0         9.2.6.0        
+       + RES   F_VEDOM                >= 9.2.2.0         9.2.6.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_SF                   >= 9.2.2.0         9.2.13.0       
+ RES   F_POST                 9.2.3.0                572 951   .\F_POST.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_RTXO                 9.2.4.0                511 456   .\F_RTXO.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_SALDO                9.2.3.0                492 394   .\F_SALDO.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_SFO                  9.2.11.0             5 543 691   .\F_SFO.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_MBP                  >= 9.2.10.0        9.2.13.0       
+       + RES   F_SHTRAF               >= 9.2.2.0         9.2.4.0        
+       + RES   F_UTILS                >= 9.2.3.0         9.2.6.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_MCU                  >= 9.2.8.0         9.2.12.0       
+       + RES   L_RASP                 >= 9.2.6.0         9.2.15.1       
+       + RES   L_SKLAD                >= 9.2.14.0        9.2.21.0       
+ RES   F_SHTRAF               9.2.4.0                559 479   .\F_SHTRAF.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_MBP                  >= 9.2.7.0         9.2.13.0       
+       + RES   F_SFO                  >= 9.2.6.0         9.2.11.0       
+       + RES   F_UTILS                >= 9.2.3.0         9.2.6.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_SOPRHOZ              9.2.17.0             3 301 181   .\F_SOPRHOZ.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_COMMON               >= 9.2.9.0         9.2.13.0       
+       + RES   F_BANKDOCF             >= 9.2.10.0        9.2.14.0       
+       + RES   F_DISTPL               >= 9.2.9.0         9.2.13.0       
+       + RES   F_DISTZACHET           >= 9.2.6.0         9.2.10.0       
+       + RES   F_OFP                  >= 9.2.17.0        9.2.23.1       
+       + RES   F_PLPOR                >= 9.2.19.0        9.2.23.0       
+       + RES   F_PODOT                >= 9.2.1.0         9.2.13.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.11.0        9.2.15.0       
+ RES   F_TAXES                9.2.5.0              1 424 700   .\F_TAXES.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_SF                   >= 9.2.5.0         9.2.13.0       
+       + RES   L_SOPRDOC              >= 9.2.9.0         9.2.20.0       
+ RES   F_TAXREPORT            9.2.5.0             32 662 100   .\F_TAXREPORT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_COMMON               >= 9.2.13.0        9.2.15.0       
+       + RES   F_OS                   >= 9.2.2.0         9.2.9.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_TBYREPORT            9.2.3.0              2 111 219   .\F_TBYREPORT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_TEMPLATE             9.2.6.0              1 122 864   .\F_TEMPLATE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_TREENEW              9.2.3.0                538 086   .\F_TREENEW.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_TXO                  9.2.10.0             1 950 147   .\F_TXO.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_TXO                  >= 9.2.9.0         9.2.13.0       
+ RES   F_TXOAPI               9.2.4.0                318 643   .\F_TXOAPI.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_USERREPORT           9.2.3.0                107 193   .\F_USERREPORT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_UTILS                9.2.6.0                720 838   .\F_UTILS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_MBP                  >= 9.2.7.0         9.2.13.0       
+       + RES   F_PODOT                >= 9.2.8.0         9.2.13.0       
+       + RES   F_SFO                  >= 9.2.6.0         9.2.11.0       
+       + RES   F_SHTRAF               >= 9.2.2.0         9.2.4.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_VALUTDOC             9.2.3.0                701 558   .\F_VALUTDOC.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_VEDOM                9.2.6.0              1 467 816   .\F_VEDOM.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_PLPOR                >= 9.2.10.0        9.2.23.0       
+       + RES   F_PODOT                >= 9.2.7.0         9.2.13.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_VEKS                 9.2.17.0             4 564 432   .\F_VEKS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_COMMON               >= 9.2.5.0         9.2.15.0       
+       + RES   F_KATDOC               >= 9.2.5.0         9.2.12.0       
+       + RES   F_MBP                  >= 9.2.13.0        9.2.13.0       
+       + RES   F_OFP                  >= 9.2.11.0        9.2.23.1       
+       + RES   F_PLPOR                >= 9.2.23.0        9.2.23.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.9.0         9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.10.0        9.2.15.0       
+       + RES   L_SKLAD                >= 9.2.19.0        9.2.21.0       
+       + RES   L_SOPRDOC              >= 9.2.18.0        9.2.20.0       
+ RES   F_VZACHET              9.2.3.0              1 034 472   .\F_VZACHET.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   F_XLSREP               9.2.3.0                790 205   .\F_XLSREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_ADVREP               9.2.7.0              6 155 625   .\L_ADVREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.13.0        9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.12.0        9.2.15.0       
+ RES   L_BASEDOC              9.2.9.0              8 957 004   .\L_BASEDOC.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_TUNE                 >= 9.2.7.0         9.2.7.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.12.0        9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.12.0        9.2.15.0       
+       + RES   L_MAKEDO               >= 9.2.7.0         9.2.8.0        
+       + RES   L_NALOG                >= 9.2.8.0         9.2.11.0       
+       + RES   L_SKLAD                >= 9.2.7.0         9.2.21.0       
+       + RES   L_SOPRBASE             >= 9.2.5.0         9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.18.0        9.2.20.0       
+ RES   L_BOX                  9.2.4.0                902 888   .\L_BOX.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_CALCUSL              9.2.3.0                601 762   .\L_CALCUSL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_CESSIA               9.2.3.0                729 473   .\L_CESSIA.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_COMMON               9.2.15.0             4 986 940   .\L_COMMON.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.1.0         9.2.10.0       
+       + RES   C_CHECKOPER            >= 9.2.1.0         9.2.7.0        
+       + RES   C_COMMON               >= 9.2.9.0         9.2.13.0       
+       + RES   C_JOIN                 >= 9.2.1.0         9.2.5.0        
+       + RES   C_MQLINK               >= 9.2.18.0        9.2.26.0       
+       + RES   F_COMMON               >= 9.2.5.0         9.2.15.0       
+       + RES   F_KATDOC               >= 9.2.8.0         9.2.12.0       
+       + RES   F_MBP                  >= 9.2.5.0         9.2.13.0       
+       + RES   F_OFP                  >= 9.2.11.0        9.2.23.1       
+       + RES   F_SOPRHOZ              >= 9.2.12.0        9.2.17.0       
+       + RES   F_VEKS                 >= 9.2.9.0         9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_NALOG                >= 9.2.2.0         9.2.4.0        
+       + RES   L_ADVREP               >= 9.2.4.0         9.2.7.0        
+       + RES   L_BASEDOC              >= 9.2.7.0         9.2.9.0        
+       + RES   L_CONSIG               >= 9.2.5.0         9.2.6.0        
+       + RES   L_DOGOVOR              >= 9.2.12.0        9.2.15.0       
+       + RES   L_GRSOPR               >= 9.2.2.0         9.2.5.0        
+       + RES   L_MCU                  >= 9.2.1.0         9.2.12.0       
+       + RES   L_NALOG                >= 9.2.6.0         9.2.11.0       
+       + RES   L_OSTATKI              >= 9.2.1.0         9.2.8.0        
+       + RES   L_PRNSOPR              >= 9.2.1.0         9.2.7.0        
+       + RES   L_RASP                 >= 9.2.7.0         9.2.15.1       
+       + RES   L_REPOPER              >= 9.2.8.0         9.2.9.0        
+       + RES   L_ROZN                 >= 9.2.4.0         9.2.5.0        
+       + RES   L_SF                   >= 9.2.11.0        9.2.13.0       
+       + RES   L_SKLAD                >= 9.2.16.0        9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.1.0         9.2.15.0       
+       + RES   L_SOPRBASE             >= 9.2.15.0        9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.18.0        9.2.20.0       
+       + RES   L_TTNDOC               >= 9.2.3.0         9.2.5.0        
+       + RES   L_UKS                  >= 9.2.16.0        9.2.19.0       
+       + RES   L_WOOD                 >= 9.2.8.0         9.2.12.0       
+ RES   L_CONSIG               9.2.6.0              4 083 405   .\L_CONSIG.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.13.0        9.2.15.0       
+       + RES   L_SF                   >= 9.2.5.0         9.2.13.0       
+ RES   L_CRM                  9.2.3.0              4 443 272   .\L_CRM.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_DOGOVOR              9.2.15.0            13 556 976   .\L_DOGOVOR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.1.0         9.2.10.0       
+       + RES   C_CHECKOPER            >= 9.2.5.0         9.2.7.0        
+       + RES   C_COMMON               >= 9.2.12.0        9.2.13.0       
+       + RES   C_JOIN                 >= 9.2.1.0         9.2.5.0        
+       + RES   C_MQLINK               >= 9.2.18.0        9.2.26.0       
+       + RES   C_STATLINE             >= 9.2.2.0         9.2.5.0        
+       + RES   F_COMMON               >= 9.2.14.0        9.2.15.0       
+       + RES   F_DISTZACHET           >= 9.2.8.0         9.2.10.0       
+       + RES   F_FPLIMIT              >= 9.2.1.0         9.2.12.0       
+       + RES   F_GETAN                >= 9.2.5.0         9.2.15.0       
+       + RES   F_KATDOC               >= 9.2.10.0        9.2.12.0       
+       + RES   F_MBP                  >= 9.2.5.0         9.2.13.0       
+       + RES   F_OFP                  >= 9.2.5.0         9.2.23.1       
+       + RES   F_VEKS                 >= 9.2.9.0         9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_LASTNUMD             >= 9.2.2.0         9.2.4.0        
+       + RES   L_ADVREP               >= 9.2.4.0         9.2.7.0        
+       + RES   L_BASEDOC              >= 9.2.4.0         9.2.9.0        
+       + RES   L_COMMON               >= 9.2.12.0        9.2.15.0       
+       + RES   L_MCU                  >= 9.2.1.0         9.2.12.0       
+       + RES   L_OSTATKI              >= 9.2.1.0         9.2.8.0        
+       + RES   L_RASP                 >= 9.2.5.0         9.2.15.1       
+       + RES   L_SKLAD                >= 9.2.16.0        9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.1.0         9.2.15.0       
+       + RES   L_SOPRBASE             >= 9.2.7.0         9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.17.0        9.2.20.0       
+       + RES   L_SPEXCH               >= 9.2.3.0         9.2.5.0        
+       + RES   L_UKSMTO               >= 9.2.14.0        9.2.17.0       
+       + RES   L_WOOD                 >= 9.2.10.0        9.2.12.0       
+ RES   L_DOVER                9.2.5.0              1 135 635   .\L_DOVER.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_COMMON               >= 9.2.13.0        9.2.15.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_GRPLAT               9.2.3.0                141 284   .\L_GRPLAT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_GRSCH                9.2.3.0                411 344   .\L_GRSCH.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_GRSOPR               9.2.5.0              1 498 095   .\L_GRSOPR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.7.0         9.2.15.0       
+       + RES   L_SOPRDOC              >= 9.2.17.0        9.2.20.0       
+ RES   L_KASSA                9.2.3.0              1 081 501   .\L_KASSA.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_KATNAZNA             9.2.5.0                186 757   .\L_KATNAZNA.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_KATORG               9.2.5.0              1 804 018   .\L_KATORG.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_MCU                  >= 9.2.11.0        9.2.12.0       
+ RES   L_KATPARTY             9.2.9.0                846 383   .\L_KATPARTY.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_MCU                  >= 9.2.2.0         9.2.12.0       
+       + RES   L_SKLAD                >= 9.2.18.0        9.2.21.0       
+       + RES   L_SOPRDOC              >= 9.2.17.0        9.2.20.0       
+ RES   L_KONTRBAL             9.2.3.0              1 502 548   .\L_KONTRBAL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_MAKEDO               9.2.8.0              3 200 073   .\L_MAKEDO.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_BASEDOC              >= 9.2.8.0         9.2.9.0        
+       + RES   L_MILK                 >= 9.2.3.0         9.2.6.0        
+       + RES   L_SOPRBASE             >= 9.2.13.0        9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.18.0        9.2.20.0       
+       + RES   L_WOOD                 >= 9.2.7.0         9.2.12.0       
+ RES   L_MAKENAKL             9.2.7.0              1 364 616   .\L_MAKENAKL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_OS                   >= 9.2.2.0         9.2.9.0        
+       + RES   F_OSOPER               >= 9.2.7.0         9.2.15.1       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_MCU                  9.2.12.0             3 683 093   .\L_MCU.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.1.0         9.2.10.0       
+       + RES   C_CHECKOPER            >= 9.2.1.0         9.2.7.0        
+       + RES   C_COMMON               >= 9.2.11.0        9.2.13.0       
+       + RES   C_JOIN                 >= 9.2.1.0         9.2.5.0        
+       + RES   F_COMMON               >= 9.2.1.0         9.2.15.0       
+       + RES   F_SFO                  >= 9.2.6.0         9.2.11.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_DOGOVOR              >= 9.2.1.0         9.2.15.0       
+       + RES   L_KATORG               >= 9.2.4.0         9.2.5.0        
+       + RES   L_KATPARTY             >= 9.2.2.0         9.2.9.0        
+       + RES   L_OSTATKI              >= 9.2.1.0         9.2.8.0        
+       + RES   L_RASP                 >= 9.2.5.0         9.2.15.1       
+       + RES   L_SALDOMTR             >= 9.2.17.0        9.2.21.0       
+       + RES   L_SKLAD                >= 9.2.18.0        9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.13.0        9.2.15.0       
+       + RES   L_SOPRDOC              >= 9.2.1.0         9.2.20.0       
+ RES   L_MILK                 9.2.6.0              2 000 098   .\L_MILK.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_MAKEDO               >= 9.2.4.0         9.2.8.0        
+       + RES   L_SKLAD                >= 9.2.21.0        9.2.21.0       
+       + RES   L_SOPRBASE             >= 9.2.18.0        9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.8.0         9.2.20.0       
+ RES   L_MOL                  9.2.4.0                289 479   .\L_MOL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_SOPRDOC              >= 9.2.17.0        9.2.20.0       
+ RES   L_MOVECELL             9.2.3.0                233 291   .\L_MOVECELL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_NALNAKL              9.2.3.0              2 931 851   .\L_NALNAKL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_NALOG                9.2.11.0               542 036   .\L_NALOG.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_BASEDOC              >= 9.2.8.0         9.2.9.0        
+       + RES   L_COMMON               >= 9.2.9.0         9.2.15.0       
+       + RES   L_SF                   >= 9.2.13.0        9.2.13.0       
+       + RES   L_SOPRDOC              >= 9.2.18.0        9.2.20.0       
+ RES   L_NIOKR                9.2.4.0              6 572 955   .\L_NIOKR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_OSTATKI              9.2.8.0              2 086 779   .\L_OSTATKI.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.1.0         9.2.10.0       
+       + RES   C_CHECKOPER            >= 9.2.1.0         9.2.7.0        
+       + RES   C_JOIN                 >= 9.2.1.0         9.2.5.0        
+       + RES   F_COMMON               >= 9.2.1.0         9.2.15.0       
+       + RES   F_KATDOC               >= 9.2.1.0         9.2.12.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.1.0         9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.1.0         9.2.15.0       
+       + RES   L_MCU                  >= 9.2.1.0         9.2.12.0       
+       + RES   L_RASP                 >= 9.2.13.0        9.2.15.1       
+       + RES   L_SKLAD                >= 9.2.19.0        9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.1.0         9.2.15.0       
+       + RES   L_SOPRDOC              >= 9.2.1.0         9.2.20.0       
+       + RES   L_UKS                  >= 9.2.10.0        9.2.19.0       
+ RES   L_PLANPR               9.2.3.0                350 026   .\L_PLANPR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_PRICES               9.2.4.0              2 018 164   .\L_PRICES.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_PRNSOPR              9.2.7.0             15 134 677   .\L_PRNSOPR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_COMMON               >= 9.2.13.0        9.2.15.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_SF                   >= 9.2.1.0         9.2.13.0       
+       + RES   L_SOPRDOC              >= 9.2.17.0        9.2.20.0       
+ RES   L_RASP                 9.2.15.1             8 044 950   .\L_RASP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_OSOPER               >= 9.2.2.0         9.2.15.1       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.7.0         9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.5.0         9.2.15.0       
+       + RES   L_MCU                  >= 9.2.3.0         9.2.12.0       
+       + RES   L_OSTATKI              >= 9.2.6.0         9.2.8.0        
+       + RES   L_REMDOC               >= 9.2.4.0         9.2.6.0        
+       + RES   L_RESERVE              >= 9.2.13.0        9.2.14.0       
+       + RES   L_SALDOMTR             >= 9.2.5.0         9.2.21.0       
+       + RES   L_SKLAD                >= 9.2.18.0        9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.13.0        9.2.15.0       
+       + RES   L_SOPRBASE             >= 9.2.13.0        9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.18.0        9.2.20.0       
+ RES   L_REALTING             9.2.3.0              2 570 325   .\L_REALTING.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_REMDOC               9.2.6.0              3 918 754   .\L_REMDOC.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_RASP                 >= 9.2.11.0        9.2.15.1       
+       + RES   L_SF                   >= 9.2.5.0         9.2.13.0       
+       + RES   L_SKLAD                >= 9.2.16.0        9.2.21.0       
+       + RES   L_SOPRBASE             >= 9.2.13.0        9.2.18.0       
+ RES   L_REMONT               9.2.4.0             11 974 088   .\L_REMONT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_UKS                  >= 9.2.10.0        9.2.19.0       
+ RES   L_REMPOTR              9.2.3.0                977 608   .\L_REMPOTR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_REMREP               9.2.3.0              2 610 627   .\L_REMREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_REPBASEDOC           9.2.3.0              1 125 644   .\L_REPBASEDOC.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_REPOPER              9.2.9.0              4 798 991   .\L_REPOPER.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.13.0        9.2.15.0       
+ RES   L_RESERVE              9.2.14.0               942 515   .\L_RESERVE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_RASP                 >= 9.2.13.0        9.2.15.1       
+       + RES   L_SKLAD                >= 9.2.18.0        9.2.21.0       
+       + RES   L_SOPRBASE             >= 9.2.5.0         9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.17.0        9.2.20.0       
+ RES   L_RETTARA              9.2.3.0                559 800   .\L_RETTARA.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_ROZN                 9.2.5.0              6 664 795   .\L_ROZN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.13.0        9.2.15.0       
+       + RES   L_SOPRDOC              >= 9.2.17.0        9.2.20.0       
+ RES   L_SALDOMTR             9.2.21.0             3 187 030   .\L_SALDOMTR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_MCU                  >= 9.2.11.0        9.2.12.0       
+       + RES   L_RASP                 >= 9.2.5.0         9.2.15.1       
+       + RES   L_SF                   >= 9.2.1.0         9.2.13.0       
+       + RES   L_SKLAD                >= 9.2.18.0        9.2.21.0       
+       + RES   L_SOPRBASE             >= 9.2.8.0         9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.15.0        9.2.20.0       
+       + RES   L_UKS                  >= 9.2.19.0        9.2.19.0       
+ RES   L_SERIALN              9.2.9.0              1 273 724   .\L_SERIALN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_SKLAD                >= 9.2.16.0        9.2.21.0       
+       + RES   L_SOPRDOC              >= 9.2.5.0         9.2.20.0       
+ RES   L_SF                   9.2.13.0            22 666 968   .\L_SF.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_STATLINE             >= 9.2.4.0         9.2.5.0        
+       + RES   F_DISTPL               >= 9.2.8.0         9.2.13.0       
+       + RES   F_PODOT                >= 9.2.1.0         9.2.13.0       
+       + RES   F_SOPRHOZ              >= 9.2.13.0        9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.13.0        9.2.15.0       
+       + RES   L_NALOG                >= 9.2.11.0        9.2.11.0       
+       + RES   L_SALDOMTR             >= 9.2.1.0         9.2.21.0       
+       + RES   L_SKLAD                >= 9.2.1.0         9.2.21.0       
+       + RES   L_SOPRBASE             >= 9.2.8.0         9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.9.0         9.2.20.0       
+       + RES   L_UKS                  >= 9.2.1.0         9.2.19.0       
+ RES   L_SKID                 9.2.3.0                403 453   .\L_SKID.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_SKLAD                9.2.21.0            20 633 428   .\L_SKLAD.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.1.0         9.2.10.0       
+       + RES   C_CHECKOPER            >= 9.2.1.0         9.2.7.0        
+       + RES   C_JOIN                 >= 9.2.1.0         9.2.5.0        
+       + RES   F_COMMON               >= 9.2.1.0         9.2.15.0       
+       + RES   F_KATDOC               >= 9.2.1.0         9.2.12.0       
+       + RES   F_OS                   >= 9.2.9.0         9.2.9.0        
+       + RES   F_SFO                  >= 9.2.6.0         9.2.11.0       
+       + RES   F_VEKS                 >= 9.2.15.0        9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_BASEDOC              >= 9.2.3.0         9.2.9.0        
+       + RES   L_COMMON               >= 9.2.9.0         9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.10.0        9.2.15.0       
+       + RES   L_KATPARTY             >= 9.2.8.0         9.2.9.0        
+       + RES   L_MCU                  >= 9.2.11.0        9.2.12.0       
+       + RES   L_OSTATKI              >= 9.2.7.0         9.2.8.0        
+       + RES   L_RASP                 >= 9.2.13.0        9.2.15.1       
+       + RES   L_REMDOC               >= 9.2.4.0         9.2.6.0        
+       + RES   L_RESERVE              >= 9.2.13.0        9.2.14.0       
+       + RES   L_SALDOMTR             >= 9.2.17.0        9.2.21.0       
+       + RES   L_SERIALN              >= 9.2.5.0         9.2.9.0        
+       + RES   L_SF                   >= 9.2.1.0         9.2.13.0       
+       + RES   L_SKLREP               >= 9.2.13.0        9.2.15.0       
+       + RES   L_SOPRBASE             >= 9.2.18.0        9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.20.0        9.2.20.0       
+       + RES   L_UKS                  >= 9.2.18.0        9.2.19.0       
+       + RES   L_UKSREP               >= 9.2.10.0        9.2.15.0       
+ RES   L_SKLREP               9.2.15.0             6 387 601   .\L_SKLREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.1.0         9.2.10.0       
+       + RES   C_CHECKOPER            >= 9.2.1.0         9.2.7.0        
+       + RES   C_JOIN                 >= 9.2.1.0         9.2.5.0        
+       + RES   F_COMMON               >= 9.2.1.0         9.2.15.0       
+       + RES   F_KATDOC               >= 9.2.1.0         9.2.12.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.1.0         9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.1.0         9.2.15.0       
+       + RES   L_MCU                  >= 9.2.11.0        9.2.12.0       
+       + RES   L_OSTATKI              >= 9.2.1.0         9.2.8.0        
+       + RES   L_RASP                 >= 9.2.13.0        9.2.15.1       
+       + RES   L_SKLAD                >= 9.2.18.0        9.2.21.0       
+       + RES   L_SOPRDOC              >= 9.2.1.0         9.2.20.0       
+ RES   L_SMETA                9.2.4.0              3 360 226   .\L_SMETA.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_UKS                  >= 9.2.10.0        9.2.19.0       
+ RES   L_SOPRBASE             9.2.18.0             3 119 420   .\L_SOPRBASE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_BASEDOC              >= 9.2.3.0         9.2.9.0        
+       + RES   L_COMMON               >= 9.2.12.0        9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.12.0        9.2.15.0       
+       + RES   L_MAKEDO               >= 9.2.5.0         9.2.8.0        
+       + RES   L_NALOG                >= 9.2.8.0         9.2.11.0       
+       + RES   L_RASP                 >= 9.2.11.0        9.2.15.1       
+       + RES   L_REMDOC               >= 9.2.4.0         9.2.6.0        
+       + RES   L_RESERVE              >= 9.2.4.0         9.2.14.0       
+       + RES   L_SALDOMTR             >= 9.2.9.0         9.2.21.0       
+       + RES   L_SF                   >= 9.2.5.0         9.2.13.0       
+       + RES   L_SKLAD                >= 9.2.21.0        9.2.21.0       
+       + RES   L_SOPRDOC              >= 9.2.20.0        9.2.20.0       
+       + RES   L_UKS                  >= 9.2.16.0        9.2.19.0       
+ RES   L_SOPRDOC              9.2.20.0            30 823 534   .\L_SOPRDOC.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_ARCHIVELINK          >= 9.2.4.0         9.2.10.0       
+       + RES   C_CHECKKBU             >= 9.2.2.0         9.2.4.0        
+       + RES   C_CHECKOPER            >= 9.2.4.0         9.2.7.0        
+       + RES   C_COMMON               >= 9.2.5.0         9.2.13.0       
+       + RES   C_EXPIMP               >= 9.2.5.0         9.2.16.0       
+       + RES   C_JOIN                 >= 9.2.3.0         9.2.5.0        
+       + RES   C_TUNE                 >= 9.2.7.0         9.2.7.0        
+       + RES   F_BACKLOG              >= 9.2.2.0         9.2.4.0        
+       + RES   F_BUHREP               >= 9.2.3.0         9.2.11.0       
+       + RES   F_COMMON               >= 9.2.8.0         9.2.15.0       
+       + RES   F_GETAN                >= 9.2.6.0         9.2.15.0       
+       + RES   F_KATDOC               >= 9.2.6.0         9.2.12.0       
+       + RES   F_OS                   >= 9.2.9.0         9.2.9.0        
+       + RES   F_SOPRHOZ              >= 9.2.5.0         9.2.17.0       
+       + RES   F_TXO                  >= 9.2.4.0         9.2.10.0       
+       + RES   F_TXOAPI               >= 9.2.2.0         9.2.4.0        
+       + RES   F_VEKS                 >= 9.2.15.0        9.2.17.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_TXO                  >= 9.2.6.0         9.2.13.0       
+       + RES   L_BASEDOC              >= 9.2.8.0         9.2.9.0        
+       + RES   L_BOX                  >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.13.0        9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.12.0        9.2.15.0       
+       + RES   L_GRSOPR               >= 9.2.4.0         9.2.5.0        
+       + RES   L_KATPARTY             >= 9.2.8.0         9.2.9.0        
+       + RES   L_MAKEDO               >= 9.2.7.0         9.2.8.0        
+       + RES   L_MAKENAKL             >= 9.2.3.0         9.2.7.0        
+       + RES   L_MCU                  >= 9.2.1.0         9.2.12.0       
+       + RES   L_MILK                 >= 9.2.2.0         9.2.6.0        
+       + RES   L_MOL                  >= 9.2.3.0         9.2.4.0        
+       + RES   L_NALOG                >= 9.2.8.0         9.2.11.0       
+       + RES   L_NIOKR                >= 9.2.2.0         9.2.4.0        
+       + RES   L_OSTATKI              >= 9.2.3.0         9.2.8.0        
+       + RES   L_PRNSOPR              >= 9.2.5.0         9.2.7.0        
+       + RES   L_RASP                 >= 9.2.14.0        9.2.15.1       
+       + RES   L_REPOPER              >= 9.2.4.0         9.2.9.0        
+       + RES   L_RESERVE              >= 9.2.13.0        9.2.14.0       
+       + RES   L_ROZN                 >= 9.2.3.0         9.2.5.0        
+       + RES   L_SALDOMTR             >= 9.2.14.0        9.2.21.0       
+       + RES   L_SERIALN              >= 9.2.3.0         9.2.9.0        
+       + RES   L_SF                   >= 9.2.5.0         9.2.13.0       
+       + RES   L_SKLAD                >= 9.2.21.0        9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.8.0         9.2.15.0       
+       + RES   L_SOPRBASE             >= 9.2.18.0        9.2.18.0       
+       + RES   L_SPEXCH               >= 9.2.2.0         9.2.5.0        
+       + RES   L_UKS                  >= 9.2.18.0        9.2.19.0       
+       + RES   L_UKSMTO               >= 9.2.14.0        9.2.17.0       
+       + RES   L_UKSREP               >= 9.2.13.0        9.2.15.0       
+       + RES   L_WOOD                 >= 9.2.6.0         9.2.12.0       
+       + RES   M_CONTROL              >= 9.2.3.0         9.2.5.0        
+       + RES   M_DVS                  >= 9.2.4.0         9.2.10.0       
+       + RES   M_MNPLAN               >= 9.2.4.0         9.2.12.0       
+       + RES   M_QUALITY              >= 9.2.2.0         9.2.4.0        
+       + RES   M_TRANSP               >= 9.2.2.0         9.2.7.0        
+       + RES   M_UP                   >= 9.2.3.0         9.2.6.0        
+ RES   L_SPEXCH               9.2.5.0                164 002   .\L_SPEXCH.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_DOGOVOR              >= 9.2.10.0        9.2.15.0       
+ RES   L_TTNDOC               9.2.5.0                660 063   .\L_TTNDOC.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.9.0         9.2.15.0       
+ RES   L_UKS                  9.2.19.0             9 083 049   .\L_UKS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_BUHREP               >= 9.2.7.0         9.2.11.0       
+       + RES   F_GETAN                >= 9.2.6.0         9.2.15.0       
+       + RES   F_MBP                  >= 9.2.7.0         9.2.13.0       
+       + RES   F_OS                   >= 9.2.9.0         9.2.9.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_COMMON               >= 9.2.12.0        9.2.15.0       
+       + RES   L_OSTATKI              >= 9.2.4.0         9.2.8.0        
+       + RES   L_REMONT               >= 9.2.2.0         9.2.4.0        
+       + RES   L_SALDOMTR             >= 9.2.21.0        9.2.21.0       
+       + RES   L_SF                   >= 9.2.1.0         9.2.13.0       
+       + RES   L_SKLAD                >= 9.2.20.0        9.2.21.0       
+       + RES   L_SMETA                >= 9.2.2.0         9.2.4.0        
+       + RES   L_SOPRBASE             >= 9.2.15.0        9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.19.0        9.2.20.0       
+       + RES   L_UKSMTO               >= 9.2.1.0         9.2.17.0       
+       + RES   L_UKSPLANS             >= 9.2.2.0         9.2.6.0        
+       + RES   L_UKSREP               >= 9.2.10.0        9.2.15.0       
+       + RES   M_UP                   >= 9.2.4.0         9.2.6.0        
+ RES   L_UKSMTO               9.2.17.0             9 225 263   .\L_UKSMTO.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_COMMON               >= 9.2.11.0        9.2.13.0       
+       + RES   F_OSOPER               >= 9.2.2.0         9.2.15.1       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_DOGOVOR              >= 9.2.12.0        9.2.15.0       
+       + RES   L_SOPRDOC              >= 9.2.17.0        9.2.20.0       
+       + RES   L_UKS                  >= 9.2.1.0         9.2.19.0       
+ RES   L_UKSPLANS             9.2.6.0              4 839 290   .\L_UKSPLANS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_UKS                  >= 9.2.17.0        9.2.19.0       
+ RES   L_UKSREP               9.2.15.0             7 154 033   .\L_UKSREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_SKLAD                >= 9.2.16.0        9.2.21.0       
+       + RES   L_SOPRDOC              >= 9.2.18.0        9.2.20.0       
+       + RES   L_UKS                  >= 9.2.14.0        9.2.19.0       
+ RES   L_VAL                  9.2.4.0              3 237 953   .\L_VAL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_VPR                  9.2.3.0                189 891   .\L_VPR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   L_WOOD                 9.2.12.0             9 587 921   .\L_WOOD.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_OFP                  >= 9.2.1.0         9.2.23.1       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_BASEDOC              >= 9.2.5.0         9.2.9.0        
+       + RES   L_COMMON               >= 9.2.9.0         9.2.15.0       
+       + RES   L_DOGOVOR              >= 9.2.12.0        9.2.15.0       
+       + RES   L_MAKEDO               >= 9.2.4.0         9.2.8.0        
+       + RES   L_SKLAD                >= 9.2.21.0        9.2.21.0       
+       + RES   L_SKLREP               >= 9.2.10.0        9.2.15.0       
+       + RES   L_SOPRBASE             >= 9.2.18.0        9.2.18.0       
+       + RES   L_SOPRDOC              >= 9.2.15.0        9.2.20.0       
+       + RES   M_DVS                  >= 9.2.3.0         9.2.10.0       
+ RES   M_CONTROL              9.2.5.0             17 179 137   .\M_CONTROL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   M_DVS                  9.2.10.0            11 636 095   .\M_DVS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   F_OFP                  >= 9.2.5.0         9.2.23.1       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   M_EIXML                9.2.6.0             46 375 650   .\M_EIXML.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_STAFFRECRUITING      >= 9.2.3.0         9.2.5.0        
+ RES   M_GETPOTR              9.2.3.0                549 898   .\M_GETPOTR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   M_MDADOC               9.2.3.0              5 942 135   .\M_MDADOC.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   M_MES                  9.2.3.0              4 295 069   .\M_MES.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   M_MNPLAN               9.2.12.0           126 610 313   .\M_MNPLAN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_COMMON               >= 9.2.11.0        9.2.13.0       
+       + RES   C_TUNE                 >= 9.2.6.0         9.2.7.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_DOGOVOR              >= 9.2.8.0         9.2.15.0       
+       + RES   L_MCU                  >= 9.2.11.0        9.2.12.0       
+       + RES   L_UKS                  >= 9.2.10.0        9.2.19.0       
+       + RES   L_UKSMTO               >= 9.2.14.0        9.2.17.0       
+       + RES   M_DVS                  >= 9.2.10.0        9.2.10.0       
+       + RES   M_SCRIPTS              >= 9.2.4.0         9.2.9.0        
+ RES   M_QUALITY              9.2.4.0              3 588 961   .\M_QUALITY.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   M_SCRIPTS              9.2.9.0             11 696 706   .\M_SCRIPTS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   M_MNPLAN               >= 9.2.8.0         9.2.12.0       
+ RES   M_SERV                 9.2.5.0              2 793 529   .\M_SERV.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_SF                   >= 9.2.5.0         9.2.13.0       
+       + RES   L_SOPRDOC              >= 9.2.9.0         9.2.20.0       
+ RES   M_SKLPLAN              9.2.3.0              1 303 714   .\M_SKLPLAN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   M_TPP                  9.2.3.0             11 008 683   .\M_TPP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   M_TRANSP               9.2.7.0             25 528 664   .\M_TRANSP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_TUNE                 >= 9.2.5.0         9.2.7.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_SF                   >= 9.2.5.0         9.2.13.0       
+ RES   M_UP                   9.2.6.0             27 406 658   .\M_UP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   L_SF                   >= 9.2.5.0         9.2.13.0       
+       + RES   L_UKS                  >= 9.2.10.0        9.2.19.0       
+ RES   Z_BASEMENT             9.2.8.0              2 543 152   .\Z_BASEMENT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_TABLEMANAGER         >= 9.2.2.0         9.2.4.0        
+       + DLL   G_ZARPL                >= 9.2.9.0         9.2.13.0       
+       + RES   Z_PAYFSS               >= 9.2.5.0         9.2.8.0        
+       + RES   Z_SERVICE              >= 9.2.4.0         9.2.8.0        
+       + RES   Z_ZARREP               >= 9.2.6.0         9.2.9.0        
+ RES   Z_CALC                 9.2.7.0              1 423 269   .\Z_CALC.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_SREDN                >= 9.2.6.0         9.2.11.0       
+       + DLL   G_ZARCACHE             >= 9.2.1.0         9.2.4.0        
+       + DLL   G_ZARPL                >= 9.2.11.0        9.2.13.0       
+       + RES   Z_LSCHET               >= 9.2.10.0        9.2.11.0       
+       + RES   Z_MENU                 >= 9.2.6.0         9.2.7.0        
+       + RES   Z_PAYREP               >= 9.2.7.0         9.2.9.0        
+       + RES   Z_ZARNASTR             >= 9.2.7.0         9.2.10.0       
+       + RES   Z_ZARREP               >= 9.2.8.0         9.2.9.0        
+ RES   Z_CALENDAR             9.2.4.0                917 932   .\Z_CALENDAR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_CHART                9.2.3.0                    391   .\Z_CHART.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_DISTRIBUTE           9.2.3.0                140 638   .\Z_DISTRIBUTE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_EXPIMP               9.2.8.0              2 283 881   .\Z_EXPIMP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_FIAS                 9.2.4.0                469 557   .\Z_FIAS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   FIAS                   >= 9.2.1.0         9.2.1.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_FOT                  9.2.5.0              3 473 008   .\Z_FOT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_FSZN                 9.2.4.0              1 233 266   .\Z_FSZN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_STAFFPENSIONER       >= 9.2.2.0         9.2.4.0        
+ RES   Z_HARM                 9.2.4.0                722 991   .\Z_HARM.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_LSCHET               >= 9.2.1.0         9.2.11.0       
+       + RES   Z_WT                   >= 9.2.2.0         9.2.7.0        
+ RES   Z_KATPODR              9.2.4.0                847 378   .\Z_KATPODR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_LSCHET               9.2.11.0             3 962 527   .\Z_LSCHET.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_WORKTABLE            >= 9.2.2.0         9.2.5.0        
+       + RES   Z_CALC                 >= 9.2.6.0         9.2.7.0        
+       + RES   Z_HARM                 >= 9.2.1.0         9.2.4.0        
+       + RES   Z_MENU                 >= 9.2.6.0         9.2.7.0        
+       + RES   Z_PAYREP               >= 9.2.7.0         9.2.9.0        
+       + RES   Z_SERVICE              >= 9.2.4.0         9.2.8.0        
+       + RES   Z_STAFF                >= 9.2.8.0         9.2.13.0       
+       + RES   Z_WT                   >= 9.2.4.0         9.2.7.0        
+       + RES   Z_ZARNASTR             >= 9.2.2.0         9.2.10.0       
+       + RES   Z_ZARREP               >= 9.2.8.0         9.2.9.0        
+ RES   Z_MENU                 9.2.7.0                445 498   .\Z_MENU.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_CALC                 >= 9.2.6.0         9.2.7.0        
+       + RES   Z_LSCHET               >= 9.2.10.0        9.2.11.0       
+       + RES   Z_PAYREP               >= 9.2.7.0         9.2.9.0        
+       + RES   Z_SERVICE              >= 9.2.3.0         9.2.8.0        
+       + RES   Z_STATIS               >= 9.2.2.0         9.2.7.0        
+       + RES   Z_ZARREP               >= 9.2.8.0         9.2.9.0        
+ RES   Z_MP                   9.2.8.0              4 241 581   .\Z_MP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_ZARPL                >= 9.2.9.0         9.2.13.0       
+       + RES   Z_PAYFSS               >= 9.2.5.0         9.2.8.0        
+       + RES   Z_PAYREP               >= 9.2.5.0         9.2.9.0        
+       + RES   Z_SERVICE              >= 9.2.4.0         9.2.8.0        
+       + RES   Z_SREDN                >= 9.2.7.0         9.2.10.0       
+       + RES   Z_ZARREP               >= 9.2.6.0         9.2.9.0        
+ RES   Z_NDFL                 9.2.5.0              5 820 929   .\Z_NDFL.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_RLIST                >= 9.2.1.0         9.2.9.0        
+ RES   Z_PAYFSS               9.2.8.0              1 642 198   .\Z_PAYFSS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_ZARPL                >= 9.2.9.0         9.2.13.0       
+       + RES   Z_BASEMENT             >= 9.2.6.0         9.2.8.0        
+       + RES   Z_MP                   >= 9.2.6.0         9.2.8.0        
+       + RES   Z_PAYREP               >= 9.2.5.0         9.2.9.0        
+       + RES   Z_SERVICE              >= 9.2.4.0         9.2.8.0        
+       + RES   Z_SREDN                >= 9.2.9.0         9.2.10.0       
+       + RES   Z_ZARREP               >= 9.2.6.0         9.2.9.0        
+ RES   Z_PAYREP               9.2.9.0              6 748 848   .\Z_PAYREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_ZARPL                >= 9.2.9.0         9.2.13.0       
+       + RES   Z_CALC                 >= 9.2.6.0         9.2.7.0        
+       + RES   Z_LSCHET               >= 9.2.10.0        9.2.11.0       
+       + RES   Z_MENU                 >= 9.2.6.0         9.2.7.0        
+       + RES   Z_MP                   >= 9.2.6.0         9.2.8.0        
+       + RES   Z_PAYFSS               >= 9.2.5.0         9.2.8.0        
+       + RES   Z_SERVICE              >= 9.2.4.0         9.2.8.0        
+       + RES   Z_SREDN                >= 9.2.7.0         9.2.10.0       
+       + RES   Z_ZARREP               >= 9.2.8.0         9.2.9.0        
+ RES   Z_PFREP                9.2.5.0              6 571 474   .\Z_PFREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_PIVOT                9.2.3.0                    396   .\Z_PIVOT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_REPORT               9.2.4.0              6 404 850   .\Z_REPORT.RES
+       требует:                       версии:            наличие:
+       + EXE   Alter_ZReport          >= 9.2.1.0         9.2.1.0        
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_CALC                 >= 9.2.4.0         9.2.7.0        
+       + RES   Z_KATPODR              >= 9.2.2.0         9.2.4.0        
+ RES   Z_RESERV               9.2.5.0              1 025 241   .\Z_RESERV.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_RLIST                9.2.9.0              1 518 826   .\Z_RLIST.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_NDFL                 >= 9.2.1.0         9.2.5.0        
+       + RES   Z_ZARNASTR             >= 9.2.2.0         9.2.10.0       
+ RES   Z_SERVICE              9.2.8.0              1 900 293   .\Z_SERVICE.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_ZARPL                >= 9.2.9.0         9.2.13.0       
+       + RES   Z_BASEMENT             >= 9.2.6.0         9.2.8.0        
+       + RES   Z_LSCHET               >= 9.2.8.0         9.2.11.0       
+       + RES   Z_MENU                 >= 9.2.3.0         9.2.7.0        
+       + RES   Z_MP                   >= 9.2.6.0         9.2.8.0        
+       + RES   Z_PAYFSS               >= 9.2.5.0         9.2.8.0        
+       + RES   Z_PAYREP               >= 9.2.5.0         9.2.9.0        
+       + RES   Z_SREDN                >= 9.2.7.0         9.2.10.0       
+       + RES   Z_ZARNASTR             >= 9.2.4.0         9.2.10.0       
+       + RES   Z_ZARREP               >= 9.2.6.0         9.2.9.0        
+ RES   Z_SREDN                9.2.10.0             4 766 866   .\Z_SREDN.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_SREDN                >= 9.2.8.0         9.2.11.0       
+       + DLL   G_SUMDIVIDE            >= 9.2.7.0         9.2.9.0        
+       + DLL   G_ZARPL                >= 9.2.9.0         9.2.13.0       
+       + RES   Z_MP                   >= 9.2.6.0         9.2.8.0        
+       + RES   Z_PAYFSS               >= 9.2.7.0         9.2.8.0        
+       + RES   Z_PAYREP               >= 9.2.5.0         9.2.9.0        
+       + RES   Z_SERVICE              >= 9.2.4.0         9.2.8.0        
+       + RES   Z_STAFFORDERS          >= 9.2.6.0         9.2.7.0        
+       + RES   Z_ZARREP               >= 9.2.6.0         9.2.9.0        
+ RES   Z_STAFF                9.2.13.0            10 260 299   .\Z_STAFF.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_LSCHET               >= 9.2.7.0         9.2.11.0       
+       + RES   Z_STAFFBUILDER         >= 9.2.4.0         9.2.6.0        
+       + RES   Z_STAFFCAT             >= 9.2.4.0         9.2.8.0        
+       + RES   Z_STAFFORDERS          >= 9.2.6.0         9.2.7.0        
+       + RES   Z_STAFFREPORTS         >= 9.2.3.0         9.2.10.0       
+       + RES   Z_ZARNASTR             >= 9.2.2.0         9.2.10.0       
+ RES   Z_STAFFBUILDER         9.2.6.0              1 266 475   .\Z_STAFFBUILDER.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_STAFF                >= 9.2.8.0         9.2.13.0       
+       + RES   Z_STAFFORDERS          >= 9.2.3.0         9.2.7.0        
+ RES   Z_STAFFCAT             9.2.8.0              1 908 247   .\Z_STAFFCAT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_STAFF                >= 9.2.5.0         9.2.13.0       
+       + RES   Z_STAFFNASTR           >= 9.2.2.0         9.2.6.0        
+       + RES   Z_STAFFORDERS          >= 9.2.2.0         9.2.7.0        
+       + RES   Z_ZAR                  >= 9.2.3.0         9.2.7.0        
+       + RES   Z_ZARNASTR             >= 9.2.5.0         9.2.10.0       
+ RES   Z_STAFFDOPREPORTS      9.2.5.0                735 479   .\Z_STAFFDOPREPORTS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_STAFFORDERS          >= 9.2.3.0         9.2.7.0        
+ RES   Z_STAFFIERREP          9.2.4.0              1 203 349   .\Z_STAFFIERREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_STAFFIF              9.2.3.0                426 849   .\Z_STAFFIF.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_STAFFMENU            9.2.4.0                409 820   .\Z_STAFFMENU.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_STAFFREPORTS         >= 9.2.8.0         9.2.10.0       
+ RES   Z_STAFFMOVES           9.2.3.0                570 397   .\Z_STAFFMOVES.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_STAFFNASTR           9.2.6.0              1 443 154   .\Z_STAFFNASTR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_STAFFCAT             >= 9.2.4.0         9.2.8.0        
+       + RES   Z_STAFFORDERS          >= 9.2.6.0         9.2.7.0        
+ RES   Z_STAFFORDERS          9.2.7.0             15 181 930   .\Z_STAFFORDERS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_SREDN                >= 9.2.9.0         9.2.10.0       
+       + RES   Z_STAFF                >= 9.2.12.0        9.2.13.0       
+       + RES   Z_STAFFCAT             >= 9.2.4.0         9.2.8.0        
+       + RES   Z_STAFFNASTR           >= 9.2.5.0         9.2.6.0        
+       + RES   Z_STAFFREPORTS         >= 9.2.3.0         9.2.10.0       
+ RES   Z_STAFFPENSIONER       9.2.4.0              1 434 915   .\Z_STAFFPENSIONER.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_FSZN                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_STAFFRECRUITING      9.2.5.0              1 369 729   .\Z_STAFFRECRUITING.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   M_EIXML                >= 9.2.3.0         9.2.6.0        
+ RES   Z_STAFFREPEAT          9.2.3.0                377 857   .\Z_STAFFREPEAT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_STAFFREPORTS         9.2.10.0             9 575 980   .\Z_STAFFREPORTS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_MQLINK               >= 9.2.25.0        9.2.26.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_STAFF                >= 9.2.5.0         9.2.13.0       
+       + RES   Z_STAFFMENU            >= 9.2.3.0         9.2.4.0        
+       + RES   Z_STAFFORDERS          >= 9.2.2.0         9.2.7.0        
+ RES   Z_STAFFSHR             9.2.7.0              2 403 812   .\Z_STAFFSHR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_STAFFCAT             >= 9.2.3.0         9.2.8.0        
+       + RES   Z_STAFFORDERS          >= 9.2.3.0         9.2.7.0        
+       + RES   Z_ZARNASTR             >= 9.2.5.0         9.2.10.0       
+ RES   Z_STAFFTEST            9.2.3.0                451 227   .\Z_STAFFTEST.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_STATIS               9.2.7.0              1 891 115   .\Z_STATIS.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + RES   Z_MENU                 >= 9.2.2.0         9.2.7.0        
+ RES   Z_TARSTAV              9.2.3.0                533 617   .\Z_TARSTAV.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+ RES   Z_WT                   9.2.7.0              2 869 436   .\Z_WT.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_WORKTABLE            >= 9.2.2.0         9.2.5.0        
+       + RES   Z_HARM                 >= 9.2.1.0         9.2.4.0        
+       + RES   Z_LSCHET               >= 9.2.3.0         9.2.11.0       
+ RES   Z_ZAR                  9.2.7.0              5 575 269   .\Z_ZAR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_ZARPL                >= 9.2.1.0         9.2.13.0       
+       + RES   Z_ZARNASTR             >= 9.2.1.0         9.2.10.0       
+ RES   Z_ZARNASTR             9.2.10.0               550 036   .\Z_ZARNASTR.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + RES   C_COMMON               >= 9.2.4.0         9.2.13.0       
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_SREDN                >= 9.2.6.0         9.2.11.0       
+       + DLL   G_ZARPL                >= 9.2.11.0        9.2.13.0       
+       + RES   Z_CALC                 >= 9.2.4.0         9.2.7.0        
+       + RES   Z_LSCHET               >= 9.2.1.0         9.2.11.0       
+       + RES   Z_RLIST                >= 9.2.2.0         9.2.9.0        
+       + RES   Z_SERVICE              >= 9.2.2.0         9.2.8.0        
+       + RES   Z_STAFF                >= 9.2.2.0         9.2.13.0       
+       + RES   Z_STAFFCAT             >= 9.2.3.0         9.2.8.0        
+       + RES   Z_ZAR                  >= 9.2.1.0         9.2.7.0        
+ RES   Z_ZARREP               9.2.9.0              7 504 820   .\Z_ZARREP.RES
+       требует:                       версии:            наличие:
+       + RES   C_ALTERCUMULATIVE      >= 9.2.3.0         9.2.3.0        
+       + DLL   GALNET                 >= 9.2.2.0         9.2.4.0        
+       + DLL   G_ZARPL                >= 9.2.9.0         9.2.13.0       
+       + RES   Z_BASEMENT             >= 9.2.6.0         9.2.8.0        
+       + RES   Z_CALC                 >= 9.2.6.0         9.2.7.0        
+       + RES   Z_LSCHET               >= 9.2.10.0        9.2.11.0       
+       + RES   Z_MENU                 >= 9.2.6.0         9.2.7.0        
+       + RES   Z_MP                   >= 9.2.6.0         9.2.8.0        
+       + RES   Z_NDFL                 >= 9.2.1.0         9.2.5.0        
+       + RES   Z_PAYFSS               >= 9.2.5.0         9.2.8.0        
+       + RES   Z_PAYREP               >= 9.2.7.0         9.2.9.0        
+       + RES   Z_SERVICE              >= 9.2.4.0         9.2.8.0        
+       + RES   Z_SREDN                >= 9.2.7.0         9.2.10.0       
+ RTL   ATLANTIS               5.5.27.0               669 184   .\ATLANTIS.RTL
+       требует:                       версии:            наличие:
+       + DLL   SiDriver               >= 5.5.24.0        5.5.24.0       

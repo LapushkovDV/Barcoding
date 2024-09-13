@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="ReplaceAssemblyBinding;Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B72C89DC-7F51-4F34-AF36-D55A0F3674B4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Galaktika.ESB.Adapter.ERP</RootNamespace>
+    <AssemblyName>Galaktika.ESB.Adapter.ERP</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SolutionDir>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory),!ProductInfo\!ProductInfo.Define))\</SolutionDir>
+    <NuGetPackageImportStamp></NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <NoWarn></NoWarn>
+    <DocumentationFile>bin\debug\Galaktika.ESB.Adapter.ERP.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn></NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\release\Galaktika.ESB.Adapter.ERP.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\!ProductInfo\gts.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper.StrongName">
+      <HintPath>..\..\Common\bin\Dapper.StrongName.dll</HintPath>
+    </Reference>
+    <Reference Include="GreenPipes">
+      <HintPath>..\..\Common\bin\GreenPipes.dll</HintPath>
+    </Reference>
+    <Reference Include="MassTransit">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Common\Bin\MassTransit.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MassTransit.QuartzIntegration">
+      <HintPath>..\..\Common\bin\MassTransit.QuartzIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="MassTransit.RabbitMqTransport">
+      <HintPath>..\..\Common\bin\MassTransit.RabbitMqTransport.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore">
+      <HintPath>..\..\Common\bin\Microsoft.EntityFrameworkCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.Relational">
+      <HintPath>..\..\Common\bin\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.Design">
+      <HintPath>..\..\Common\bin\Microsoft.EntityFrameworkCore.Design.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.SqlServer">
+      <HintPath>..\..\Common\bin\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+      <HintPath>..\..\Common\Bin\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SqlClient">
+      <HintPath>..\..\Common\bin\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions">
+      <HintPath>..\..\Common\bin\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.OData.Edm,  Culture=neutral,  PublicKeyToken=31bf3856ad364e35,  processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Common\bin\Microsoft.OData.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Restier.Core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Common\bin\Microsoft.Restier.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Restier.Providers.EntityFramework7">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Common\bin\Microsoft.Restier.Providers.EntityFramework7.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Restier.Publishers.OData">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Common\bin\Microsoft.Restier.Publishers.OData.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Common\Bin\Newtonsoft.Json.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx,  Culture=neutral,  PublicKeyToken=09d695329ca273b7,  processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Common\bin\Nito.AsyncEx.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Common\Bin\NLog.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\..\Common\bin\Oracle.ManagedDataAccess.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Quartz">
+      <HintPath>..\..\Common\bin\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\..\Common\Bin\System.Collections.Immutable.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Interactive.Async">
+      <HintPath>..\..\Common\Bin\System.Interactive.Async.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.ValueTuple,  Culture=neutral,  PublicKeyToken=cc7b13ffcd2ddd51,  processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Common\bin\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\..\Common\Bin\System.Web.Http.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web.OData">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Common\bin\System.Web.OData.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\!ProductInfo\ProductInfo.cs">
+      <Link>ProductInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisAdapterService.cs">
+      <Link>Adapter\AtlantisAdapterService.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisAdapterService.Log.cs">
+      <Link>Adapter\AtlantisAdapterService.Log.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisBaseUpdatesService.cs">
+      <Link>Adapter\AtlantisBaseUpdatesService.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisChangesTrackerService.cs">
+      <Link>Adapter\AtlantisChangesTrackerService.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisChangesTrackerService.Log.cs">
+      <Link>Adapter\AtlantisChangesTrackerService.Log.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisODataAdapter.cs">
+      <Link>Adapter\AtlantisODataAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisODataAdapter.Log.cs">
+      <Link>Adapter\AtlantisODataAdapter.Log.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisODataService.cs">
+      <Link>Adapter\AtlantisODataService.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisODataService.Log.cs">
+      <Link>Adapter\AtlantisODataService.Log.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisSession.cs">
+      <Link>Adapter\AtlantisSession.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisStarterService.cs">
+      <Link>Adapter\AtlantisStarterService.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisStarterService.Log.cs">
+      <Link>Adapter\AtlantisStarterService.Log.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisUpdatesService.cs">
+      <Link>Adapter\AtlantisUpdatesService.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\AtlantisUpdatesService.Log.cs">
+      <Link>Adapter\AtlantisUpdatesService.Log.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\ElapsedEventReceiver .cs">
+      <Link>Adapter\ElapsedEventReceiver .cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\RestierService.cs">
+      <Link>Adapter\RestierService.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\RestierService.Log.cs">
+      <Link>Adapter\RestierService.Log.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\TrackingEntityConsumer.cs">
+      <Link>Adapter\TrackingEntityConsumer.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Adapter\UpdatesJournal.cs">
+      <Link>Adapter\UpdatesJournal.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Api\AtlantisApi.cs">
+      <Link>Api\AtlantisApi.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Api\DictionaryApi.cs">
+      <Link>Api\DictionaryApi.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Context\AtlantisBaseContext.cs">
+      <Link>Context\AtlantisBaseContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Context\WlistIncrementor.cs">
+      <Link>Context\WlistIncrementor.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Program.cs">
+      <Link>Program.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Services\AtlantisAttributeService.cs">
+      <Link>Services\AtlantisAttributeService.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Services\AtlantisChangeSetInitializer.cs">
+      <Link>Services\AtlantisChangeSetInitializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Services\AtlServices.AtlantisModelBuilder.Log.cs">
+      <Link>Services\AtlServices.AtlantisModelBuilder.Log.cs</Link>
+    </Compile>
+    <Compile Include="..\Galaktika.ESB.Adapter.Atlantis\Services\AtlServices.cs">
+      <Link>Services\AtlServices.cs</Link>
+    </Compile>
+    <Compile Include="Adapter\AtlantisAdapter.cs" />
+    <Compile Include="AppSpecificERP\AtlantisApi.cs" />
+    <Compile Include="AppSpecificERP\ErpChangeSetInitializer.cs" />
+    <Compile Include="AppSpecificERP\Plan.cs" />
+    <Compile Include="AppSpecificERP\PlanApi.cs" />
+    <Compile Include="AppSpecificERP\PlanApi.Log.cs" />
+    <Compile Include="AppSpecificERP\PlanApi.PlanModelBuilder.cs" />
+    <Compile Include="AppSpecificERP\PlanApi.PlanModelBuilder.Log.cs" />
+    <Compile Include="AppSpecificERP\PlanWorker.cs" />
+    <Compile Include="AppSpecificERP\Post.cs" />
+    <Compile Include="Context\GalaktikaApi.Generated.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extensions\RestierExtension.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\CompressionHelper.cs" />
+    <Compile Include="RequestResults\RequestResult.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Galaktika.ESB.Adapter.Atlantis\debug.res">
+      <Link>debug.res</Link>
+    </Content>
+    <Content Include="..\Galaktika.ESB.Adapter.Atlantis\G_DotNet4Vip.dll">
+      <Link>G_DotNet4Vip.dll</Link>
+    </Content>
+    <Content Include="ПолныйОтчет.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="..\..\!ProductInfo\gts.snk">
+      <Link>gts.snk</Link>
+    </None>
+    <None Include="App.Debug.config">
+      <DependentUpon>App.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App.Release.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
+    <None Include="..\Galaktika.ESB.Adapter.Atlantis\!atlsp.cmd">
+      <Link>!atlsp.cmd</Link>
+    </None>
+    <None Include="..\Galaktika.ESB.Adapter.Atlantis\!atlwp.cmd">
+      <Link>!atlwp.cmd</Link>
+    </None>
+    <None Include="..\Galaktika.ESB.Adapter.Atlantis\!gal.cmd">
+      <Link>!gal.cmd</Link>
+    </None>
+    <None Include="..\Galaktika.ESB.Adapter.Atlantis\restartAdapter.bat">
+      <Link>restartAdapter.bat</Link>
+    </None>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Context\GalaktikaApi.Generated.cmd" />
+    <None Include="Context\GalaktikaApi.Generated.template" />
+    <None Include="Galaktika.ESB.Adapter.ERP.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Adapter.ERP.Prerequisites.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Adapter.ERP.Rationales.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Воссоздание системы клиента.docx" />
+    <Content Include="Подключение ресурса ESB к ERP.docx" />
+    <Content Include="Подключение ERP 9.1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\!ProductInfo\!ProductInfo.csproj">
+      <Project>{ddd91aa6-930d-472f-9ad9-852a1ce08afb}</Project>
+      <Name>!ProductInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Galaktika.ESB\Galaktika.ESB.Adapter\Galaktika.ESB.Adapter.csproj">
+      <Project>{8FF7F5C3-12DB-4E05-910C-42E50C477998}</Project>
+      <Name>Galaktika.ESB.Adapter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Galaktika.ESB\Galaktika.ESB.AppMetrics\Galaktika.ESB.AppMetrics.csproj">
+      <Project>{78676c3f-ff00-4410-90e2-6fbaeae45a66}</Project>
+      <Name>Galaktika.ESB.AppMetrics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Galaktika.ESB\Galaktika.ESB.CodeGenerator\Galaktika.ESB.CodeGenerator.csproj">
+      <Project>{7e6d2dbc-1eba-4ef3-abd4-dd406f552529}</Project>
+      <Name>Galaktika.ESB.CodeGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Galaktika.ESB\Galaktika.ESB.Configuration\Galaktika.ESB.Configuration.csproj">
+      <Project>{d9e225e8-866d-44dd-a223-1fd4efa1256f}</Project>
+      <Name>Galaktika.ESB.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Galaktika.ESB\Galaktika.ESB.Core\Galaktika.ESB.Core.csproj">
+      <Project>{74ef4493-286c-476c-afa3-cf53b96a48ed}</Project>
+      <Name>Galaktika.ESB.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Galaktika.ESB\Galaktika.ESB.RabbitMqTransport\Galaktika.ESB.RabbitMqTransport.csproj">
+      <Project>{37e7ed8d-0af6-4be7-a5f7-cad8468be1f7}</Project>
+      <Name>Galaktika.ESB.RabbitMqTransport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Galaktika.ESB\Galaktika.ESB.Utils\Galaktika.ESB.Utils.csproj">
+      <Project>{5affd373-145b-4239-a0d3-deacd3cb3a98}</Project>
+      <Name>Galaktika.ESB.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Galaktika.ESB\NLog.ESBTarget\NLog.ESBTarget.csproj">
+      <Project>{dddd1ed2-b1a4-4d47-bb18-a208f61ef1e3}</Project>
+      <Name>NLog.ESBTarget</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntityFramework.Atlantis\EntityFramework.Atlantis.csproj">
+      <Project>{2a020a4e-85df-419a-a305-385a7268a08c}</Project>
+      <Name>EntityFramework.Atlantis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Galaktika.ERP.EFCoreProvider\Galaktika.ERP.EFCoreProvider.csproj">
+      <Project>{750a75fb-a642-485a-a8be-9a618dfd2450}</Project>
+      <Name>Galaktika.ERP.EFCoreProvider</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Galaktika.ERP.Interop\Galaktika.ERP.Interop.csproj">
+      <Project>{f901ce20-3122-4248-beb7-24ac31c5d3ce}</Project>
+      <Name>Galaktika.ERP.Interop</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Galaktika.ESB\Galaktika.ESB.ServiceAdapterApi\Galaktika.ESB.ServiceAdapterApi.csproj">
+      <Project>{6b5d6526-6008-41f0-9d6b-2d97d4126a0f}</Project>
+      <Name>Galaktika.ESB.ServiceAdapterApi</Name>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="D:\Build\ERP_TSD\Source\Package\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.12\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets" Condition="Exists('D:\Build\ERP_TSD\Source\Package\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.12\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets')" />
+  <UsingTask AssemblyFile="D:\Build\ERP_TSD\Source\AuxiliaryFiles\galaktika.esb.buildtask.assembly" TaskName="Galaktika.ESB.BuildTask.BindingRedirectTask" />
+  <Target Name="ReplaceAssemblyBinding">
+    <BindingRedirectTask AssemblyBindingFilePath="D:\Build\ERP_TSD\Source\AuxiliaryFiles\common.assemblybinding" ConfigurationPath=".\App.config" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <UsingTask TaskName="TransformXml" AssemblyFile="D:\Build\ERP_TSD\Source\AuxiliaryFiles\microsoft.web.publishing.tasks.dll" />
+  <Target Name="App_config_AfterCompile" AfterTargets="AfterCompile" Condition="Exists('App.$(Configuration).config')">
+    <!--Generate transformed app config in the intermediate directory-->
+    <TransformXml Source="App.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="App.$(Configuration).config" />
+    <!--Force build process to use the transformed configuration file from now on.-->
+    <ItemGroup>
+      <AppConfigWithTargetPath Remove="App.config" />
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
+        <TargetPath>$(TargetFileName).config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
+  <!--Override After Publish to support ClickOnce AfterPublish. Target replaces the untransformed config file copied to the deployment directory with the transformed one.-->
+  <Target Name="App_config_AfterPublish" AfterTargets="AfterPublish" Condition="Exists('App.$(Configuration).config')">
+    <PropertyGroup>
+      <DeployedConfig>$(_DeploymentApplicationDir)$(TargetName)$(TargetExt).config$(_DeploymentFileMappingExtension)</DeployedConfig>
+    </PropertyGroup>
+    <!--Publish copies the untransformed App.config to deployment directory so overwrite it-->
+    <Copy Condition="Exists('$(DeployedConfig)')" SourceFiles="$(IntermediateOutputPath)$(TargetFileName).config" DestinationFiles="$(DeployedConfig)" />
+  </Target>
+</Project>

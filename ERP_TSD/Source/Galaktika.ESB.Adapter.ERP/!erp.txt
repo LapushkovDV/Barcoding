@@ -1,0 +1,12 @@
+ DLL   AtlWP.dll              >=  5.5.28.8 
+ DLL   MS70DRV  (ORADRV)      >=  5.5.28.7       
+ RES   C_ESB                  версия любая
+ DLL   G_DOTNET4VIP           версия любая
+
+в файле galnet.cfg:
+
+{Esb}
+ InteropAutoStart=true
+
+
+

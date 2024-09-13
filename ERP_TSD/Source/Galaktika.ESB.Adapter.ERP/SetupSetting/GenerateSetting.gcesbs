@@ -1,0 +1,25 @@
+﻿{
+  "GenerateSetting":{
+	"Abbriviation":"ERP",
+	"Title":"ESB Адаптер Галактика ERP",
+	"IsVisible": true,
+	"CsprojName":"Galaktika.ESB.Adapter.ERP",
+	"JsonName":"Galaktika.ESB.Adapter.ERP",
+	"IsThirdPartyProgram":true,
+        "IsSource":false,
+	"ComponentPath":"..\\",
+	"SearchByRelativePaths":"..\\..\\..\\Common\\bin",
+	"AddFoldersInToMsi":[{
+		"FolderPath":"..\\..\\..\\Galaktika.ESB\\Galaktika.ESB.Core\\Storage",
+		"DirectoryName":"SQL", //not necessary
+		"SearchPattern":"*.sql" //not necessary
+	}]
+	//"LaunchParametersPaths":".\\LaunchParameters.cesblp",
+        //"ConfigurationSettingsPaths":".\\ConfigurationSettings.cesbcs",
+	//"JsonSettingsPaths":"..\\Delete\\JsonSettings.cesbjs",
+        //"DllSettingsPaths":".\\TEST\\DllSettings.cesbds"
+	//"ConfigurationSettingsPaths":"D:\\GalaktikaESB\\TestSettings\\ConfigurationSettings.cesbcs",
+	//"JsonSettingsPaths":"D:\\GalaktikaESB\\TestSettings\\JsonSettings.cesbjs",
+        //"DllSettingsPaths":"D:\\GalaktikaESB\\TestSettings\\DllSettings.cesbds"
+  }
+}

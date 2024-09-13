@@ -1,0 +1,13 @@
+D:\Build\ERP_TSD\Source\Galaktika.ESB.Adapter.ERP\obj\Debug\Galaktika.ESB.Adapter.ERP.csprojAssemblyReference.cache
+D:\Build\ERP_TSD\Source\Galaktika.ESB.Adapter.ERP\obj\Debug\Galaktika.ESB.Adapter.ERP.csproj.CoreCompileInputs.cache
+D:\!GalESB\Galaktika.ESB.Adapter.ERP\Source\Build\2024-02-12-22-54-59\Build\ПолныйОтчет.txt
+D:\!GalESB\Galaktika.ESB.Adapter.ERP\Source\Build\2024-02-12-22-54-59\Build\Adapter.ERP.Prerequisites.txt
+D:\!GalESB\Galaktika.ESB.Adapter.ERP\Source\Build\2024-02-12-22-54-59\Build\Adapter.ERP.Rationales.txt
+D:\!GalESB\Galaktika.ESB.Adapter.ERP\Source\Build\2024-02-12-22-54-59\Build\Galaktika.ESB.Adapter.ERP.json
+D:\!GalESB\Galaktika.ESB.Adapter.ERP\Source\Build\2024-02-12-22-54-59\Build\Galaktika.ESB.Adapter.ERP.exe.config
+D:\!GalESB\Galaktika.ESB.Adapter.ERP\Source\Build\2024-02-12-22-54-59\Build\Galaktika.ESB.Adapter.ERP.exe
+D:\!GalESB\Galaktika.ESB.Adapter.ERP\Source\Build\2024-02-12-22-54-59\Build\Galaktika.ESB.Adapter.ERP.pdb
+D:\!GalESB\Galaktika.ESB.Adapter.ERP\Source\Build\2024-02-12-22-54-59\Build\Galaktika.ESB.Adapter.ERP.xml
+D:\Build\ERP_TSD\Source\Galaktika.ESB.Adapter.ERP\obj\Debug\Galaktika.ESB.Adapter.ERP.csproj.CopyComplete
+D:\Build\ERP_TSD\Source\Galaktika.ESB.Adapter.ERP\obj\Debug\Galaktika.ESB.Adapter.ERP.exe
+D:\Build\ERP_TSD\Source\Galaktika.ESB.Adapter.ERP\obj\Debug\Galaktika.ESB.Adapter.ERP.pdb

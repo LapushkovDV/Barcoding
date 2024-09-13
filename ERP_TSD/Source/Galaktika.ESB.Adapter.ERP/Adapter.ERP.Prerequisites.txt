@@ -1,0 +1,5 @@
+Требования для работы адаптера ERP
+
+1. Atlantis не ниже 5.5.29.3. + обязательно обновить napsrv.exe не ниже 5.5.29.0.
+2. Для MS SQL необходимо использовать Microsoft SQL Server Native Client Version >= 11.00.6540
+3. Файл GalaktikaApi.Generated.cs сгенерирован на основании Galaktika 9.2. Версия AlterCumulative 9.2.3

@@ -1,0 +1,11 @@
+﻿{
+	"LaunchParameters":[{
+		"FullCommand":"-x",
+		"AbbreviatedСommand":"-x",
+		"Title":"Сбор информации модели метаданных ERP",
+		"Description":"Делает запрос к базе, чтобы получить модель метаданных ERP, после чего ложит модель метаданных рядом.",
+		"IsAutoBuildParameters":true,
+		"Parameters":[]
+	}
+	]
+}

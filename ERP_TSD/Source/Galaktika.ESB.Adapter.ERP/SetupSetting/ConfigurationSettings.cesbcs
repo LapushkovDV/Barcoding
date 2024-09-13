@@ -1,0 +1,796 @@
+﻿{
+ "ConfigSettings":[
+    {
+      "SectionName": "configSections",
+      "ParentSection": "configSections",
+      "KeyAttributes":null,
+      "SectionSettings": {
+        "Description": "Включение настроек для секций",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Включение настроек для секций",
+	"AttributeValues":null
+      }
+    },
+    {
+      "SectionName": "section",
+      "ParentSection": "configSections;section",
+      "KeyAttributes": {
+        "name": "xafariLicensing",
+	"type": "System.Configuration.NameValueSectionHandler"
+      },
+      "SectionSettings": {
+        "Description": "Включение секции лицензирования",
+        "IsUse": true,
+	"Title": "Лицензирование",
+	"IsObligatory":true,
+	"AttributeValues":[]
+      }
+    },
+    {
+      "SectionName": "section",
+      "ParentSection": "configSections;section",
+      "KeyAttributes": {
+        "name": "entityFramework",
+	"type": "System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework",
+	"requirePermission":"false"
+      },
+      "SectionSettings": {
+        "Description": "Включение секции entityFramework",
+        "IsUse": true,
+	"Title": "EntityFramework",
+	"AttributeValues":[]
+      }
+    },
+    {
+      "SectionName": "section",
+      "ParentSection": "configSections;section",
+      "KeyAttributes": {
+        "name": "nlog",
+	"type": "NLog.Config.ConfigSectionHandler, NLog"
+      },
+      "SectionSettings": {
+        "Description": "Включение секции Nlog",
+        "IsUse": true,
+	"Title": "Nlog",
+	"AttributeValues":[]
+      }
+    },
+    {
+      "SectionName": "section",
+      "ParentSection": "configSections;section",
+      "KeyAttributes": {
+        "name": "CatcherExceptionsSection",
+	"type": "Galaktika.ESB.Configuration.CatcherExceptionsSection, Galaktika.ESB.Configuration"
+      },
+      "SectionSettings": {
+        "Description": "Включение секции обработчика ошибок",
+        "IsUse": true,
+	"Title": "Обработчик ошибок",
+	"AttributeValues":[]
+      }
+    },
+    {
+      "SectionName": "section",
+      "ParentSection": "configSections;section",
+      "KeyAttributes": {
+        "name": "securityConfiguration",
+	"type": "System.Configuration.AppSettingsSection"
+      },
+      "SectionSettings": {
+        "Description": "Включение секции безопасности",
+        "IsUse": false,
+	"Title": "Безопасности",
+	"AttributeValues":[]
+      }
+    },
+    {
+      "SectionName": "securityConfiguration",
+      "ParentSection": "securityConfiguration",
+      "KeyAttributes":null,
+      "SectionSettings": {
+        "Description": "Cross-Origin Resource Sharing (CORS) — механизм, использующий дополнительные HTTP-заголовки, чтобы дать возможность агенту пользователя получать разрешения на доступ к выбранным ресурсам с сервера на источнике (домене), отличном от того, что сайт использует в данный момент. Агент пользователя делает запрос с другого источника (cross-origin HTTP request), если источник текущего документа отличается от запрашиваемого ресурса доменом, протоколом или портом.",
+        "IsUse": false,
+	"Title": "CORS",
+	"AttributeValues":null
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "securityConfiguration;add",
+      "KeyAttributes": {
+        "key": "Access-Control-Allow-Origin"
+      },
+      "SectionSettings": {
+        "Description": "Ответ, который указывает браузеру разрешить запрашивать код из источника, для доступа к ресурсу",
+        "IsUse": false,
+	"Title": "Источник для доступа к ресурсу",
+	"AttributeValues":[
+		{"AttributeName":"value","IsObligatory":true,"Title":"Адрес источника","ValueType":"string","Value":"http://localhost:64011;https://msdn.microsoft.com"}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "securityConfiguration;add",
+      "KeyAttributes": {
+        "key": "Access-Control-Allow-Methods"
+      },
+      "SectionSettings": {
+        "Description": "Определяет метод или методы доступа к ресурсам предварительной проверки CORS, является запросом CORS, который проверяет, понимается ли протокол CORS",
+        "IsUse": false,
+	"Title": "Метод или методы доступа к ресурсам предварительной проверки CORS",
+	"AttributeValues":[
+		{"AttributeName":"value","IsObligatory":true,"Title":"Методы","ValueType":"string","Value":"GET;POST;PUT;DELETE;HEAD"}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "securityConfiguration;add",
+      "KeyAttributes": {
+        "key": "Access-Control-Allow-Headers"
+      },
+      "SectionSettings": {
+        "Description": "Заголовок ответа Access-Control-Allow-Headers используется в ответ на запрос доступа к ресурсам предварительной проверки CORS, является запросом CORS, который проверяет, понимается ли протокол CORS, чтобы указать, какие заголовки HTTP могут использоваться во время фактического запроса.",
+        "IsUse": false,
+	"Title": "Ответ на запрос доступа к ресурсам предварительной проверки CORS",
+	"AttributeValues":[
+		{"AttributeName":"value","IsObligatory":true,"Title":"Доступ","ValueType":"string","Value":"Overwrite;Destination;Content-Type;Depth;User-Agent"}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "securityConfiguration;add",
+      "KeyAttributes": {
+        "key": "Access-Control-Max-Age"
+      },
+      "SectionSettings": {
+        "Description": "Измеряется в секундах. Заголовок ответа сервера Access-Control-Max-Age сообщает браузеру как долго предзапрос (эта информация содержится в заголовках Access-Control-Allow-Methods и Access-Control-Allow-Headers) может быть кэширован и опущен при запросах к серверу.",
+        "IsUse": false,
+	"Title": "Как долго предзапрос может быть кэширован и опущен при запросах к серверу",
+	"AttributeValues":[
+		{"AttributeName":"value","IsObligatory":true,"Title":"Максимальное количество (c)","ValueType":"int","Value":"86400","Description":"Access-Control-Max-Age дает значение в секундах для того, как долго может быть кэширован ответ на запрос предварительной проверки без отправки другого запроса предварительной проверки. В этом случае 86400 секунд составляет 24 часа. Каждый браузер имеет максимальное внутреннее значение, которое имеет приоритет, когда Access-Control-Max-Age является большим."}		
+	]
+      }
+    },
+    {
+      "SectionName": "appSettings",
+      "ParentSection": "appSettings",
+      "KeyAttributes":null,
+      "SectionSettings": {
+        "Description": "Настройка работы адаптера",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Настройка работы адаптера",
+	"AttributeValues":null
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "appSettings;add",
+      "KeyAttributes": {
+        "key": "AssemblyDirectories"
+      },
+      "SectionSettings": {
+        "Description": "Поиск нехватающих dll для корректной работы компонента ESB. Примерами могут служить пути на приложение под которое написан компонент, длл для плагинов и т.д.. Разделителем является ';'",
+        "IsUse": true,
+	"Title": "Каталоги поиска",
+	"AttributeValues":[
+		{"AttributeName":"value","IsObligatory":true,"Title":"Пути каталогов","ValueType":"string","RegExMask":null}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "appSettings;add",
+      "KeyAttributes": {
+        "key": "UserName"
+      },
+      "SectionSettings": {
+        "Description": "Пользователь, от которого будет получен доступ к приложению",
+        "IsUse": true,
+	"Title": "Пользователь",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Имя пользователя","ValueType":"string","RegExMask":null,"IsObligatory":true}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "appSettings;add",
+      "KeyAttributes": {
+        "key": "Password"
+      },
+      "SectionSettings": {
+        "Description": "Пароль пользователя, от которого будет получен доступ к приложению",
+        "IsUse": false,
+	"Title": "Пароль",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Пароль","ValueType":"string","RegExMask":null,"IsObligatory":true}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "appSettings;add",
+      "KeyAttributes": {
+        "key": "SettingsFilePath"
+      },
+      "SectionSettings": {
+        "Description": "Наименование файла настройки и расположение к нему. Если файл настройки лежит рядом с exe, достаточно только наименования файла настройки.",
+        "IsUse": true,
+        "IsObligatory":true,
+	"Title": "Файл настройки",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Имя json","ValueType":"string","RegExMask":null,"IsObligatory":true,"Value":"Galaktika.ESB.Adapter.ERP.json"}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "appSettings;add",
+      "KeyAttributes": {
+        "key": "GeneratedAssembliesDir"
+      },
+      "SectionSettings": {
+        "Description": "Путь поиска сгенерированных метаданных модели интеграции",
+        "IsUse": true,
+        "IsObligatory":true,
+	"Title": "Путь поиска сгенерированных метаданных модели интеграции",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Каталог поиска","ValueType":"string","IsObligatory":true,"Value":".\\GeneratedAssembliesDir\\ERP\\"}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "appSettings;add",
+      "KeyAttributes": {
+        "key": "generateDebugSources"
+      },
+      "SectionSettings": {
+        "Description": "Определяет будет ли генерация исходнов для диагностики",
+        "IsUse": true,
+        "IsObligatory":true,
+	"Title": "Генерация исходников для диагностики",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Генерация","ValueType":"bool","IsObligatory":true,"Value":true}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "appSettings;add",
+      "KeyAttributes": {
+        "key": "generateDebugPdb"
+      },
+      "SectionSettings": {
+        "Description": "Определяет будет ли генерация pdb для диагностики",
+        "IsUse": true,
+        "IsObligatory":true,
+	"Title": "Генерация pdb для диагностики",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Генерация","ValueType":"bool","IsObligatory":true,"Value":true}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "appSettings;add",
+      "KeyAttributes": {
+        "key": "debugCompilationPath"
+      },
+      "SectionSettings": {
+        "Description": "Расположение куда будут сложены скомпилированные метаданные модели интеграции",
+        "IsUse": true,
+        "IsObligatory":true,
+	"Title": "Расположение скомпилированных метаданных модели интеграции",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Расположение","ValueType":"string","IsObligatory":true,"Value":".\\GeneratedAssembliesDir\\ERP\\Debug\\"}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "appSettings;add",
+      "KeyAttributes": {
+        "key": "DebuggerLaunch"
+      },
+      "SectionSettings": {
+        "Description": "Включает отладку",
+        "IsUse": true,
+        "IsObligatory":true,
+	"Title": "Включить отладку",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Отладка","ValueType":"bool","IsObligatory":true,"Value":false}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "appSettings;add",
+      "KeyAttributes": {
+        "key": "ErrorCompilePath"
+      },
+      "SectionSettings": {
+        "Description": "Расположение данных об ошибках возникших при сборе интеграционной модели",
+        "IsUse": true,
+        "IsObligatory":true,
+	"Title": "Расположение данных об ошибках возникших при сборе интеграционной модели",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Каталог ошибок","ValueType":"string","IsObligatory":true,"Value":".\\GeneratedAssembliesDir\\ERP\\Errors\\"}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "appSettings;add",
+      "KeyAttributes": {
+        "key": "XafariLicenseServerV2"
+      },
+      "SectionSettings": {
+        "Description": "Лицензирование компонента ESB",
+        "IsUse": false,
+	"IsOutdated":true,
+	"DialogType": "LicenseServerUri",
+	"Title": "Сервер лицензирования",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Сервер","ValueType":"string","RegExMask":null,"IsObligatory":true}		
+	]
+      }
+    },
+    {
+      "SectionName": "connectionStrings",
+      "ParentSection": "connectionStrings",
+      "KeyAttributes":null,
+      "SectionSettings": {
+        "Description": "Настройка строк подключения к базам данных",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Настройка строк подключения к базам данных",
+	"AttributeValues":null
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "connectionStrings;add",
+      "KeyAttributes": {
+        "name": "ESBConnectionString"
+      },
+      "SectionSettings": {
+        "Description": "Настройка строки подключения к базе данных адаптера ERP",
+        "IsUse": true,
+	"IsObligatory":true,
+	"DialogType":"ConnectionString",
+	"Title": "Настройка строки подключения к базе данных адаптера ERP",
+        "AttributeValues": [
+          {
+            "AttributeName": "connectionString",
+            "Title": "Строка подключения",
+            "ValueType": "string",
+            "IsObligatory": true,
+            "Value": "Integrated Security=SSPI;Pooling=false;Data Source=.;Initial Catalog=ESB_Adapter_ERP"
+          },
+          {
+            "AttributeName": "providerName",
+            "Title": "Имя провайдера",
+            "Description": "Допустимые значения: \r\nMS SQL Server: Microsoft.EntityFrameworkCore.SqlServer; \r\nPostgreSQL: Npgsql.EntityFrameworkCore.PostgreSQL; \r\nOracle: Oracle.EntityFrameworkCore",
+            "ValueType": "ProviderInfo",
+            "IsObligatory": true,
+            "Value": "Microsoft.EntityFrameworkCore.SqlServer"
+          }
+        ]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "connectionStrings;add",
+      "KeyAttributes": {
+        "name": "EntityKeyLocatorDB"
+      },
+      "SectionSettings": {
+        "Description": "Настройка строки подключения к KeyLokator ESB",
+        "IsUse": true,
+	"IsObligatory":true,
+	"DialogType":"ConnectionString",
+	"Title": "Настройка строки подключения к KeyLokator ESB",
+        "AttributeValues": [
+          {
+            "AttributeName": "connectionString",
+            "Title": "Строка подключения",
+            "ValueType": "string",
+            "IsObligatory": true,
+            "Value": "Integrated Security=SSPI;Pooling=false;Data Source=.;Initial Catalog=ESB_KeyLocator"
+          },
+          {
+            "AttributeName": "providerName",
+            "Title": "Имя провайдера",
+            "Description": "Допустимые значения: \r\nMS SQL Server: Microsoft.EntityFrameworkCore.SqlServer; \r\nPostgreSQL: Npgsql.EntityFrameworkCore.PostgreSQL; \r\nOracle: Oracle.EntityFrameworkCore",
+            "ValueType": "ProviderInfo",
+            "IsObligatory": true,
+            "Value": "Microsoft.EntityFrameworkCore.SqlServer"
+          }
+        ]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "connectionStrings;add",
+      "KeyAttributes": {
+        "name": "Atlantis"
+      },
+      "SectionSettings": {
+        "Description": "Настройка строки подключения к Atlantis",
+        "IsUse": true,
+	"IsObligatory":true,
+	"DialogType":"ConnectionString",
+	"Title": "Настройка строки подключения к Atlantis",
+	"AttributeValues":[
+		{"AttributeName":"connectionString","Title":"Строка подключения","ValueType":"string","IsObligatory":true, "Value":"---"},
+		{"AttributeName":"providerName","Title":"Имя провайдера","ValueType":"string","IsObligatory":true, "Value":"Atlantis"}		
+	]
+      }
+    },
+    {
+      "SectionName": "xafariLicensing",
+      "ParentSection": "xafariLicensing",
+      "KeyAttributes":null,
+      "SectionSettings": {
+        "Description": "Настройка лицензирования ESB",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Настройка лицензирования ESB",
+	"AttributeValues":null
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "xafariLicensing;add",
+      "KeyAttributes": {
+        "key": "LicenseServerUri"
+      },
+      "SectionSettings": {
+        "Description": "Сервер лицензирования",
+        "IsUse": true,
+	"IsObligatory":true,
+	"DialogType":"LicenseServerUri",
+	"Title": "Сервер лицензирования",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Сервер","ValueType":"string","RegExMask":null,"IsObligatory":true}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "xafariLicensing;add",
+      "KeyAttributes": {
+        "key": "ProcessorAffinityMask"
+      },
+      "SectionSettings": {
+        "Description": "Афинити маска",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Афинити маска",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Афинити маска","ValueType":"string","RegExMask":null,"IsObligatory":true,"Value":"0xF"}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "xafariLicensing;add",
+      "KeyAttributes": {
+        "key": "CpuCoresLimit"
+      },
+      "SectionSettings": {
+        "Description": "Измеряется в ядрах процессора. Лимит CPU",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Лимит CPU ",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"CPU","ValueType":"int","RegExMask":null,"IsObligatory":true,"Value":4}		
+	]
+      }
+    },
+    {
+      "SectionName": "system.data",
+      "ParentSection": "system.data",
+      "KeyAttributes":null,
+      "SectionSettings": {
+        "Description": "Настройка провайдера",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Настройка провайдера",
+	"AttributeValues":null
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "system.data;DbProviderFactories;add",
+      "KeyAttributes": {
+        "name": "Atlantis",
+	"invariant": "Atlantis"
+      },
+      "SectionSettings": {
+        "Description": "Настройка Атлантис провайдера",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Настройка Атлантис провайдера",
+	"AttributeValues":[
+		{"AttributeName":"type","Title":"Провайдер","ValueType":"string","RegExMask":null,"IsObligatory":true,"Value":"System.Data.Entity.Atlantis.AtlantisDbProviderFactory, EntityFramework.Atlantis"}		
+	]
+      }
+    },
+    {
+      "SectionName": "entityFramework",
+      "ParentSection": "entityFramework",
+      "KeyAttributes":null,
+      "SectionSettings": {
+        "Description": "Настройка Entity Framework",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Настройка Entity Framework",
+	"AttributeValues":null
+      }
+    },
+    {
+      "SectionName": "defaultConnectionFactory",
+      "ParentSection": "entityFramework;defaultConnectionFactory",
+      "KeyAttributes": {},
+      "SectionSettings": {
+        "Description": "Подключение по умолчанию",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Подключение по умолчанию",
+	"AttributeValues":[
+		{"AttributeName":"type","Title":"Провайдер","ValueType":"string","RegExMask":null,"IsObligatory":true,"Value":"System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework"}		
+	]
+      }
+    },
+    {
+      "SectionName": "parameter",
+      "ParentSection": "entityFramework;defaultConnectionFactory;parameters;parameter",
+      "KeyAttributes": {},
+      "SectionSettings": {
+        "Description": "Дефолтный сервер для подключения",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Дефолтный сервер для подключения",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Сервер","ValueType":"string","RegExMask":null,"IsObligatory":true,"Value":"mssqllocaldb"}		
+	]
+      }
+    },
+    {
+      "SectionName": "provider",
+      "ParentSection": "entityFramework;providers;provider",
+      "KeyAttributes": {
+        "invariantName": "Atlantis"
+      },
+      "SectionSettings": {
+        "Description": "Настройка Атлантис провайдера",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Настройка Атлантис провайдера",
+	"AttributeValues":[
+		{"AttributeName":"type","Title":"Провайдер","ValueType":"string","RegExMask":null,"IsObligatory":true,"Value":"System.Data.Entity.Atlantis.AtlantisDbProviderFactory, EntityFramework.Atlantis"}		
+	]
+      }
+    },
+    {
+      "SectionName": "system.diagnostics",
+      "ParentSection": "system.diagnostics",
+      "KeyAttributes":null,
+      "SectionSettings": {
+        "Description": "Настройка диагностики адаптера ERP",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Настройка диагностики адаптера ERP",
+	"AttributeValues":null
+      }
+    },
+    {
+      "SectionName": "trace",
+      "ParentSection": "system.diagnostics;trace",
+      "KeyAttributes": {},
+      "SectionSettings": {
+        "Description": "Настройка автоматической загрузки слушателей",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Автоматическая загрузка слушателей",
+	"AttributeValues":[
+		{"AttributeName":"autoflush","Title":"Автоматическая загрузка слушателей","ValueType":"bool","RegExMask":null,"IsObligatory":true,"Value":true}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "system.diagnostics;trace;listeners;add",
+      "KeyAttributes": {
+	 "name":"Log"
+      },
+      "SectionSettings": {
+        "Description": "Слушатель лицензирования",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Слушатель лицензирования",
+	"AttributeValues":[
+		{"AttributeName":"type","Title":"Тип слушателя","ValueType":"string","RegExMask":null,"IsObligatory":true,"Value":"System.Diagnostics.TextWriterTraceListener"},
+		{"AttributeName":"initializeData","Title":"Реализация логирования","ValueType":"string","RegExMask":null,"IsObligatory":true,"Value":"XafariLicenseService.log"}		
+	]
+      }
+    },
+    {
+      "SectionName": "add",
+      "ParentSection": "system.diagnostics;switches;add",
+      "KeyAttributes": {
+	 "name":"Xafari.Licensing"
+      },
+      "SectionSettings": {
+        "Description": "Уровни отслеживания лицензирования: 0-отключить отслеживание, 1-отслеживать только ошибки, 2-отслеживать ошибки и предупреждения, 3-отслеживать ошибки, предупреждения и информацию, 4-отслеживать всё.",
+        "IsUse": true,
+	"IsObligatory":true,
+	"Title": "Уровень отслеживания лицензирования",
+	"AttributeValues":[
+		{"AttributeName":"value","Title":"Уровень","ValueType":"int","RegExMask":null,"IsObligatory":true,"Value":2}
+	]
+      }
+    },
+    {
+      "SectionName": "nlog",
+      "ParentSection": "nlog",
+      "KeyAttributes":null,
+      "SectionSettings": {
+        "Description": "Настройки логирования",
+        "IsUse": true,
+	"Title": "Настройки логирования секция nlog",
+	"AttributeValues":null
+      }
+    },
+    {
+      "SectionName": "target",
+      "ParentSection": "nlog;targets;target",
+      "KeyAttributes": {
+	 "name":"jsonFile"
+      },
+      "SectionSettings": {
+        "Description": "Сохранение сообщений логирования в файл в формате json в локальный файл, имя которого соответсвует указанному в fileName",
+        "IsUse": true,
+	"Title": "Таргет для записи информации в файл в формате json ",
+	"AttributeValues":[
+		{"AttributeName":"type","Title":"Тип","ValueType":"string","IsObligatory":true,"Value":"File"},
+		{"AttributeName":"fileName","Title":"Полный путь к файлу","ValueType":"string","IsObligatory":true,"Value":"${basedir}//logs//${shortdate}.json"}
+		
+	]
+      }
+    },
+    {
+      "SectionName": "target",
+      "ParentSection": "nlog;targets;target",
+      "KeyAttributes": {
+	 "name":"coloredConsole"
+      },
+      "SectionSettings": {
+        "Description": "Выводит сообщения логирования в консоль компонентов, с цветовыделением уровней логирования.",
+        "IsUse": true,
+	"Title": "Таргет для цветовыделение уровней логирования",
+	"AttributeValues":[
+		{"AttributeName":"type","Title":"Тип","ValueType":"string","IsObligatory":true,"Value":"ColoredConsole"},
+		{"AttributeName":"layout","Title":"Формат вывода сообщений в консоль","ValueType":"string","IsObligatory":true,"Value":"${longdate} ${uppercase:${level}} ThreadId=${threadid} ${message} ${exception} ${exception:format=tostring}"},
+		{"AttributeName":"useDefaultRowHighlightingRules","Title":"Использовать правило выделения строк по умолчанию ","ValueType":"bool","IsObligatory":true,"Value":"true","Description":"Указывает, следует ли использовать правила выделения строк по умолчанию"},
+		{"AttributeName":"detectConsoleAvailable","Title":"Обнаружение наличия консоли ","ValueType":"bool","IsObligatory":true,"Value":"true","Description":"Указывает, должна ли целевая консоль отключиться, когда консоль не обнаружена."},
+		
+	]
+      }
+    },
+    {
+      "SectionName": "target",
+      "ParentSection": "nlog;targets;target",
+      "KeyAttributes": {
+	 "name":"esb"
+      },
+      "SectionSettings": {
+        "Description": "Отправляет логи в шину, для дальнейшего сохранения сервисом",
+        "IsUse": true,
+	"Title": "Таргет для отправки логов в шину ",
+	"AttributeValues":[
+		{"AttributeName":"type","Title":"Тип","ValueType":"string","IsObligatory":true,"Value":"ESBPublisher"}		
+	]
+      }
+    },
+    {
+      "SectionName": "logger",
+      "ParentSection": "nlog;rules;logger",
+      "KeyAttributes": {
+	 "writeTo":"jsonFile"
+      },
+      "SectionSettings": {
+        "Description": "Позволяет управлять выводом логирования в файл json",
+        "IsUse": true,
+	"Title": "Логер json файла",
+	"AttributeValues":[
+		{"AttributeName":"name","Title":"Имена таргетов","ValueType":"string","IsObligatory":true,"Value":"*"},
+		{"AttributeName":"minlevel","Title":"Уровень логирования","ValueType":"string","IsObligatory":true,"Value":"Info"}				
+	]
+      }
+    },
+    {
+      "SectionName": "logger",
+      "ParentSection": "nlog;rules;logger",
+      "KeyAttributes": {
+	 "writeTo":"coloredConsole"
+      },
+      "SectionSettings": {
+        "Description": "Позволяет управлять выводом логирования в консоль",
+        "IsUse": true,
+	"Title": "Логер вывода логирования в консоль",
+	"AttributeValues":[
+		{"AttributeName":"name","Title":"Имена таргетов","ValueType":"string","IsObligatory":true,"Value":"*"},
+		{"AttributeName":"minlevel","Title":"Уровень логирования","ValueType":"string","IsObligatory":true,"Value":"Info"}				
+	]
+      }
+    },
+    {
+      "SectionName": "logger",
+      "ParentSection": "nlog;rules;logger",
+      "KeyAttributes": {
+	 "writeTo":"esb"
+      },
+      "SectionSettings": {
+        "Description": "Позволяет управлять выводом логирования в консоль",
+        "IsUse": true,
+	"Title": "Логер отправки сообшений в шину",
+	"AttributeValues":[
+		{"AttributeName":"name","Title":"Имена таргетов","ValueType":"string","IsObligatory":true,"Value":"*"},
+		{"AttributeName":"minlevel","Title":"Уровень логирования","ValueType":"string","IsObligatory":true,"Value":"Info"}				
+	]
+      }
+    },
+    {
+      "SectionName": "CatcherExceptionsSection",
+      "ParentSection": "CatcherExceptionsSection",
+      "KeyAttributes":null,
+      "SectionSettings": {
+        "Description": "Обработчик ошибок",
+        "IsUse": true,
+	"IsObligatory":false,
+	"Title": "Обработчик ошибок",
+	"AttributeValues":null
+      }
+    },
+    {
+      "SectionName": "Exception",
+      "ParentSection": "CatcherExceptionsSection;Exceptions;Exception",
+      "KeyAttributes": {
+	 "AssemblyQualifiedName":"Galaktika.ERP.Interop.AtlantisDbException, Galaktika.ERP.Interop"
+      },
+      "SectionSettings": {
+        "Description": "Измеряется в секундах. Интервал времени с которой будет производиться обработка ошибок базы данных Atlantis",
+        "IsUse": true,
+	"IsObligatory":false,
+	"Title": "Интервал времени с которой будет производиться обработка ошибок базы данных Atlantis (c)",
+	"AttributeValues":[
+		{"AttributeName":"Timeout","Title":"Интервал","ValueType":"int","RegExMask":null,"IsObligatory":true,"Value":10}
+	]
+      }
+    },
+    {
+      "SectionName": "Exception",
+      "ParentSection": "CatcherExceptionsSection;Exceptions;Exception",
+      "KeyAttributes": {
+	 "AssemblyQualifiedName":"Galaktika.ERP.Interop.DispatcherException, Galaktika.ERP.Interop"
+      },
+      "SectionSettings": {
+        "Description": "Измеряется в секундах. Интервал времени с которой будет производиться обработка ошибок диспетчера",
+        "IsUse": true,
+	"IsObligatory":false,
+	"Title": "Интервал времени с которой будет производиться обработка ошибок диспетчера (с)",
+	"AttributeValues":[
+		{"AttributeName":"Timeout","Title":"Интервал","ValueType":"int","RegExMask":null,"IsObligatory":true,"Value":10}
+	]
+      }
+    }
+  ]
+}

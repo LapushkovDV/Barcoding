@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="ReplaceAssemblyBinding;Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{32060BF2-A96D-4D31-884A-7461D7D7D6F1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Galaktika.ESB.Adapter.ERP</RootNamespace>
+    <AssemblyName>Galaktika.ESB.Adapter.ERP</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SolutionDir>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory),!ProductInfo\!ProductInfo.Define))\</SolutionDir>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <NoWarn>
+    </NoWarn>
+    <DocumentationFile>bin\debug\Galaktika.ESB.Adapter.ERP.xml</DocumentationFile>
+    <LangVersion>7.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>
+    </NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\release\Galaktika.ESB.Adapter.ERP.xml</DocumentationFile>
+    <LangVersion>7.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\!ProductInfo\gts.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\..\Common\Bin\System.Collections.Immutable.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Services\AtlServices.AtlantisModelBuilder.Log.cs" />
+    <Content Include="5_5_29_3\AtlSP.exe" />
+    <Content Include="5_5_29_3\AtlWP.dll" />
+    <Content Include="5_5_29_3\G_DotNet4Vip.dll" />
+    <Content Include="5_5_29_3\SILog.dll" />
+    <Content Include="Adapter\AtlantisAdapterService.cs" />
+    <Content Include="Adapter\AtlantisODataAdapter.cs" />
+    <Content Include="Adapter\AtlantisStarterService.cs" />
+    <Content Include="Adapter\AtlantisSession.cs" />
+    <Content Include="Adapter\AtlantisODataService.cs" />
+    <Content Include="Adapter\AtlantisUpdatesService.Log.cs" />
+    <Content Include="Adapter\AtlantisUpdatesService.cs" />
+    <Content Include="Adapter\RestierService.cs" />
+    <Content Include="Adapter\UpdatesJournal.cs" />
+    <Content Include="Api\AtlantisApi.cs" />
+    <Content Include="Api\DictionaryApi.cs" />
+    <Content Include="Context\AtlantisBaseContext.cs" />
+    <Content Include="Context\WlistIncrementor.cs" />
+    <Content Include="Program.cs" />
+    <Content Include="Adapter\AtlantisStarterService.Log.cs" />
+    <Content Include="Adapter\AtlantisODataAdapter.Log.cs" />
+    <Content Include="Adapter\AtlantisODataService.Log.cs" />
+    <Content Include="Adapter\RestierService.Log.cs" />
+    <Content Include="Adapter\ElapsedEventReceiver .cs" />
+    <Content Include="Adapter\AtlantisAdapterService.Log.cs" />
+    <Content Include="Adapter\AtlantisChangesTrackerService.cs" />
+    <Content Include="Adapter\AtlantisChangesTrackerService.Log.cs" />
+    <Content Include="Adapter\TrackingEntityConsumer.cs" />
+    <Content Include="Automapper.Data\DataRecordMemberConfigurationEx.cs" />
+    <Content Include="Adapter\AtlantisBaseUpdatesService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Services\AtlServices.cs" />
+    <Content Include="Services\AtlantisAttributeService.cs" />
+    <Content Include="Services\AtlantisChangeSetInitializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\!ProductInfo\gts.snk">
+      <Link>gts.snk</Link>
+    </None>
+    <None Include="5_5_29_3\AtlSP.TDS" />
+    <None Include="5_5_29_3\AtlWP.TDS" />
+    <None Include="5_5_29_3\G_DotNet4Vip.TDS" />
+    <None Include="5_5_29_3\SILog.TDS" />
+    <None Include="debug.res" />
+    <None Include="!atlsp.cmd" />
+    <None Include="!atlwp.cmd" />
+    <None Include="!gal.cmd" />
+    <None Include="galnet.cfg" />
+    <Content Include="G_DotNet4Vip.dll" />
+    <None Include="restartAdapter.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <UsingTask AssemblyFile="..\..\Common\Galaktika.ESB.BuildTask.assembly" TaskName="Galaktika.ESB.BuildTask.BindingRedirectTask" />
+  <Target Name="ReplaceAssemblyBinding">
+    <BindingRedirectTask AssemblyBindingFilePath="..\..\Common\Common.assemblyBinding" ConfigurationPath=".\App.config" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

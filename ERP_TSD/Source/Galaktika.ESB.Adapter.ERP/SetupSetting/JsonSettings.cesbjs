@@ -1,0 +1,981 @@
+﻿{
+  "JsonSettings": [
+    {
+      "Key": "ServiceName",
+      "ParentKeys": "",
+      "Settings": {
+        "Description": "Имя службы",
+        "IsUse": true,
+        "Title": "Имя службы",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": "Galaktika_ESB_ERP_Adapter_Service"
+      }
+    },
+    {
+      "Key": "ServiceDisplayName",
+      "ParentKeys": "",
+      "Settings": {
+        "Description": "Отображаемое имя службы",
+        "IsUse": true,
+        "Title": "Отображаемое имя службы",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": "Galaktika ESB ERP Adapter Service"
+      }
+    },
+    {
+      "Key": "ServiceDescription",
+      "ParentKeys": "",
+      "Settings": {
+        "Description": "Описание службы",
+        "IsUse": true,
+        "Title": "Описание службы",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": "Galaktika ESB ERP Adapter Service description"
+      }
+    },
+    {
+      "Key": "Galaktika.ESB.Core.LogService.LogService-Galaktika.ESB.Core",
+      "ParentKeys": "Modules",
+      "Settings": {
+        "Description": "Настройка лог сервиса",
+        "IsUse": false,
+        "Title": "Настройка лог сервиса"
+      }
+    },
+    {
+      "Key": "Galaktika.ESB.Adapter.Atlantis.AtlantisChangesTrackerService-Galaktika.ESB.Adapter.ERP",
+      "ParentKeys": "Modules",
+      "Settings": {
+        "Description": "Настройка отслеживания изменений через дополнительный сервис",
+        "IsUse": false,
+        "Title": "Настройка отслеживания изменений через дополнительный сервис"
+      }
+    },
+    {
+      "Key": "Galaktika.ESB.Adapter.Atlantis.AtlantisUpdatesService-Galaktika.ESB.Adapter.ERP",
+      "ParentKeys": "Modules",
+      "Settings": {
+        "Description": "Настройка отслеживания изменений",
+        "IsUse": true,
+        "Title": "Настройка отслеживания изменений"
+      }
+    },
+    {
+      "Key": "OfficesForTracking",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisUpdatesService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Офисы erp которые будет отслеживать адаптер. Если необходимо несколько офисов, указывается через ','",
+        "IsUse": false,
+        "Title": "Офисы отслеживания",
+        "IsValue": true,
+        "ValueType": "string",
+        "RegExMask": null,
+        "Value": "1"
+      }
+    },
+    {
+      "Key": "MaxRecordChangesCountInChunk",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisUpdatesService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Задаёт максимальное количество данных, для обработки и отправки",
+        "IsUse": false,
+        "Title": "Максимальное количество данных",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "Value": 10000
+      }
+    },
+    {
+      "Key": "ErpUpdatesServiceIntervalSec",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisUpdatesService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Измеряется в секундах. Задаёт интервал проверки изменений",
+        "IsUse": false,
+        "Title": "Интервал проверки изменений (с)",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "Value": 5
+      }
+    },
+    {
+      "Key": "UserName",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisUpdatesService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Имя пользователя от которого будет отслеживаться журнализация",
+        "IsUse": true,
+        "Title": "Имя пользователя",
+        "IsValue": true,
+        "ValueType": "string",
+        "RegExMask": null,
+        "Value": ""
+      }
+    },
+    {
+      "Key": "Password",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisUpdatesService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Пароль от пользователя под которым будет отслеживаться журнализация",
+        "IsUse": false,
+        "Title": "Пароль",
+        "IsValue": true,
+        "ValueType": "string",
+        "RegExMask": null,
+        "Value": ""
+      }
+    },
+    {
+      "Key": "Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "ParentKeys": "Modules",
+      "Settings": {
+        "Description": "Настройка Атлантис адаптер сервиса",
+        "IsUse": true,
+        "Title": "Настройка Атлантис адаптер сервиса",
+        "IsObligatory": true
+      }
+    },
+    {
+      "Key": "AdapterId",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Идентификатор адаптера. Используется при маппировании модели",
+        "IsUse": true,
+        "Title": "Идентификатор Адаптера",
+        "IsValue": true,
+        "ValueType": "string",
+        "RegExMask": null,
+        "IsObligatory": true,
+        "Value": "ERP_01"
+      }
+    },
+    {
+      "Key": "OfficesForTracking",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Список офисов, изменения в котором адаптер будет отслеживать. Указывается в виде строки с номерами офисов через разделитель. Если у офиса отключена журнализация либо его нет в системе, то отслеживаться этот офис не будет.",
+        "IsUse": false,
+        "Title": "Офисы для которых отслеживать изменения",
+        "IsValue": true,
+        "ValueType": "string",
+		"IsObligatory": false,
+        "IsOutdated": true,
+        "RegExMask": null,
+        "Value": ""
+      }
+    },
+    {
+      "Key": "IsDsqlInsert",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Вставка данных через dsql, если не указано, вставка будет производиться через интероп",
+        "IsUse": false,
+        "Title": "Вставка данных через dsql",
+        "IsValue": true,
+        "ValueType": "bool",
+        "RegExMask": null,
+        "Value": false
+      }
+    },
+    {
+      "Key": "GalaktikaExePath",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Место расположение программы ERP",
+        "IsUse": true,
+        "Title": "Место расположение программы ERP",
+        "IsValue": true,
+        "ValueType": "string",
+        "RegExMask": null,
+        "IsObligatory": true,
+        "Value": ""
+      }
+    },
+    {
+      "Key": "LastJournalNrecFilePath",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Место расположение последнего журнала Nrec",
+        "IsUse": true,
+        "Title": "Место расположение последнего журнала Nrec",
+        "IsValue": true,
+        "ValueType": "string",
+        "RegExMask": null,
+        "IsObligatory": false,
+        "IsOutdated": true,
+        "Value": ""
+      }
+    },
+    {
+      "Key": "UserName",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Имя пользователя от которого будет отслеживаться журнализация",
+        "IsUse": true,
+        "Title": "Имя пользователя",
+        "IsValue": true,
+        "ValueType": "string",
+        "RegExMask": null,
+        "IsObligatory": false,
+        "IsOutdated": true,
+        "Value": ""
+      }
+    },
+    {
+      "Key": "Password",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Пароль от пользователя под которым будет отслеживаться журнализация",
+        "IsUse": false,
+        "Title": "Пароль",
+        "IsValue": true,
+        "ValueType": "string",
+        "RegExMask": null,
+        "IsObligatory": false,
+        "IsOutdated": true,
+        "Value": ""
+      }
+    },
+    {
+      "Key": "RequestTimeOut",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Таймаут выполнения запроса на проверку работоспособности адаптера. Указывается в секундах. Если в течении указанного времени запрос не был выполнен адаптер выключается.",
+        "IsUse": false,
+        "Title": "Таймаут выполнения запроса на проверку работоспособности адаптера (с)",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "Value": 60
+      }
+    },
+    {
+      "Key": "KillAdapterTimeout",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Измеряется в минутах. Если в адаптере произошла ошибка, данный параметр указывает время, через которое адаптер закроется",
+        "IsUse": false,
+        "Title": "Время закрывания адаптера (min)",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "IsObligatory": false,
+        "Value": 1
+      }
+    },
+    {
+      "Key": "GalaktikaSessionCommandArgs",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Параметры для инициализации сервера",
+        "IsUse": false,
+        "Title": "Параметры для инициализации сервера",
+        "IsValue": true,
+        "ValueType": "string",
+        "RegExMask": null,
+        "Value": ""
+      }
+    },
+    {
+      "Key": "GalaktikaInitCommandArgs",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Параметры для инициализации сессии",
+        "IsUse": false,
+        "Title": "Параметры для инициализации сессии",
+        "IsValue": true,
+        "ValueType": "string",
+        "RegExMask": null,
+        "Value": ""
+      }
+    },
+    {
+      "Key": "IsUseTempTable",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Параметр позволяет использовать временную таблицу. Позволяет ускорить публикацию.",
+        "IsUse": false,
+        "Title": "Использовать временную таблицу",
+        "IsValue": true,
+        "ValueType": "bool",
+        "RegExMask": null,
+        "Value": false
+      }
+    },
+    {
+      "Key": "LostNrecsLifeTime",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Измеряется в минутах. Задаёт время жизни последнего Nrec",
+        "IsUse": false,
+        "Title": "Время жизни последнего Nrec (min)",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "Value": 60
+      }
+    },
+    {
+      "Key": "SetStartTimeout",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Измеряется в секундах. Задаёт время за которое адаптеру необходимо запуститься, в случае если не успевает запуститься останавливается",
+        "IsUse": false,
+        "Title": "Время старта адаптера (с)",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "Value": 120
+      }
+    },
+    {
+      "Key": "SetStopTimeout",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Измеряется в секундах. Задаёт время за которое адаптеру необходимо остановиться",
+        "IsUse": false,
+        "Title": "Время остановки адаптера (с)",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "Value": 30
+      }
+    },
+    {
+      "Key": "MaxRecordChangesCountInChunk",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Задаёт максимальное количество данных, для обработки и отправки",
+        "IsUse": false,
+        "Title": "Максимальное количество данных",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "IsObligatory": false,
+        "IsOutdated": true,
+        "Value": 10000
+      }
+    },
+    {
+      "Key": "ErpUpdatesServiceIntervalSec",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Измеряется в секундах. Задаёт интервал проверки изменений",
+        "IsUse": false,
+        "Title": "Интервал проверки изменений (с)",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "IsObligatory": false,
+        "IsOutdated": true,
+        "Value": 5
+      }
+    },
+    {
+      "Key": "LoggingLevel",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Задаёт уровень логирования",
+        "IsUse": false,
+        "Title": "Уровень логирования",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "Value": 1
+      }
+    },
+    {
+      "Key": "UseNewStarter",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Позволяет использовать новый стартер",
+        "IsUse": false,
+        "Title": "Новый стартер",
+        "IsValue": true,
+        "ValueType": "bool",
+        "RegExMask": null,
+        "Value": false
+      }
+    },
+    {
+      "Key": "UseWorkerContexts",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Позволяет использовать рабочий контекст",
+        "IsUse": false,
+        "Title": "Рабочий контекст",
+        "IsValue": true,
+        "ValueType": "bool",
+        "RegExMask": null,
+        "Value": false
+      }
+    },
+    {
+      "Key": "UseAtlContexts",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Позволяет использовать Атлантический контекст",
+        "IsUse": false,
+        "Title": "Атлантический контекст",
+        "IsValue": true,
+        "ValueType": "bool",
+        "RegExMask": null,
+        "Value": true
+      }
+    },
+    {
+      "Key": "LogicalProcessorCount",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Позволяет использовать количество логических процессов",
+        "IsUse": false,
+        "Title": "Количество логических процессов",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "Value": 1
+      }
+    },
+    {
+      "Key": "MaxSleepOnStartCount",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "Задаёт максимальное количество остановок адаптера, для ожидания запуска Атлантиса",
+        "IsUse": false,
+        "Title": "Максимальное количество остановок адаптера",
+        "IsValue": true,
+        "ValueType": "int",
+        "RegExMask": null,
+        "Value": 100
+      }
+    },
+    {
+      "Key": "GalaktikaPreloadedLibraryList",
+      "ParentKeys": "Modules;Galaktika.ESB.Adapter.Atlantis.AtlantisAdapterService-Galaktika.ESB.Adapter.ERP",
+      "Settings": {
+        "Description": "mt_drv.dll;ms70drv.dll;ora90drv.dll",
+        "IsUse": true,
+        "Title": "Библиотеки, для работы с базой данных",
+        "IsValue": true,
+        "ValueType": "string",
+        "RegExMask": null,
+        "Value": "mt_drv.dll;ms70drv.dll"
+      }
+    },
+    {
+      "Key": "Galaktika.ESB.RabbitMqTransport.RabbitMqMassTransitTransport-Galaktika.ESB.RabbitMqTransport",
+      "ParentKeys": "Modules",
+      "Settings": {
+        "Description": "Настройка RabbitMQ клиента",
+        "IsUse": true,
+        "Title": "Настройка RabbitMQ",
+        "IsObligatory": true,
+        "DialogType": "RabbitMQ"
+      }
+    },
+    {
+      "Key": "HostAddress",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqMassTransitTransport-Galaktika.ESB.RabbitMqTransport",
+      "Settings": {
+        "Description": "Адрес подключения",
+        "IsUse": true,
+        "Title": "Адрес подключения",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true
+      }
+    },
+    {
+      "Key": "VirtualHost",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqMassTransitTransport-Galaktika.ESB.RabbitMqTransport",
+      "Settings": {
+        "Description": "Виртуальный адрес",
+        "IsUse": true,
+        "Title": "Виртуальный адрес",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true
+      }
+    },
+    {
+      "Key": "UserName",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqMassTransitTransport-Galaktika.ESB.RabbitMqTransport",
+      "Settings": {
+        "Description": "Имя пользователя",
+        "IsUse": true,
+        "Title": "Имя пользователя",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true
+      }
+    },
+    {
+      "Key": "Password",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqMassTransitTransport-Galaktika.ESB.RabbitMqTransport",
+      "Settings": {
+        "Description": "Пароль",
+        "IsUse": true,
+        "Title": "Пароль",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true
+      }
+    },
+    {
+      "Key": "Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport",
+      "ParentKeys": "Modules",
+      "Settings": {
+        "Description": "Настройка консьюмера",
+        "IsUse": true,
+        "Title": "Настройка консьюмера",
+        "IsObligatory": true
+      }
+    },
+    {
+      "Key": "UrlReplaces",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport",
+      "Settings": {
+        "Description": "Заменяет элементы в url",
+        "IsUse": true,
+        "Title": "Замена URL",
+        "IsValue": true,
+        "ValueType": "JArray",
+        "RegExMask": null,
+        "Value": [ [ "/mq/", "/" ] ]
+      }
+    },
+    {
+      "Key": "Name",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;Queue",
+      "Settings": {
+        "Description": "Наименование очереди",
+        "IsUse": true,
+        "Title": "Наименование очереди",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": "ESB_HttpMQService"
+      }
+    },
+    {
+      "Key": "Durable",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;Queue",
+      "Settings": {
+        "Description": "Если задано при создании новой очереди, то очередь будет отмечена как долговечная. Длительные очереди остаются активными, когда сервер перезагружается. Непродолжительные очереди (переходные очереди) очищаются, если / когда сервер перезагружается. Обратите внимание, что длительные очереди не обязательно содержат постоянные сообщения, хотя не имеет смысла отправлять постоянные сообщения в временную очередь.",
+        "IsUse": true,
+        "Title": "Долговременная",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "Exclusive",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;Queue",
+      "Settings": {
+        "Description": "Исключительные очереди могут быть доступны только текущему соединению и удаляются, когда это соединение закрывается. Пассивное объявление исключительной очереди другими подключениями не допускается.Сервер ДОЛЖЕН поддерживать как эксклюзивные (частные), так и неисключительные (общие) очереди.",
+        "IsUse": true,
+        "Title": "Исключительная",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "AutoDelete",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;Queue",
+      "Settings": {
+        "Description": "Если установлено, очередь будет удалена, когда все потребители закончат ее использование. Последний потребитель может быть отменен либо явно, либо потому, что его канал закрыт. Если в очереди не было потребителя, оно не будет удалено. Приложения могут явно удалять очереди автоматического удаления, используя метод Delete, как обычно.",
+        "IsUse": true,
+        "Title": "Авто-удаление",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "Name",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;Bindings;ESB_HttpMQService",
+      "Settings": {
+        "Description": "Наименование очереди",
+        "IsUse": true,
+        "Title": "Наименование очереди",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": "ESB_HttpMQService"
+      }
+    },
+    {
+      "Key": "Durable",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;Bindings;ESB_HttpMQService",
+      "Settings": {
+        "Description": "Если задано при создании новой очереди, то очередь будет отмечена как долговечная. Длительные очереди остаются активными, когда сервер перезагружается. Непродолжительные очереди (переходные очереди) очищаются, если / когда сервер перезагружается. Обратите внимание, что длительные очереди не обязательно содержат постоянные сообщения, хотя не имеет смысла отправлять постоянные сообщения в временную очередь.",
+        "IsUse": true,
+        "Title": "Долговременная",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "Exclusive",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;Bindings;ESB_HttpMQService",
+      "Settings": {
+        "Description": "Исключительные очереди могут быть доступны только текущему соединению и удаляются, когда это соединение закрывается. Пассивное объявление исключительной очереди другими подключениями не допускается.Сервер ДОЛЖЕН поддерживать как эксклюзивные (частные), так и неисключительные (общие) очереди.",
+        "IsUse": true,
+        "Title": "Исключительная",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "AutoDelete",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;Bindings;ESB_HttpMQService",
+      "Settings": {
+        "Description": "Если установлено, очередь будет удалена, когда все потребители закончат ее использование. Последний потребитель может быть отменен либо явно, либо потому, что его канал закрыт. Если в очереди не было потребителя, оно не будет удалено. Приложения могут явно удалять очереди автоматического удаления, используя метод Delete, как обычно.",
+        "IsUse": true,
+        "Title": "Авто-удаление",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "NoAck",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;Consumer",
+      "Settings": {
+        "Description": "Отвечает за повторное отправление данных в случае разрыва",
+        "IsUse": true,
+        "Title": "Повторное отправление данных",
+        "IsValue": true,
+        "ValueType": "bool",
+        "Value": false
+      }
+    },
+    {
+      "Key": "ConsumerTag",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;Consumer",
+      "Settings": {
+        "Description": "Отвечает за пометку неотправленных сообщений",
+        "IsUse": true,
+        "Title": "Пометка неоправленных сообщений",
+        "IsValue": true,
+        "ValueType": "string",
+        "Value": ""
+      }
+    },
+    {
+      "Key": "PrefetchSize",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;QoS",
+      "Settings": {
+        "Description": "Измеряется в количествах сообщений. Клиент может запросить отправку сообщений заранее, чтобы, когда клиент завершил обработку сообщения, следующее сообщение уже выполняется локально, а не нужно отправлять по каналу. Предварительная выборка дает улучшение производительности. Это поле задает размер окна предварительной выборки в октетах. Сервер будет отправлять сообщение заранее, если он равен или меньше по размеру, чем размер доступной предварительной выборки (а также попадает в другие пределы предварительной выборки). Может быть установлено равным нулю, что означает «никакого конкретного ограничения», хотя другие ограничения предварительной выборки могут все еще применяться. Размер предварительной выборки игнорируется, если установлена ​​опция no-ack.",
+        "IsUse": true,
+        "Title": "Размер предварительной выборки",
+        "IsValue": true,
+        "ValueType": "int",
+        "Value": 0
+      }
+    },
+    {
+      "Key": "PrefetchCount",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;QoS",
+      "Settings": {
+        "Description": "Измеряется в количествах сообщений. Задает окно предварительной выборки в терминах целых сообщений. Это поле может использоваться в сочетании с полем поля предварительной выборки; сообщение будет отправлено только заранее, если это позволяют оба окна предварительной выборки (и те, что указаны на канале и уровне соединения). Счет предварительной выборки игнорируется, если установлена ​​опция no-ack.",
+        "IsUse": true,
+        "Title": "Подсчет предварительной выборки",
+        "IsValue": true,
+        "ValueType": "int",
+        "Value": 1
+      }
+    },
+    {
+      "Key": "Global",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqConsumers-Galaktika.ESB.RabbitMqTransport;QoS",
+      "Settings": {
+        "Description": "RabbitMQ переинтерпретировал это поле. В первоначальной спецификации говорилось: «По умолчанию настройки QoS применяются только к текущему каналу. Если это поле установлено, они применяются ко всему соединению». Вместо этого RabbitMQ принимает global = false, чтобы означать, что параметры QoS должны применяться для каждого потребителя (для новых пользователей на канале, а существующие не затронуты) и global = true, чтобы означать, что параметры QoS должны применяться для каждого канала.",
+        "IsUse": true,
+        "Title": "Глобально",
+        "IsValue": true,
+        "ValueType": "bool",
+        "Value": false
+      }
+    },
+    {
+      "Key": "Galaktika.ESB.RabbitMqTransport.RabbitMqPublishers-Galaktika.ESB.RabbitMqTransport",
+      "ParentKeys": "Modules",
+      "Settings": {
+        "Description": "Настройка работы отправителя в RabbitMq",
+        "IsUse": true,
+        "Title": "Настройка работы отправителя в RabbitMq",
+        "IsObligatory": true
+      }
+    },
+    {
+      "Key": "UrlRegex",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqPublishers-Galaktika.ESB.RabbitMqTransport",
+      "Settings": {
+        "Description": "RegEx URL",
+        "IsUse": true,
+        "Title": "RegEx URL",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": "^/mq/.*"
+      }
+    },
+    {
+      "Key": "Exchange",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqPublishers-Galaktika.ESB.RabbitMqTransport;Publisher",
+      "Settings": {
+        "Description": "Обмен",
+        "IsUse": true,
+        "Title": "Обмен",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": ""
+      }
+    },
+    {
+      "Key": "Mandatory",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqPublishers-Galaktika.ESB.RabbitMqTransport;Publisher",
+      "Settings": {
+        "Description": "Этот флаг сообщает серверу, как реагировать, если сообщение не может быть перенаправлено в очередь. Если этот флаг установлен, сервер будет возвращать неопробованное сообщение с помощью метода Return. Если этот флаг равен нулю, сервер молча отбрасывает сообщение.",
+        "IsUse": true,
+        "Title": "Обязательная публикация",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "RoutingKey",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqPublishers-Galaktika.ESB.RabbitMqTransport;Publisher",
+      "Settings": {
+        "Description": "Задает ключ маршрутизации для сообщения. Клавиша маршрутизации используется для маршрутизации сообщений в зависимости от конфигурации обмена.",
+        "IsUse": true,
+        "Title": "Ключ для отправки сообщений",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": "ESB_HttpMQService"
+      }
+    },
+    {
+      "Key": "Name",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqPublishers-Galaktika.ESB.RabbitMqTransport;Queue",
+      "Settings": {
+        "Description": "Наименование очереди",
+        "IsUse": true,
+        "Title": "Наименование очереди",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": "ESB_HttpMQService"
+      }
+    },
+    {
+      "Key": "Durable",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqPublishers-Galaktika.ESB.RabbitMqTransport;Queue",
+      "Settings": {
+        "Description": "Если задано при создании новой очереди, то очередь будет отмечена как долговечная. Длительные очереди остаются активными, когда сервер перезагружается. Непродолжительные очереди (переходные очереди) очищаются, если / когда сервер перезагружается. Обратите внимание, что длительные очереди не обязательно содержат постоянные сообщения, хотя не имеет смысла отправлять постоянные сообщения в временную очередь.",
+        "IsUse": true,
+        "Title": "Долговременная",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "Exclusive",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqPublishers-Galaktika.ESB.RabbitMqTransport;Queue",
+      "Settings": {
+        "Description": "Исключительные очереди могут быть доступны только текущему соединению и удаляются, когда это соединение закрывается. Пассивное объявление исключительной очереди другими подключениями не допускается.Сервер ДОЛЖЕН поддерживать как эксклюзивные (частные), так и неисключительные (общие) очереди.",
+        "IsUse": true,
+        "Title": "Исключительная",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "AutoDelete",
+      "ParentKeys": "Modules;Galaktika.ESB.RabbitMqTransport.RabbitMqPublishers-Galaktika.ESB.RabbitMqTransport;Queue",
+      "Settings": {
+        "Description": "Если установлено, очередь будет удалена, когда все потребители закончат ее использование. Последний потребитель может быть отменен либо явно, либо потому, что его канал закрыт. Если в очереди не было потребителя, оно не будет удалено. Приложения могут явно удалять очереди автоматического удаления, используя метод Delete, как обычно.",
+        "IsUse": true,
+        "Title": "Авто-удаление",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "Galaktika.ESB.ServiceAdapterApi.HttpServiceSelfHost-Galaktika.ESB.ServiceAdapterApi",
+      "ParentKeys": "Modules",
+      "Settings": {
+        "Description": "Настройка OData",
+        "IsUse": false,
+        "Title": "Настройка OData"
+      }
+    },
+    {
+      "Key": "HttpServiceEndPoint",
+      "ParentKeys": "Modules;Galaktika.ESB.ServiceAdapterApi.HttpServiceSelfHost-Galaktika.ESB.ServiceAdapterApi",
+      "Settings": {
+        "Description": "Адрес http сервера",
+        "IsUse": true,
+        "Title": "Адрес http сервера",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": "http://localhost:8081"
+      }
+    },
+    {
+      "Key": "IncrementPortIfNotAvailableTill",
+      "ParentKeys": "Modules;Galaktika.ESB.ServiceAdapterApi.HttpServiceSelfHost-Galaktika.ESB.ServiceAdapterApi",
+      "Settings": {
+        "Description": "Порт на случай не доступности основного порта",
+        "IsUse": true,
+        "Title": "Дополнительный порт",
+        "IsValue": true,
+        "ValueType": "int",
+        "IsObligatory": true,
+        "Value": 8099
+      }
+    },
+    {
+      "Key": "Galaktika.ESB.Core.NotificationWorker-Galaktika.ESB.Core",
+      "ParentKeys": "Modules",
+      "Settings": {
+        "Description": "Настройка работы уведомлений",
+        "IsUse": true,
+        "Title": "Настройка работы уведомлений",
+        "IsObligatory": true
+      }
+    },
+    {
+      "Key": "Name",
+      "ParentKeys": "Modules;Galaktika.ESB.Core.NotificationWorker-Galaktika.ESB.Core;Queue",
+      "Settings": {
+        "Description": "Наименование очереди",
+        "IsUse": true,
+        "Title": "Наименование очереди",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": "ESB_ServiceAdapter_Worker"
+      }
+    },
+    {
+      "Key": "Durable",
+      "ParentKeys": "Modules;Galaktika.ESB.Core.NotificationWorker-Galaktika.ESB.Core;Queue",
+      "Settings": {
+        "Description": "Если задано при создании новой очереди, то очередь будет отмечена как долговечная. Длительные очереди остаются активными, когда сервер перезагружается. Непродолжительные очереди (переходные очереди) очищаются, если / когда сервер перезагружается. Обратите внимание, что длительные очереди не обязательно содержат постоянные сообщения, хотя не имеет смысла отправлять постоянные сообщения в временную очередь.",
+        "IsUse": true,
+        "Title": "Долговременная",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "Exclusive",
+      "ParentKeys": "Modules;Galaktika.ESB.Core.NotificationWorker-Galaktika.ESB.Core;Queue",
+      "Settings": {
+        "Description": "Исключительные очереди могут быть доступны только текущему соединению и удаляются, когда это соединение закрывается. Пассивное объявление исключительной очереди другими подключениями не допускается.Сервер ДОЛЖЕН поддерживать как эксклюзивные (частные), так и неисключительные (общие) очереди.",
+        "IsUse": true,
+        "Title": "Исключительная",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "AutoDelete",
+      "ParentKeys": "Modules;Galaktika.ESB.Core.NotificationWorker-Galaktika.ESB.Core;Queue",
+      "Settings": {
+        "Description": "Если установлено, очередь будет удалена, когда все потребители закончат ее использование. Последний потребитель может быть отменен либо явно, либо потому, что его канал закрыт. Если в очереди не было потребителя, оно не будет удалено. Приложения могут явно удалять очереди автоматического удаления, используя метод Delete, как обычно.",
+        "IsUse": true,
+        "Title": "Авто-удаление",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "Exchange",
+      "ParentKeys": "Modules;Galaktika.ESB.Core.NotificationWorker-Galaktika.ESB.Core;Publisher",
+      "Settings": {
+        "Description": "Обмен",
+        "IsUse": true,
+        "Title": "Обмен",
+        "IsValue": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": ""
+      }
+    },
+    {
+      "Key": "Mandatory",
+      "ParentKeys": "Modules;Galaktika.ESB.Core.NotificationWorker-Galaktika.ESB.Core;Publisher",
+      "Settings": {
+        "Description": "Этот флаг сообщает серверу, как реагировать, если сообщение не может быть перенаправлено в очередь. Если этот флаг установлен, сервер будет возвращать неопробованное сообщение с помощью метода Return. Если этот флаг равен нулю, сервер молча отбрасывает сообщение.",
+        "IsUse": true,
+        "Title": "Обязательная публикация",
+        "IsValue": true,
+        "ValueType": "bool",
+        "IsObligatory": true,
+        "Value": false
+      }
+    },
+    {
+      "Key": "RoutingKey",
+      "ParentKeys": "Modules;Galaktika.ESB.Core.NotificationWorker-Galaktika.ESB.Core;Publisher",
+      "Settings": {
+        "Description": "Задает ключ маршрутизации для сообщения. Клавиша маршрутизации используется для маршрутизации сообщений в зависимости от конфигурации обмена.",
+        "IsUse": true,
+        "Title": "Ключ для отправки сообщений",
+        "IsValues": true,
+        "ValueType": "string",
+        "IsObligatory": true,
+        "Value": "ESB_ServiceAdapter_Worker"
+      }
+    },
+    {
+      "Key": "PollingIntervalSec",
+      "ParentKeys": "Modules;Galaktika.ESB.Core.NotificationWorker-Galaktika.ESB.Core",
+      "Settings": {
+        "Description": "Измеряется в секундах. Интервал проверки уведомлений",
+        "IsUse": true,
+        "Title": "Интервал проверки уведомлений (c)",
+        "IsValue": true,
+        "ValueType": "int",
+        "IsObligatory": true,
+        "Value": 20
+      }
+    }
+  ]
+}

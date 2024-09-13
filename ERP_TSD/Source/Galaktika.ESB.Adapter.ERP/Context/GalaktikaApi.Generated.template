@@ -1,0 +1,387 @@
+<#@ template debug="false" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Runtime.dll" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Net.Http.dll" #>
+<#@ Assembly Name="Newtonsoft.Json.dll" #>
+<#@ Assembly Name="System.Diagnostics.DiagnosticSource.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ import namespace="System.Net.Http" #>  
+<#@ import namespace="Newtonsoft.Json.Linq" #> 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace Galaktika.ESB.Adapter.Atlantis.Api
+{
+	
+			
+<# Test(); #>	
+	
+}
+<#+  
+	private long[] deleteTable = {
+		1, 2, 3, 8, 15, 17
+	 };
+        
+
+	private IDictionary<int, IEnumerable<string>> nullableObjects = new Dictionary<int, IEnumerable<string>>()
+	{
+		{1434,new []{ "CMCUSL" } },
+		{1411,new []{ "CED" } },
+		{1110,new []{ "CMCUSL", "CSOPR", "CSPSOPR" } },
+		{17006,new []{ "CGRAFIK" } }
+	};
+
+	//private IDictionary<long, string> changeTableName = new Dictionary<long, string>()
+	//{
+	//	{25033, "ExtCatLinks"},
+	//	{1471, "KatOrgDescr"},
+	//	{25018, "StaffStruct"},
+	//	{2131, "AddSumTune"},
+	//	{25008, "Appointments"}
+	//};
+
+	private static IEnumerable<IDictionary<string, object>> ConvertJsonIEnumerableIDictionary(string result)
+	{
+		var jObj = JObject.Parse(result);
+		var values = GetIEnumerableIDictionary((JArray)(jObj["TableInfo"]));
+		return values;
+	}
+	private static IEnumerable<IDictionary<string, object>> GetIEnumerableIDictionary(JArray jsonArray)
+	{
+		var values = jsonArray.ToObject<IEnumerable<IDictionary<string, object>>>();
+		for (var i = 0; i < values.Count(); i++)
+		{
+			var iDictionary = GetIDictionary(values.ElementAt(i));
+			for (var j = 0; j < iDictionary.Count; j++)
+				values.ElementAt(i)[iDictionary.ElementAt(j).Key] = iDictionary.ElementAt(j).Value;
+		}
+		return values;
+	}
+	private static IDictionary<string, object> GetIDictionary(IDictionary<string, object> value)
+	{
+		for (var j = 0; j < value.Count; j++)
+			if (value[value.ElementAt(j).Key] == null) continue;
+			else if (value[value.ElementAt(j).Key].GetType().Name == "JArray")
+				value[value.ElementAt(j).Key] = GetIEnumerableIDictionary((JArray)value[value.ElementAt(j).Key]);
+			else if ((value[value.ElementAt(j).Key].GetType().Name == "JObject"))
+				value[value.ElementAt(j).Key] = GetIDictionary(((JObject)value[value.ElementAt(j).Key]).ToObject<IDictionary<string, object>>());
+		return value;
+	}
+	IEnumerable<IDictionary<string,object>> MetaData=GetTables();
+	public static IEnumerable<IDictionary<string,object>> GetTables()
+	{
+		using (var sr = new StreamReader(File.Open(@"D:\!GalESB\Galaktika.ESB.Adapter.ERP\Model\TableInfo.json", FileMode.Open)))
+		{
+			var json = sr.ReadToEnd();
+			return ConvertJsonIEnumerableIDictionary(json);
+		}
+	}
+
+	public enum AtlTypes:byte
+	{
+		Void = 0,
+		Boolean = 1,
+		Char = 2,
+		Byte = 3,
+		Word = 4,
+		Integer = 5,
+		LongInt = 6,
+		Date = 7,
+		Time = 8,
+		Pointer = 9,
+		Single = 10,
+		Double = 11,
+		String = 12,
+		ZString = 13,
+		LVar = 14,
+		Buffer = 15,
+		AutoInc = 16,
+		Comp = 17,
+		DateTime = 18,
+		Array = 19,
+		TabArray = 20,
+		Record = 21,
+		Reference = 22,
+		AnyArray = 23,
+		PositionHandle = 24,
+		Variant = 25,
+		DataStream = 26,
+		Decimal = 27,
+		Password = 28,
+		SQLParamPtr = 29
+	}
+		//private string CheckChangeTableName(long tableCode,string tableName)
+		//{
+		//	string obj;
+		//	if (!changeTableName.TryGetValue(tableCode, out obj))
+		//		return tableName;
+		//	return obj;
+		//}
+		private bool DeleteTable(long idTable)
+       	 	{
+            		//return deleteTable.SingleOrDefault(t => t == idTable) != 0;
+					return idTable < 100;
+        	}
+		public bool CheckNullableType(IDictionary<string, object> fld)
+		{
+			int xEFileCode;
+			string xEName;
+			int.TryParse(fld["XE_FILECODE"].ToString(), out xEFileCode);
+			xEName = fld["XE_NAME"].ToString();
+			IEnumerable<string> objs;
+			if (!nullableObjects.TryGetValue(xEFileCode, out objs))
+				return false;
+			foreach (var nullableObject in objs)
+				if (nullableObject == xEName)
+					return true;
+			return false;
+		}
+		public string FldType(IDictionary<string, object> fld)
+		{
+			var checkNullableType = CheckNullableType(fld);
+			var dt = (AtlTypes)byte.Parse(fld["XE_DATATYPE"].ToString());
+
+			if (checkNullableType)
+			{
+				switch (dt)
+				{
+					case AtlTypes.Boolean:
+						return "bool?";
+					case AtlTypes.DateTime:
+						return "DateTime?";
+					case AtlTypes.Byte:
+						return "byte?";
+					case AtlTypes.Char:
+						return "char?";
+					case AtlTypes.Comp:
+						return "long?";
+					case AtlTypes.Date:
+						return "DateTime?";
+					case AtlTypes.Decimal:
+						return "Double?";
+					case AtlTypes.Double:
+						return "double?";
+					case AtlTypes.Single:
+						return "float?";
+					case AtlTypes.Time:
+						return "TimeSpan?";
+					case AtlTypes.Integer:
+						return "short?";
+					case AtlTypes.Word:
+						return "int?";
+					case AtlTypes.LongInt:
+						return "int?";
+				}
+			}
+			switch (dt)
+			{
+				case AtlTypes.Boolean:
+					return "bool";
+				case AtlTypes.DateTime:
+					return "DateTime";
+				case AtlTypes.Byte:
+					return "byte";
+				case AtlTypes.Char:
+					return "char";
+				case AtlTypes.Comp:
+					return "long";
+				case AtlTypes.Date:
+					return "DateTime";
+				case AtlTypes.Decimal:
+					return "Double";
+				case AtlTypes.Double:
+					return "double";
+				case AtlTypes.Single:
+					return "float";
+				case AtlTypes.String:
+					return "string";
+				case AtlTypes.Time:
+					return "TimeSpan";
+				case AtlTypes.Integer:
+					return "short";
+				case AtlTypes.Word:
+					return "int";
+				case AtlTypes.LongInt:
+					return "int";
+				case AtlTypes.LVar:
+					return "byte[]";
+				case AtlTypes.Void:
+				default:
+					return "void";
+			}
+		}
+
+	public string AltTypeName(IDictionary<string,object> fld)
+	{
+		var dt=(AtlTypes)byte.Parse(fld["XE_DATATYPE"].ToString());
+		return dt.ToString();
+	}
+	string[] tablesDict=new string[66000];
+	HashSet<string> tables=new HashSet<string>();
+	public string TableName(IDictionary<string,object> tbl)
+	{
+	
+		var tblCode=(long)tbl["XF_CODE"];
+		var tblName=tablesDict[tblCode];
+		if(tblName != null)
+			return tblName;
+
+		tblName=tbl["XF_NAME"].ToString().Replace("$","_").Replace(".dat","").Replace(".adf","").Replace(".","_").Replace("_DAT","").ToUpper();
+		
+		if(tables.Contains(tblName))
+		{
+			tblName=tbl["XF_NAME"].ToString().Replace("$","_").ToUpper();
+		}
+		//tblName = CheckChangeTableName(tblCode,tblName);
+
+		tables.Add(tblName);
+		tablesDict[tblCode]=tblName;
+
+		return tblName;
+	}
+	public string ColumnName(IDictionary<string,object> fld,IDictionary<string,object> tbl)
+	{
+		var str=fld["XE_NAME"].ToString().Replace('[','_').Replace(']','_').Replace("$","_");
+		if (str==TableName(tbl))
+			str+="_";
+		return str;
+	}
+	public void Test()
+	{
+#>       
+	  public partial class AtlantisApi
+	  {
+
+		public partial class AtlantisContext
+		{
+<#+
+		//System.Diagnostics.Debugger.Launch ();
+		foreach (var tbl in this.MetaData)
+		{
+			
+			object obj;
+			if(!tbl.TryGetValue("Fields",out obj))
+				continue;
+			
+			var flds=(IEnumerable<IDictionary<string,object>>)obj;
+			var keyExist=TableName(tbl)=="Field";
+			if (!keyExist)
+			{
+				foreach(var fld in flds)
+				{
+					var columnName=ColumnName(fld,tbl);
+					if((columnName=="NREC")||(columnName=="ATL_NREC")||(columnName=="XF_CODE"))
+					{
+						keyExist=true;
+						break;
+					}
+				}
+			}
+			if(!keyExist)	
+			{
+#>
+			// KEY NOT EXIST <#= TableName(tbl) #> <#= tbl["XF_CODE"] #>. <#= tbl["XF_LOC2"] #>::<#= tbl["XF_NAME"] #> - <#= tbl["XF_TITLE"] #> 
+<#+
+				continue;
+			}
+			if(DeleteTable((long)tbl["XF_CODE"]))
+				continue;
+#>
+			
+			private DbSet< <#= TableName(tbl) #> > _<#=TableName(tbl)#>;
+			/// <summary>
+            /// <#= tbl["XF_CODE"] #>. <#= tbl["XF_LOC2"] #>::<#= tbl["XF_NAME"] #> - <#= tbl["XF_TITLE"].ToString().Replace('<',' ').Replace('>',' ') #>  
+            /// </summary>
+			public virtual DbSet< <#= TableName(tbl) #> > <#= TableName(tbl) #> => _<#=TableName(tbl)#> ?? (_<#=TableName(tbl)#> = Set<<#=TableName(tbl)#>>());   
+<#+
+			
+		}
+#>
+			}
+                }
+<#+
+		foreach (var tbl in this.MetaData)
+		{
+			object obj;
+			if(!tbl.TryGetValue("Fields",out obj))
+				continue;
+			if(DeleteTable((long)tbl["XF_CODE"]))
+				continue;
+			
+#>
+		/// <summary>
+		/// <#= tbl["XF_CODE"] #>. <#= tbl["XF_LOC2"] #>::<#= tbl["XF_TITLE"].ToString().Replace('<',' ').Replace('>',' ') #>
+		/// </summary>
+		[Table("<#= tbl["XF_NAME"] #>")]
+		public partial class <#= TableName(tbl) #>
+		{
+<#+
+			var flds=(IEnumerable<IDictionary<string,object>>)obj;
+			var keyExist=false;
+			foreach(var fld in flds)
+			{
+				if(AltTypeName(fld)=="LVar")
+				{
+#>
+			// LVAR ?? ?????????????? ! [Column("<#= fld["XE_NAME"] #>", TypeName = "<#= AltTypeName(fld) #>")]
+<#+
+					continue;
+				}
+#>
+            /// <summary>
+            /// <#= fld["XE_CODE"] #>.<#= fld["XE_TITLE"].ToString().Replace('<',' ').Replace('>',' ') #>
+            /// </summary>
+			[Column("<#= fld["XE_NAME"] #>", TypeName = "<#= AltTypeName(fld) #>")]
+<#+
+				var columnName=ColumnName(fld,tbl);
+				if(!keyExist)
+					if((columnName=="NREC")||(columnName=="ATL_NREC")||(columnName=="XF_CODE"))
+					{
+						keyExist=true;
+#>
+			[Key]
+<#+
+					}
+#>
+<#+
+				if(AltTypeName(fld)=="String")
+				{
+#>
+			[StringLength(<#= ((long)fld["XE_SIZE"])-1 #>)]
+<#+
+				}
+#>
+			public <#= FldType(fld) #> <#= columnName #> { get; set; }
+<#+
+			} // fld loop
+
+			if(tbl.TryGetValue("RelationsByForeign",out obj))
+			{
+
+				var foreignRelations=obj as IEnumerable<IDictionary<string,object>>;
+				if(foreignRelations!=null)
+				{
+					foreach(var rel in foreignRelations)
+					{
+						var relTbl=rel["PrimaryTable"] as IDictionary<string,object>;
+						var relType=TableName(relTbl);
+						var relName=TableName(relTbl)+"_"+rel["XP_FINDEXCODE"].ToString();
+#>
+		// public virtual <#= relType #> <#= relName #> { get; set; }
+<#+
+					} // relations loop
+				}
+			}
+#>
+		}
+<#+
+		} // Tables loop
+	} // Test()
+#>
