@@ -1082,9 +1082,9 @@ function GenerateJSON_VALUESFILE(_ActionName: string; _pIdent: string; _login: s
                                                 , _login
                                                 , _imei );
 
-     mylog(' after GenerateJSON_VALUES JSONObj_VALUES = ' + string(JSONObj_VALUES) );
-    mylog(' HttpConnect_LastErrorText =' + HttpConnect_LastErrorText(m_service));
-     mylog('      HttpConnect_JsonCount(m_service, JSONObj_VALUES) =' + string(HttpConnect_JsonCount(m_service, JSONObj_VALUES) ) );
+     mylog('after GenerateJSON_VALUES JSONObj_VALUES = ' + string(JSONObj_VALUES) );
+     mylog('HttpConnect_LastErrorText =' + HttpConnect_LastErrorText(m_service));
+     mylog('HttpConnect_JsonCount(m_service, JSONObj_VALUES) =' + string(HttpConnect_JsonCount(m_service, JSONObj_VALUES) ) );
   var _setResultEmpty : boolean = False;
   if JSONObj_VALUES <> 0 then
    {
@@ -1133,7 +1133,7 @@ function GenerateJSON_VALUESFILE(_ActionName: string; _pIdent: string; _login: s
    }
    else
     {
-      #WRITE_JSONERROR(JSONObj,'No Data',_err)
+      #WRITE_JSONERROR(JSONObj,'No Data', 'нет данных ' + _err)
 
 //     HttpConnect_JsonObjectAddObject(m_service, JSONObj, 'OBJECTVALUES', JSONObj_VALUES);
 

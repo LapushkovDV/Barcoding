@@ -92,13 +92,14 @@
 		<FileList>
 			<File Name="C_Barcode.prj" PosX="18" PosY="114" OpenEditor="True"/>
 			<File Name="vip\SHK_TEMPLATES.vip" PosX="20" PosY="107" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut.vip" PosX="26" PosY="1292" OpenEditor="True" Active="True"/>
-			<File Name="vip\SHK_InOut_KatSopr.vpp" PosX="21" PosY="473" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut_InvTab.vpp" PosX="19" PosY="228" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut.vih" PosX="33" PosY="50" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut.vip" PosX="55" PosY="1136" OpenEditor="True" Active="True"/>
+			<File Name="vip\SHK_InOut_KatSopr.vpp" PosX="14" PosY="165" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut_InvTab.vpp" PosX="14" PosY="173" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut.vih" PosX="17" PosY="30" OpenEditor="True"/>
 			<File Name="vip\SHK_Base.vip" PosX="23" PosY="7" OpenEditor="True"/>
 			<File Name="vip\SHK_Base.vih" PosX="1" PosY="1" OpenEditor="True"/>
-			<File Name="vip\SHK_InOut.pan" PosX="69" PosY="14" OpenEditor="True"/>
+			<File Name="vip\SHK_InOut.pan" PosX="53" PosY="51" OpenEditor="True"/>
+			<File Name="vip\SHK_MenuDynamic.vip" PosX="16" PosY="94" OpenEditor="True"/>
 		</FileList>
 		<DebugOptions StopOnStartup="False"/>
 		<MarkerList>
